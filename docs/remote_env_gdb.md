@@ -106,7 +106,7 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 ## 4. 基础使用教学
 
 !!! warning "注意"
-    默认启用的是xv6内核的调试。若要调试用户程序，方法参见下方[4.4.4 用户态程序调试](#444节。
+    默认启用的是xv6内核的调试。若要调试用户程序，方法参见下方[4.4.4 用户态程序调试](#444)节。
 
 为演示起见，我们在`kernel/main.c`的第13行打下一个断点，如图。
 ![bp](remote_env_gdb.assets/bp.png)

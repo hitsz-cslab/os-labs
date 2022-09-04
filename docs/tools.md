@@ -563,7 +563,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-这说明当前你的工作区有尚未保存的更改。请参考[3.3.1.1](#3311-commit)或者[3.3.2](#332-vs-code)节，完成commit操作。
+这说明当前你的工作区有尚未保存的更改。请参考[3.3.1](#331)或者[3.3.2](#332-vs-code)节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。
 
 ## 4 gcc

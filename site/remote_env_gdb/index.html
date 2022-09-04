@@ -127,7 +127,7 @@
                 <h1 id="_1">远程实验平台环境图形化调试指南<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">调试说明</p>
-<p>通常来说，使用简单粗暴的<code>printf大法</code>（在特定的地方打印日志）就能够处理绝大多数的bug。但是对于大型的项目开发或数量超多的源码，printf大法就不能快速地去定位问题所在。使用GDB调试可以说是作为Linux下的程序员应当要掌握的一大技能。然而，GDB因其命令行的方式想必会挡住了一大波同学，默默地继续使用printf。那有没有带图形化调试界面的调试方法呢？</p>
+<p>通常来说，使用简单粗暴的<code>printf大法</code>（在特定的地方打印日志）就能够处理绝大多数的bug。但是对于大型的项目开发或数量超多的源码，printf大法就不能快速地去定位问题所在。功能强大的GDB调试是Linux系统下的一个程序调试利器，使用GDB调试可以说是作为Linux下的程序员应当要掌握的一大技能。然而，GDB因其命令行的方式想必会挡住了一大波同学，默默地继续使用printf。那有没有带图形化调试界面的调试方法呢？</p>
 <p>接下来，我们为同学们介绍调试手段的重头戏：使用VS Code来调试xv6 ：）  </p>
 </div>
 <div class="admonition warning">
@@ -198,7 +198,7 @@
 <h2 id="4">4. 基础使用教学<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">注意</p>
-<p>默认启用的是xv6内核的调试。若要调试用户程序，方法参见下方<a href="#444-用户态程序调试">4.4.4 用户态程序调试</a>节。</p>
+<p>默认启用的是xv6内核的调试。若要调试用户程序，方法参见下方<a href="#444">4.4.4 用户态程序调试</a>节。</p>
 </div>
 <p>为演示起见，我们在<code>kernel/main.c</code>的第13行打下一个断点，如图。
 <img alt="bp" src="../remote_env_gdb.assets/bp.png" />

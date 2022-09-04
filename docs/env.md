@@ -64,7 +64,7 @@ openEuler镜像：openEuler.zip
 
 **Step3** . 下载运行xv6代码
 
-详见[2.2.4.5 运行XV6](#2245-xv6)
+详见[2.2.4.4 运行XV6](#2244-xv6)
 
 ### 2.2  自行部署实验环境
 
@@ -233,68 +233,7 @@ https://repo.openeuler.org/openEuler-20.09/ISO/x86_64/openEuler-20.09-x86_64-dvd
 # yum install autoconf automake curl gawk bison flex texinfo gperf libtool patchutils bc expat-devel pixman-devel
 ```
 
-##### 2.2.4.2 新建用户
-
-使用root用户操作系统是一件很危险的事情，因为root用户拥有最高权限，可以为所欲为，一旦出错很难定位和恢复。因此，建议同学们新建普通用户。
-
-!!! note "root用户"
-    一个用户代表一个实体，它有权限运行用户进程，对文件拥有所有权。用户机制主要用于权限管理，在一定限制下，用户可以终止和改变他的进程的行为，但是，对于其他用户的进程无权干预。root用户可以终止其他用户的进程，读取系统中的任何文件。虽然root用户权限很高，但是还是在用户模式而非内核模式中运行。
-
-新建cs用户名和密码。
-
-```console
-# useradd cs
-# passwd cs
-Changing password for user cs.
-New password:
-Retype new password:
-```
-
-记住你的用户密码和root密码。
-
-```console
-# su cs
-```
-
-切换至cs用户下运行。
-
-![img](openeuler.assets/clip_image052.png)
-
-
-
-!!! note "回退到root用户"
-    <font size=3>在cs用户模式下，输入exit，则退出cs用户模式，回退到root用户模式。</font>
-
-一般来说，系统不会允许任何用户都能够以超级用户的身份运行命令。下图中，当我们输入sudo提权时，显示cs用户不能运行sudo命令，那么我们需要在root下给cs用户添加权限。
-
-![image-20210906094037645](Linux.assets/image-20210906094037645.png)
-
-修改方法如下：
-
-到openEuler虚拟机里，输入
-
-```console
-# visudo
-```
-
-进入vi编辑器，输入”/Allow root“，定位到”## Allow root to run any commands anywhere“，接着按下”i“键，进行编辑模式（最下面一行显示-- INSERT --），增加：
-
-```bash
-cs	ALL=(ALL)	ALL
-```
-
-授权cs用户在任何主机上执行任何命令。第一个ALL表示所有计算机；第二个ALL表示所有用户，第三个ALL表示所有命令。
-
-![image-20210906102459543](Linux.assets/image-20210906102459543.png)
-
-编辑完成后，按”Esc“键退出编辑模式，再输入”:wq“，回车，保存并退出。
-
-再到cs用户下，执行sudo命令，这时就能够执行sudo命令了。
-
-![image-20210906100511534](Linux.assets/image-20210906100511534.png)
-
-
-##### 2.2.4.3 安装RISC-V GNU Compiler Toolchain
+##### 2.2.4.2 安装RISC-V GNU Compiler Toolchain
 
 ```console
 $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
@@ -314,15 +253,15 @@ $ tar zxvf riscv-gnu-toolchain.tar.gz
 
 ```console
 $ cd riscv-gnu-toolchain
-$ sudo ./configure --prefix=/usr/local
-$ sudo make
+$ ./configure --prefix=/usr/local
+$ make
 $ cd ..
  
-$ sudo rm riscv-gnu-toolchain.tar.gz
+$ rm riscv-gnu-toolchain.tar.gz
 rm: remove regular file 'riscv-gnu-toolchain.tar.gz'? y
 ```
 
-##### 2.2.4.4 安装QEMU
+##### 2.2.4.3 安装QEMU
 
 下载QEMU
 
@@ -335,12 +274,12 @@ $ tar xf qemu-5.1.0.tar.xz
 
 ```console
 $ cd qemu-5.1.0
-$ sudo ./configure --disable-kvm --disable-werror --prefix=/usr/local --target-list="riscv64-softmmu"
-$ sudo make
-$ sudo make install
+$ ./configure --disable-kvm --disable-werror --prefix=/usr/local --target-list="riscv64-softmmu"
+$ make
+$ make install
 $ cd ..
  
-$ sudo rm qemu-5.1.0.tar.xz
+$ rm qemu-5.1.0.tar.xz
 rm: remove regular file 'qemu-5.1.0.tar.xz'? y
 ```
 
@@ -355,7 +294,7 @@ $ qemu-system-riscv64 --version
 QEMU emulator version 5.1.0
 ```
 
-##### 2.2.4.5 运行XV6
+##### 2.2.4.4 运行XV6
 
 ```console
 $ git clone https://gitee.com/hitsz-lab/xv6-labs-2020.git
