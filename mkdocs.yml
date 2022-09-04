@@ -1,0 +1,62 @@
+site_name: 操作系统（2022秋季） | 哈工大（深圳）
+copyright: 'Copyright &copy; 2022 - 2023 哈尔滨工业大学（深圳）'
+repo_name: 'HITSZ-OS-Course'
+
+theme:
+    language: 'zh'
+    name: readthedocs
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - rust
+    features:
+        - navigation.tabs
+    icon:
+      logo: fontawesome/brands/linux
+      repo: fontawesome/brands/git-alt        
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+      linenums: false
+  - toc:
+      permalink: true
+  - footnotes
+  - meta
+  - def_list
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed
+  - pymdownx.tilde
+  - admonition
+  - mdx_math:
+      enable_dollar_delimiter: True
+
+nav:
+  - 实验概述: 
+    - 实验须知: index.md
+    - 实验平台以及环境配置: env.md
+    - 实验实用工具: tools.md
+    - Linux开发环境基础知识: Linux.md
+    - 远程实验平台使用指南: remote_env.md
+    - 远程实验平台环境图形化调试指南: remote_env_gdb.md
+  - Lab1：XV6与Unix实用程序: 
+    - 实验概述: lab1/part1.md
+    - 实验原理: lab1/part2.md
+    - 实验步骤: lab1/part3.md
+    - 提交文档: lab1/part4.md  
+    

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>实验概述 - 操作系统（2022秋季） | 哈工大（深圳）</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u5b9e\u9a8c\u6982\u8ff0";
+        var mkdocs_page_input_path = "lab1\\part1.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/rust.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> 操作系统（2022秋季） | 哈工大（深圳）
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">实验概述</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">实验须知</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../env/">实验平台以及环境配置</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tools/">实验实用工具</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Linux/">Linux开发环境基础知识</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../remote_env/">远程实验平台使用指南</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../remote_env_gdb/">远程实验平台环境图形化调试指南</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab1：XV6与Unix实用程序</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">实验概述</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1">1.  实验目的</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2">2.  实验学时</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3">3.  实验内容</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../part2/">实验原理</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../part3/">实验步骤</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../part4/">提交文档</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">操作系统（2022秋季） | 哈工大（深圳）</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Lab1：XV6与Unix实用程序 &raquo;</li>
+      <li>实验概述</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="_1">实验概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">关于<a href="https://integrity.mit.edu/">Academic Intergrity</a></p>
+<p>所有课程实验都需要 <strong>独立完成</strong> 。你应当 <strong>主动避免阅读、使用任何人/互联网上的XV6实验代码</strong> 。在实验中碰到问题很正常，发现问题时需沉着冷静，认真阅读实验指导书，查阅MIT 6.S081的官方网站以及XV6 book，尝试自己调试解决，也可以向同学/助教/老师请教调试的技巧。只有这样，你才能够得到真正的训练与收获！</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">关于第一次实验课考核</p>
+<p>我们选择基于Linux系统的XV6作为操作系统实验的教学平台，因为它开源、自由，也有丰富的文档/课程资源（能让我们了解它内部的实现）。在做实验之前，首先必不可少地是实际动手操作Linux系统。为了激发同学们的学习热（压）情（力），我们将 <strong>在第一次实验课上进行Linux系统基础知识的考核</strong> （助教会一对一地问一些简单的问题来确保同学们真正了解了，虽然考核分数不多，也请大家认真对待），要求同学们能提前学习如下内容：</p>
+<p>（1） 请认真阅读<a href="../..">实验概述</a>中的内容，掌握实验平台/工具的使用、Linux开发环境基础知识；</p>
+<p>（2） 请认真阅读实验一中的内容，了解xv6源码的运行环境，做好实验前的<a href="part3/#2">准备工作</a>。</p>
+<p>遇到凡（考）事（核）不要慌，当你能完成上述要求时，相信一定能通过本次考核! 
+</font></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">实验说明</p>
+<p>该部分说明了该实验需要完成的任务，以及要求达到怎样的目标。需要注意，本章实验上手很难，但是内容简单，大家需要 <strong>耐心理清楚</strong> 实验指导书的脉络。</p>
+<p>特别推荐同学们观看B站上的<a href="https://www.bilibili.com/video/BV19k4y1C7kA?p=1">MIT 6.S081/Fall 2020课程视频</a>，通过学习这门课程可以让你对xv6操作系统有一个全面的认识。</p>
+</div>
+<h2 id="1">1.  实验目的<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>认识xv6操作系统，并熟悉其运行环境。</li>
+<li>复习并巩固系统调用、进程等理论知识，掌握在xv6上编写用户程序的方法。</li>
+</ul>
+<h2 id="2">2.  实验学时<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>本实验为4学时。</p>
+<h2 id="3">3.  实验内容<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>本次实验需要实现5个Unix实用程序。这里展示的是程序功能和实验测试的最终效果，更多详细的介绍可在后续章节中阅读。</p>
+<p>（1）了解xv6上用户程序sleep的实现。sleep程序会等待用户指定的时间。请将代码写在user/sleep.c文件中。运行效果应该如下：</p>
+<p><img alt="image-20201017230825652" src="../part1.assets/image-20201017230825652.png" /></p>
+<p>输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义)，然后输出"(nothing happens for a little while)"。</p>
+<p>在xv6-labs-2020中，执行下面指令，测试程序</p>
+<p><img alt="image-20210913094528437" src="../part1.assets/image-20210913094528437.png" /></p>
+<p>（2）在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印。请将代码写在user/pingpong.c文件中。运行效果应该如下：</p>
+<p><img alt="image-20201017230846238" src="../part1.assets/image-20201017230846238.png" /></p>
+<p>在xv6-labs-2020中，执行下面指令，测试程序</p>
+<p><img alt="image-20210913094617315" src="../part1.assets/image-20210913094617315.png" /></p>
+<p>（3）在xv6上使用管道实现“质数筛选”, 输出2~35之间的而所有质数。请将代码写在user/primes.c文件中。运行效果应该如下：</p>
+<p><img alt="image-20201017230855254" src="../part1.assets/image-20201017230855254.png" /></p>
+<p>在xv6-labs-2020中，执行下面指令，测试程序</p>
+<p><img alt="image-20210913094654462" src="../part1.assets/image-20210913094654462.png" /></p>
+<p>（4）在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 <strong>命令格式为“find path file_name”</strong> 。请将代码写在user/find.c文件中。运行效果应该如下：</p>
+<p><img alt="image-20210914091100817" src="../part1.assets/image-20210914091100817.png" /></p>
+<p>在xv6-labs-2020中，执行下面指令，测试程序</p>
+<p><img alt="image-20210913094755912" src="../part1.assets/image-20210913094755912.png" /></p>
+<p>（5）在xv6上实现用户程序xargs，即从标准输入中读取行并 <strong>为每行运行一次</strong> 指定的命令，且将该行作为命令的参数提供。请将代码写在user/xargs.c中。运行效果应该如下：</p>
+<p><img alt="image-20201017230906954" src="../part1.assets/image-20201017230906954.png" /></p>
+<div class="highlight"><pre><span></span><code>$ make qemu
+...
+$ <span class="nb">echo</span> <span class="m">3</span> <span class="m">4</span><span class="p">|</span>xargs <span class="nb">echo</span> <span class="m">1</span> <span class="m">2</span>
+<span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
+$
+</code></pre></div>
+<p>在xv6-labs-2020中，执行下面指令，测试程序</p>
+<p><img alt="image-20210913094918606" src="../part1.assets/image-20210913094918606.png" /></p>
+<p>（6）完成上述5个小实验后，在在xv6-labs-2020目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。</p>
+<p>如果上述5个程序都能正常运行，可以用如下指令测试5个程序：</p>
+<p><img alt="image-20210913095200221" src="../part1.assets/image-20210913095200221.png" /></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../remote_env_gdb/" class="btn btn-neutral float-left" title="远程实验平台环境图形化调试指南"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../part2/" class="btn btn-neutral float-right" title="实验原理">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2022 - 2023 哈尔滨工业大学（深圳）</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../remote_env_gdb/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../part2/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
