@@ -115,10 +115,10 @@
 你可能会在同一个时间段内需要完成多项课程任务，或者准备考试，或者其他……但是，无论你处于何种程度的压力之下，我们都希望你能做到管理好时间，以诚实正直的态度来完成课程实验。</p>
 </div>
 <h2 id="0">0. 导读<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
-<p>本实验文档为哈尔滨工业大学（深圳）《操作系统》课程实验指导材料。页面左侧为指导书的各个小节目录，页面左上角可详细搜索，页面下方可切换上下小节。请务必按顺序阅读指导书，有问题积极在课程群内提出。</p>
+<p>本实验文档为哈尔滨工业大学（深圳）《操作系统》课程实验指导材料。页面左侧为指导书的各个小节目录，页面左上角可详细搜索，页面下方可切换上下小节。</p>
 <p>本学期的操作系统课程实验有6次实验课，5个实验项目，前4个实验项目分别各占4个学时，最后一个实验项目8个学时，总共24个学时。其中，前4个实验是从开源操作系统 <strong>xv6-labs-2020</strong> 的实验课程中选取4个实验，并根据我们学校的操作系统课程要求进行修改。最后一个来自我校学生自主设计的文件系统实验案例（该实验案例获得2022年全国大学生计算机系统能力大赛操作系统设计大赛OS功能挑战赛道二等奖）。</p>
-<p>由于我们已经对XV6的实验内容及要求进行了修改，<strong>请大家务必从下面的<a href="#3-xv6">“3. 获取XV6实验框架代码”</a>小节中下载代码，在这套代码上完成实验</strong> 。在实验开始之前，请同学们务必先按顺序阅读<code>实验概要</code>章节，掌握实验平台的搭建/使用方法，掌握Linux系统下的一些基本命令/操作，熟练使用GDB调试工具。对于有兴趣有余力的同学，建议完成XV6的所有实验，若能完成会有意想不到的惊喜！</p>
-<p>如果同学们对本课程实验内容、实验安排、实验指导书或者代码框架等各方面有宝贵的意见或建议，请在本指导书的Gitee仓库中发Issue或私信老师或助教。</p>
+<p>由于我们已经对XV6的实验内容及要求进行了修改，<strong>请大家务必从下面的<a href="#3-xv6">“3. 获取XV6实验框架代码”</a>小节中下载代码，在这套代码上完成实验</strong> 。在实验开始之前，请同学们务必先按顺序阅读指导书，掌握实验平台的搭建/使用方法，掌握Linux系统下的一些基本命令/操作，熟练使用GDB调试工具。对于有兴趣有余力的同学，建议完成XV6的所有实验，若能完成会有意想不到的惊喜！</p>
+<p>如果同学们对本课程实验内容、实验安排、实验指导书或者代码框架等各方面有宝贵的意见或建议，请在<a href="https://piazza.com/harbin_institute_of_technology_shenzhen/fall2022/comp3001">piazza在线交流平台</a>（access code：comp3001）提出来或私信老师或助教。</p>
 <h2 id="1">1. 课程信息<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>课程名称：操作系统（实验）</li>
@@ -132,6 +132,7 @@
 <li><strong>实验工具</strong> 下载地址（校内网）：<a href="http://10.249.14.14:8000/index.php/s/7vlEVZPKaMTIpi0">http://10.249.14.14:8000/index.php/s/7vlEVZPKaMTIpi0</a></li>
 <li><strong>实验提交</strong> 地址（校内网）：<a href="http://10.249.12.98:8000/#/login">http://10.249.12.98:8000/#/login</a></li>
 <li><strong>远程实验环境</strong> （校内网），详见<a href="remote_env/">远程实验环境使用指南</a></li>
+<li><strong>piazza在线交流平台（access code：comp3001）</strong> 欢迎同学们在piazza上提问，提问的内容第一时间会由助教或老师回答，当然也欢迎同学们来回答：<a href="https://piazza.com/harbin_institute_of_technology_shenzhen/fall2022/comp3001">https://piazza.com/harbin_institute_of_technology_shenzhen/fall2022/comp3001</a></li>
 </ul>
 <h2 id="3-xv6">3. 获取XV6实验框架代码<a class="headerlink" href="#3-xv6" title="Permanent link">&para;</a></h2>
 <p>在下载实验代码前，请先搭建好xv6实验平台，搭建方法参考<a href="env">实验平台搭建以及环境配置</a>。</p>
