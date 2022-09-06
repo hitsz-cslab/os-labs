@@ -107,6 +107,11 @@
                   <li class="toctree-l1"><a class="reference internal" href="../remote_env_gdb/">远程实验平台环境图形化调试指南</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">常见问题</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../faq-env/">实验环境问题</a>
+                  </li>
+              </ul>
               <p class="caption"><span class="caption-text">Lab1：XV6与Unix实用程序</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../lab1/part1/">实验概述</a>
@@ -171,7 +176,7 @@
 <p>左侧边栏应该会多出一个这样的图标：<img alt="图标:" src="../remote_env.assets/icon.png" />
 点击这个图标，选择SSH TARGETS右侧的<code>+</code>号：</p>
 <p><img alt="增加host" src="../remote_env.assets/ssh_add_host.png" /></p>
-<p>这会在屏幕上方中央弹出输入框，要求输入ssh指令。在这里输入<code>ssh 你的学号@计算节点IP</code>，例如<code>ssh 200110101@10.249.12.98</code>就是学号为200110101的同学希望连接到计算节点0。</p>
+<p>这会在屏幕上方中央弹出输入框，要求输入ssh指令。在这里输入<code>ssh 你的学号@远程实验平台IP</code>，例如<code>ssh 200110101@10.249.12.98</code>就是学号为200110101的同学希望连接到远程实验平台。</p>
 <p><img alt="增加host2" src="../remote_env.assets/ssh_add_host2.png" /></p>
 <p>输入完成后，按下回车。如果弹出下图所示的界面，则再次按下回车：</p>
 <p><img alt="增加host3" src="../remote_env.assets/ssh_add_host3.png" /></p>
@@ -235,11 +240,11 @@ $
 # 例如，如上图所示，我应该键入ssh-add C:\Users\willson\.ssh\id_rsa_priv_20210909
 </code></pre></div>
 <p>在你的Windows上将公钥文件打开（用你喜欢的纯文本编辑器，比如记事本或者VS Code），复制其中的内容。</p>
-<p>最后，登录你想要快捷认证的计算节点的终端，并执行下面的命令：</p>
+<p>最后，登录你想要快捷认证的远程实验平台终端，并执行下面的命令：</p>
 <div class="highlight"><pre><span></span><code>mkdir -p ~/.ssh
 vi ~/.ssh/authorized_keys
 </code></pre></div>
-<p>这会打开一个文件编辑界面。按下<code>i</code>按键，进入编辑模式，并粘贴到上面节点终端中编辑界面的一个新行里。按下<code>Esc</code>，按下<code>:wq</code>可保存并退出。如果不放心，可以<code>cat ~/.ssh/authorized_keys</code>并检查输出和你刚才贴进去的是不是一样的。
+<p>这会打开一个文件编辑界面。按下<code>i</code>按键，进入编辑模式，并粘贴到上面远程实验平台终端中编辑界面的一个新行里。按下<code>Esc</code>，按下<code>:wq</code>可保存并退出。如果不放心，可以<code>cat ~/.ssh/authorized_keys</code>并检查输出和你刚才贴进去的是不是一样的。
 配置完成后，下次你从Windows登陆时，应该就无需密码认证了。</p>
 <h4 id="visual-studio-code">Visual Studio Code：进阶使用<a class="headerlink" href="#visual-studio-code" title="Permanent link">&para;</a></h4>
 <p>有没有怀念Visual Studio、CodeBlock等IDE中便捷的一键运行功能？没关系，完备的插件市场配合自动化脚本可以完成你的一切功能需求！

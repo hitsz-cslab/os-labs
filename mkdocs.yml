@@ -57,6 +57,8 @@ nav:
     - Linux开发环境基础知识: Linux.md
     - 远程实验平台使用指南: remote_env.md
     - 远程实验平台环境图形化调试指南: remote_env_gdb.md
+  - 常见问题: 
+    - 实验环境问题: faq-env.md
   - Lab1：XV6与Unix实用程序: 
     - 实验概述: lab1/part1.md
     - 实验原理: lab1/part2.md
