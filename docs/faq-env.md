@@ -3,7 +3,7 @@
 
 ## 1. xv6如何在QEMU>=6.0.0上启动？
 
-具体解决方案具体详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/8
+具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/8
 
 ![qemu](faq.assets/qemu.png)
 
