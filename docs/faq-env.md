@@ -21,6 +21,7 @@ VSCode远程调试时，提示如下错误：
 
 打开xv6工作目录下的.gdbint文件，将第三行“target remote 127.0.0.1:***”用“#”注释掉。
 
+![gdb2](faq.assets/gdb2.jpg)
 
 
 ## 3. 远程平台make qemu报错：Is another process using the image [fs.img]?
@@ -29,7 +30,7 @@ VSCode远程调试时，提示如下错误：
 
 ![qemu2](faq.assets/qemu2.png)
 
-用ps或top命令查看一下是不是已经开启了qemu？如果qemu已经在运行，请先结束该进程（如果用的是远程实验平台，需要联系老师）。
+用ps或top命令查看一下是不是已经开启了qemu？如果qemu已经在运行，请先结束该进程。
 
 注意：该问题出现的原因，主要是没有正常退出QEMU，请务必记得QEMU的退出方法。
 
