@@ -63,6 +63,12 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#1-xv6qemu600">1. xv6如何在QEMU&gt;=6.0.0上启动？</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2">2. 远程实验平台图形化无法调试？</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-make-qemuis-another-process-using-the-image-fsimg">3. 远程平台make qemu报错：Is another process using the image [fs.img]?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-gcc-12">4. 使用高版本gcc (≥12)出现报错</a>
+    </li>
     </ul>
                   </li>
               </ul>
@@ -107,6 +113,24 @@
 <p><img alt="qemu" src="../faq.assets/qemu.png" /></p>
 <p>Patch文件：<a href="../code/pmp.patch">pmp.patch</a></p>
 <p>该问题的解决方案来自20级某位大佬的分享，非常感谢这位大佬的贡献~~</p>
+<h2 id="2">2. 远程实验平台图形化无法调试？<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>VSCode远程调试时，提示如下错误：</p>
+<p><img alt="gdb1" src="../faq.assets/gdb1.jpg" /></p>
+<p>具体解决方案详见piazza ：<a href="https://piazza.com/class/l7fs47nofoc4pm/post/20">https://piazza.com/class/l7fs47nofoc4pm/post/20</a></p>
+<p>打开xv6工作目录下的.gdbint文件，将第三行“target remote 127.0.0.1:***”用“#”注释掉。</p>
+<h2 id="3-make-qemuis-another-process-using-the-image-fsimg">3. 远程平台make qemu报错：Is another process using the image [fs.img]?<a class="headerlink" href="#3-make-qemuis-another-process-using-the-image-fsimg" title="Permanent link">&para;</a></h2>
+<p>如图：</p>
+<p><img alt="qemu2" src="../faq.assets/qemu2.png" /></p>
+<p>用ps或top命令查看一下是不是已经开启了qemu？如果qemu已经在运行，请先结束该进程（如果用的是远程实验平台，需要联系老师）。</p>
+<p>注意：该问题出现的原因，主要是没有正常退出QEMU，请务必记得QEMU的退出方法。</p>
+<div class="admonition tip">
+<p class="admonition-title">QEMU退出方法</p>
+<p>先按“Ctrl+a”组合键，接着全部松开，再按下“x”键</p>
+</div>
+<p>具体解决方案详见piazza ：<a href="https://piazza.com/class/l7fs47nofoc4pm/post/23">https://piazza.com/class/l7fs47nofoc4pm/post/23</a> </p>
+<h2 id="4-gcc-12">4. 使用高版本gcc (≥12)出现报错<a class="headerlink" href="#4-gcc-12" title="Permanent link">&para;</a></h2>
+<p>具体解决方案详见piazza ：<a href="https://piazza.com/class/l7fs47nofoc4pm/post/22">https://piazza.com/class/l7fs47nofoc4pm/post/22</a> </p>
+<p><img alt="gcc" src="../faq.assets/gcc.png" /></p>
               
             </div>
           </div><footer>
