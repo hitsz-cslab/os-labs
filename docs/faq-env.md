@@ -1,4 +1,7 @@
 
+!!! tip "温馨提示"
+    本文档会不定时更新同学们在实验过程中可能会出现的问题以及对应的解决办法，供同学们参考。特别感谢给本课程实验反馈问题、建议以及意见的同学。
+
 # 实验环境问题
 
 ## 1. xv6如何在QEMU>=6.0.0上启动？
@@ -11,7 +14,14 @@ Patch文件：[pmp.patch](code/pmp.patch)
 
 该问题的解决方案来自20级某位大佬的分享，非常感谢这位大佬的贡献~~
 
-## 2. 远程实验平台图形化无法调试？
+## 2. 使用高版本gcc (≥12)出现报错
+
+具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/22 
+
+![gcc](faq.assets/gcc.png)
+
+
+## 3. 远程实验平台图形化无法调试？
 
 VSCode远程调试时，提示如下错误：
 
@@ -24,7 +34,7 @@ VSCode远程调试时，提示如下错误：
 ![gdb2](faq.assets/gdb2.jpg)
 
 
-## 3. 远程平台make qemu报错：Is another process using the image [fs.img]?
+## 4. 远程平台make qemu报错：Is another process using the image [fs.img]?
 
 如图：
 
@@ -40,11 +50,16 @@ VSCode远程调试时，提示如下错误：
 具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/23 
 
 
-## 4. 使用高版本gcc (≥12)出现报错
+## 5. 远程平台调试时VSCode报错：Failed to attach: 127.0.0.1:XXX: Connection timed out. (from target-select remote 127.0.0.11:XXX)?
 
-具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/22 
+如图：
 
-![gcc](faq.assets/gcc.png)
+![qemu3](faq.assets/qemu3.png)
+
+原因：
+
+没有在终端输入make qemu-gdb，直接点了VSCode的debug的三角形符号进行调试。
+
 
 
 
