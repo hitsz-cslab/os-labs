@@ -14,9 +14,9 @@
     ```bash
     make qemu-gdb
     ```
-
+    
     1. 打开另外一个终端，到xv6-labs-2020目录下输入
-
+    
     ```bash
     gdb-multiarch
     ```    
@@ -217,46 +217,68 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 #### 4.4.4 用户态程序调试
 
 xv6的内核态和用户态并不共享页表，调试符号也完全不同。调试用户程序需要加载对应的用户程序调试符号，我们将通过调试控制台完成这一项操作。我们以调试自带的用户程序“ls"为例。  
-首先，我们需要确认对应xv6的用户程序入口点，我们可以通过readelf确认应用程序入口点。ls的elf文件位于`user/_ls`：
 
-```console
-lgz_stu@OSLabExecNode1:~/xv6-labs-2020$ readelf -h user/_ls
-ELF Header:
-  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
-  Class:                             ELF64
-  Data:                              2's complement, little endian
-  Version:                           1 (current)
-  OS/ABI:                            UNIX - System V
-  ABI Version:                       0
-  Type:                              EXEC (Executable file)
-  Machine:                           RISC-V
-  Version:                           0x1
-  Entry point address:               0x27a
-  Start of program headers:          64 (bytes into file)
-  Start of section headers:          25064 (bytes into file)
-  Flags:                             0x5, RVC, double-float ABI
-  Size of this header:               64 (bytes)
-  Size of program headers:           56 (bytes)
-  Number of program headers:         1
-  Size of section headers:           64 (bytes)
-  Number of section headers:         18
-  Section header string table index: 17
-```
+首先，我们需要确认对应xv6的用户程序入口点，我们有两种方法可以确认应用程序的入口点：
 
-可见其中显示`Entry point address: 0x27a`，应用程序入口点位于`0x27a`处。随后，我们用上面的方法开始调试，并将断点打在即将返回用户态处。
-检查当前即将被运行的进程名，在即将进入对应用户程序（ls）的时候，准备进行用户态程序调试。我们知道，在进入Trampoline切换前最后一行C代码位于`kernel/trap.c:128`处，我们将断点打在此处，并通过局部变量`p`监视当前进程的进程名`p.name`，如图所示：
+1. 通过readelf确认应用程序入口点。
+2. 在VSCode上直接打开该应用程序的源代码，找打main()函数，并在main()函数里打上断点。
 
-![last_c](remote_env_gdb.assets/last_c.png)
+以下分别介绍两种方法：
 
-如左下角所示，我们可以发现，xv6第一个执行的用户程序为`initcode`，并非我们正在寻找的`ls`。我们可以继续执行，并在xv6的shell中输入`ls`，以启动`ls`程序；持续执行，直到我们将首次进入`ls`执行：
+!!! summary  "**方法一:**  通过readelf确认应用程序入口点"
+    ls的elf文件位于`user/_ls`：
 
-![ls_start](remote_env_gdb.assets/ls_start.png)
+    ```console
+    lgz_stu@OSLabExecNode1:~/xv6-labs-2020$ readelf -h user/_ls
+    ELF Header:
+      Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+      Class:                             ELF64
+      Data:                              2's complement, little endian
+      Version:                           1 (current)
+      OS/ABI:                            UNIX - System V
+      ABI Version:                       0
+      Type:                              EXEC (Executable file)
+      Machine:                           RISC-V
+      Version:                           0x1
+      Entry point address:               0x27a
+      Start of program headers:          64 (bytes into file)
+      Start of section headers:          25064 (bytes into file)
+      Flags:                             0x5, RVC, double-float ABI
+      Size of this header:               64 (bytes)
+      Size of program headers:           56 (bytes)
+      Number of program headers:         1
+      Size of section headers:           64 (bytes)
+      Number of section headers:         18
+      Section header string table index: 17
+    ```
+    
+    可见其中显示`Entry point address: 0x27a`，应用程序入口点位于`0x27a`处。随后，我们用上面的方法开始调试，并将断点打在即将返回用户态处。
+    检查当前即将被运行的进程名，在即将进入对应用户程序（ls）的时候，准备进行用户态程序调试。我们知道，在进入Trampoline切换前最后一行C代码位于`kernel/trap.c:128`处，我们将断点打在此处，并通过局部变量`p`监视当前进程   的进程名`p.name`，如图所示：
+    
+    ![last_c](remote_env_gdb.assets/last_c.png)
+    
+    如左下角所示，我们可以发现，xv6第一个执行的用户程序为`initcode`，并非我们正在寻找的`ls`。我们可以继续执行，并在xv6的shell中输入`ls`，以启动`ls`程序；持续执行，直到我们将首次进入`ls`执行：
+    
+    ![ls_start](remote_env_gdb.assets/ls_start.png)
+    
+    由此可见，内核即将首次返回并执行用户程序`ls`。我们前往调试控制台，在其中输入`b *0x27a`，即将断点置于`ls`程序入口处：
+    
+    ![ls_bmain](remote_env_gdb.assets/ls_bmain.png)
 
-由此可见，内核即将首次返回并执行用户程序`ls`。我们前往调试控制台，在其中输入`b *0x27a`，即将断点置于`ls`程序入口处：
+    接下来，继续执行，qemu将从内核态返回到用户态并停止在`ls`的入口点处。
 
-![ls_bmain](remote_env_gdb.assets/ls_bmain.png)
+!!! info  "**方法二:**  在应用程序的源代码main()函数打断点"
+    在VSCode中，打开user/ls.c文件，找到main()函数，在第76行打上断点。
+    
+    ![image-20220915200435754](remote_env_gdb.assets/image-20220915200435754.png)
+    
+    在进入Trampoline切换前最后一行C代码位于kernel/trap.c:128处，我们将断点打在此处。xv6第一个执行的用户程序为initcode，并非我们正在寻找的ls。我们可以继续执行，直到在xv6的shell中输入ls，以启动ls程序。
 
-接下来，继续执行，qemu将从内核态返回到用户态并停止在`ls`的入口点处。此时，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载`ls`的调试符号。在其中输入`file user/_ls`：
+    ![image-20220915202526527](remote_env_gdb.assets/image-20220915202526527.png)
+
+
+通过上述两个方法都可以确认应用程序的入口点，将断点打在应用程序的main()上。
+接下来，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载`ls`的调试符号。在其中输入`file user/_ls`：
 
 ![del_bp](remote_env_gdb.assets/del_bp.png)
 ![file_ls](remote_env_gdb.assets/file_ls.png)

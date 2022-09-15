@@ -65,11 +65,13 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#2-gcc-12">2. 使用高版本gcc (≥12)出现报错</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#3">3. 远程实验平台图形化无法调试？</a>
+    <li class="toctree-l2"><a class="reference internal" href="#3-failed-to-attch-remote-communication-error">3. 远程实验平台图形化无法调试：Failed to attch: Remote communication error？</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#4-make-qemuis-another-process-using-the-image-fsimg">4. 远程平台make qemu报错：Is another process using the image [fs.img]?</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#5-vscodefailed-to-attach-127001xxx-connection-timed-out-from-target-select-remote-1270011xxx">5. 远程平台调试时VSCode报错：Failed to attach: 127.0.0.1:XXX: Connection timed out. (from target-select remote 127.0.0.11:XXX)?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-vscodefailed-to-attach-truncated-register-37-in-remote-g-packet">6. 远程平台调试时VSCode报错：Failed to attach: Truncated register 37 in remote 'g' packet?</a>
     </li>
     </ul>
                   </li>
@@ -99,13 +101,13 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>常见问题 &raquo;</li>
-      <li>实验环境问题</li>
+          <li>常见问题 &raquo;</li><li>实验环境问题</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
   <hr/>
 </div>
+
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
@@ -122,7 +124,7 @@
 <h2 id="2-gcc-12">2. 使用高版本gcc (≥12)出现报错<a class="headerlink" href="#2-gcc-12" title="Permanent link">&para;</a></h2>
 <p>具体解决方案详见piazza ：<a href="https://piazza.com/class/l7fs47nofoc4pm/post/22">https://piazza.com/class/l7fs47nofoc4pm/post/22</a> </p>
 <p><img alt="gcc" src="../faq.assets/gcc.png" /></p>
-<h2 id="3">3. 远程实验平台图形化无法调试？<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h2 id="3-failed-to-attch-remote-communication-error">3. 远程实验平台图形化无法调试：Failed to attch: Remote communication error？<a class="headerlink" href="#3-failed-to-attch-remote-communication-error" title="Permanent link">&para;</a></h2>
 <p>VSCode远程调试时，提示如下错误：</p>
 <p><img alt="gdb1" src="../faq.assets/gdb1.jpg" /></p>
 <p>具体解决方案详见piazza ：<a href="https://piazza.com/class/l7fs47nofoc4pm/post/20">https://piazza.com/class/l7fs47nofoc4pm/post/20</a></p>
@@ -143,6 +145,18 @@
 <p><img alt="qemu3" src="../faq.assets/qemu3.png" /></p>
 <p>原因：</p>
 <p>没有在终端输入make qemu-gdb，直接点了VSCode的debug的三角形符号进行调试。</p>
+<h2 id="6-vscodefailed-to-attach-truncated-register-37-in-remote-g-packet">6. 远程平台调试时VSCode报错：Failed to attach: Truncated register 37 in remote 'g' packet?<a class="headerlink" href="#6-vscodefailed-to-attach-truncated-register-37-in-remote-g-packet" title="Permanent link">&para;</a></h2>
+<p>如图：</p>
+<p><img alt="image-20220915205054529" src="../faq-env.assets/image-20220915205054529.png" /></p>
+<p>原因：</p>
+<p>VSCode工作区路径不是XV6路径，嵌套了外面一层文件夹。</p>
+<p><img alt="image-20220915205018098" src="../faq-env.assets/image-20220915205018098.png" /></p>
+<p>解决方法：</p>
+<p>首先 <strong>确认你的VS Code工作区路径是否是你的xv6路径，没有额外嵌套一层文件夹</strong> 。按下<code>Ctrl+`</code>，呼出终端，输入<code>ls</code>。你应该会看到如下情景：</p>
+<div class="highlight"><pre><span></span><code><span class="gp">ldap_example@OSLabExecNode0:~/xv6-labs-2020$ </span>ls
+<span class="go">conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefile  mkfs  README  user</span>
+</code></pre></div>
+<p>如果不是，打开新的工作区，选择xv6所在的文件夹打开即可。</p>
               
             </div>
           </div><footer>

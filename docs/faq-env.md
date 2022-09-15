@@ -21,7 +21,7 @@ Patch文件：[pmp.patch](code/pmp.patch)
 ![gcc](faq.assets/gcc.png)
 
 
-## 3. 远程实验平台图形化无法调试？
+## 3. 远程实验平台图形化无法调试：Failed to attch: Remote communication error？
 
 VSCode远程调试时，提示如下错误：
 
@@ -62,4 +62,25 @@ VSCode远程调试时，提示如下错误：
 
 
 
+## 6. 远程平台调试时VSCode报错：Failed to attach: Truncated register 37 in remote 'g' packet?
 
+如图：
+
+![image-20220915205054529](faq-env.assets/image-20220915205054529.png)
+
+原因：
+
+VSCode工作区路径不是XV6路径，嵌套了外面一层文件夹。
+
+![image-20220915205018098](faq-env.assets/image-20220915205018098.png)
+
+解决方法：
+
+首先 **确认你的VS Code工作区路径是否是你的xv6路径，没有额外嵌套一层文件夹** 。按下`` Ctrl+` ``，呼出终端，输入`ls`。你应该会看到如下情景：
+
+```console
+ldap_example@OSLabExecNode0:~/xv6-labs-2020$ ls
+conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefile  mkfs  README  user
+```
+
+如果不是，打开新的工作区，选择xv6所在的文件夹打开即可。
