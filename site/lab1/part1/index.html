@@ -137,7 +137,7 @@
 <p>输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义)，然后输出"(nothing happens for a little while)"。</p>
 <p>在xv6-labs-2020中，执行下面指令，测试程序</p>
 <p><img alt="image-20210913094528437" src="../part1.assets/image-20210913094528437.png" /></p>
-<p>（2）在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印。请将代码写在user/pingpong.c文件中。运行效果应该如下：</p>
+<p>（2）在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印<code>&lt;pid&gt;：received ping</code> ，其中<code>&lt;pid&gt;</code>是子进程的进程ID。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印<code>&lt;pid&gt;：received pong</code>，其中<code>&lt;pid&gt;</code>是父进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：</p>
 <p><img alt="image-20201017230846238" src="../part1.assets/image-20201017230846238.png" /></p>
 <p>在xv6-labs-2020中，执行下面指令，测试程序</p>
 <p><img alt="image-20210913094617315" src="../part1.assets/image-20210913094617315.png" /></p>
@@ -145,12 +145,13 @@
 <p><img alt="image-20201017230855254" src="../part1.assets/image-20201017230855254.png" /></p>
 <p>在xv6-labs-2020中，执行下面指令，测试程序</p>
 <p><img alt="image-20210913094654462" src="../part1.assets/image-20210913094654462.png" /></p>
-<p>（4）在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 <strong>命令格式为“find path file_name”</strong> 。请将代码写在user/find.c文件中。运行效果应该如下：</p>
+<p>（4）在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 <strong>命令格式为“find path file_name”</strong> 。请将代码写在user/find.c文件中。当文件系统包含文件b和a/b时，输出效果应该如下：</p>
 <p><img alt="image-20210914091100817" src="../part1.assets/image-20210914091100817.png" /></p>
 <p>在xv6-labs-2020中，执行下面指令，测试程序</p>
 <p><img alt="image-20210913094755912" src="../part1.assets/image-20210913094755912.png" /></p>
 <p>（5）在xv6上实现用户程序xargs，即从标准输入中读取行并 <strong>为每行运行一次</strong> 指定的命令，且将该行作为命令的参数提供。请将代码写在user/xargs.c中。运行效果应该如下：</p>
 <p><img alt="image-20201017230906954" src="../part1.assets/image-20201017230906954.png" /></p>
+<p>下列是xargs的用法。<code>echo 1 2</code>，附加参数是<code>3 4</code>，即<code>echo 1 2 3 4</code>输出<code>1 2 3 4</code>。</p>
 <div class="highlight"><pre><span></span><code>$ make qemu
 ...
 $ <span class="nb">echo</span> <span class="m">3</span> <span class="m">4</span><span class="p">|</span>xargs <span class="nb">echo</span> <span class="m">1</span> <span class="m">2</span>

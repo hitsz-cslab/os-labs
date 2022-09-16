@@ -473,7 +473,7 @@ tar -cvf log.tar log2012.log  仅打包，不压缩.
 
 tar -zcvf log.tar.gz log2012.log  打包后，以 gzip 压缩 
 
-tar -zcvf log.tar.bz2 log2012.log 打包后，以 bzip2 压缩 
+tar -jcvf log.tar.bz2 log2012.log 打包后，以 bzip2 压缩 
 
 
 
