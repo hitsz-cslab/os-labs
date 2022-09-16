@@ -65,13 +65,19 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#2-gcc-12">2. 使用高版本gcc (≥12)出现报错</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#3-failed-to-attch-remote-communication-error">3. 远程实验平台图形化无法调试：Failed to attch: Remote communication error？</a>
+    <li class="toctree-l2"><a class="reference internal" href="#3-failed-to-attach-remote-communication-error">3. 远程实验平台图形化无法调试：Failed to attach: Remote communication error？</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#4-make-qemuis-another-process-using-the-image-fsimg">4. 远程平台make qemu报错：Is another process using the image [fs.img]?</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#5-vscodefailed-to-attach-127001xxx-connection-timed-out-from-target-select-remote-1270011xxx">5. 远程平台调试时VSCode报错：Failed to attach: 127.0.0.1:XXX: Connection timed out. (from target-select remote 127.0.0.11:XXX)?</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#6-vscodefailed-to-attach-truncated-register-37-in-remote-g-packet">6. 远程平台调试时VSCode报错：Failed to attach: Truncated register 37 in remote 'g' packet?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-vs-codebad-owner-or-permission">7. VS Code连接远程实验平台时出现bad owner or permission报错？</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-vs-codessh-connect-to-host-102491298-port-22-connection-timed-out">8. VS Code连接远程实验平台时提示：ssh: connect to host 10.249.12.98 port 22: Connection timed out？</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9clone-xv6-labs-2020">9.在远程实验平台上clone xv6-labs-2020失败？</a>
     </li>
     </ul>
                   </li>
@@ -121,30 +127,32 @@
 <p><img alt="qemu" src="../faq.assets/qemu.png" /></p>
 <p>Patch文件：<a href="../code/pmp.patch">pmp.patch</a></p>
 <p>该问题的解决方案来自20级某位大佬的分享，非常感谢这位大佬的贡献~~</p>
+<hr />
 <h2 id="2-gcc-12">2. 使用高版本gcc (≥12)出现报错<a class="headerlink" href="#2-gcc-12" title="Permanent link">&para;</a></h2>
 <p>具体解决方案详见piazza ：<a href="https://piazza.com/class/l7fs47nofoc4pm/post/22">https://piazza.com/class/l7fs47nofoc4pm/post/22</a> </p>
 <p><img alt="gcc" src="../faq.assets/gcc.png" /></p>
-<h2 id="3-failed-to-attch-remote-communication-error">3. 远程实验平台图形化无法调试：Failed to attch: Remote communication error？<a class="headerlink" href="#3-failed-to-attch-remote-communication-error" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="3-failed-to-attach-remote-communication-error">3. 远程实验平台图形化无法调试：Failed to attach: Remote communication error？<a class="headerlink" href="#3-failed-to-attach-remote-communication-error" title="Permanent link">&para;</a></h2>
 <p>VSCode远程调试时，提示如下错误：</p>
 <p><img alt="gdb1" src="../faq.assets/gdb1.jpg" /></p>
 <p>具体解决方案详见piazza ：<a href="https://piazza.com/class/l7fs47nofoc4pm/post/20">https://piazza.com/class/l7fs47nofoc4pm/post/20</a></p>
 <p>打开xv6工作目录下的.gdbint文件，将第三行“target remote 127.0.0.1:***”用“#”注释掉。</p>
 <p><img alt="gdb2" src="../faq.assets/gdb2.jpg" /></p>
+<hr />
 <h2 id="4-make-qemuis-another-process-using-the-image-fsimg">4. 远程平台make qemu报错：Is another process using the image [fs.img]?<a class="headerlink" href="#4-make-qemuis-another-process-using-the-image-fsimg" title="Permanent link">&para;</a></h2>
 <p>如图：</p>
 <p><img alt="qemu2" src="../faq.assets/qemu2.png" /></p>
 <p>用ps或top命令查看一下是不是已经开启了qemu？如果qemu已经在运行，请先结束该进程。</p>
-<p>注意：该问题出现的原因，主要是没有正常退出QEMU，请务必记得QEMU的退出方法。</p>
-<div class="admonition tip">
-<p class="admonition-title">QEMU退出方法</p>
-<p>先按“Ctrl+a”组合键，接着全部松开，再按下“x”键</p>
-</div>
 <p>具体解决方案详见piazza ：<a href="https://piazza.com/class/l7fs47nofoc4pm/post/23">https://piazza.com/class/l7fs47nofoc4pm/post/23</a> </p>
+<p>另外一种解决方案：输入在xv6-labs-2020目录下输入<code>make clean</code>清除fs.img，然后再运行<code>make qemu</code></p>
+<p><img alt="image-20220916094737504" src="../faq-env.assets/image-20220916094737504.png" /></p>
+<hr />
 <h2 id="5-vscodefailed-to-attach-127001xxx-connection-timed-out-from-target-select-remote-1270011xxx">5. 远程平台调试时VSCode报错：Failed to attach: 127.0.0.1:XXX: Connection timed out. (from target-select remote 127.0.0.11:XXX)?<a class="headerlink" href="#5-vscodefailed-to-attach-127001xxx-connection-timed-out-from-target-select-remote-1270011xxx" title="Permanent link">&para;</a></h2>
 <p>如图：</p>
 <p><img alt="qemu3" src="../faq.assets/qemu3.png" /></p>
 <p>原因：</p>
 <p>没有在终端输入make qemu-gdb，直接点了VSCode的debug的三角形符号进行调试。</p>
+<hr />
 <h2 id="6-vscodefailed-to-attach-truncated-register-37-in-remote-g-packet">6. 远程平台调试时VSCode报错：Failed to attach: Truncated register 37 in remote 'g' packet?<a class="headerlink" href="#6-vscodefailed-to-attach-truncated-register-37-in-remote-g-packet" title="Permanent link">&para;</a></h2>
 <p>如图：</p>
 <p><img alt="image-20220915205054529" src="../faq-env.assets/image-20220915205054529.png" /></p>
@@ -156,7 +164,26 @@
 <div class="highlight"><pre><span></span><code><span class="gp">ldap_example@OSLabExecNode0:~/xv6-labs-2020$ </span>ls
 <span class="go">conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefile  mkfs  README  user</span>
 </code></pre></div>
-<p>如果不是，打开新的工作区，选择xv6所在的文件夹打开即可。</p>
+<p>如果不是，打开新的工作区，选择xv6所在的文件夹打开即可。正确的工作区应该如下显示：</p>
+<p><img alt="image-20220915210332246" src="../faq-env.assets/image-20220915210332246.png" /></p>
+<hr />
+<h2 id="7-vs-codebad-owner-or-permission">7. VS Code连接远程实验平台时出现<code>bad owner or permission</code>报错？<a class="headerlink" href="#7-vs-codebad-owner-or-permission" title="Permanent link">&para;</a></h2>
+<p>解决方法：进入路径C:\Users\用户名.ssh，右击config文件进入属性中高级安全管理，选择禁止继承，并且删除所有此对象中继承的权限。</p>
+<p>具体可以查看：<a href="https://www.cnblogs.com/Akkuman/p/11187776.html">https://www.cnblogs.com/Akkuman/p/11187776.html</a></p>
+<hr />
+<h2 id="8-vs-codessh-connect-to-host-102491298-port-22-connection-timed-out">8. VS Code连接远程实验平台时提示：ssh: connect to host 10.249.12.98 port 22: Connection timed out？<a class="headerlink" href="#8-vs-codessh-connect-to-host-102491298-port-22-connection-timed-out" title="Permanent link">&para;</a></h2>
+<p>端口号写错了，请参考实验指导书要求来连接。</p>
+<p><a href="https://hitsz-cslab.gitee.io/os-labs/remote_env/">https://hitsz-cslab.gitee.io/os-labs/remote_env/</a></p>
+<p>远程实验平台IP地址： <code>10.249.12.98</code> ，端口号： <code>6666</code></p>
+<hr />
+<h2 id="9clone-xv6-labs-2020">9.在远程实验平台上clone xv6-labs-2020失败？<a class="headerlink" href="#9clone-xv6-labs-2020" title="Permanent link">&para;</a></h2>
+<p>如图：</p>
+<p><img alt="image-20220916095456586" src="../faq-env.assets/image-20220916095456586.png" /></p>
+<p>原因：</p>
+<p>远程实验平台给每位同学做了资源限额管理，出现这个问题的同学，有可能是之前的《计算机设计与实践》实验包<code>cdp-tests</code>占用了太多空间，你需要删除<code>cdp-tests\waveform</code>目录下的所有波形图文件（主要是波形图文件太大了）。</p>
+<p><img alt="image-20220916095936980" src="../faq-env.assets/image-20220916095936980.png" /></p>
+<p>使用<code>rm -rf *</code>删除后，应该就能clone xv6-labs-2020。</p>
+<hr />
               
             </div>
           </div><footer>
