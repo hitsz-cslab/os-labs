@@ -36,7 +36,7 @@ VSCode远程调试时，提示如下错误：
 
 具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/20
 
-打开xv6工作目录下的.gdbint文件，将第三行“target remote 127.0.0.1:***”用“#”注释掉。
+打开xv6工作目录下的.gdbint文件，将第三行`target remote 127.0.0.1:***`用`#`注释掉。
 
 ![gdb2](faq.assets/gdb2.jpg)
 
@@ -107,7 +107,7 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 
 ## 7. VS Code连接远程实验平台时出现`bad owner or permission`报错？
 
-解决方法：进入路径C:\Users\用户名\.ssh，右击config文件进入属性中高级安全管理，选择禁止继承，并且删除所有此对象中继承的权限。
+解决方法：进入路径`C:\Users\用户名\.ssh`，右击config文件进入属性中高级安全管理，选择禁止继承，并且删除所有此对象中继承的权限。
 
 具体可以查看：https://www.cnblogs.com/Akkuman/p/11187776.html
 
@@ -137,6 +137,8 @@ https://hitsz-cslab.gitee.io/os-labs/remote_env/
 
 远程实验平台给每位同学做了资源限额管理，出现这个问题的同学，有可能是之前的《计算机设计与实践》实验包`cdp-tests`占用了太多空间，你需要删除`cdp-tests\waveform`目录下的所有波形图文件（主要是波形图文件太大了）。
 
+使用mobaxterm登录，输入如下命令：
+
 ![image-20220916154734658](faq-env.assets/image-20220916154734658.png)
 
 使用`rm -rf *`删除后，应该就能clone xv6-labs-2020。
@@ -154,6 +156,8 @@ https://hitsz-cslab.gitee.io/os-labs/remote_env/
 原因：
 
 与上述第9个问题一样，也是因为资源限额的问题。之前的《计算机设计与实践》实验包`cdp-tests`占用了太多空间，你需要删除`cdp-tests\waveform`目录下的所有波形图文件（主要是波形图文件太大了）。
+
+使用mobaxterm登录，输入如下命令：
 
 ![image-20220916154734658](faq-env.assets/image-20220916154734658.png)
 
