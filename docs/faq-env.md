@@ -28,7 +28,7 @@ Patch文件：[pmp.patch](code/pmp.patch)
 
 
 
-## 3. 远程实验平台图形化无法调试：Failed to attach: Remote communication error？
+## 3. 远程实验平台图形化无法调试`Failed to attach: Remote communication error`？
 
 VSCode远程调试时，提示如下错误：
 
@@ -44,7 +44,7 @@ VSCode远程调试时，提示如下错误：
 
 
 
-## 4. 远程平台make qemu报错：Is another process using the image [fs.img]?
+## 4. 远程平台make qemu报错`Is another process using the image [fs.img]`?
 
 如图：
 
@@ -64,7 +64,7 @@ VSCode远程调试时，提示如下错误：
 
 
 
-## 5. 远程平台调试时VSCode报错：Failed to attach: 127.0.0.1:XXX: Connection timed out. (from target-select remote 127.0.0.11:XXX)?
+## 5. 远程平台调试时VSCode报错`Failed to attach: 127.0.0.1:XXX: Connection timed out. (from target-select remote 127.0.0.11:XXX)`?
 
 如图：
 
@@ -78,7 +78,7 @@ VSCode远程调试时，提示如下错误：
 
 
 
-## 6. 远程平台调试时VSCode报错：Failed to attach: Truncated register 37 in remote 'g' packet?
+## 6. 远程平台调试时VSCode报错`Failed to attach: Truncated register 37 in remote 'g' packet`?
 
 如图：
 
@@ -115,7 +115,7 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 
 
 
-## 8. VS Code连接远程实验平台时提示：ssh: connect to host 10.249.12.98 port 22: Connection timed out？
+## 8. VS Code连接远程实验平台时提示`ssh: connect to host 10.249.12.98 port 22: Connection timed out`？
 
 端口号写错了，请参考实验指导书要求来连接。
 
@@ -137,9 +137,25 @@ https://hitsz-cslab.gitee.io/os-labs/remote_env/
 
 远程实验平台给每位同学做了资源限额管理，出现这个问题的同学，有可能是之前的《计算机设计与实践》实验包`cdp-tests`占用了太多空间，你需要删除`cdp-tests\waveform`目录下的所有波形图文件（主要是波形图文件太大了）。
 
-![image-20220916095936980](faq-env.assets/image-20220916095936980.png)
+![image-20220916154734658](faq-env.assets/image-20220916154734658.png)
 
 使用`rm -rf *`删除后，应该就能clone xv6-labs-2020。
+
+------
+
+## 10. VS Code连接远程实验平台时提示`Failed to parse remote port from server output`
+
+如图：
+
+![image-20220916154922685](faq-env.assets/image-20220916154922685.png)
+
+![image-20220916155011110](faq-env.assets/image-20220916155011110.png)
+
+原因：
+
+与上述第9个问题一样，也是因为资源限额的问题。之前的《计算机设计与实践》实验包`cdp-tests`占用了太多空间，你需要删除`cdp-tests\waveform`目录下的所有波形图文件（主要是波形图文件太大了）。
+
+![image-20220916154734658](faq-env.assets/image-20220916154734658.png)
 
 ------
 
