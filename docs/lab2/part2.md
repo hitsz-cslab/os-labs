@@ -60,16 +60,13 @@
 ### 1.3 系统调用的参数：寄存器传参
 
 这里我们还忽略了一点，那就是系统调用还需要传递参数。实际上，从汇编的角度来看，当我们调用一个函数的时候，传入的参数一般会按照位置依次放在`a0`, `a1`, `a2`等以此类推的寄存器中。想要了解更多关于函数参数的细节可以自行阅读阅读RISC-V手册：[RISC-V 中文手册 (ict.ac.cn) P41-43](http://crva.ict.ac.cn/wjxz/202202/P020220217666841292320.pdf)
-
-!!! note "拓展"
-    根据RISC-V标准规定，函数调用通过寄存器传递参数。在内核中可以通过argint、argaddr等函数获取系统调用的参数，分别对应整数和指针。
-
+    
 ![image-20220920161553412](part2.assets/image-20220920161553412.png)
 
 也就是说，调用`user/user.h`中的函数接口后，参数已经存储于寄存器了，这个时候我们就原封不动地继续调用`ecall`，操作系统就可以通过a0, a1, a2等寄存器来获取参数了。此外，函数的返回值一般存储于a0寄存器。
     
 !!! note "提示"
-    比如，`kernel/sycall.c`中 line 34-54中`argraw`函数所描述的就是取出参数的过程。其中 **trapframe就是用户进程的寄存器状态** （上下文）。
+    根据RISC-V标准规定，函数调用通过寄存器传递参数。在内核中可以通过argint、argaddr等函数获取系统调用的参数，分别对应整数和指针，它们都调用argraw来读取已保存的寄存器。比如，`kernel/sycall.c`中 line 34-54中`argraw`函数所描述的就是取出参数的过程。其中 **trapframe就是用户进程的寄存器状态** （上下文）。
     
 ### 1.4 系统调用的分发和实现：解耦合
 
@@ -108,32 +105,10 @@ int sleep(int);
 
 ### 2.2 usys.S汇编
 
-然而，user/user.h只是对函数原型进行了声明。具体做了什么事呢？这个定义是在usys.S中。
+然而，user/user.h只是对函数原型进行了声明。具体做了什么事呢？这个定义是在usys.S中，详见[1.2 系统调用的接口：操作系统内核和用户程序的中间体](#12)。
 
-```assembly
-98  .global sleep
-99  sleep:
-100 li a7, SYS_sleep
-101 ecall
-102 ret
-```
+需要注意的是，usys.S汇编是由usys.pl（perl脚本）自动生成的。也就是，当你要增加新的系统调用时，不要修改usys.S，而是参考其他系统调用接口来修改usys.pl。
 
-这是一个汇编程序。第100行，将系统调用号SYS_sleep（定义见kernel/syscall.h）通过li(load imm)伪指令存入a7寄存器，之后再使用ecall指令进入内核态。
-
-需要注意的是，usys.S汇编是由usys.pl（perl脚本）自动生成的。也就是，当你要增加新的系统调用时，不要取修改usys.S，而是参考其他系统调用接口来修改usys.pl。
-
-```perl
-9  sub entry {
-10     my $name = shift;
-11     print ".global $name\n";
-12     print "${name}:\n";
-13     print " li a7, SYS_${name}\n";
-14     print " ecall\n";
-15     print " ret\n";
-16 }
-
-37 entry("sleep");
-```
 
 ### 2.3 uservec汇编
 
