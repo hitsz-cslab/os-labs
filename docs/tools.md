@@ -83,7 +83,7 @@ GatewayPorts yes
 
 用vi命令打开sshd_config：
 
-vi是所有Unix及Linux系统下标准的编辑器，它就相当于windows系统中的记事本一样，它是我们使用Linux系统不能缺少的工具。vim可以当作vi的升级版本，学会它，你将在Linux的世界里畅行无阻：）
+vi是所有Unix及Linux系统下标准的编辑器，它就相当于windows系统中的记事本一样，它是我们使用Linux系统不能缺少的工具。vim可以当作vi的升级版本，学会它，你将在Linux的世界里畅行无阻:-)
 
 ```console
 # vi /etc/ssh/sshd_config

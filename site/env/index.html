@@ -95,6 +95,17 @@
                   <li class="toctree-l1"><a class="reference internal" href="../lab1/part4/">提交文档</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Lab2：系统调用</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lab2/part1/">实验概述</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lab2/part2/">实验原理</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lab2/part3/">实验实现</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lab2/part4/">提交文档</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -120,7 +131,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="_1">实验平台搭建以及环境配置<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>本课程实验提供了 <strong>远程实验平台</strong> 供同学们做实验。当然，同学们也可以尝试自己部署实验环境，体验一下自己动手的乐趣：）</p>
+<p>本课程实验提供了 <strong>远程实验平台</strong> 供同学们做实验。当然，同学们也可以尝试自己部署实验环境，体验一下自己动手的乐趣:-)</p>
 <h2 id="1">1. 远程实验平台<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>远程实验平台已经将XV6实验环境部署在实验中心的服务器上，我们把所有依赖的配置都已经事先搭建完毕。无论你的电脑性能如何，无论你是在宿舍、实验室还是自习室，只要你还能连上校园网，你就能完成你的实验。具体详见<a href="../remote_env/">远程实验环境使用指南</a>。</p>
 <div class="admonition warning">
@@ -138,7 +149,7 @@
 <ul>
 <li>Linux发行版</li>
 </ul>
-<p>Linux发行版是由Linux内核、GNU工具、附加软件和软件包管理器组成的操作系统。所谓“发行”，是由某些机构“发行”了Linux内核以及所有必要的软件及实用程序，使其可以作为一个操作系统使用。主流的Linux发行版有Ubuntu、Debian、Fedora、Centos等，国产Linux发行版有openEuler、Deepin等，为支持国产Linux发行版，我们建议同学们使用华为公司发行的 openEuler 作为实验平台，以此揭开openEuler的神秘面纱：）</p>
+<p>Linux发行版是由Linux内核、GNU工具、附加软件和软件包管理器组成的操作系统。所谓“发行”，是由某些机构“发行”了Linux内核以及所有必要的软件及实用程序，使其可以作为一个操作系统使用。主流的Linux发行版有Ubuntu、Debian、Fedora、Centos等，国产Linux发行版有openEuler、Deepin等，为支持国产Linux发行版，我们建议同学们使用华为公司发行的 openEuler 作为实验平台，以此揭开openEuler的神秘面纱:-)</p>
 <ul>
 <li>RISC-V工具链</li>
 </ul>
@@ -150,7 +161,7 @@
 (1)取指：读取4/8字节的RISC-V指令；
 (2)译码：解析RISC-V指令，并找出对应的OP code；
 (3)执行：在软件中执行相应的指令。
-QEMU主循环里也需要有寄存器文件，用于维护寄存器的状态。回想我们在《计算机设计与实践》的CPU实验，是不是有似曾相识的感觉：）</p>
+QEMU主循环里也需要有寄存器文件，用于维护寄存器的状态。回想我们在《计算机设计与实践》的CPU实验，是不是有似曾相识的感觉:-)</p>
 </div>
 <p>对于想在自己的电脑上安装实验环境的同学，本实验提供了两种安装方法：</p>
 <ul>
@@ -171,7 +182,7 @@ QEMU主循环里也需要有寄存器文件，用于维护寄存器的状态。�
 <p>详见<a href="#2244-xv6">2.2.4.4 运行XV6</a></p>
 <h3 id="22">2.2  自行部署实验环境<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
 <div class="admonition tip">
-<p>无论是远程实验平台，还是本地虚拟机，都是我们已经部署好的实验环境，你只需要按照实验要求编写相应的代码就行。但实际上，你无法知道项目里的所有细节，难以掌握整个项目的架构。因此，我们希望同学们能够自己动手搭建实验环境，这样你得到的收获才是最大的：）</p>
+<p>无论是远程实验平台，还是本地虚拟机，都是我们已经部署好的实验环境，你只需要按照实验要求编写相应的代码就行。但实际上，你无法知道项目里的所有细节，难以掌握整个项目的架构。因此，我们希望同学们能够自己动手搭建实验环境，这样你得到的收获才是最大的:-)</p>
 </div>
 <p>你需自行下载并安装所有工具链（有的工具需要你自己编译），下列步骤主要以openEuler为例：</p>
 <div class="admonition warning">
@@ -319,7 +330,7 @@ QEMU主循环里也需要有寄存器文件，用于维护寄存器的状态。�
 <p class="admonition-title">QEMU退出方法</p>
 <p>先按“Ctrl+a”组合键，接着全部松开，再按下“x”键</p>
 </div>
-<p>至此，XV6已经能够正常运行了：）</p>
+<p>至此，XV6已经能够正常运行了:-)</p>
               
             </div>
           </div><footer>

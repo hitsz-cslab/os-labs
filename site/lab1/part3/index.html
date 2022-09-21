@@ -97,6 +97,17 @@
                   <li class="toctree-l1"><a class="reference internal" href="../part4/">提交文档</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Lab2：系统调用</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/part1/">实验概述</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/part2/">实验原理</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/part3/">实验实现</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/part4/">提交文档</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -178,21 +189,32 @@ $ git checkout util
 <p><strong>2)</strong>   <strong>primes</strong></p>
 <p>a)    根据需求利用<code>fork()</code>创建子进程;</p>
 <p>b)    利用多个<code>pipe()</code>创建的管道在父子进程间进行数据的传输；</p>
-<p>c)    <code>dup()</code>可以用来复制文件句柄（管道的写入、读出端）：</p>
+<p>c)    可以使用<code>dup()</code>复制文件句柄（管道的写入、读出端），用来节省资源：</p>
 <p>例如，将”hello world”写入到标准输入。</p>
 <div class="highlight"><pre><span></span><code><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dup</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
 <span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="err">“</span><span class="n">hello</span><span class="err">”</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span><span class="w"></span>
 <span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="err">“</span><span class="n">world</span><span class="err">\</span><span class="n">en</span><span class="err">”</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span><span class="w"> </span><span class="c1">//此时fd!=1，但字符串仍然会写入标准输出</span>
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">提示</p>
+<p>由于xv6的文件描述符和进程数量有限（详见<code>kernel/param.h</code>），请注意关闭进程不需要的文件描述符，否则，你的程序在xv6上运行会在第一个进程到达35之前耗完资源。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// kernel/param.h</span>
+<span class="cp">#define NPROC        64  </span><span class="c1">// maximum number of processes</span>
+<span class="cp">#define NOFILE       16  </span><span class="c1">// open files per process</span>
+<span class="cp">#define NFILE       100  </span><span class="c1">// open files per system</span>
+</code></pre></div>
+</div>
 <p>d)    管道<code>read</code>是一直阻塞，直到管道有数据写入；如果绑定在这个管道的写端口关闭了，<code>read</code>返回0。注意及时关闭管道的写端，否则读出端无法判断传输的结束。</p>
 <p>e)  要确保子进程先退出，父进程再退出。要不然容易出现如下错误，即<code>$</code>符号先打印出来，但是子进程还在运行状态中。如下图所示。</p>
 <p><img alt="image-20201027155243519" src="../part3.assets/image-20201027155243519.png" /></p>
 <p><img alt="image-20201027155303167" src="../part3.assets/image-20201027155303167.png" /></p>
+<p>f)  建议直接将32位（4字节）int写入管道，而不是使用格式化的ASCII I/O。即往管道中写32位的整数，无需转换位字符串。</p>
 <p><strong>3)</strong>   <strong>find</strong></p>
-<p>a)    可参照<code>user/ls.c</code>的逻辑实现；</p>
-<p>b)    使用递归允许<code>find</code>进入到子目录；</p>
-<p>c)    不要递归进入<code>.</code>和<code>..</code>；</p>
-<p>d)    测试时需要创建新的文件和文件夹，可使用<code>make clean</code>清理文件系统，并使用<code>make qemu</code>再编译运行。</p>
+<p>a)    可查看<code>user/ls.c</code>以了解如何读取目录；</p>
+<p>b)    可参照<code>user/ls.c</code>的逻辑实现；</p>
+<p>c)    使用递归允许<code>find</code>进入到子目录；</p>
+<p>d)    不要递归进入<code>.</code>和<code>..</code>；</p>
+<p>e)    测试时需要创建新的文件和文件夹，可使用<code>make clean</code>清理文件系统，并使用<code>make qemu</code>再编译运行。</p>
 <p><strong>4)</strong>   <strong>xargs</strong></p>
 <p>a)    xv6中的<code>xargs</code>基本功能演示：</p>
 <p>示例1：</p>
@@ -221,8 +243,8 @@ $ <span class="nb">echo</span> <span class="m">3</span> <span class="m">4</span>
 <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
 $
 </code></pre></div>
-<p>本示例中，管道左侧<code>echo</code>的输出为<code>"3 4"</code>，通过管道和<code>xargs</code>，它被传递给右侧的<code>echo</code>，即右侧<code>echo</code>实际得到的参数为"1"、"2"、"3"、"4"。最终结果等价于执行命令<code>"echo 1 2 3 4"</code>。实验中你不必考虑管道的实现与使用，你的程序可以直接从标准输入中读取管道传递给你的字符串。</p>
-<p>b)    使用<code>fork()</code>和<code>exec()</code>系统对每一行输入调用命令；<code>exec</code>接收的二维参数数组<code>argv</code>，<code>argv[0]</code>必须是该命令本身，最后一个参数<code>argv[size-1]</code>必须为0，否则将执行失败。</p>
+<p>本示例中，管道左侧<code>echo</code>的输出为<code>"3 4"</code>，通过管道和<code>xargs</code>，它被传递给右侧的echo，即右侧echo实际得到的参数为"1"、"2"、"3"、"4"。最终结果等价于执行命令<code>"echo 1 2 3 4"</code>。实验中你不必考虑管道的实现与使用，你的程序可以直接从标准输入中读取管道传递给你的字符串。</p>
+<p>b)    使用<code>fork()</code>和<code>exec()</code>系统对每一行输入调用命令；exec接收的二维参数数组argv，<code>argv[0]</code>必须是该命令本身，最后一个参数<code>argv[size-1]</code>必须为0，否则将执行失败。</p>
 <p><img alt="image-20201027155755713" src="../part3.assets/image-20201027155755713.png" /></p>
 <p>c)    使用<code>wait()</code>等待子进程运行完命令；</p>
 <p>d)    可以使用<code>kernel/param.h</code>中定义的<code>MAXARG</code>来声明<code>argv</code>的长度；</p>
