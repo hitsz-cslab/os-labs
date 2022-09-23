@@ -138,7 +138,7 @@
 <p>我们还可以输入<code>info reg</code>打印全部32个寄存器的值</p>
 <p><img alt="image-20220922100826291" src="../part5.assets/image-20220922100826291.png" /></p>
 <p>我们需要关心的是a0、a1寄存器，ls程序传递给fstat系统调用的参数。其中，a0是<code>fd</code>文件描述符，a1是要获取stat结构体信息的指针。</p>
-<p>此时，我们也可以通过输入<code>print/x $satp</code>或者<code>p/x $satp</code>查看stap寄存器（页表所在的物理地址）。</p>
+<p>此时，我们也可以通过输入<code>print/x $satp</code>或者<code>p/x $satp</code>查看satp寄存器（页表所在的物理地址）。</p>
 <p><img alt="image-20220922104511551" src="../part5.assets/image-20220922104511551.png" /></p>
 <p>satp寄存器给出的物理内存地址是0x8000000000087f48。</p>
 <p>如果想进一步查看page table的映射关系，在QEMU界面中（注意，是在<code>终端</code>，不是在调试控制台），输入<code>ctrl a + c</code>就可以进入QEMU的console，之后再输入<code>info mem</code>。</p>
@@ -230,14 +230,15 @@
 <p>接着进入syscall.c文件中的syscall()，那么同学们就可以愉快地进行调试分析后面的代码吧。</p>
 <h2 id="4">4. 一个简单的从用户到内核空间的调试方法<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>有同学可能问，能不能跳过汇编代码，直接打打断点到C代码呢？答案是可以的。下面还是以ls中的fstat系统调用为例，介绍一个较为简单的调试步骤：</p>
-<p><strong>Step1：</strong> 在kernel/trap.c:128处打断点，xv6第一个执行的用户程序为initcode，并非我们正在寻找的ls。我们可以继续执行，直到在xv6的shell中输入<code>ls</code>，以启动ls程序。</p>
-<p><strong>Step2：</strong> 接下来，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载ls的调试符号。在其中输入<code>file user/_ls</code>。</p>
-<p><strong>Step3：</strong> 打开user/ls.c文件，找到main()函数，在第78行打上断点。</p>
-<p><strong>Step4：</strong> 点击“运行”，在ls.c第38行打上断点，也就是执行fstat系统调用的地方。</p>
-<p><strong>Step5：</strong> 在调试控制台，输入<code>b *0x59c</code>在ecall指令上打断点。再点击<code>“运行”</code>，程序自动停在了ecall指令那一行上。</p>
-<p><strong>Step6：</strong> 在调试控制台，输入<code>file kernel/kernel</code>，加载kernel的调试符号。</p>
-<p><strong>Step7：</strong> 在syscall.c文件中第67行<code>syscall();</code>打上断点，点击<code>“运行”</code>，让程序停留在syscall()函数。</p>
-<p><strong>Step8：</strong> 接下来，你就可以根据需要来调试你想要分析的代码吧。</p>
+<p><strong>Step1：</strong> 在kernel/trap.c:128处打断点，在终端运行<code>make qemu-gdb</code>，点击VS Code的“运行和调试”选项。</p>
+<p><strong>Step2：</strong> xv6第一个执行的用户程序为initcode，并非我们正在寻找的ls。我们可以继续执行，直到在xv6的shell中输入<code>ls</code>，以启动ls程序。</p>
+<p><strong>Step3：</strong> 接下来，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载ls的调试符号。在其中输入<code>file user/_ls</code>。</p>
+<p><strong>Step4：</strong> 打开user/ls.c文件，找到main()函数，在第78行打上断点。</p>
+<p><strong>Step5：</strong> 点击“运行”，在ls.c第38行打上断点，也就是执行fstat系统调用的地方。</p>
+<p><strong>Step6：</strong> 在调试控制台，输入<code>b *0x59c</code>在ecall指令上打断点。再点击<code>“运行”</code>，程序自动停在了ecall指令那一行上。</p>
+<p><strong>Step7：</strong> 在调试控制台，输入<code>file kernel/kernel</code>，加载kernel的调试符号。</p>
+<p><strong>Step8：</strong> 在syscall.c文件中第67行<code>syscall();</code>打上断点，点击<code>“运行”</code>，让程序停留在syscall()函数。</p>
+<p><strong>Step9：</strong> 接下来，你就可以根据需要来调试你想要分析的代码吧。</p>
               
             </div>
           </div><footer>
