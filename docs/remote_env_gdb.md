@@ -264,16 +264,18 @@ xv6的内核态和用户态并不共享页表，调试符号也完全不同。�
     由此可见，内核即将首次返回并执行用户程序`ls`。我们前往调试控制台，在其中输入`b *0x27a`，即将断点置于`ls`程序入口处：
     
     ![ls_bmain](remote_env_gdb.assets/ls_bmain.png)
-
+    
     接下来，继续执行，qemu将从内核态返回到用户态并停止在`ls`的入口点处。
 
+
 !!! info  "**方法二:**  在应用程序的源代码main()函数打断点"
-    在VSCode中，打开user/ls.c文件，找到main()函数，在第76行打上断点。
-    
-    ![image-20220915200435754](remote_env_gdb.assets/image-20220915200435754.png)
+    在VSCode中，打开user/ls.c文件，找到main()函数，在第78行打上断点。
+
+    ![image-20220923143519150](remote_env_gdb.assets/image-20220923143519150.png)
+
     
     在进入Trampoline切换前最后一行C代码位于kernel/trap.c:128处，我们将断点打在此处。xv6第一个执行的用户程序为initcode，并非我们正在寻找的ls。我们可以继续执行，直到在xv6的shell中输入ls，以启动ls程序。
-
+    
     ![image-20220915202526527](remote_env_gdb.assets/image-20220915202526527.png)
 
 

@@ -115,6 +115,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../lab2/part4/">提交文档</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lab2/part5/">GDB调试系统调用（补充说明）</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -330,8 +332,8 @@
 </div>
 <div class="admonition info">
 <p class="admonition-title"><strong>方法二:</strong>  在应用程序的源代码main()函数打断点</p>
-<p>在VSCode中，打开user/ls.c文件，找到main()函数，在第76行打上断点。</p>
-<p><img alt="image-20220915200435754" src="../remote_env_gdb.assets/image-20220915200435754.png" /></p>
+<p>在VSCode中，打开user/ls.c文件，找到main()函数，在第78行打上断点。</p>
+<p><img alt="image-20220923143519150" src="../remote_env_gdb.assets/image-20220923143519150.png" /></p>
 <p>在进入Trampoline切换前最后一行C代码位于kernel/trap.c:128处，我们将断点打在此处。xv6第一个执行的用户程序为initcode，并非我们正在寻找的ls。我们可以继续执行，直到在xv6的shell中输入ls，以启动ls程序。</p>
 <p><img alt="image-20220915202526527" src="../remote_env_gdb.assets/image-20220915202526527.png" /></p>
 </div>

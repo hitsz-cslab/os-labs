@@ -196,7 +196,7 @@ fstat系统调用陷入内核调用`sys_fstat`，最终执行`filestat`函数，
 
 之后，返回`sys_fstat`，即可将内核空间的数据传递至用户空间。
 
-## 3. 参考资料
+## 4. 参考资料
 
 [1] xv6 book, Sections 4.3 and 4.4 of Chapter 4  
 [2] Related source files:  

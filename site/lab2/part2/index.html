@@ -111,13 +111,15 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#3">3. 内核空间和用户空间交换数据</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#3_1">3. 参考资料</a>
+    <li class="toctree-l2"><a class="reference internal" href="#4">4. 参考资料</a>
     </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../part3/">实验实现</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../part4/">提交文档</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../part5/">GDB调试系统调用（补充说明）</a>
                   </li>
               </ul>
       </div>
@@ -303,7 +305,7 @@
 <p>在filestat函数中，通过<code>stati</code>函数获取到inode节点信息，再调用<code>copyout</code>将获取到的信息拷贝给起始地址为filestat函数的入参addr，大小为sizeof(st)的用户空间。</p>
 <p><img alt="image-20220920181634893" src="../part2.assets/image-20220920181634893.png" /></p>
 <p>之后，返回<code>sys_fstat</code>，即可将内核空间的数据传递至用户空间。</p>
-<h2 id="3_1">3. 参考资料<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h2>
+<h2 id="4">4. 参考资料<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>[1] xv6 book, Sections 4.3 and 4.4 of Chapter 4<br />
 [2] Related source files:  </p>
 <ul>

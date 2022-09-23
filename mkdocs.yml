@@ -68,4 +68,5 @@ nav:
     - 实验概述: lab2/part1.md
     - 实验原理: lab2/part2.md
     - 实验实现: lab2/part3.md
-    - 提交文档: lab2/part4.md      
+    - 提交文档: lab2/part4.md   
+    - GDB调试系统调用（补充说明）: lab2/part5.md     
