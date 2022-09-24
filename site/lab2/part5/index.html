@@ -230,14 +230,18 @@
 <p>接着进入syscall.c文件中的syscall()，那么同学们就可以愉快地进行调试分析后面的代码吧。</p>
 <h2 id="4">4. 一个简单的从用户到内核空间的调试方法<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>有同学可能问，能不能跳过汇编代码，直接打打断点到C代码呢？答案是可以的。下面还是以ls中的fstat系统调用为例，介绍一个较为简单的调试步骤：</p>
-<p><strong>Step1：</strong> 在kernel/trap.c:128处打断点，在终端运行<code>make qemu-gdb</code>，点击VS Code的“运行和调试”选项。</p>
-<p><strong>Step2：</strong> xv6第一个执行的用户程序为initcode，并非我们正在寻找的ls。我们可以继续执行，直到在xv6的shell中输入<code>ls</code>，以启动ls程序。</p>
-<p><strong>Step3：</strong> 接下来，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载ls的调试符号。在其中输入<code>file user/_ls</code>。</p>
-<p><strong>Step4：</strong> 打开user/ls.c文件，找到main()函数，在第78行打上断点。</p>
-<p><strong>Step5：</strong> 点击“运行”，在ls.c第38行打上断点，也就是执行fstat系统调用的地方。</p>
-<p><strong>Step6：</strong> 在调试控制台，输入<code>file kernel/kernel</code>，加载kernel的调试符号。</p>
-<p><strong>Step7：</strong> 在syscall.c文件中第67行<code>syscall();</code>打上断点，点击<code>“运行”</code>，让程序停留在syscall()函数。</p>
-<p><strong>Step8：</strong> 接下来，你就可以根据需要来调试你想要分析的代码吧。</p>
+<p><strong>Step1：</strong> 先在终端输入“make qemu-gdb”。</p>
+<p>接着，按下F5， <strong>或者</strong> 点击左侧按钮运行与调试，并点击左上角绿色三角（Attach to gdb)。</p>
+<p>再点击“运行”，让xv6正常运行，直到出现“$”，表示已经进入shell中。</p>
+<p><strong>Step2：</strong> 在调试控制台，输入“interrupt”。</p>
+<p><strong>Step3：</strong> 在kernel/trap.c:128处打断点，继续点击“运行”。</p>
+<p><strong>Step4：</strong> 在xv6的shell中输入<code>ls</code>，以启动<code>ls</code>程序；程序停留在<code>kernel/trap.c:128</code>处。</p>
+<p><strong>Step5：</strong> 接下来，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载ls的调试符号。在其中输入<code>file user/_ls</code>。</p>
+<p><strong>Step6：</strong> 打开user/ls.c文件，找到main()函数，在第78行打上断点。点击“运行”。</p>
+<p><strong>Step7：</strong> 在ls.c第38行打上断点，点击“运行”，让程序停留在执行fstat系统调用的地方。</p>
+<p><strong>Step8：</strong> 在调试控制台，输入<code>file kernel/kernel</code>，加载kernel的调试符号。</p>
+<p><strong>Step9：</strong> 在syscall.c文件中第67行<code>syscall();</code>打上断点，点击<code>“运行”</code>，让程序停留在syscall()函数。</p>
+<p><strong>Step10：</strong> 接下来，你就可以根据需要来调试你想要分析的代码吧。</p>
               
             </div>
           </div><footer>

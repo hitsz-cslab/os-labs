@@ -218,7 +218,27 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 
 xv6的内核态和用户态并不共享页表，调试符号也完全不同。调试用户程序需要加载对应的用户程序调试符号，我们将通过调试控制台完成这一项操作。我们以调试自带的用户程序“ls"为例。  
 
-首先，我们需要确认对应xv6的用户程序入口点，我们有两种方法可以确认应用程序的入口点：
+**Step1：** 先在终端输入“make qemu-gdb”。
+
+接着，按下F5， **或者** 点击左侧按钮运行与调试，并点击左上角绿色三角（Attach to gdb)。
+
+再点击“运行”，让xv6正常运行，直到出现“$”，表示已经进入shell中。
+
+![image-20220924102228129](remote_env_gdb.assets/image-20220924102228129.png)
+
+**Step2：** 在调试控制台，输入“interrupt”。
+
+![image-20220924102353055](remote_env_gdb.assets/image-20220924102353055.png)
+
+**Step3：** 我们知道，在进入Trampoline切换前最后一行C代码位于`kernel/trap.c:128`处，我们将断点打在此处，继续点击“运行”。
+
+![image-20220924102844921](remote_env_gdb.assets/image-20220924102844921.png)
+
+**Step4：** 在xv6的shell中输入`ls`，以启动`ls`程序；程序停留在`kernel/trap.c:128`处。
+
+![image-20220924102934345](remote_env_gdb.assets/image-20220924102934345.png)
+
+**Step5：** 接下来，我们需要确认对应xv6的用户程序入口点，我们有两种方法可以确认应用程序的入口点：
 
 1. 通过readelf确认应用程序入口点。
 2. 在VSCode上直接打开该应用程序的源代码，找打main()函数，并在main()函数里打上断点。
@@ -253,15 +273,8 @@ xv6的内核态和用户态并不共享页表，调试符号也完全不同。�
     ```
     
     可见其中显示`Entry point address: 0x27a`，应用程序入口点位于`0x27a`处。随后，我们用上面的方法开始调试，并将断点打在即将返回用户态处。
-    检查当前即将被运行的进程名，在即将进入对应用户程序（ls）的时候，准备进行用户态程序调试。我们知道，在进入Trampoline切换前最后一行C代码位于`kernel/trap.c:128`处，我们将断点打在此处，并通过局部变量`p`监视当前进程   的进程名`p.name`，如图所示：
     
-    ![last_c](remote_env_gdb.assets/last_c.png)
-    
-    如左下角所示，我们可以发现，xv6第一个执行的用户程序为`initcode`，并非我们正在寻找的`ls`。我们可以继续执行，并在xv6的shell中输入`ls`，以启动`ls`程序；持续执行，直到我们将首次进入`ls`执行：
-    
-    ![ls_start](remote_env_gdb.assets/ls_start.png)
-    
-    由此可见，内核即将首次返回并执行用户程序`ls`。我们前往调试控制台，在其中输入`b *0x27a`，即将断点置于`ls`程序入口处：
+    我们前往调试控制台，在其中输入`b *0x27a`，即将断点置于`ls`程序入口处：
     
     ![ls_bmain](remote_env_gdb.assets/ls_bmain.png)
     
@@ -273,29 +286,27 @@ xv6的内核态和用户态并不共享页表，调试符号也完全不同。�
 
     ![image-20220923143519150](remote_env_gdb.assets/image-20220923143519150.png)
 
-    
-    在进入Trampoline切换前最后一行C代码位于kernel/trap.c:128处，我们将断点打在此处。xv6第一个执行的用户程序为initcode，并非我们正在寻找的ls。我们可以继续执行，直到在xv6的shell中输入ls，以启动ls程序。
-    
-    ![image-20220915202526527](remote_env_gdb.assets/image-20220915202526527.png)
 
+​    
 
 通过上述两个方法都可以确认应用程序的入口点，将断点打在应用程序的main()上。
-接下来，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载`ls`的调试符号。在其中输入`file user/_ls`：
+
+**Step6：** 接下来，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载`ls`的调试符号。在其中输入`file user/_ls`：
 
 ![del_bp](remote_env_gdb.assets/del_bp.png)
 ![file_ls](remote_env_gdb.assets/file_ls.png)
 
-此时，可以在user/ls.c文件中直接打上断点，下图是在user/ls.c中的第78行打断点。
+**Step7：** 点击“运行”。可以看到已经进入了ls.c的main函数中。
+
+![image-20220924104328493](remote_env_gdb.assets/image-20220924104328493.png)
+
+**Step8：** 此时，可以在user/ls.c文件中直接打上断点，下图是在user/ls.c中的第78行打断点。如果已经在78行打过断点，可以忽略这一步。
 
 ![image-20210928095130751](remote_env_gdb.assets/image-20210928095130751.png)
 
-接下来，继续执行。qemu将停止在`ls`程序的第78行。
+**Step9：** 接下来，继续执行。qemu将停止在`ls`程序的第78行。
 
 ![image-20210928095306503](remote_env_gdb.assets/image-20210928095306503.png)
-
-输入`disas $pc, $pc+24`检查当前正在执行的汇编指令，并与`ls.asm`反编译结果相对照，我们可以确认，我们已经成功进入`ls`程序的用户态调试流程；输入`p argv[0]`可见其内容为`ls`：
-
-![disas](remote_env_gdb.assets/disas.png)
 
 点击上方的单步调试按钮，我们发现vscode的GUI调试工具现也以可以正常工作。
 
