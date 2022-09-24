@@ -5,6 +5,34 @@
 
     接下来，我们为同学们介绍调试手段的重头戏：使用VS Code来调试xv6 :-) 
 
+为了给同学们演示如何用VSCode图形化调试XV6，我们录制了两个演示视频：
+
+<iframe 
+    width= 600  
+    height= 400
+    src="//player.bilibili.com/player.html?aid=603268135&bvid=BV1ZB4y1E7X5&cid=842011406&page=1" 
+    scrolling="no" 
+    border="0" 
+    frameborder="no" 
+    framespacing="0" 
+    allowfullscreen="true"
+> </iframe>
+
+<iframe 
+    width= 600  
+    height= 400
+    src="//player.bilibili.com/player.html?aid=773255983&bvid=BV1i14y1Y7ZZ&cid=842019673&page=1" 
+    scrolling="no" 
+    border="0" 
+    frameborder="no" 
+    framespacing="0" 
+    allowfullscreen="true"
+> </iframe>
+
+如果视频不太清晰，建议到bilibili上观看。
+
+1. 【1. VSCode调试xv6内核代码】 https://www.bilibili.com/video/BV1ZB4y1E7X5?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
+2. 【2. VSCode调试xv6用户代码】 https://www.bilibili.com/video/BV1i14y1Y7ZZ?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
 
 !!! warning "注意事项"
     如果不想使用VS Code调试，还是想在远程实验环境使用gdb命令行的同学，请使用可以支持多种硬件体系架构的“gdb-multiarch”而非“gdb”或者“riscv64-unknown-elf-gdb”。
