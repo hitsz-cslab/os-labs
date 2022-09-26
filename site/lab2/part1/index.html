@@ -59,7 +59,9 @@
               </ul>
               <p class="caption"><span class="caption-text">常见问题</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../faq-env/">实验环境问题</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../faq/faq-env/">实验环境问题</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../faq/lab1/">Lab1问题</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Lab1：XV6与Unix实用程序</span></p>
@@ -107,7 +109,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../part4/">提交文档</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../part5/">GDB调试系统调用（补充说明）</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../part5/">GDB调试系统调用（补充材料）</a>
                   </li>
               </ul>
       </div>
@@ -157,7 +159,8 @@
 <div class="admonition warning">
 <p class="admonition-title">请先同步上游远程仓库，并注意切换到syscall分支进行试验</p>
 <p>本次实验基于syscall分支，请同学们注意切换。</p>
-<p>切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
+<p><strong>Step 1.</strong> 首先，保存实验一的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VS Code内建的图形化界面完成操作</a>这两小节，完成commit操作。或者， <strong>如果你希望直接放弃掉上一次commit后的所有更改</strong> ，那么你也可以使用-f选项强制切换分支，例如<code>git checkout -f syscall</code>。</p>
+<p><strong>Step 2.</strong> 切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
 </div>
 <p>本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用<code>trace</code>程序和<code>sysinfotest</code>测试程序。具体来说，本实验有两部分：</p>
 <h3 id="32">3.2 任务一：系统调用信息打印<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
@@ -172,8 +175,8 @@
 <li><strong>返回值</strong> ：正常执行返回0，异常返回-1。  </li>
 <li><strong>功能</strong> ：设置该程序的<code>mask</code>。<br />
 （1）设置mask之后，内核每 <strong>处理完一次系统调用后</strong> ，即系统调用返前，若mask指示了该系统调用，则打印对应信息。<br />
-（2）打印格式： <code>PID: sys_$name(arg0) -return_value</code> <br />
-其中<code>$name</code>为系统调用的名称；<code>arg0</code>为系统调用的第一个参数，<code>return_value</code>为系统调用的返回值，以十进制型打印。</li>
+（2）打印格式： <code>PID: sys_$name(arg0) -&gt; return_value</code> <br />
+其中<code>$name</code>为需要追踪的系统调用的名称；<code>arg0</code>为需要追踪的系统调用的第一个参数，<code>return_value</code>为需要追踪的系统调用的返回值，以十进制型打印。</li>
 </ol>
 <h4 id="322">3.2.2 运行结果<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
 <p>实验提供了一个trace（见 <code>user/trace.c</code>）用户级应用程序，该程序首先通过trace系统调用设置需要跟踪的系统调用，然后再启动另一个程序，打印出该程序执行指定系统调用的情况。</p>
@@ -244,7 +247,7 @@ $
 <li><code>32</code>是"1 &lt;&lt; SYS_read"，表示只追踪系统调用read；  </li>
 <li><code>grep</code>是trace应用程序中通过"exec"启动的另一个程序（见 user/grep.    c）；  </li>
 <li><code>hello README</code>则是grep程序的入参；  </li>
-<li>该命令是使用grep程序查找README文件中匹配"hello"的行，并在此次查找匹配过程中将使用系统调用read信息打印出来：<code>PID: sys_read(arg0) -return_value</code>。</li>
+<li>该命令的作用是使用grep程序查找README文件中匹配"hello"的行，并将其所使用到的read系统调用的信息打印出来，打印的格式为：<code>PID: sys_read(read系统调用的arg0) -&gt; read系统调用的return_value</code>。</li>
 </ul>
 </li>
 <li>

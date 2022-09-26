@@ -143,7 +143,9 @@
               </ul>
               <p class="caption"><span class="caption-text">常见问题</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../faq-env/">实验环境问题</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../faq/faq-env/">实验环境问题</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../faq/lab1/">Lab1问题</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Lab1：XV6与Unix实用程序</span></p>
@@ -167,7 +169,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../lab2/part4/">提交文档</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../lab2/part5/">GDB调试系统调用（补充说明）</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../lab2/part5/">GDB调试系统调用（补充材料）</a>
                   </li>
               </ul>
       </div>
@@ -306,13 +308,13 @@ GatewayPorts yes
 <span class="go">upstream        git@gitee.com:hitsz-lab/xv6-labs-2020.git (push)</span>
 </code></pre></div>
 <p>其中，远程仓库<code>origin</code>的地址（在此处显示为<code>git@gitee.com:willson0v0/xv6-labs-2020.git</code>）应该是是你自己的远程仓库地址，而远程仓库<code>upstream</code>的地址应该显示为本课程实验提供的远程仓库地址，即<code>git@gitee.com:hitsz-lab/xv6-labs-2020.git</code>或者<code>https://gitee.com/hitsz-lab/xv6-labs-2020.git</code>。<br />
-如果你的远程仓库已经设置完成，那么跳到<a href="#313">3.1.3</a>继续。否则，请按照<a href="#312">3.1.2</a>节完成远程仓库设置。</p>
+如果你的远程仓库已经设置完成，那么跳到<a href="#313">3.1.3 同步上游仓库更改</a>继续。否则，请按照<a href="#312">3.1.2 完成远程仓库设置</a>节完成远程仓库设置。</p>
 <h4 id="312">3.1.2 完成远程仓库设置<a class="headerlink" href="#312" title="Permanent link">&para;</a></h4>
-<p>如果你没有设置上游仓库（即<code>upstream</code>），并且 <strong>origin仓库的链接被设置为本课程实验的远程仓库而非自己的远程仓库</strong> ，那么请先参照<a href="#32">3.2</a>节，将代码发布至自己的远程仓库。
+<p>如果你没有设置上游仓库（即<code>upstream</code>），并且 <strong>origin仓库的链接被设置为本课程实验的远程仓库而非自己的远程仓库</strong> ，那么请先参照<a href="#32">3.2 将代码发布至自己的远程仓库</a>节，将代码发布至自己的远程仓库。
 如果你的<code>origin</code>仓库正确设置为自己的远程仓库，那么请输入以下指令，设置上游仓库为本课程实验提供的仓库：</p>
 <div class="highlight"><pre><span></span><code>$ git remote add upstream git@gitee.com:hitsz-lab/xv6-labs-2020.git
 </code></pre></div>
-<p>此时，如果在输入<code>git remote -v</code>，应该能显示出<a href="#311">3.1.1</a>中设置完成一样的效果。</p>
+<p>此时，如果在输入<code>git remote -v</code>，应该能显示出<a href="#311">3.1.1 检查上游仓库设置</a>中设置完成一样的效果。</p>
 <h4 id="313">3.1.3 同步上游仓库更改<a class="headerlink" href="#313" title="Permanent link">&para;</a></h4>
 <p>在这里，我们以将上游仓库的<code>syscall</code>分支同步到本地的<code>syscall</code>分支为例。键入以下指令，以获取上游更改、切换到本地<code>syscall</code>分支、完成与上游仓库<code>syscall</code>分支的合并，并最后上传到自己的远程仓库：</p>
 <div class="highlight"><pre><span></span><code>$ git fetch --all
@@ -353,7 +355,7 @@ $ git push origin
 <span class="go">Auto-merging time.txt</span>
 <span class="go">Automatic merge failed; fix conflicts and then commit the result.</span>
 </code></pre></div>
-<p>如果发生冲突，请参照<a href="#333">3.3.3</a>节完成冲突合并操作。</p>
+<p>如果发生冲突，请参照<a href="#333">3.3.3 合并冲突更改</a>节完成冲突合并操作。</p>
 <h3 id="32">3.2 将代码发布至自己的远程仓库<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
 <p>如果你的代码是直接从本课程实验仓库clone而来，而非先fork出自己的远程仓库、再进行clone，那么这篇教程会指引你设置自己的远程仓库、并将代码发布至自己的远程仓库处。</p>
 <div class="admonition info">
@@ -379,7 +381,7 @@ $ git push origin
 
 <span class="go">nothing to commit, working tree clean</span>
 </code></pre></div>
-<p>那么，你可以跳过这一步，前往<a href="#323">3.2.3</a>继续。如果本地有尚未commit的更改，则命令会显示出你更改过的内容，提示其尚未被跟踪：</p>
+<p>那么，你可以跳过这一步，前往<a href="#323">3.2.3 修改远程仓库地址并推送</a>继续。如果本地有尚未commit的更改，则命令会显示出你更改过的内容，提示其尚未被跟踪：</p>
 <div class="highlight"><pre><span></span><code><span class="gp">lgz_admin@OSLabExecNode0:~/git_demo/xv6-labs-2020$ </span>git status
 <span class="go">On branch syscall</span>
 <span class="go">Your branch is up to date with &#39;origin/syscall&#39;.</span>
@@ -391,12 +393,12 @@ $ git push origin
 
 <span class="go">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span>
 </code></pre></div>
-<p>如果本地有尚未commit的更改，请参照<a href="#3311">3.3.1.1</a>中的操作（命令行操作）或者<a href="#332">3.3.2</a>中的操作（VS code图形化界面操作），完成commit。你没有推送到上游仓库（本课程实验提供的远程仓库）的权限，所以不必push。</p>
+<p>如果本地有尚未commit的更改，请参照<a href="#3311">3.3.1.1 Commit</a>中的操作（命令行操作）或者<a href="#332">3.3.2 使用VS Code内建的图形化界面完成操作</a>中的操作（VS code图形化界面操作），完成commit。你没有推送到上游仓库（本课程实验提供的远程仓库）的权限，所以不必push。</p>
 <h4 id="323">3.2.3 修改远程仓库地址并推送<a class="headerlink" href="#323" title="Permanent link">&para;</a></h4>
 <p>在命令行中，输入以下命令：</p>
 <p><div class="highlight"><pre><span></span><code>$ git remote set-url origin git@gitee.com:willson0v0/my_xv6_repo.git
 </code></pre></div>
-将其中<code>git@gitee.com:willson0v0/my_xv6_repo.git</code>替换成<a href="#321">3.2.1</a>中复制下来的远程仓库地址。可以输入<code>git remote -v</code>检视远程连接有没有更改成功。完成后，切换到你想要推送的分支，并上传到远程。这里以<code>syscall</code>分支为例：</p>
+将其中<code>git@gitee.com:willson0v0/my_xv6_repo.git</code>替换成<a href="#321">3.2.1 设立自己的远程仓库（以gitee为例）</a>中复制下来的远程仓库地址。可以输入<code>git remote -v</code>检视远程连接有没有更改成功。完成后，切换到你想要推送的分支，并上传到远程。这里以<code>syscall</code>分支为例：</p>
 <div class="highlight"><pre><span></span><code>$ git push -u origin syscall
 </code></pre></div>
 <p>这会将<code>syscall</code>分支设置成跟踪远程<code>origin</code>的<code>syscall</code>分支，并推送。现在回到浏览器并刷新仓库页面，你应该能看到上传已经完成。</p>
@@ -448,7 +450,7 @@ $ git merge 远程仓库名称/分支名称
 </code></pre></div></p>
 <div class="admonition waning">
 <p class="admonition-title">仓库权限</p>
-<p>你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照<a href="#34-ssh">3.4节</a>完成设置。</p>
+<p>你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照<a href="#34-ssh">3.4节 ssh密钥设置</a>完成设置。</p>
 </div>
 <h4 id="332-vs-code">3.3.2 使用VS Code内建的图形化界面完成操作<a class="headerlink" href="#332-vs-code" title="Permanent link">&para;</a></h4>
 <p>VS Code的版本控制界面在左侧从上往下数第二个按钮处；下方会显示当前所处的分支，点击可以切换当前所处分支；右侧的圆形双箭头则代表与远程环境同步。右侧Changes显示工作区中被修改的文件，而Staged则显示将被加入到下次Commit中的修改。如图，这个界面显示我们有两个被修改的文件：</p>
@@ -463,7 +465,7 @@ $ git merge 远程仓库名称/分支名称
 <p>这样，你的代码就保存到云端了。</p>
 <div class="admonition waning">
 <p class="admonition-title">仓库权限</p>
-<p>你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照<a href="#34-ssh">3.4节</a>完成设置。</p>
+<p>你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照<a href="#34-ssh">3.4节 ssh密钥设置</a>完成设置。</p>
 </div>
 <h4 id="333">3.3.3 合并冲突更改<a class="headerlink" href="#333" title="Permanent link">&para;</a></h4>
 <p>如果有两个Commit的内容出现冲突，merge的时候就有可能需要合并冲突更改。建议在VSCode中进行冲突修改。例如此处，我在对本地<code>syscall</code>做修改之后，将其与远程<code>upstream/origin</code>做修改，并触发了冲突：
@@ -555,7 +557,7 @@ $ git merge 远程仓库名称/分支名称
 <span class="go">Please make sure you have the correct access rights </span>
 <span class="go">and the repository exists</span>
 </code></pre></div>
-<p>这表明你没有权限推送到这个远程仓库。一般而言，这是由于你没有设置好自己的ssh密钥造成的。请参照<a href="#34-ssh">3.4节</a>，设置自己的ssh密钥。</p>
+<p>这表明你没有权限推送到这个远程仓库。一般而言，这是由于你没有设置好自己的ssh密钥造成的。请参照<a href="#34-ssh">3.4节 ssh密钥设置</a>，设置自己的ssh密钥。</p>
 <h4 id="352">3.5.2 我怎么知道我修改了哪些文件？<a class="headerlink" href="#352" title="Permanent link">&para;</a></h4>
 <p>通常而言，实验要求同学们提交 <strong>所有</strong> 被修改过的文件。通过将当前工作路径与上游仓库（课程实验提供的仓库）对应分支的内容相比较，可以方便地知道自己曾经修改过哪些文件，并打包提交。这里，我们将当前分支与上游仓库的<code>syscall</code>分支相比较：</p>
 <div class="highlight"><pre><span></span><code><span class="gp">lgz_admin@OSLabExecNode0:~/git_demo/xv6-labs-2020$ </span>git fetch --all
@@ -597,7 +599,7 @@ $ git merge 远程仓库名称/分支名称
 
 <span class="go">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span>
 </code></pre></div>
-<p>这说明当前你的工作区有尚未保存的更改。请参考<a href="#331">3.3.1</a>或者<a href="#332-vs-code">3.3.2</a>节，完成commit操作。
+<p>这说明当前你的工作区有尚未保存的更改。请参考<a href="#331">3.3.1 使用命令行完成操作</a>或者<a href="#332-vs-code">3.3.2 使用VS Code内建的图形化界面完成操作</a>节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 <strong>所有更改</strong> ，那么你也可以使用<code>-f</code>选项强制切换分支，例如<code>git checkout -f syscall</code>。</p>
 <h2 id="4-gcc">4 gcc<a class="headerlink" href="#4-gcc" title="Permanent link">&para;</a></h2>
 <div class="admonition question">

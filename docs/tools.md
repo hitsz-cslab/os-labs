@@ -174,18 +174,18 @@ upstream        git@gitee.com:hitsz-lab/xv6-labs-2020.git (push)
 ```
 
 其中，远程仓库`origin`的地址（在此处显示为`git@gitee.com:willson0v0/xv6-labs-2020.git`）应该是是你自己的远程仓库地址，而远程仓库`upstream`的地址应该显示为本课程实验提供的远程仓库地址，即`git@gitee.com:hitsz-lab/xv6-labs-2020.git`或者`https://gitee.com/hitsz-lab/xv6-labs-2020.git`。  
-如果你的远程仓库已经设置完成，那么跳到[3.1.3](#313)继续。否则，请按照[3.1.2](#312)节完成远程仓库设置。
+如果你的远程仓库已经设置完成，那么跳到[3.1.3 同步上游仓库更改](#313)继续。否则，请按照[3.1.2 完成远程仓库设置](#312)节完成远程仓库设置。
 
 #### 3.1.2 完成远程仓库设置
 
-如果你没有设置上游仓库（即`upstream`），并且 **origin仓库的链接被设置为本课程实验的远程仓库而非自己的远程仓库** ，那么请先参照[3.2](#32)节，将代码发布至自己的远程仓库。
+如果你没有设置上游仓库（即`upstream`），并且 **origin仓库的链接被设置为本课程实验的远程仓库而非自己的远程仓库** ，那么请先参照[3.2 将代码发布至自己的远程仓库](#32)节，将代码发布至自己的远程仓库。
 如果你的`origin`仓库正确设置为自己的远程仓库，那么请输入以下指令，设置上游仓库为本课程实验提供的仓库：
 
 ```bash
 $ git remote add upstream git@gitee.com:hitsz-lab/xv6-labs-2020.git
 ```
 
-此时，如果在输入`git remote -v`，应该能显示出[3.1.1](#311)中设置完成一样的效果。
+此时，如果在输入`git remote -v`，应该能显示出[3.1.1 检查上游仓库设置](#311)中设置完成一样的效果。
 
 #### 3.1.3 同步上游仓库更改
 
@@ -234,7 +234,7 @@ Auto-merging time.txt
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 
-如果发生冲突，请参照[3.3.3](#333)节完成冲突合并操作。
+如果发生冲突，请参照[3.3.3 合并冲突更改](#333)节完成冲突合并操作。
 
 ### 3.2 将代码发布至自己的远程仓库
 
@@ -272,7 +272,7 @@ Your branch is up to date with 'origin/syscall'.
 nothing to commit, working tree clean
 ```
 
-那么，你可以跳过这一步，前往[3.2.3](#323)继续。如果本地有尚未commit的更改，则命令会显示出你更改过的内容，提示其尚未被跟踪：
+那么，你可以跳过这一步，前往[3.2.3 修改远程仓库地址并推送](#323)继续。如果本地有尚未commit的更改，则命令会显示出你更改过的内容，提示其尚未被跟踪：
 
 ```console
 lgz_admin@OSLabExecNode0:~/git_demo/xv6-labs-2020$ git status
@@ -287,7 +287,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-如果本地有尚未commit的更改，请参照[3.3.1.1](#3311)中的操作（命令行操作）或者[3.3.2](#332)中的操作（VS code图形化界面操作），完成commit。你没有推送到上游仓库（本课程实验提供的远程仓库）的权限，所以不必push。
+如果本地有尚未commit的更改，请参照[3.3.1.1 Commit](#3311)中的操作（命令行操作）或者[3.3.2 使用VS Code内建的图形化界面完成操作](#332)中的操作（VS code图形化界面操作），完成commit。你没有推送到上游仓库（本课程实验提供的远程仓库）的权限，所以不必push。
 
 #### 3.2.3 修改远程仓库地址并推送
 
@@ -296,7 +296,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 ```bash
 $ git remote set-url origin git@gitee.com:willson0v0/my_xv6_repo.git
 ```
-将其中`git@gitee.com:willson0v0/my_xv6_repo.git`替换成[3.2.1](#321)中复制下来的远程仓库地址。可以输入`git remote -v`检视远程连接有没有更改成功。完成后，切换到你想要推送的分支，并上传到远程。这里以`syscall`分支为例：
+将其中`git@gitee.com:willson0v0/my_xv6_repo.git`替换成[3.2.1 设立自己的远程仓库（以gitee为例）](#321)中复制下来的远程仓库地址。可以输入`git remote -v`检视远程连接有没有更改成功。完成后，切换到你想要推送的分支，并上传到远程。这里以`syscall`分支为例：
 
 ```bash
 $ git push -u origin syscall
@@ -364,7 +364,7 @@ $ git merge 远程仓库名称/分支名称
 ```
 
 !!! waning "仓库权限"
-	你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照[3.4节](#34-ssh)完成设置。
+	你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照[3.4节 ssh密钥设置](#34-ssh)完成设置。
 
 #### 3.3.2 使用VS Code内建的图形化界面完成操作
 
@@ -387,7 +387,7 @@ VS Code的版本控制界面在左侧从上往下数第二个按钮处；下方�
 这样，你的代码就保存到云端了。
 
 !!! waning "仓库权限"
-	你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照[3.4节](#34-ssh)完成设置。
+	你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照[3.4节 ssh密钥设置](#34-ssh)完成设置。
 
 #### 3.3.3 合并冲突更改
 
@@ -511,7 +511,7 @@ Please make sure you have the correct access rights
 and the repository exists
 ```
 
-这表明你没有权限推送到这个远程仓库。一般而言，这是由于你没有设置好自己的ssh密钥造成的。请参照[3.4节](#34-ssh)，设置自己的ssh密钥。
+这表明你没有权限推送到这个远程仓库。一般而言，这是由于你没有设置好自己的ssh密钥造成的。请参照[3.4节 ssh密钥设置](#34-ssh)，设置自己的ssh密钥。
 
 #### 3.5.2 我怎么知道我修改了哪些文件？
 
@@ -563,7 +563,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-这说明当前你的工作区有尚未保存的更改。请参考[3.3.1](#331)或者[3.3.2](#332-vs-code)节，完成commit操作。
+这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](#331)或者[3.3.2 使用VS Code内建的图形化界面完成操作](#332-vs-code)节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。
 
 ## 4 gcc

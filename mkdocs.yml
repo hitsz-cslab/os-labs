@@ -58,7 +58,8 @@ nav:
     - 远程实验平台使用指南: remote_env.md
     - 远程实验平台环境图形化调试指南: remote_env_gdb.md
   - 常见问题: 
-    - 实验环境问题: faq-env.md
+    - 实验环境问题: faq/faq-env.md
+    - Lab1问题: faq/lab1.md
   - Lab1：XV6与Unix实用程序: 
     - 实验概述: lab1/part1.md
     - 实验原理: lab1/part2.md
@@ -69,4 +70,4 @@ nav:
     - 实验原理: lab2/part2.md
     - 实验实现: lab2/part3.md
     - 提交文档: lab2/part4.md   
-    - GDB调试系统调用（补充说明）: lab2/part5.md     
+    - GDB调试系统调用（补充材料）: lab2/part5.md     

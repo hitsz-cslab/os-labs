@@ -146,3 +146,73 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 
 
 ------
+
+## 5 git常见问题
+
+### 5.1 无法推送怎么办？
+
+如果你尝试推送到远程仓库，或者从远程仓库拉取，但是git却显示出这样的错误：
+
+```console
+git@gitee.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights 
+and the repository exists
+```
+
+这表明你没有权限推送到这个远程仓库。一般而言，这是由于你没有设置好自己的ssh密钥造成的。请参照[3.4节 ssh密钥设置](../../tools/#34-ssh)，设置自己的ssh密钥。
+
+### 5.2 我怎么知道我修改了哪些文件？
+
+通常而言，实验要求同学们提交 **所有** 被修改过的文件。通过将当前工作路径与上游仓库（课程实验提供的仓库）对应分支的内容相比较，可以方便地知道自己曾经修改过哪些文件，并打包提交。这里，我们将当前分支与上游仓库的`syscall`分支相比较：
+
+```console
+lgz_admin@OSLabExecNode0:~/git_demo/xv6-labs-2020$ git fetch --all
+Fetching origin
+Fetching upstream
+lgz_admin@OSLabExecNode0:~/git_demo/xv6-labs-2020$ git diff --stat upstream/syscall *
+ kernel/kalloc.c  | 2 ++
+ kernel/syscall.c | 1 +
+ kernel/syscall.h | 1 +
+ kernel/sysinfo.h | 1 +
+ 4 files changed, 5 insertions(+)
+```
+
+要比较其他分支，将第二条指令中的`syscall`改为对应分支名即可。
+
+!!! warning "请先在本地切换到对应分支！"
+	在比较的时候，你需要将本地分支与上游对应分支进行比较。举例而言，你不会想比较本地的`util`分支和远程的`syscall`分支，因为这两个不是一个实验的。请先使用`git checkout 分支名`以切换到对应分支，并在使用`git diff --stat upstream/分支名 *`时指定 **同一个** 上游分支。
+
+!!! warning "未设置上游仓库？"
+	如果git报告“`fatal: ambiguous argument 'upstream/分支名': unknown revision or path not in the working tree.`”，说明你尚未设置上游仓库。请先按本指南中的[3.1-同步上游仓库](../../tools/#31)一节完成上游仓库的设置与同步，再进行比较。
+
+### 5.3 为什么我不能切换分支（checkout）？
+
+通常而言，不能切换分支的主要原因是你当前有尚未保存的修改，此时checkout的话会触发以下错误：
+
+```console
+lgz_admin@OSLabExecNode0: ~/git_demo/xv6-labs-2020$ git checkout util                                                                                                ─╯
+error: Your local changes to the following files would be overwritten by checkout:
+        Makefile
+Please commit your changes or stash them before you switch branches.
+Aborting
+```
+
+通过`git status`指令，我们可以检查当前git的状态。如果你的输出如下所示：
+
+```console
+lgz_admin@OSLabExecNode0: ~/git_demo/xv6-labs-2020$ git status
+On branch syscall
+Your branch is up to date with 'origin/syscall'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   Makefile
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](../../tools/#331)或者[3.3.2 使用VS Code内建的图形化界面完成操作](../../tools/#332-vs-code)节，完成commit操作。
+或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。
