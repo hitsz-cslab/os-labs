@@ -71,9 +71,9 @@ Step1. 阅读user/sleep.c文件，理解代码和注释；
 
 ![image-20210913110416368](part3.assets/image-20210913110416368.png)
 
-Step2. 由于sleep.c为新增的用户程序文件，请如下图修改Makefile文件：
+Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在UPROGS上增加一行`$U/_sleep`：
 
-![image-20201017231603221](part3.assets/image-20201017231603221.png)
+![image-20220926104856325](part3.assets/image-20220926104856325.png)
 
 Step3. 编译xv6并运行sleep。
 

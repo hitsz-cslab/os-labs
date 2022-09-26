@@ -176,8 +176,8 @@ $ git checkout util
 <p>sleep程序已经实现，你需要理解其代码并成功将其运行：</p>
 <p>Step1. 阅读user/sleep.c文件，理解代码和注释；</p>
 <p><img alt="image-20210913110416368" src="../part3.assets/image-20210913110416368.png" /></p>
-<p>Step2. 由于sleep.c为新增的用户程序文件，请如下图修改Makefile文件：</p>
-<p><img alt="image-20201017231603221" src="../part3.assets/image-20201017231603221.png" /></p>
+<p>Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在UPROGS上增加一行<code>$U/_sleep</code>：</p>
+<p><img alt="image-20220926104856325" src="../part3.assets/image-20220926104856325.png" /></p>
 <p>Step3. 编译xv6并运行sleep。</p>
 <p><img alt="image-20201018125249828" src="../part3.assets/image-20201018125249828.png" /></p>
 <p>Step4.回答3.3中的<a href="#33">相关问题</a>。</p>

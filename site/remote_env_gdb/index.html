@@ -362,14 +362,12 @@
 <p>可见其中显示<code>Entry point address: 0x27a</code>，应用程序入口点位于<code>0x27a</code>处。随后，我们用上面的方法开始调试，并将断点打在即将返回用户态处。</p>
 <p>我们前往调试控制台，在其中输入<code>b *0x27a</code>，即将断点置于<code>ls</code>程序入口处：</p>
 <p><img alt="ls_bmain" src="../remote_env_gdb.assets/ls_bmain.png" /></p>
-<p>接下来，继续执行，qemu将从内核态返回到用户态并停止在<code>ls</code>的入口点处。</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title"><strong>方法二:</strong>  在应用程序的源代码main()函数打断点</p>
 <p>在VSCode中，打开user/ls.c文件，找到main()函数，在第78行打上断点。</p>
 <p><img alt="image-20220923143519150" src="../remote_env_gdb.assets/image-20220923143519150.png" /></p>
 </div>
-<p>​    </p>
 <p>通过上述两个方法都可以确认应用程序的入口点，将断点打在应用程序的main()上。</p>
 <p><strong>Step6：</strong> 接下来，我们需要在调试窗口左下角删除原有的内核态断点，并通过调试控制台，加载<code>ls</code>的调试符号。在其中输入<code>file user/_ls</code>：</p>
 <p><img alt="del_bp" src="../remote_env_gdb.assets/del_bp.png" />

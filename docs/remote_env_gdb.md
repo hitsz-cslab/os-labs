@@ -306,16 +306,11 @@ xv6的内核态和用户态并不共享页表，调试符号也完全不同。�
     
     ![ls_bmain](remote_env_gdb.assets/ls_bmain.png)
     
-    接下来，继续执行，qemu将从内核态返回到用户态并停止在`ls`的入口点处。
-
-
 !!! info  "**方法二:**  在应用程序的源代码main()函数打断点"
     在VSCode中，打开user/ls.c文件，找到main()函数，在第78行打上断点。
 
     ![image-20220923143519150](remote_env_gdb.assets/image-20220923143519150.png)
 
-
-​    
 
 通过上述两个方法都可以确认应用程序的入口点，将断点打在应用程序的main()上。
 

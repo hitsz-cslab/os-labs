@@ -185,7 +185,7 @@
 </thead>
 <tbody>
 <tr>
-<td>int fork()</td>
+<td>int fork(void)</td>
 <td>Create a process, return child’s PID.</td>
 </tr>
 <tr>
@@ -201,7 +201,7 @@
 <td>Terminate process PID. Returns 0, or -1 for error.</td>
 </tr>
 <tr>
-<td>int getpid()</td>
+<td>int getpid(void)</td>
 <td>Return the current process’s PID.</td>
 </tr>
 <tr>
@@ -221,11 +221,11 @@
 <td>Open a file; flags indicate read/write; returns an fd (file descriptor).</td>
 </tr>
 <tr>
-<td>int read(int fd, char* buf, int n)</td>
+<td>int read(int fd, void* buf, int n)</td>
 <td>Read n bytes into buf; returns number read; or 0 if end of file.</td>
 </tr>
 <tr>
-<td>int write(int fd, char* buf, int n)</td>
+<td>int write(int fd, void* buf, int n)</td>
 <td>Write n bytes from buf to file descriptor fd; returns n.</td>
 </tr>
 <tr>
@@ -249,7 +249,7 @@
 <td>Create a new directory.</td>
 </tr>
 <tr>
-<td>int mknod(char *name, int major, int minor)</td>
+<td>int mknod(char *name, short major, short minor)</td>
 <td>Create a device file.</td>
 </tr>
 <tr>
