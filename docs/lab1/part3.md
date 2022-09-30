@@ -149,12 +149,13 @@ a)    xv6中的`xargs`基本功能演示：
 
 示例1：
 
-```shell
+```console
 $ xargs echo good   # 指定要执行的命令：echo，同时输入参数'good'
 bye                 # 换行后继续输入echo的参数'bye'
-good bye			# 执行"echo good bye"，输出"good bye"
+good bye		   # 执行"echo good bye"，输出"good bye"
 hello too           # 换行后输入参数'hello too'
-good hello too      # 执行"echo good hello too"，输出"good hello too"
+good hello	        # 执行"echo good hello too"，输出"good hello"和"good too"
+good too
 # 通过ctrl+D结束输入
 $
 ```
@@ -163,11 +164,12 @@ $
 
 需要注意的是，Linux中`xargs`具备`"-n"`选项，用于选择每次执行命令需要接收的参数数量，例如：
 
-```shell
+```console
 $ xargs -n2 echo good   # 设置选项-n为2，表示接收两个参数（两行输入）；指定要执行的命令：echo，并输入参数'good'
 bye                     # 换行后输入参数'bye'
 hello too               # 换行后继续输入参数'hello too'，至此接收两个参数
-good bye hello too      # 执行"echo good bye hello too"，输出"good bye hello too"
+good bye hello	        # 执行"echo good bye hello too"，输出"good bye hello"
+good too			   # 通过ctrl+D结束输入，输出"good too"
 # 通过ctrl+D结束输入
 $
 ```
