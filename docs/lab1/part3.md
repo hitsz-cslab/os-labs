@@ -178,7 +178,7 @@ $
 
 示例2：
 
-```shell
+```console
 $ make qemu
 ...
 $ echo 3 4|xargs echo 1 2

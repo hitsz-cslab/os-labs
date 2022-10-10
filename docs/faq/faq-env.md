@@ -12,7 +12,7 @@
 
 ![qemu](faq.assets/qemu.png)
 
-Patch文件：[pmp.patch](code/pmp.patch)
+Patch文件：[pmp.patch](../code/pmp.patch)
 
 该问题的解决方案来自20级某位大佬的分享，非常感谢这位大佬的贡献~~
 

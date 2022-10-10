@@ -63,6 +63,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../faq/lab1/">Lab1问题</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../faq/lab3/">Lab3问题</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Lab1：XV6与Unix实用程序</span></p>
               <ul class="current">
@@ -110,6 +112,19 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../lab2/part4/">提交文档</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../lab2/part5/">GDB调试系统调用（补充材料）</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab3：锁机制的应用</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/part1/">实验概述</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/part2/">实验原理</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/part3/">实验实现</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/part4/">xv-6中Lock的实现（选读）</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/part5/">提交文档</a>
                   </li>
               </ul>
       </div>
@@ -243,11 +258,11 @@ $ git checkout util
 </code></pre></div>
 <p>为了简化实现，我们不要求实现选项<code>"-n"</code>，实现时请 <strong>默认该选项为<code>"-n1"</code></strong> ，即 <strong>每接收一行就执行一次指定的命令</strong> 。</p>
 <p>示例2：</p>
-<div class="highlight"><pre><span></span><code>$ make qemu
-...
-$ <span class="nb">echo</span> <span class="m">3</span> <span class="m">4</span><span class="p">|</span>xargs <span class="nb">echo</span> <span class="m">1</span> <span class="m">2</span>
-<span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span>
-$
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>make qemu
+<span class="go">...</span>
+<span class="gp">$ </span><span class="nb">echo</span> <span class="m">3</span> <span class="m">4</span><span class="p">|</span>xargs <span class="nb">echo</span> <span class="m">1</span> <span class="m">2</span>
+<span class="go">1 2 3 4</span>
+<span class="gp">$</span>
 </code></pre></div>
 <p>本示例中，管道左侧<code>echo</code>的输出为<code>"3 4"</code>，通过管道和<code>xargs</code>，它被传递给右侧的echo，即右侧echo实际得到的参数为"1"、"2"、"3"、"4"。最终结果等价于执行命令<code>"echo 1 2 3 4"</code>。实验中你不必考虑管道的实现与使用，你的程序可以直接从标准输入中读取管道传递给你的字符串。</p>
 <p>b)    使用<code>fork()</code>和<code>exec()</code>系统对每一行输入调用命令；exec接收的二维参数数组argv，<code>argv[0]</code>必须是该命令本身，最后一个参数<code>argv[size-1]</code>必须为0，否则将执行失败。</p>
