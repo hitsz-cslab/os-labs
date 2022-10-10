@@ -85,7 +85,7 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#1">1. 系统调用</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#11">1.1 系统调用的使用：用户的权力</a>
+    <li class="toctree-l3"><a class="reference internal" href="#11">1.1 系统调用的使用</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#12">1.2 系统调用的接口：操作系统内核和用户程序的中间体</a>
     </li>
@@ -170,7 +170,7 @@
 </div>
 <h2 id="1">1. 系统调用<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>系统调用就是调用操作系统提供的一系列内核函数。由于用户程序运行在CPU的用户态（又称非特权模式，用户模式），无法直接访问系统硬件和操作系统中的系统数据，用户程序只能发出请求，然后由内核调用相应的内核函数来帮着处理，最后将结果返回给应用程序。</p>
-<h3 id="11">1.1 系统调用的使用：用户的权力<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<h3 id="11">1.1 系统调用的使用<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
 <p>在第一个实验中，我们将系统调用和C语言的函数放在一起做了一定的说明。</p>
 <p>“系统调用被 <strong>封装</strong> 为函数以向用户提供接口，用户程序可以通过函数调用的方式请求操作系统的服务”。从这里我们需要注意，虽然两者看起来一样，是这是因为封装的结果。接下来我们简要介绍xv6是怎样封装的。</p>
 <p>首先看<code>user/user.h</code>文件，我们可以看到对应有许多的函数接口，其中标识系统调用和用户库（<code>ulib</code>）。但是我们只看到了封装的接口，那么实际上统调用的实现是什么样的呢？</p>
