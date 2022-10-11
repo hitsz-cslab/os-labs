@@ -221,7 +221,7 @@
 <h2 id="2-kalloc">2. 锁与kalloc<a class="headerlink" href="#2-kalloc" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title"><code>kalloc</code>在什么情况下使用了锁？</p>
-<p>查阅<code>kalloc.c</code>代码可知，<code>kalloc</code>只在<code>kalloc()</code>和<code>kfree()</code>中使用了锁，那这两个用锁的情况有什么共性呢？没错，他们都是把对freelist的操作锁了起来。<code>kfree()</code>在往<code>freelist</code>里加节点前锁了一下，操作完之后解锁了。<code>kalloc()</code>在移除<code>freelist</code>第一个元素时也同样加了锁，操作完成再释放锁。所以对于内存分配器中需要锁保护的只有对<code>freelist</code>的操作。</p>
+<p>查阅<code>kalloc.c</code>代码可知，<code>kalloc</code>只在<code>kalloc()</code>和<code>kfree()</code>中使用了锁，那这两个用锁的情况有什么共性呢？没错，他们都是把对freelist的操作锁了起来。<code>kfree()</code>在往<code>freelist</code>里加入空闲页前锁了一下，操作完之后解锁了。<code>kalloc()</code>在移除<code>freelist</code>第一个元素时也同样加了锁，操作完成再释放锁。所以对于内存分配器中需要锁保护的只有对<code>freelist</code>的操作。</p>
 </div>
 <p>那为什么要在操作freelist的时候上锁呢？上锁必然是为了防止并行运行的时候问题，如果我们能设想出一场景（这个场景显然是并行情况下的）让没上锁的链表作出问题，那就可以解释为什么要上锁了。</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Allocate one 4096-byte page of physical memory.</span>
