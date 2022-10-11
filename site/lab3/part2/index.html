@@ -100,6 +100,8 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#11">1.1 简介</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#12">1.2 功能与操作</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -185,6 +187,16 @@
 <span class="w">  </span><span class="n">release</span><span class="p">(</span><span class="o">&amp;</span><span class="n">kmem</span><span class="p">.</span><span class="n">lock</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
+<h3 id="12">1.2 功能与操作<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<p>关于链表的操作主要有两个：</p>
+<p>1、释放内存</p>
+<p>释放内存的函数是<code>kfree(void *pa)</code>，首先将 <code>void *pa</code> 开始的物理页的内全部置为1，这是为了让之前使用它的代码不能再读取到有效的内容，使得这些代码能尽早crash以显露问题。然后将这空闲页物理内存加到链表头。</p>
+<p><img alt="image-20201121160342435" src="../part2.assets/image-20201121160342435.png" /></p>
+<p>2、申请内存</p>
+<p><code>void* kalloc(void *)</code>用来分配内存物理页，功能很简单，就是移除并返回空闲链表头的第一个元素，即给调用者分配1页物理内存。</p>
+<p><img alt="image-20201121160419011" src="../part2.assets/image-20201121160419011.png" /></p>
+<p>由于物理内存是在多进程之间共享的，所以不管是分配还是释放页面，每次操作kmem.freelist时都需要先申请kmem.lock，此后再进行内存页面的操作。</p>
+<p><img alt="freelist" src="../part2.assets/freelist.png" /></p>
               
             </div>
           </div><footer>
