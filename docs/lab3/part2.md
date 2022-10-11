@@ -82,4 +82,4 @@ void kfree(void *pa)
 ### 1.3 锁机制
 
 !!! info   "`kalloc`在什么情况下使用了锁？"
-    查阅`kalloc.c`代码可知，`kalloc`只在`kalloc()`和`kfree()`中使用了锁，那这两个用锁的情况有什么共性呢？没错，他们都是把 **对`freelist`的操作** 锁了起来。`kfree()`在往`freelist`里加节点前锁了一下，操作完之后解锁了。`kalloc()`在移除`freelist`第一个元素时也同样加了锁，操作完成再释放锁。所以对于内存分配器中需要锁保护的只有对`freelist`的操作。
+    查阅`kalloc.c`代码可知，`kalloc`只在`kalloc()`和`kfree()`中使用了锁，那这两个用锁的情况有什么共同之处呢？没错，他们都是把 **对`freelist`的操作** 锁了起来。`kfree()`在往`freelist`里加节点前锁了一下，操作完之后解锁了。`kalloc()`在移除`freelist`第一个元素时也同样加了锁，操作完成再释放锁。所以对于内存分配器中需要锁保护的只有对`freelist`的操作。
