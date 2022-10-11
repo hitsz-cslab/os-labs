@@ -115,7 +115,7 @@ total free number of pages: 32499 (out of 32768)
 test2 OK
 ```
 
-其中，"kmem"、"bcache"、"proc" 等指示了锁的类型，acquire()记录了每种锁 **被请求** 的次数，fetch-and-add就是 **进程没有成功获取到此锁** 的次数。其中， *lock: kmem: #fetch-and-add 46375 #acquire() 433016* 这句话的意思是，kmem.lock请求了433016次，仅成功了46375次，这就是发生了锁争用了（lock contention）。这些计数来自于在kalloctest调用的ntas()，它通过执行statistics()函数，打开"statistics"设备文件，获取内核打印的那些针对kmem和bcache锁(*本验的重点*)及5个竞争最激烈的锁的计数（见kernel/spinlock.c中的`statslock()`）。
+其中，"kmem"、"bcache"、"proc" 等指示了锁的类型，acquire()记录了每种锁 **被请求** 的次数，fetch-and-add就是 **进程没有成功获取到此锁** 的次数。例如， *lock: kmem: #fetch-and-add 46375 #acquire() 433016* 这句话的意思是，kmem.lock请求了433016次，仅成功了46375次，这就是发生了锁争用了（lock contention）。这些计数来自于在kalloctest调用的ntas()，它通过执行statistics()函数，打开"statistics"设备文件，获取内核打印的那些针对kmem和bcache锁(*本验的重点*)及5个竞争最激烈的锁的计数（见kernel/spinlock.c中的`statslock()`）。
 
 如果存在锁争用，fetch-and-add的数量将会很高，因为在acquire()获得锁之前要进行许多循环迭代，"statistics"设备文件会返回kmem和bcache锁的#test-and-set的总和（也就是`tot`）。
 
@@ -123,17 +123,17 @@ test2 OK
 
 1)   本实验必须使用 **多核** 的环境，否则数据将没有意义；  
 2)   请使用`initlock()`初始化锁，并要求锁名字以`kmem`开头；  
-3)   运行`kalloctest`查看实现的代码是否减少了锁争用（`tot`没获取到此锁的次数小于10则为通过）；  
-4)   运行 `usertests sbrkmuch` 以测试修改代码后系统是否仍可以分配所有内存；  
+3)   运行`kalloctest`查看实现的代码是否减少了锁争用（`tot`没有获取到此锁的次数小于10则为通过）；  
+4)   运行 `usertests sbrkmuch` 以测试修改代码后系统是否仍可以分配所有的内存；  
 5)   运行`usertests`，确保其能能够全部通过；  
-6)   kalloctest和usertests的输出如下图（锁争用的次数大大减少），具体的据会有所差别：
+6)   kalloctest和usertests的输出如下图（锁争用的次数大大减少），具体的数据会有所差别：
 
 ![kalloc_proc](part1.assets/kalloc_proc.jpg)
     
 
 ### 3.2 任务二：磁盘缓存（Buffer cache）
     
-在访问文件数据的时候，操作系统会将文件的数据放置在磁盘缓存中。磁盘缓存是不同进程间的共享资源，因此需要通过锁确保使用的正确性。如果有多进程密集地使用文件系统，他们可能会竞争磁盘缓存的`bcache.lock`锁。
+在访问文件数据的时候，操作系统会将文件的数据放置在磁盘缓存中。磁盘缓存是不同进程之间的共享资源，因此需要通过锁确保使用的正确性。如果有多进程密集地使用文件系统，他们可能会竞争磁盘缓存的`bcache.lock`锁。
 目前，xv6采用单个锁管理磁盘缓存，我们需要 **修改磁盘缓存块列表的管理机制（主要修改kernel/bio.c）** ，使得可用多个锁管理缓存块，从而减少缓存块管理的锁争用。
 
 !!! tip   "提示"
@@ -151,13 +151,13 @@ test2 OK
 
 可以看到，bcache的`fetch-and-add`值非常大，说明磁盘缓存锁的争用非常严重。
 
-修改buffer cache的设计后，所有锁的test-and-set的数目应当接近于0。
+修改buffer cache的设计后，所有锁的fetch-and-add的数目应当接近于0。
 
 #### 3.2.2 具体要求
 
-1)   理想状态下，`bcachetest`中数据块缓存相关的所有锁`test-and-set`的总应该为0，但本实验中总和`tot`不超过500即可；  
-2)   请修改`bget()`和`brelse()`，使得缓存区并发的查询和释放不容易发生争用，比如，不是所有流程都得等bcache.lock；  
-3)   同样要求`usertests`中的用例全部通过，最后的输出如下（具体数据有所入）：  
+1)   理想状态下，`bcachetest`中数据块缓存相关的所有锁`fetch-and-add`的总和应该为0，但本实验中总和`tot`不超过500即可；  
+2)   请修改`bget()`和`brelse()`，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等bcache.lock；  
+3)   同样要求`usertests`中的用例全部通过，最后的输出如下（具体数据有所出入）：  
 
 ![image-20211019205449169](part1.assets/image-20211019205449169.png)
 
