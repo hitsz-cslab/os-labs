@@ -96,6 +96,12 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">实验原理</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1-memory-allocator">1. 内存分配器（Memory Allocator）</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#11">1.1 简介</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../part3/">实验实现</a>
@@ -136,6 +142,49 @@
 <p>在多核情况下，这就会导致当很多CPU核心要操作一个数据结构（如kalloc中的freelist）时，需要排队，一个个来。一个核心在干活，其他的核心只能被阻塞住，这就导致了并行性的下降。</p>
 <p>那我们把锁删了，不阻塞，并行性不就上去了吗？确实，但这样功能就不能保证正确了。功能正确的重要性往往比性能高的重要性大得多。因此在成熟的操作系统中，一般都会采取锁的机制，同时通过减少锁争用的方法优化性能。这是本实验的 <strong>根本目的</strong> ，之后的章节主要讨论使用锁的一些部件，我们在这些场景下来进行锁的优化。</p>
 </div>
+<h2 id="1-memory-allocator">1. 内存分配器（Memory Allocator）<a class="headerlink" href="#1-memory-allocator" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>本部分，你应该要知道：</p>
+<ul>
+<li>什么是内存分配器？</li>
+<li>内存分配器的数据结构是什么？</li>
+<li>内存分配器的所有操作及其对数据结构的改变？</li>
+<li>我们应该如何修改内存分配器以达到实验目标？</li>
+</ul>
+</div>
+<h3 id="11">1.1 简介<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<p>xv6对上层提供kalloc()和kfree()接口来管理物理内存。通过kalloc()和kfree()，屏蔽对物理内存的管理，使得调用者只需要关心虚拟地址空间，在需要使用新内存空间时候调用kalloc()，在需要释放内存空间的时候调用kfree()。
+物理内存分配器（allocator）定义在kernel/kalloc.c。</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="w"> </span><span class="o">*</span><span class="n">next</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+
+<span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">spinlock</span><span class="w"> </span><span class="n">lock</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="w"> </span><span class="o">*</span><span class="n">freelist</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">kmem</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+<p>分配器的核心数据结构是由空闲物理页组成的链表<code>freelist</code>，这个空闲页链表用 <strong>自旋锁</strong> （spinlock）进行保护。每个空闲页在链表里都是<code>struct run next</code>指向下一个空闲物理页。这可能比较难理解，我们不妨从这个链表的构建开始了解。在系统启动时，<code>main()</code>函数（见kernel/main.c）调用<code>kinit()</code>来初始分配器，它通过保存所有空闲页来初始化链表。kinit()调用<code>freerange()</code>把空闲内存页加到链表里，freerange()则是通过调用<code>kfree()</code>把每个空闲页（地范围从pa_start至pa_end）逐一加到链表里来实现此功能的。kfree() 函数用于放指定的物理内存页，将其添加至<code>freelist</code>中，参数<code>pa</code>为需要释放的物理页号，即物理页的首地址，它被看作一个没有类型的指针。在kfree()中，pa被 <strong>强制转换</strong> 为run类型的指针，进而可以放入freelist中。因为空闲页里什么都没有，所以结构体<code>run</code>的成员可以直接 <strong>保存在空闲页自身里</strong> 。</p>
+<p><img alt="kalloc执行流" src="../part2.assets/kalloc%E6%89%A7%E8%A1%8C%E6%B5%81.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">freerange</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">pa_start</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">pa_end</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">PGROUNDUP</span><span class="p">((</span><span class="n">uint64</span><span class="p">)</span><span class="n">pa_start</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="p">(;</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">PGSIZE</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">pa_end</span><span class="p">;</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">PGSIZE</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">kfree</span><span class="p">(</span><span class="n">p</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">kfree</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">pa</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span><span class="w"></span>
+<span class="w">  </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="o">*</span><span class="p">)</span><span class="n">pa</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">acquire</span><span class="p">(</span><span class="o">&amp;</span><span class="n">kmem</span><span class="p">.</span><span class="n">lock</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">r</span><span class="o">-&gt;</span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kmem</span><span class="p">.</span><span class="n">freelist</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">kmem</span><span class="p">.</span><span class="n">freelist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">release</span><span class="p">(</span><span class="o">&amp;</span><span class="n">kmem</span><span class="p">.</span><span class="n">lock</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
               
             </div>
           </div><footer>
