@@ -102,8 +102,6 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#12">1.2 功能与操作</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#13">1.3 锁机制</a>
-    </li>
         </ul>
     </li>
     </ul>
@@ -199,11 +197,6 @@
 <p><img alt="image-20201121160419011" src="../part2.assets/image-20201121160419011.png" /></p>
 <p>由于物理内存是在多进程之间共享的，所以不管是分配还是释放页面，每次操作kmem.freelist时都需要先申请kmem.lock，此后再进行内存页面的操作。</p>
 <p><img alt="freelist" src="../part2.assets/freelist.png" /></p>
-<h3 id="13">1.3 锁机制<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
-<div class="admonition info">
-<p class="admonition-title"><code>kalloc</code>在什么情况下使用了锁？</p>
-<p>查阅<code>kalloc.c</code>代码可知，<code>kalloc</code>只在<code>kalloc()</code>和<code>kfree()</code>中使用了锁，那这两个用锁的情况有什么共同之处呢？没错，他们都是把 <strong>对<code>freelist</code>的操作</strong> 锁了起来。<code>kfree()</code>在往<code>freelist</code>里加节点前锁了一下，操作完之后解锁了。<code>kalloc()</code>在移除<code>freelist</code>第一个元素时也同样加了锁，操作完成再释放锁。所以对于内存分配器中需要锁保护的只有对<code>freelist</code>的操作。</p>
-</div>
               
             </div>
           </div><footer>
