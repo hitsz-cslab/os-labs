@@ -121,7 +121,7 @@ int sleep(int);
 !!! info   "提示"
     一般进入usertrap函数有三种情况：  
     1. syscall系统调用，是由用户进程主动调用ecall指令来实现的。  
-    2. exception异常，是用户进程或内核程序的非法指令导致的，比如：除0错误，或引用无效的虚拟地址。  
+    2. exception异常，是用户进程或内核程序的illegal instruction导致的，比如：除0错误，或引用无效的虚拟地址。  
     3. device interrupt设备中断，比如：磁盘设备完成了读写请求操作。
 
 ### 2.5 syscall
