@@ -172,7 +172,19 @@
 </ul>
 </div>
 <h3 id="11">1.1 简介<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
-<p>xv6对上层提供kalloc()和kfree()接口来管理物理内存。通过kalloc()和kfree()，屏蔽了对物理内存的管理，使得调用者只需要关心虚拟地址空间，在需要使用新内存空间的时候调用kalloc()，在需要释放内存空间的时候调用kfree()。
+<p>在xv6中，设置了总量为128MB的物理内存空间，见Makefile中的编译运行选项：</p>
+<div class="highlight"><pre><span></span><code><span class="nv">QEMUOPTS</span> <span class="o">=</span> -machine virt -bios none -kernel <span class="nv">$K</span>/kernel -m 128M -smp <span class="k">$(</span>CPUS<span class="k">)</span> -nographic
+</code></pre></div>
+<p>在内核代码中，也给出了内存地址定义，在kernel/memlayout.h。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// the kernel expects there to be RAM</span>
+<span class="c1">// for use by the kernel and user pages</span>
+<span class="c1">// from physical address 0x80000000 to PHYSTOP.</span>
+<span class="cp">#define KERNBASE 0x80000000L</span>
+<span class="cp">#define PHYSTOP (KERNBASE + 128*1024*1024)</span>
+</code></pre></div>
+<p>在xv6内核刚启动时，从kernel结束地址（end）一直到PHYSTOP的空间都是空闲的。实际上，内核代码段（kernel text）和数据段（kernel data）会占用一部分空间，导致剩余的空闲空间比128MB要小一些。在xv6 book 3.2小节，给出了物理地址和虚拟地址的分布及映射关系（见下图）。</p>
+<p><img alt="image-20221012175648080" src="../part2.assets/image-20221012175648080.png" /></p>
+<p>xv6内存分配器对上层提供kalloc()和kfree()接口来管理这段剩余的空闲物理内存。在需要使用新内存空间的时候调用kalloc()，在需要释放内存空间的时候调用kfree()。
 物理内存分配器（allocator）定义在kernel/kalloc.c。</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="w"> </span><span class="o">*</span><span class="n">next</span><span class="p">;</span><span class="w"></span>
@@ -183,7 +195,8 @@
 <span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="w"> </span><span class="o">*</span><span class="n">freelist</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"> </span><span class="n">kmem</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
-<p>分配器的核心数据结构是由空闲物理页组成的链表<code>freelist</code>，这个空闲页链表使用 <strong>自旋锁</strong> （spinlock）进行保护。每个空闲页在链表里都是<code>struct run next</code>指向下一个空闲物理页。这可能比较难理解，我们不妨从这个链表的构建开始了解。在系统启动时，<code>main()</code>函数（见kernel/main.c）调用<code>kinit()</code>来初始化分配器，它通过保存所有空闲页来初始化链表。kinit()调用<code>freerange()</code>来把空闲内存页加到链表里，freerange()则是通过调用<code>kfree()</code>把每个空闲页（地址范围从pa_start至pa_end）逐一加到链表里来实现此功能的。kfree() 函数用于释放指定的物理内存页，将其添加至<code>freelist</code>中，参数<code>pa</code>为需要释放的物理页页号，即物理页的首地址，它被看作一个没有类型的指针。在kfree()中，pa被 <strong>强制转换</strong> 为run类型的指针，进而可以放入freelist中。因为空闲页里什么都没有，所以结构体<code>run</code>的成员可以直接 <strong>保存在空闲页自身里</strong> 。</p>
+<p>分配器的核心数据结构是由空闲物理页组成的链表<code>freelist</code>，这个空闲页链表将物理内存划分成4KB大小的页帧来管理，并使用 <strong>自旋锁</strong> （spinlock）进行保护。每个空闲页在链表里都是<code>struct run next</code>指向下一个空闲物理页。</p>
+<p>这可能比较难理解，我们不妨从这个链表的构建开始了解。在系统启动时，<code>main()</code>函数（见kernel/main.c）调用<code>kinit()</code>来初始化分配器，它通过保存所有空闲页来初始化链表。kinit()调用<code>freerange()</code>来把空闲内存页加到链表里，freerange()则是通过调用<code>kfree()</code>把每个空闲页（地址范围从pa_start至pa_end）逐一加到链表里来实现此功能的。kfree() 函数用于释放指定的物理内存页，将其添加至<code>freelist</code>中，参数<code>pa</code>为需要释放的物理页页号，即物理页的首地址，它被看作一个没有类型的指针。在kfree()中，pa被 <strong>强制转换</strong> 为run类型的指针，进而可以放入freelist中。因为空闲页里什么都没有，所以结构体<code>run</code>的成员可以直接 <strong>保存在空闲页自身里</strong> 。</p>
 <p><img alt="kalloc执行流" src="../part2.assets/kalloc%E6%89%A7%E8%A1%8C%E6%B5%81.png" /></p>
 <div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">freerange</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">pa_start</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">pa_end</span><span class="p">)</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
