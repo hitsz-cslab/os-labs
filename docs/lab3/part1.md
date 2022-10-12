@@ -115,13 +115,13 @@ total free number of pages: 32499 (out of 32768)
 test2 OK
 ```
 
-其中，"kmem"、"bcache"、"proc" 等指示了锁的类型，acquire()记录了每种锁 **被请求** 的次数，fetch-and-add就是 **进程没有成功获取到此锁** 的次数。例如， *lock: kmem: #fetch-and-add 46375 #acquire() 433016* 这句话的意思是，kmem.lock请求了433016次，仅成功了46375次，这就是发生了锁争用了（lock contention）。这些计数来自于在kalloctest调用的ntas()，它通过执行statistics()函数，打开"statistics"设备文件，获取内核打印的那些针对kmem和bcache锁(*本验的重点*)及5个竞争最激烈的锁的计数（见kernel/spinlock.c中的`statslock()`）。
+其中，"kmem"、"bcache"、"proc" 等指示了锁的类型，acquire()记录了每种锁 **被请求** 的次数，fetch-and-add就是 **进程没有成功获取到此锁** 的次数。例如， *lock: kmem: #fetch-and-add 46375 #acquire() 433016* 这句话的意思是，kmem.lock请求了433016次，仅成功了433016 - 46375 = 386641次，这就是发生了锁争用了（lock contention）。这些计数来自于在kalloctest调用的ntas()，它通过执行statistics()函数，打开"statistics"设备文件，获取内核打印的那些针对kmem和bcache锁(*本验的重点*)及5个竞争最激烈的锁的计数（见kernel/spinlock.c中的`statslock()`）。
 
 如果存在锁争用，fetch-and-add的数量将会很高，因为在acquire()获得锁之前要进行许多循环迭代，"statistics"设备文件会返回kmem和bcache锁的#test-and-set的总和（也就是`tot`）。
 
 #### 3.1.2 具体要求
 
-1)   本实验必须使用 **多核** 的环境，否则数据将没有意义；  
+1)   本实验必须使用 **专用空载多核** 的环境，否则数据将没有意义。你可以使用远程实验平台或你的笔记本电脑。  
 2)   请使用`initlock()`初始化锁，并要求锁名字以`kmem`开头；  
 3)   运行`kalloctest`查看实现的代码是否减少了锁争用（`tot`没有获取到此锁的次数小于10则为通过）；  
 4)   运行 `usertests sbrkmuch` 以测试修改代码后系统是否仍可以分配所有的内存；  
