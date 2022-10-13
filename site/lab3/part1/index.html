@@ -209,7 +209,7 @@
 <div class="admonition warning">
 <p class="admonition-title">请先同步上游远程仓库，并注意切换到lock分支进行试验</p>
 <p>本次实验基于 <strong>lock</strong> 分支，请同学们注意切换。</p>
-<p><strong>Step 1.</strong> 首先，保存实验二的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VS Code内建的图形化界面完成操作</a>这两小节，完成commit操作。或者， <strong>如果你希望直接放弃掉上一次commit后的所有更改</strong> ，那么你也可以使用-f选项强制切换分支，例如<code>git checkout -f syscall</code>。</p>
+<p><strong>Step 1.</strong> 首先，保存实验二的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VS Code内建的图形化界面完成操作</a>这两小节，完成commit操作。或者， <strong>如果你希望直接放弃掉上一次commit后的所有更改</strong> ，那么你也可以使用-f选项强制切换分支，例如<code>git checkout -f lock</code>。</p>
 <p><strong>Step 2.</strong> 切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
 </div>
 <h3 id="31-memory-allocator">3.1 任务一：内存分配器（Memory allocator）<a class="headerlink" href="#31-memory-allocator" title="Permanent link">&para;</a></h3>
@@ -228,7 +228,7 @@
 <p>测评程序<code>kalloctest</code>（见user/kalloctest.c）有两个test，分别是test1和test2。</p>
 <p>1) 在test1中fork出多个进程，它们并发运行于不同CPU核心，用 <code>sbrk()</code> 进行频繁获取空闲内存（调用<code>kalloc()</code>实现），然后又释放（调用<code>kfree()</code>实现）。在获取内存的时候不同CPU核心可能会争抢锁。</p>
 <div class="admonition note">
-<p class="admonition-title"><code>sbrk()</code>函数说明</p>
+<p class="admonition-title"><code>sbrk()</code>函数功能说明</p>
 <p>sbrk()是xv6提供的系统调用接口，其内核文件位置在kernel/sysproc.c。作用：为进程分配或回收内存。它有一个参数，代表要分配的字节数。它返回的是新分配内存的地址。</p>
 <p>这个系统调用是通过<code>growproc</code>来实现的。如果给的参数是正数，<code>growproc</code>使用<code>uvmalloc</code>来分配内存；如果给的参数是负数，使用<code>uvmdealloc</code>来释放内存。</p>
 <p><code>uvmalloc</code>首先使用<code>kalloc</code>来分配物理内存，然后再用<code>mappages</code>把PTE加到用户的页表里。<code>uvmdealloc</code>调用<code>uvmunmap</code>实现其功能，<code>uvmunmap</code>首先用<code>walk</code>来找到对应的PTE，然后使用<code>kfree</code>来释放相应的物理内存。</p>

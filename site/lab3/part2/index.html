@@ -182,8 +182,24 @@
 <span class="cp">#define KERNBASE 0x80000000L</span>
 <span class="cp">#define PHYSTOP (KERNBASE + 128*1024*1024)</span>
 </code></pre></div>
-<p>在xv6内核刚启动时，从kernel结束地址（end）一直到PHYSTOP的空间都是空闲的。实际上，内核代码段（kernel text）和数据段（kernel data）会占用一部分空间，导致剩余的空闲空间比128MB要小一些。在xv6 book 3.2小节，给出了物理地址和虚拟地址的分布及映射关系（见下图）。</p>
+<p>在xv6 book 3.2小节，给出了物理地址和虚拟地址的分布及映射关系（见下图）。下图左边是内核的虚拟地址，右边上半部分是物理内存（DRAM），右边下半部分是I/O设备。本次实验主要关注图中的右边上半部分（我们会在下一个实验中再次介绍左边部分的虚拟地址：-)。当操作系统启动时，会从地址0x80000000开始运行，这个地址其实是由硬件设计者决定的。在xv6内核刚启动时，从kernel结束地址（end）一直到PHYSTOP的空间都是空闲的。实际上，内核代码段（kernel text）和数据段（kernel data）会占用一部分空间，导致剩余的空闲空间比128MB要小。</p>
 <p><img alt="image-20221012175648080" src="../part2.assets/image-20221012175648080.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">拓展阅读</p>
+<ul>
+<li><strong>trampoline</strong>：用户态-内核态跳板</li>
+<li><strong>kstack</strong> ：每个进程的内核栈空间</li>
+<li><strong>Guard page</strong>：同时在内核空间和用户空间用来保护Stack。如果kernel stack耗尽了，它会溢出到Guard page，但是因为Guard page的PTE中Valid标志位未设置，会导致立即触发page fault，这样的结果好过内存越界之后造成的数据混乱。</li>
+<li><strong>free memory</strong>：页分配器管理的地址空间</li>
+<li><strong>kernel data/text</strong>：数据段/代码段</li>
+<li><strong>KERNBASE</strong>：内核态基址</li>
+<li><strong>VIRTIO disk</strong>：磁盘IO操作地址</li>
+<li><strong>UART0</strong>：串口IO操作地址</li>
+<li><strong>PLIC</strong>：平台级中断控制器地址</li>
+<li><strong>CLINT</strong>：core-local中断控制器地址</li>
+<li><strong>boot ROM</strong>：用于启动操作系统。当主板上电后，运行的时存储在boot ROM中的代码，当boot完成之后，会跳转到地址0x80000000。</li>
+</ul>
+</div>
 <p>xv6内存分配器对上层提供kalloc()和kfree()接口来管理这段剩余的空闲物理内存。在需要使用新内存空间的时候调用kalloc()，在需要释放内存空间的时候调用kfree()。
 物理内存分配器（allocator）定义在kernel/kalloc.c。</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -245,7 +261,6 @@
 <li>我们应该如何修改磁盘缓存以达到实验目标？  </li>
 </ul>
 </div>
-<p>​    </p>
 <h3 id="21">2.1 简介<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
 <p>xv6的文件系统是以磁盘数据块为单位从磁盘读写数据的。由于对磁盘的读取非常慢，而内存的速度要快得多，因此将最近经常访问的磁盘块缓存在内存里可以大大提升性能（此时内存起到cache的作用）。Buffer Cache（也称为bcache）就担任了磁盘缓存一职，它是磁盘与文件系统交互的中间层。
 xv6的磁盘缓存模块主要提供了以下功能：</p>
@@ -254,6 +269,7 @@ xv6的磁盘缓存模块主要提供了以下功能：</p>
 <li>缓存常用块，使得不必每次都从硬盘上读取它们。  </li>
 <li>修改缓存块的内容后，确保磁盘中对应内容的更新。  </li>
 </ol>
+<p><img alt="bcache3" src="../part2.assets/bcache3.png" /></p>
 <h3 id="22">2.2 基本结构<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
 <p>数据结构bcache（见kernel/bio.c）维护了一个由静态数组<code>struct buf buf[NBUF]</code>组成的双向链表，它以块为单位，每次读入或写出一个磁盘块，放到一个内存缓存块中（bcache.buf），同时自旋锁<code>bcache.lock</code>用于用户互斥访问。所有对缓存块的访问都是通过<code>bcache.head</code>引用链表来实现的，而不是buf数组。</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
