@@ -127,6 +127,17 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../lab3/part5/">提交文档</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Lab4：页表</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/part1/">实验概述</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/part2/">实验原理</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/part3/">实验实现</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/part4/">提交文档</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -239,10 +250,9 @@ $ git checkout util
 <p>示例1：</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>xargs <span class="nb">echo</span> good   <span class="c1"># 指定要执行的命令：echo，同时输入参数&#39;good&#39;</span>
 <span class="go">bye                 # 换行后继续输入echo的参数&#39;bye&#39;</span>
-<span class="go">good bye           # 执行&quot;echo good bye&quot;，输出&quot;good bye&quot;</span>
+<span class="go">good bye            # 执行&quot;echo good bye&quot;，输出&quot;good bye&quot;</span>
 <span class="go">hello too           # 换行后输入参数&#39;hello too&#39;</span>
-<span class="go">good hello          # 执行&quot;echo good hello too&quot;，输出&quot;good hello&quot;和&quot;good too&quot;</span>
-<span class="go">good too</span>
+<span class="go">good hello too      # 执行&quot;echo good hello too&quot;，输出&quot;good hello too&quot;</span>
 <span class="gp"># </span>通过ctrl+D结束输入
 <span class="gp">$</span>
 </code></pre></div>
@@ -256,7 +266,7 @@ $ git checkout util
 <span class="gp"># </span>通过ctrl+D结束输入
 <span class="gp">$</span>
 </code></pre></div>
-<p>为了简化实现，我们不要求实现选项<code>"-n"</code>，实现时请 <strong>默认该选项为<code>"-n1"</code></strong> ，即 <strong>每接收一行就执行一次指定的命令</strong> 。</p>
+<p>为了简化实现，我们不要求实现选项<code>"-n"</code>，实现时请 <strong>每接收一行就执行一次指定的命令</strong> 。</p>
 <p>示例2：</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>make qemu
 <span class="go">...</span>

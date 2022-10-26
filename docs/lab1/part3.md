@@ -152,10 +152,9 @@ a)    xv6中的`xargs`基本功能演示：
 ```console
 $ xargs echo good   # 指定要执行的命令：echo，同时输入参数'good'
 bye                 # 换行后继续输入echo的参数'bye'
-good bye		   # 执行"echo good bye"，输出"good bye"
+good bye			# 执行"echo good bye"，输出"good bye"
 hello too           # 换行后输入参数'hello too'
-good hello	        # 执行"echo good hello too"，输出"good hello"和"good too"
-good too
+good hello too      # 执行"echo good hello too"，输出"good hello too"
 # 通过ctrl+D结束输入
 $
 ```
@@ -174,7 +173,7 @@ good too			   # 通过ctrl+D结束输入，输出"good too"
 $
 ```
 
-为了简化实现，我们不要求实现选项`"-n"`，实现时请 **默认该选项为`"-n1"`** ，即 **每接收一行就执行一次指定的命令** 。
+为了简化实现，我们不要求实现选项`"-n"`，实现时请 **每接收一行就执行一次指定的命令** 。
 
 示例2：
 

@@ -113,6 +113,17 @@
                   <li class="toctree-l1"><a class="reference internal" href="../../lab3/part5/">提交文档</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Lab4：页表</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/part1/">实验概述</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/part2/">实验原理</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/part3/">实验实现</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/part4/">提交文档</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -269,7 +280,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title"><code>trapframe</code>拓展知识</p>
-<p>可能还有同学注意到，user page table中倒数第二个PTE的vaddr（虚拟地址：0x3ffffffe00）也是比较大。这个PTE是由kernel设置好的映射关系，用于指向一个可以用来存放每个进程的用户寄存器的内存位置（如果你想查看xv6在trapframe page中存放了什么，详见proc.h的trapframe结构体）。在内核切换用户空间时，内核会执行set sscratch指令，将这个寄存器的内容设置为0x3ffffffe00，也就是trapframe page的虚拟地址。在运行用户代码时，sscratch保存的就是指向TRAPFRAME的地址。</p>
+<p>可能还有同学注意到，user page table中倒数第二个PTE的vaddr（虚拟地址：0x3ffffffe00）也是比较大。它是由kernel设置好的映射关系，用于指向一个可以用来存放每个进程的用户寄存器的内存位置（如果你想查看xv6在trapframe page中存放了什么，详见proc.h的trapframe结构体）。在内核切换用户空间时，内核会执行set sscratch指令，将这个寄存器的内容设置为0x3ffffffe00，也就是trapframe page的虚拟地址。在运行用户代码时，sscratch保存的就是指向TRAPFRAME的地址。</p>
 <p>那为什么内核要保存这些用户寄存器呢？</p>
 <p>是因为内核即将要运行会覆盖这些寄存器的C代码。当从内核再次切回至用户空间时，如果要想正确恢复用户程序，则需要将用户寄存器恢复成在ecall指令执行之前的状态。因此，需要将所有的寄存器都保存在trapframe中，这样才能在之后恢复寄存器的值。</p>
 </div>

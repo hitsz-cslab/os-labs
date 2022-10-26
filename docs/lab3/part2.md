@@ -51,7 +51,7 @@ QEMUOPTS = -machine virt -bios none -kernel $K/kernel -m 128M -smp $(CPUS) -nogr
     - **UART0**：串口IO操作地址
     - **PLIC**：平台级中断控制器地址
     - **CLINT**：core-local中断控制器地址
-    - **boot ROM**：用于启动操作系统。当主板上电后，运行的时存储在boot ROM中的代码，当boot完成之后，会跳转到地址0x80000000。
+    - **boot ROM**：用于启动操作系统。当主板上电后，运行的是存储在boot ROM中的代码，当boot完成之后，会跳转到地址0x80000000。
 
 xv6内存分配器对上层提供kalloc()和kfree()接口来管理这段剩余的空闲物理内存。在需要使用新内存空间的时候调用kalloc()，在需要释放内存空间的时候调用kfree()。
 物理内存分配器（allocator）定义在kernel/kalloc.c。
