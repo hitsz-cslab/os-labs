@@ -283,6 +283,7 @@
 <li><strong>用户程序页表</strong> ：仅包含自身的代码和数据的虚实地址映射，内核代码和数据不包含在内。</li>
 </ul>
 <p><img alt="image-20221024160039840" src="../part2.assets/image-20221024160039840.png" /></p>
+<p>其代码实现在kernel/exec.c中，<code>exec</code>使用<code>proc_pagetable</code>分配了TRAMPOLINE和TRAPFRAME的页表映射，然后用<code>uvmalloc</code>来为每个ELF段分配内存及页表映射，并用<code>loadseg</code>把每个ELF段载入内存。</p>
 <p>上图是xv6的用户程序虚拟地址空间分布。</p>
 <div class="admonition info">
 <p class="admonition-title">拓展阅读：用户程序虚拟地址空间分布</p>
@@ -300,6 +301,39 @@
 <li><strong>内核页表</strong> ：仅包含内核的代码和数据的虚实地址映射，用户程序的代码和数据不包含在内。</li>
 </ul>
 <p><img alt="image-20221024170624973" src="../part2.assets/image-20221024170624973.png" /></p>
+<p>其代码实现在kernel/vm.c的kvminit()函数。在kvminit()函数内，完成了UART0、VIRTIO0、CLINT、PLIC、kernel text、kernel data和TRAMPOLINE的虚拟地址和物理地址的映射。</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm"> * create a direct-map page table for the kernel.</span>
+<span class="cm"> */</span><span class="w"></span>
+<span class="kt">void</span><span class="w"></span>
+<span class="nf">kvminit</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel_pagetable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">pagetable_t</span><span class="p">)</span><span class="w"> </span><span class="n">kalloc</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">memset</span><span class="p">(</span><span class="n">kernel_pagetable</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">PGSIZE</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// uart registers</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">(</span><span class="n">UART0</span><span class="p">,</span><span class="w"> </span><span class="n">UART0</span><span class="p">,</span><span class="w"> </span><span class="n">PGSIZE</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_W</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// virtio mmio disk interface</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">(</span><span class="n">VIRTIO0</span><span class="p">,</span><span class="w"> </span><span class="n">VIRTIO0</span><span class="p">,</span><span class="w"> </span><span class="n">PGSIZE</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_W</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// CLINT</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">(</span><span class="n">CLINT</span><span class="p">,</span><span class="w"> </span><span class="n">CLINT</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10000</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_W</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// PLIC</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">(</span><span class="n">PLIC</span><span class="p">,</span><span class="w"> </span><span class="n">PLIC</span><span class="p">,</span><span class="w"> </span><span class="mh">0x400000</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_W</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// map kernel text executable and read-only.</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">(</span><span class="n">KERNBASE</span><span class="p">,</span><span class="w"> </span><span class="n">KERNBASE</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">uint64</span><span class="p">)</span><span class="n">etext</span><span class="o">-</span><span class="n">KERNBASE</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_X</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// map kernel data and the physical RAM we&#39;ll make use of.</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">((</span><span class="n">uint64</span><span class="p">)</span><span class="n">etext</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">uint64</span><span class="p">)</span><span class="n">etext</span><span class="p">,</span><span class="w"> </span><span class="n">PHYSTOP</span><span class="o">-</span><span class="p">(</span><span class="n">uint64</span><span class="p">)</span><span class="n">etext</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_W</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// map the trampoline for trap entry/exit to</span>
+<span class="w">  </span><span class="c1">// the highest virtual address in the kernel.</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">(</span><span class="n">TRAMPOLINE</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">uint64</span><span class="p">)</span><span class="n">trampoline</span><span class="p">,</span><span class="w"> </span><span class="n">PGSIZE</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_X</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">拓展阅读：内核虚拟地址空间-物理地址空间分布</p>
 <p>又见到这个图了:-) 我们在<a href="../../lab3/part2/#11">Lab3的实验原理</a>部分已经介绍过了。</p>
@@ -312,7 +346,7 @@
 <li>内核栈：每个进程都有自己的内核栈，它被映射到高位，这样在它下面可以保留一个未映射的守护页。</li>
 </ul>
 </div>
-<p>对此Figure3.3和Figure3.4，可以发现，用户虚拟地址空间与内核虚拟地址空间的范围一样，都是从0到MAXVA（MAXVA的定义见kernel/riscv.h，共计256G的内存（2<sup>38</sup>））。这样，内核页表因不包含用户页表的映射，用户地址在内核中也会无效，用户也无法访问内核的数据。</p>
+<p>对此Figure3.3和Figure3.4，可以发现，用户虚拟地址空间与内核虚拟地址空间的范围一样，都是从0到MAXVA（MAXVA的定义见kernel/riscv.h，共计256G的内存（2<sup>38</sup>））。这样，内核页表因不包含用户页表的映射，用户地址在内核中无访问，同理用户无法访问内核的数据。</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// one beyond the highest possible virtual address.</span>
 <span class="c1">// MAXVA is actually one bit less than the max allowed by</span>
 <span class="c1">// Sv39, to avoid having to sign-extend virtual addresses</span>
@@ -339,11 +373,12 @@
 <p><strong>但需要注意的是</strong> ，如果直接把用户页表的内容复制到内核页表，即其中页表项的User位置1，那么内核依旧无法直接访问对应的虚拟地址（硬件会拒绝地址翻译，但软件模拟翻译依旧可行）。可供参考的解决方案有两种：</p>
 <ul>
 <li>（1）把内核页表中页表项的User位均置为0；</li>
-<li>（2）借助RISC-V的<code>sstatus</code>寄存器，如果该寄存器的SUM位（第18位）置为1，那么内核也可以直接访问上述的虚拟地址。大多情况下，该位需要置0。（访问寄存器的函数定义于riscv.h）</li>
+<li>（2）借助RISC-V的<code>sstatus</code>寄存器，如果该寄存器的SUM位（第18位）置为1，那么内核也可以直接访问上述的虚拟地址。大多情况下，该位需要置0。（访问寄存器的函数定义于riscv.h）关于<code>sstatus</code>寄存器，可以查阅<a href="https://gitee.com/hitsz-cslab/os-labs/tree/master/references/riscv-privileged.pdf">riscv-privileged.pdf</a> 4.1小节。</li>
 </ul>
 <p><img alt="image-20211023210540509" src="../part2.assets/image-20211023210540509-16353884146574.png" /></p>
 <h3 id="34">3.4 内核栈<a class="headerlink" href="#34" title="Permanent link">&para;</a></h3>
-<p>进程进入内核后，需要一个专属的栈以维持运行，这个栈就被称为内核栈。因为不同进程在内核中运行的情况不一样，所以每个进程都应当拥有一个内核栈。在xv6中，内核栈的分配过程如下（<code>kernel/proc.c</code>的 <code>procinit()</code>）：</p>
+<p>进程进入内核后，需要一个专属的栈以维持运行，这个栈就被称为内核栈。因为不同进程在内核中运行的情况不一样，所以每个进程都应当拥有一个内核栈。</p>
+<p>如<a href="#31">3.1小节 内核页表</a>所示，在kvminit()函数中，除了内核栈之外，其他部件都映射完成。内核栈的页表映射是在<code>kernel/proc.c</code>的 <code>procinit()</code>中实现：</p>
 <div class="highlight"><pre><span></span><code><span class="cm">/*in kernel/proc.c procinit()*/</span><span class="w"></span>
 <span class="k">for</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">proc</span><span class="p">;</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">proc</span><span class="p">[</span><span class="n">NPROC</span><span class="p">];</span><span class="w"> </span><span class="n">p</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="p">...</span><span class="w"></span>
@@ -355,13 +390,16 @@
 <span class="w">    </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">kstack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">va</span><span class="p">;</span><span class="w">       </span><span class="c1">// 将内核栈的虚拟地址存储于进程控制块</span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
-<p><code>procinit()</code>在系统的启动阶段执行，因此其为每个进程都分配了一个内核栈。在xv6的设计中，每个进程的内核栈的虚拟地址是固定的，因此可以直接计算。</p>
+<p><code>procinit()</code>在系统的启动阶段执行，因此其为每个进程（总共支持NPROC个进程）都分配了一个内核栈。在xv6的设计中，每个进程的内核栈的虚拟地址是固定的，因此可以直接计算。</p>
 <h3 id="35">3.5 用户页表和内核页表合并的一个重要前提：地址不重合<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
 <p>其实，要想在独立内核页表中，同时包含内核页表和用户页表是有讲究的。其中一个重要的前提要求是：用户的虚拟地址和内核的虚拟地址不能重叠。</p>
 <p>还好，用户程序从0开始，内核则从一个很高的虚拟地址（0xC000000）开始排布。但是他们还是有可能发生重叠。所以，你一定要限制用户程序虚拟地址与内核地址重叠。</p>
 <p>内核地址0xC000000，为PLIC寄存器地址，你可以在 <code>kernel/memlayout.h + kernel/vm.c</code> 中 <code>kvminit()</code> 进行查阅。仔细阅读 <code>kvminit()</code> ，你会发现其对如下地址范围进行了映射：</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// CLINT</span>
-<span class="n">kvmmap</span><span class="p">(</span><span class="n">kernel_pagetable</span><span class="p">,</span><span class="w"> </span><span class="n">CLINT</span><span class="p">,</span><span class="w"> </span><span class="n">CLINT</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10000</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_W</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="c1">// CLINT</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">(</span><span class="n">CLINT</span><span class="p">,</span><span class="w"> </span><span class="n">CLINT</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10000</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_W</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// PLIC</span>
+<span class="w">  </span><span class="n">kvmmap</span><span class="p">(</span><span class="n">PLIC</span><span class="p">,</span><span class="w"> </span><span class="n">PLIC</span><span class="p">,</span><span class="w"> </span><span class="mh">0x400000</span><span class="p">,</span><span class="w"> </span><span class="n">PTE_R</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">PTE_W</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>那么为何说0xC000000是内核地址的开始？内核页表不是从0开始，而是在某些特定地址上有特定的映射（见上述Figure3.3）。在 <code>memlayout.h</code> 可看到CLINT的值为0x2000000L，这个值比0xC000000小，0xC000000是PLIC（Platform-Level Interrput Controller，中断控制器）的地址，实际上，CLINT（Core Local Interruptor）定义了本地中断控制器的地址，我们只会在内核初始化的时候用到这段地址。所以，为用户进程生成内核页表的时候，可以不必映射这段地址。用户页表是从虚拟地址0开始，用多少就建多少，但最高地址不能超过内核的起始地址，这样用户程序可用的虚拟地址空间就为<code>0x0 - 0xC000000</code>。</p>
 <p><img alt="页表合并" src="../part2.assets/%E9%A1%B5%E8%A1%A8%E5%90%88%E5%B9%B6.png" /></p>

@@ -131,6 +131,8 @@ SV39页表标准下，构造了三级页表，我们将其分为称为：根页�
 
 ![image-20221024160039840](part2.assets/image-20221024160039840.png)
 
+其代码实现在kernel/exec.c中，`exec`使用`proc_pagetable`分配了TRAMPOLINE和TRAPFRAME的页表映射，然后用`uvmalloc`来为每个ELF段分配内存及页表映射，并用`loadseg`把每个ELF段载入内存。
+
 上图是xv6的用户程序虚拟地址空间分布。
 
 !!! info   "拓展阅读：用户程序虚拟地址空间分布"
@@ -147,6 +149,42 @@ SV39页表标准下，构造了三级页表，我们将其分为称为：根页�
 
 ![image-20221024170624973](part2.assets/image-20221024170624973.png)
 
+其代码实现在kernel/vm.c的kvminit()函数。在kvminit()函数内，完成了UART0、VIRTIO0、CLINT、PLIC、kernel text、kernel data和TRAMPOLINE的虚拟地址和物理地址的映射。
+
+```c
+/*
+ * create a direct-map page table for the kernel.
+ */
+void
+kvminit()
+{
+  kernel_pagetable = (pagetable_t) kalloc();
+  memset(kernel_pagetable, 0, PGSIZE);
+
+  // uart registers
+  kvmmap(UART0, UART0, PGSIZE, PTE_R | PTE_W);
+
+  // virtio mmio disk interface
+  kvmmap(VIRTIO0, VIRTIO0, PGSIZE, PTE_R | PTE_W);
+
+  // CLINT
+  kvmmap(CLINT, CLINT, 0x10000, PTE_R | PTE_W);
+
+  // PLIC
+  kvmmap(PLIC, PLIC, 0x400000, PTE_R | PTE_W);
+
+  // map kernel text executable and read-only.
+  kvmmap(KERNBASE, KERNBASE, (uint64)etext-KERNBASE, PTE_R | PTE_X);
+
+  // map kernel data and the physical RAM we'll make use of.
+  kvmmap((uint64)etext, (uint64)etext, PHYSTOP-(uint64)etext, PTE_R | PTE_W);
+
+  // map the trampoline for trap entry/exit to
+  // the highest virtual address in the kernel.
+  kvmmap(TRAMPOLINE, (uint64)trampoline, PGSIZE, PTE_R | PTE_X);
+}
+```
+
 !!! info   "拓展阅读：内核虚拟地址空间-物理地址空间分布"
     又见到这个图了:-) 我们在[Lab3的实验原理](../../lab3/part2/#11)部分已经介绍过了。
 
@@ -161,7 +199,7 @@ SV39页表标准下，构造了三级页表，我们将其分为称为：根页�
     - trampoline页：它是用户态-内核态跳板，既被映射到内核虚拟空间的顶端，页被映射到用户空间的同样位置。
     - 内核栈：每个进程都有自己的内核栈，它被映射到高位，这样在它下面可以保留一个未映射的守护页。
 
-对此Figure3.3和Figure3.4，可以发现，用户虚拟地址空间与内核虚拟地址空间的范围一样，都是从0到MAXVA（MAXVA的定义见kernel/riscv.h，共计256G的内存（2<sup>38</sup>））。这样，内核页表因不包含用户页表的映射，用户地址在内核中也会无效，用户也无法访问内核的数据。
+对此Figure3.3和Figure3.4，可以发现，用户虚拟地址空间与内核虚拟地址空间的范围一样，都是从0到MAXVA（MAXVA的定义见kernel/riscv.h，共计256G的内存（2<sup>38</sup>））。这样，内核页表因不包含用户页表的映射，用户地址在内核中无访问，同理用户无法访问内核的数据。
 
 ```c
 // one beyond the highest possible virtual address.
@@ -199,14 +237,16 @@ SV39页表标准下，构造了三级页表，我们将其分为称为：根页�
 **但需要注意的是** ，如果直接把用户页表的内容复制到内核页表，即其中页表项的User位置1，那么内核依旧无法直接访问对应的虚拟地址（硬件会拒绝地址翻译，但软件模拟翻译依旧可行）。可供参考的解决方案有两种：
     
 - （1）把内核页表中页表项的User位均置为0；
-- （2）借助RISC-V的`sstatus`寄存器，如果该寄存器的SUM位（第18位）置为1，那么内核也可以直接访问上述的虚拟地址。大多情况下，该位需要置0。（访问寄存器的函数定义于riscv.h）
+- （2）借助RISC-V的`sstatus`寄存器，如果该寄存器的SUM位（第18位）置为1，那么内核也可以直接访问上述的虚拟地址。大多情况下，该位需要置0。（访问寄存器的函数定义于riscv.h）关于`sstatus`寄存器，可以查阅[riscv-privileged.pdf](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/riscv-privileged.pdf) 4.1小节。
   
 
 ![image-20211023210540509](part2.assets/image-20211023210540509-16353884146574.png)
     
 ### 3.4 内核栈
 
-进程进入内核后，需要一个专属的栈以维持运行，这个栈就被称为内核栈。因为不同进程在内核中运行的情况不一样，所以每个进程都应当拥有一个内核栈。在xv6中，内核栈的分配过程如下（`kernel/proc.c`的 `procinit()`）：
+进程进入内核后，需要一个专属的栈以维持运行，这个栈就被称为内核栈。因为不同进程在内核中运行的情况不一样，所以每个进程都应当拥有一个内核栈。
+
+如[3.1小节 内核页表](#31)所示，在kvminit()函数中，除了内核栈之外，其他部件都映射完成。内核栈的页表映射是在`kernel/proc.c`的 `procinit()`中实现：
 
 ```c
 /*in kernel/proc.c procinit()*/
@@ -221,7 +261,7 @@ for(p = proc; p < &proc[NPROC]; p++) {
 }
 ```
 
-`procinit()`在系统的启动阶段执行，因此其为每个进程都分配了一个内核栈。在xv6的设计中，每个进程的内核栈的虚拟地址是固定的，因此可以直接计算。
+`procinit()`在系统的启动阶段执行，因此其为每个进程（总共支持NPROC个进程）都分配了一个内核栈。在xv6的设计中，每个进程的内核栈的虚拟地址是固定的，因此可以直接计算。
 
 ### 3.5 用户页表和内核页表合并的一个重要前提：地址不重合
 
@@ -232,8 +272,11 @@ for(p = proc; p < &proc[NPROC]; p++) {
 内核地址0xC000000，为PLIC寄存器地址，你可以在 `kernel/memlayout.h + kernel/vm.c` 中 `kvminit()` 进行查阅。仔细阅读 `kvminit()` ，你会发现其对如下地址范围进行了映射：
 
 ```c
-// CLINT
-kvmmap(kernel_pagetable, CLINT, CLINT, 0x10000, PTE_R | PTE_W);
+  // CLINT
+  kvmmap(CLINT, CLINT, 0x10000, PTE_R | PTE_W);
+
+  // PLIC
+  kvmmap(PLIC, PLIC, 0x400000, PTE_R | PTE_W);
 ```
 
 那么为何说0xC000000是内核地址的开始？内核页表不是从0开始，而是在某些特定地址上有特定的映射（见上述Figure3.3）。在 `memlayout.h` 可看到CLINT的值为0x2000000L，这个值比0xC000000小，0xC000000是PLIC（Platform-Level Interrput Controller，中断控制器）的地址，实际上，CLINT（Core Local Interruptor）定义了本地中断控制器的地址，我们只会在内核初始化的时候用到这段地址。所以，为用户进程生成内核页表的时候，可以不必映射这段地址。用户页表是从虚拟地址0开始，用多少就建多少，但最高地址不能超过内核的起始地址，这样用户程序可用的虚拟地址空间就为`0x0 - 0xC000000`。
