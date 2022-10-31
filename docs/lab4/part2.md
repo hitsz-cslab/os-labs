@@ -131,9 +131,7 @@ SV39页表标准下，构造了三级页表，我们将其分为称为：根页�
 
 ![image-20221024160039840](part2.assets/image-20221024160039840.png)
 
-其代码实现在kernel/exec.c中，`exec`使用`proc_pagetable`分配了TRAMPOLINE和TRAPFRAME的页表映射，然后用`uvmalloc`来为每个ELF段分配内存及页表映射，并用`loadseg`把每个ELF段载入内存。
-
-上图是xv6的用户程序虚拟地址空间分布。
+上图是xv6的用户程序虚拟地址空间分布。其代码实现在kernel/exec.c中，`exec`使用`proc_pagetable`分配了TRAMPOLINE和TRAPFRAME的页表映射，然后用`uvmalloc`来为每个ELF段分配内存及页表映射，并用`loadseg`把每个ELF段载入内存。
 
 !!! info   "拓展阅读：用户程序虚拟地址空间分布"
     - **trampoline**：用户态-内核态跳板。
@@ -186,7 +184,7 @@ kvminit()
 ```
 
 !!! info   "拓展阅读：内核虚拟地址空间-物理地址空间分布"
-    又见到这个图了:-) 我们在[Lab3的实验原理](../../lab3/part2/#11)部分已经介绍过了。
+    又见到图Figure3.3了:-) 我们在[Lab3的实验原理](../../lab3/part2/#11)部分已经介绍过了。
 
     kernel/memlayout.h描述了内核内存的布局。
 

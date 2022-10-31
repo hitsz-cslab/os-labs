@@ -242,29 +242,29 @@
 </ul>
 <div class="highlight"><pre><span></span><code><span class="c1">// Recursively free page-table pages.</span>
 <span class="c1">// All leaf mappings must already have been removed.</span>
-<span class="kt">void</span><span class="w"></span>
-<span class="nf">freewalk</span><span class="p">(</span><span class="n">pagetable_t</span><span class="w"> </span><span class="n">pagetable</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// there are 2^9 = 512 PTEs in a page table.</span>
+<span class="mi">275</span><span class="w"> </span><span class="kt">void</span><span class="w"></span>
+<span class="mi">276</span><span class="w"> </span><span class="n">freewalk</span><span class="p">(</span><span class="n">pagetable_t</span><span class="w"> </span><span class="n">pagetable</span><span class="p">)</span><span class="w"></span>
+<span class="mi">277</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="mi">278</span><span class="w">  </span><span class="c1">// there are 2^9 = 512 PTEs in a page table.</span>
 <span class="w">  </span><span class="c1">// 遍历一个页表页的PTE表项 </span>
-<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">512</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="n">pte_t</span><span class="w"> </span><span class="n">pte</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pagetable</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="c1">//获取第i条PTE </span>
+<span class="mi">279</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">512</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="mi">280</span><span class="w">    </span><span class="n">pte_t</span><span class="w"> </span><span class="n">pte</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pagetable</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="c1">//获取第i条PTE </span>
 
 <span class="w">    </span><span class="cm">/*判断PTE的Flag位，如果还有下一级页表(即当前是根页表或次页表)，</span>
 <span class="cm">    则递归调用freewalk释放页表项，并将对应的PTE清零*/</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="p">((</span><span class="n">pte</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">PTE_V</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">pte</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">PTE_R</span><span class="o">|</span><span class="n">PTE_W</span><span class="o">|</span><span class="n">PTE_X</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"> </span>
-<span class="w">      </span><span class="c1">// this PTE points to a lower-level page table.</span>
-<span class="w">      </span><span class="n">uint64</span><span class="w"> </span><span class="n">child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PTE2PA</span><span class="p">(</span><span class="n">pte</span><span class="p">);</span><span class="w"> </span><span class="c1">// 将PTE转为为物理地址</span>
-<span class="w">      </span><span class="n">freewalk</span><span class="p">((</span><span class="n">pagetable_t</span><span class="p">)</span><span class="n">child</span><span class="p">);</span><span class="w"> </span><span class="c1">// 递归调用freewalk</span>
-<span class="w">      </span><span class="n">pagetable</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// 清零</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">pte</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">PTE_V</span><span class="p">){</span><span class="w"> </span>
+<span class="mi">281</span><span class="w">    </span><span class="k">if</span><span class="p">((</span><span class="n">pte</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">PTE_V</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">pte</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">PTE_R</span><span class="o">|</span><span class="n">PTE_W</span><span class="o">|</span><span class="n">PTE_X</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span><span class="w"> </span>
+<span class="mi">282</span><span class="w">      </span><span class="c1">// this PTE points to a lower-level page table.</span>
+<span class="mi">283</span><span class="w">      </span><span class="n">uint64</span><span class="w"> </span><span class="n">child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PTE2PA</span><span class="p">(</span><span class="n">pte</span><span class="p">);</span><span class="w"> </span><span class="c1">// 将PTE转为为物理地址</span>
+<span class="mi">284</span><span class="w">      </span><span class="n">freewalk</span><span class="p">((</span><span class="n">pagetable_t</span><span class="p">)</span><span class="n">child</span><span class="p">);</span><span class="w"> </span><span class="c1">// 递归调用freewalk</span>
+<span class="mi">285</span><span class="w">      </span><span class="n">pagetable</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// 清零</span>
+<span class="mi">286</span><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">pte</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">PTE_V</span><span class="p">){</span><span class="w"> </span>
 <span class="w">    </span><span class="cm">/*如果叶子页表的虚拟地址还有映射到物理地址，报错panic。</span>
 <span class="cm">    因为调用freewalk之前应该会先uvmunmap释放物理内存*/</span><span class="w">    </span>
-<span class="w">      </span><span class="n">panic</span><span class="p">(</span><span class="s">&quot;freewalk: leaf&quot;</span><span class="p">);</span><span class="w"> </span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="n">kfree</span><span class="p">((</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">pagetable</span><span class="p">);</span><span class="w"> </span><span class="c1">// 释放pagetable指向的物理页</span>
-<span class="p">}</span><span class="w"></span>
+<span class="mi">287</span><span class="w">      </span><span class="n">panic</span><span class="p">(</span><span class="s">&quot;freewalk: leaf&quot;</span><span class="p">);</span><span class="w"> </span>
+<span class="mi">288</span><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="mi">289</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="mi">290</span><span class="w">  </span><span class="n">kfree</span><span class="p">((</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">pagetable</span><span class="p">);</span><span class="w"> </span><span class="c1">// 释放pagetable指向的物理页</span>
+<span class="mi">291</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <ul>
 <li>
@@ -299,10 +299,13 @@
 <p class="admonition-title">关于内核栈映射</p>
 <p>注意，要保证在每一个进程的内核页表中映射该进程的内核栈。xv6本会在 procinit() 中分配内核栈的物理页并在页表建立映射。但是现在，应该在allocproc()中实现该功能，因为执行procinit()的时候进程的内核页表还未被创建。你可以在procinit()中只保留内存的分配，但在allocproc()中完成映射。</p>
 </div>
-<p><strong>Step 5</strong> ：修改调度器（scheduler），使得切换进程的时候切换内核页表。参考方法：在进程切换的同时也要切换页表将其放入寄存器<code>satp</code>中，请借鉴 kvminithart()的页表载入方式），在调用 w_satp() 之后调用 sfence_vma()，具体原理可查阅实验原理的<a href="../part2/#33">3.3 内核对用户空间的访问</a>。</p>
+<p><strong>Step 5</strong> ：修改调度器（scheduler），使得切换进程的时候切换内核页表。</p>
 <ul>
 <li>
-<p>无进程运行的适配：当目前没有进程运行的时候，scheduler() 应该要satp载入全局的内核页表kernel_pagetable (kernel/vm.c)。</p>
+<p><strong>参考方法</strong> ：在进程切换的同时也要切换页表将其放入寄存器<code>satp</code>中，请借鉴 kvminithart()的页表载入方式），在调用 w_satp() 之后调用 sfence_vma()，具体原理可查阅实验原理的<a href="../part2/#33">3.3 内核对用户空间的访问</a>。</p>
+</li>
+<li>
+<p><strong>无进程运行的适配</strong> ：当目前没有进程运行的时候，scheduler() 应该要satp载入全局的内核页表kernel_pagetable (kernel/vm.c)。</p>
 </li>
 <li>
 <p>关于scheduler调度器，可以参考<a href="https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&amp;vd_source=225a99017e082147ac525beeddd6e3e2">HITSZ操作系统课程组讲解XV6（三）内存管理</a></p>

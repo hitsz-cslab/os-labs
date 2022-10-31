@@ -283,8 +283,7 @@
 <li><strong>用户程序页表</strong> ：仅包含自身的代码和数据的虚实地址映射，内核代码和数据不包含在内。</li>
 </ul>
 <p><img alt="image-20221024160039840" src="../part2.assets/image-20221024160039840.png" /></p>
-<p>其代码实现在kernel/exec.c中，<code>exec</code>使用<code>proc_pagetable</code>分配了TRAMPOLINE和TRAPFRAME的页表映射，然后用<code>uvmalloc</code>来为每个ELF段分配内存及页表映射，并用<code>loadseg</code>把每个ELF段载入内存。</p>
-<p>上图是xv6的用户程序虚拟地址空间分布。</p>
+<p>上图是xv6的用户程序虚拟地址空间分布。其代码实现在kernel/exec.c中，<code>exec</code>使用<code>proc_pagetable</code>分配了TRAMPOLINE和TRAPFRAME的页表映射，然后用<code>uvmalloc</code>来为每个ELF段分配内存及页表映射，并用<code>loadseg</code>把每个ELF段载入内存。</p>
 <div class="admonition info">
 <p class="admonition-title">拓展阅读：用户程序虚拟地址空间分布</p>
 <ul>
@@ -336,7 +335,7 @@
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">拓展阅读：内核虚拟地址空间-物理地址空间分布</p>
-<p>又见到这个图了:-) 我们在<a href="../../lab3/part2/#11">Lab3的实验原理</a>部分已经介绍过了。</p>
+<p>又见到图Figure3.3了:-) 我们在<a href="../../lab3/part2/#11">Lab3的实验原理</a>部分已经介绍过了。</p>
 <p>kernel/memlayout.h描述了内核内存的布局。</p>
 <p>QEMU模拟了一个包含I/O设备的计算机。设备的控制寄存器被映射到物理内存0x0~0x80000000之间，内核通过读写这些内存地址于设备进行交互。</p>
 <p>xv6内核的大部分虚实地址映射是恒等映射，虚拟地址和物理地址是一模一样的。对于既要读写虚拟页又要通过PTE管理物理页的xv6内核来说，这样的直接映射降低了复杂性。</p>

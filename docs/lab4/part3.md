@@ -79,29 +79,29 @@
 ```c
 // Recursively free page-table pages.
 // All leaf mappings must already have been removed.
-void
-freewalk(pagetable_t pagetable)
-{
-  // there are 2^9 = 512 PTEs in a page table.
+275 void
+276 freewalk(pagetable_t pagetable)
+277 {
+278  // there are 2^9 = 512 PTEs in a page table.
   // 遍历一个页表页的PTE表项 
-  for(int i = 0; i < 512; i++){
-    pte_t pte = pagetable[i]; //获取第i条PTE 
+279  for(int i = 0; i < 512; i++){
+280    pte_t pte = pagetable[i]; //获取第i条PTE 
 
     /*判断PTE的Flag位，如果还有下一级页表(即当前是根页表或次页表)，
     则递归调用freewalk释放页表项，并将对应的PTE清零*/
-    if((pte & PTE_V) && (pte & (PTE_R|PTE_W|PTE_X)) == 0){ 
-      // this PTE points to a lower-level page table.
-      uint64 child = PTE2PA(pte); // 将PTE转为为物理地址
-      freewalk((pagetable_t)child); // 递归调用freewalk
-      pagetable[i] = 0; // 清零
-    } else if(pte & PTE_V){ 
+281    if((pte & PTE_V) && (pte & (PTE_R|PTE_W|PTE_X)) == 0){ 
+282      // this PTE points to a lower-level page table.
+283      uint64 child = PTE2PA(pte); // 将PTE转为为物理地址
+284      freewalk((pagetable_t)child); // 递归调用freewalk
+285      pagetable[i] = 0; // 清零
+286    } else if(pte & PTE_V){ 
     /*如果叶子页表的虚拟地址还有映射到物理地址，报错panic。
     因为调用freewalk之前应该会先uvmunmap释放物理内存*/    
-      panic("freewalk: leaf"); 
-    }
-  }
-  kfree((void*)pagetable); // 释放pagetable指向的物理页
-}
+287      panic("freewalk: leaf"); 
+288    }
+289  }
+290  kfree((void*)pagetable); // 释放pagetable指向的物理页
+291 }
 ```
 
 - 在 `kernel/defs.h` 中定义 `vmprint()` 的接口，这样你才能在 `exec()` 中使用它。  
@@ -136,9 +136,11 @@ freewalk(pagetable_t pagetable)
 !!! note   "关于内核栈映射"
     注意，要保证在每一个进程的内核页表中映射该进程的内核栈。xv6本会在 procinit() 中分配内核栈的物理页并在页表建立映射。但是现在，应该在allocproc()中实现该功能，因为执行procinit()的时候进程的内核页表还未被创建。你可以在procinit()中只保留内存的分配，但在allocproc()中完成映射。
 
-**Step 5** ：修改调度器（scheduler），使得切换进程的时候切换内核页表。参考方法：在进程切换的同时也要切换页表将其放入寄存器`satp`中，请借鉴 kvminithart()的页表载入方式），在调用 w_satp() 之后调用 sfence_vma()，具体原理可查阅实验原理的[3.3 内核对用户空间的访问](../part2/#33)。
+**Step 5** ：修改调度器（scheduler），使得切换进程的时候切换内核页表。
 
-- 无进程运行的适配：当目前没有进程运行的时候，scheduler() 应该要satp载入全局的内核页表kernel_pagetable (kernel/vm.c)。
+- **参考方法** ：在进程切换的同时也要切换页表将其放入寄存器`satp`中，请借鉴 kvminithart()的页表载入方式），在调用 w_satp() 之后调用 sfence_vma()，具体原理可查阅实验原理的[3.3 内核对用户空间的访问](../part2/#33)。
+
+- **无进程运行的适配** ：当目前没有进程运行的时候，scheduler() 应该要satp载入全局的内核页表kernel_pagetable (kernel/vm.c)。
 
 - 关于scheduler调度器，可以参考[HITSZ操作系统课程组讲解XV6（三）内存管理](https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)
 
