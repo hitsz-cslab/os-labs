@@ -133,6 +133,9 @@ SV39页表标准下，构造了三级页表，我们将其分为称为：根页�
 
 上图是xv6的用户程序虚拟地址空间分布。其代码实现在kernel/exec.c中，`exec`使用`proc_pagetable`分配了TRAMPOLINE和TRAPFRAME的页表映射，然后用`uvmalloc`来为每个ELF段分配内存及页表映射，并用`loadseg`把每个ELF段载入内存。
 
+当进程申请更多内存的时候，xv6首先用`kalloc`分配一个物理页。然后调用mappages函数把这个物理页的PTE加到进程的页表里。xv6会设置该PTE对应的标志位(W,X,R,U,V)。
+
+
 !!! info   "拓展阅读：用户程序虚拟地址空间分布"
     - **trampoline**：用户态-内核态跳板。
     - **trapframe**：用来存放每个进程的用户寄存器的内存空间。如果你想查看xv6在trapframe page中存放了什么，详见proc.h的trapframe结构体。

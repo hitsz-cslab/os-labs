@@ -192,7 +192,7 @@
 - **推荐方案** ：在调用copyin_new()/ copyinstr_new()之前修改sstatus寄存器的SUM位：`w_sstatus(r_sstatus() | SSTATUS_SUM);` 在凋用copyin_new()/ copyinstr_new()之后去掉sstatus寄存器的SUM位：`w_sstatus(r_sstatus() & ~SSTATUS_SUM);`
 
 
-**Step 4** ：在独立内核页表加上用户页表的映射的时候，每一次用户页表被修改了映射的同时，都要修改对应独立内核页表的相应部分保持同步。这通常在 fork(), exec(), sbrk()中发生。也就是，需要在这三个函数里将改变后的进程页表同步到内核页表中。
+**Step 4** ：在独立内核页表加上用户页表的映射的时候，每一次用户页表被修改了映射的同时，都要修改对应独立内核页表的相应部分保持同步。这通常在 fork(), exec(), sbrk()中发生，其中sbrk()调用growproc()来实现内存分配或回收。也就是，需要在fork()、exec()和growproc()这三个函数里将改变后的进程页表同步到内核页表中。
 
 **Step 5** ：注意：第一个进程也需要将用户页表映射到内核页表中，见kernel/proc.c: userinit()。
 

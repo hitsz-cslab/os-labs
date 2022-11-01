@@ -284,6 +284,7 @@
 </ul>
 <p><img alt="image-20221024160039840" src="../part2.assets/image-20221024160039840.png" /></p>
 <p>上图是xv6的用户程序虚拟地址空间分布。其代码实现在kernel/exec.c中，<code>exec</code>使用<code>proc_pagetable</code>分配了TRAMPOLINE和TRAPFRAME的页表映射，然后用<code>uvmalloc</code>来为每个ELF段分配内存及页表映射，并用<code>loadseg</code>把每个ELF段载入内存。</p>
+<p>当进程申请更多内存的时候，xv6首先用<code>kalloc</code>分配一个物理页。然后调用mappages函数把这个物理页的PTE加到进程的页表里。xv6会设置该PTE对应的标志位(W,X,R,U,V)。</p>
 <div class="admonition info">
 <p class="admonition-title">拓展阅读：用户程序虚拟地址空间分布</p>
 <ul>

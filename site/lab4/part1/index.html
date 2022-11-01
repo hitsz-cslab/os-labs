@@ -266,19 +266,19 @@
 <span class="go">|| ||0: pte 0x0000000021fda401 pa 0x0000000087f69000</span>
 <span class="go">/* 第二级目录项 0，PTE的PPN物理页帧号：0x87f69，Flags为0x001。 */</span>
 <span class="go">|| || ||0: pte 0x0000000021fdac1f pa 0x0000000087f6b000</span>
-<span class="go">/* 进程的第 0 页，其PPN物理页帧号：0x87f6b，Flags为0x01f，物理块起始地址：0x0000000087f6b000 */</span>
+<span class="go">/* 第三级目录项 0，其PPN物理页帧号：0x87f6b，Flags为0x01f，物理块起始地址：0x0000000087f6b000 */</span>
 <span class="go">|| || ||1: pte 0x0000000021fda00f pa 0x0000000087f68000</span>
-<span class="go">/* 进程的第 1 页，其PPN物理页帧号：0x87f68，Flags为0x00f，物理块起始地址：0x0000000087f68000 */</span>
+<span class="go">/* 第三级目录项 1，其PPN物理页帧号：0x87f68，Flags为0x00f，物理块起始地址：0x0000000087f68000 */</span>
 <span class="go">|| || ||2: pte 0x0000000021fd9c1f pa 0x0000000087f67000</span>
-<span class="go">/* 进程的第 2 页，其PPN物理页帧号：0x87f67，Flags为0x01f，物理块起始地址：0x0000000087f67000 */</span>
+<span class="go">/* 第三级目录项 2，其PPN物理页帧号：0x87f67，Flags为0x01f，物理块起始地址：0x0000000087f67000 */</span>
 <span class="go">||255: pte 0x0000000021fdb401 pa 0x0000000087f6d000</span>
 <span class="go">/* 根页目录项 255，下一级（第二级）页表的PPN物理页帧号为0x87f6d，Flags为0x001，PTE_V有效。该物理页的起始物理地址为0x0000000087f6d000 */</span>
 <span class="go">|| ||511: pte 0x0000000021fdb001 pa 0x0000000087f6c000</span>
 <span class="go">/* 第二级目录项 511，PPN物理页帧号为0x87f6c，Flags为0x001 */</span>
 <span class="go">|| || ||510: pte 0x0000000021fdd807 pa 0x0000000087f76000</span>
-<span class="go">/* 进程的第 510 页，其PPN物理页帧号：0x87f76，Flags为0x007，物理块起始地址：0x0000000087f76000 */</span>
+<span class="go">/* 第三级目录项 510，其PPN物理页帧号：0x87f76，Flags为0x007，物理块起始地址：0x0000000087f76000 */</span>
 <span class="go">|| || ||511: pte 0x0000000020001c0b pa 0x0000000080007000</span>
-<span class="go">/* 进程的第 511 页，其PPN物理页帧号：0x80007，Flags为0x00b，物理块起始地址：0x0000000080007000 */</span>
+<span class="go">/* 第三级目录项 511，，其PPN物理页帧号：0x80007，Flags为0x00b，物理块起始地址：0x0000000080007000 */</span>
 </code></pre></div>
 <p>我们先不着急动手，先看看结果长什么样（不清楚页表的含义先不急，实验原理会告诉你）。</p>
 <ul>
@@ -292,7 +292,7 @@
 </ul>
 </li>
 </ul>
-<p>在上面的示例中，根页表向具有0和255的映射，其中0的次页表只映射了索引0，该索引0映射了叶子页表的0、1和2。</p>
+<p>在上面的示例中，根页表项只有第0项和第255项的映射是有效的，其中第0项的次页表只映射了索引0，该索引0映射了叶子页表的0、1和2。</p>
 <p>你的代码输出的物理地址与上述示例可能不相同，但显示项数和虚拟地址应相同。</p>
 <h4 id="313">3.1.3 测试<a class="headerlink" href="#313" title="Permanent link">&para;</a></h4>
 <p>运行<code>make grade</code> ，其中的<code>pte printout</code>测试就是该任务的测试（<a href="#34">可参考测评 3.4</a>）。</p>
