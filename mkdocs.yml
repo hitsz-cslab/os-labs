@@ -57,6 +57,8 @@ nav:
     - Linux开发环境基础知识: Linux.md
     - 远程实验平台使用指南: remote_env.md
     - 远程实验平台环境图形化调试指南: remote_env_gdb.md
+  - OS竞赛招新: 
+    - 2023年“全国大学生计算机系统能力大赛操作系统设计赛”火热报名中！: oscomp/oscomp.md   
   - 常见问题: 
     - 实验环境问题: faq/faq-env.md
     - Lab1问题: faq/lab1.md
@@ -83,3 +85,11 @@ nav:
     - 实验原理: lab4/part2.md
     - 实验实现: lab4/part3.md
     - 提交文档: lab4/part4.md  
+  - Lab5：基于FUSE的青春版EXT2文件系统: 
+    - 实验概述: lab5/part1.md
+    - 实验原理: lab5/part2.md
+    - 环境搭建与上手: lab5/part3-1.md
+    - 任务一：熟悉DDRIVER驱动: lab5/part3-2.md
+    - 任务二：基于FUSE实现青春版EXT2文件系统: lab5/part3-3.md
+    - 选做任务: lab5/part3-4.md
+    - 提交文档: lab5/part4.md   
