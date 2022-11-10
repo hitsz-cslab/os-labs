@@ -153,7 +153,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#2">2.  日志文件系统简介（选做内容）</a>
+    <li class="toctree-l2"><a class="reference internal" href="#2">2.  日志文件系统简介（选做任务）</a>
     </li>
     </ul>
                   </li>
@@ -537,7 +537,7 @@
 <span class="o">[</span>root@localhost user_ddriver<span class="o">]</span><span class="c1"># make</span>
 gcc  -Wall -O -g  -c ddriver.c
 </code></pre></div>
-<h2 id="2">2.  日志文件系统简介（选做内容）<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h2 id="2">2.  日志文件系统简介（选做任务）<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>日志机制是提高文件系统鲁棒性的一个重要机制。我们知道， <strong>文件系统的很多操作往往不止一个步骤</strong> ，以创建文件为例，它要经过： <strong>写文件inode</strong> 、 <strong>写目录项</strong> 、 <strong>更新位图</strong> 三个步骤。</p>
 <p>如果在写完目录项但没开始写超级块时发生了 <strong>系统崩溃或者停电等因素导致宕机</strong> ，那么第一步被分配出去的inode就无法被记录为已分配，重启系统后文件系统有可能把这一inode分配给其他文件。</p>
 <p>为了保证整个过程的 <strong>原子性</strong> ，我们可以加入日志机制。在磁盘中划出一块区域记为日志区。一开始不把更新后的数据写入数据区，而是把日志区状态记为记录中，并把更改写入日志区。写入完成后，把日志区状态改为写入中，并把日志区的更改更新到数据区。全部更新完成后，把日志区状态记为空闲。</p>
