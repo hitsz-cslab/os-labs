@@ -17,9 +17,18 @@
     
     此外，特别推荐同学们观看由我校OS课题组、各级学长助教们合力为大家录制的XV6讲解视频，希望能够让大家对整个XV6系统有一个更为直观的认识，推荐大家按需观看：
     
-    1. 【HITSZ操作系统课程组讲解XV6（一）启动过程】 https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
-    2. 【HITSZ操作系统课程组讲解XV6（二）进程管理】 https://www.bilibili.com/video/BV1ge4y1J7Je?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
-    3. 【HITSZ操作系统课程组讲解XV6（三）内存管理】 https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    1. 【HITSZ操作系统课程组讲解XV6（一）启动过程】 			 
+    
+    	- 视频链接: https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析1-进程管理.pdf)
+    2. 【HITSZ操作系统课程组讲解XV6（二）进程管理】 
+
+    	- 视频链接: https://www.bilibili.com/video/BV1ge4y1J7Je?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析2-内存管理.pdf)
+    3. 【HITSZ操作系统课程组讲解XV6（三）内存管理】 
+
+    	- 视频链接: https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析3-启动过程.pdf)
 
 !!! info   "提示"
     本节实验将探索内核的内存管理模块，并且需要修改相应的部分。建议阅读完所有部分，再开始代码的编写。
@@ -135,7 +144,7 @@ page table 0x0000000087f6e000
 
 你的代码输出的物理地址与上述示例可能不相同，但显示项数和虚拟地址应相同。
 
-    
+
 #### 3.1.3 测试
 
 运行`make grade` ，其中的`pte printout`测试就是该任务的测试（[可参考测评 3.4](#34)）。
