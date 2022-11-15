@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>任务一：熟悉DDRIVER驱动 - 操作系统2022秋 | 哈工大（深圳）</title>
+    <title>实验提示 - 操作系统2022秋 | 哈工大（深圳）</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "\u4efb\u52a1\u4e00\uff1a\u719f\u6089DDRIVER\u9a71\u52a8";
-        var mkdocs_page_input_path = "lab5\\part3-2.md";
+        var mkdocs_page_name = "\u5b9e\u9a8c\u63d0\u793a";
+        var mkdocs_page_input_path = "lab5\\part5.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -127,9 +127,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../part3-1/">环境搭建与上手</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">任务一：熟悉DDRIVER驱动</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../part3-2/">任务一：熟悉DDRIVER驱动</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../part3-3/">任务二：基于FUSE实现青春版EXT2文件系统</a>
                   </li>
@@ -137,7 +135,19 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../part4/">提交文档</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../part5/">实验提示</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">实验提示</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1">1. 如何调试？</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2">2. 挂载失败？</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3">3. 挂载点不空？</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-ext2">4. 如何解读EXT2文件系统布局？</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5">5. 实验评测中的位图检查原理</a>
+    </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -154,7 +164,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Lab5：基于FUSE的青春版EXT2文件系统 &raquo;</li><li>任务一：熟悉DDRIVER驱动</li>
+          <li>Lab5：基于FUSE的青春版EXT2文件系统 &raquo;</li><li>实验提示</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -164,22 +174,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="ddriver">任务一：<strong>熟悉DDRIVER驱动</strong><a class="headerlink" href="#ddriver" title="Permanent link">&para;</a></h1>
-<p>任务一要求熟悉DDRIVER驱动，我们要求大家根据注释看懂<code>user-land-filesystem/tests/test_ddriver/src/test.c</code>的代码，并 <strong>根据提示</strong> 修改其中的 <strong>一处错误</strong> ：</p>
-<p><img alt="image-20211024153154797" src="../part3.assets/image-20211024153154797.png" /></p>
-<p>编译运行测试程序的步骤：</p>
-<div class="highlight"><pre><span></span><code><span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ </span>cmake CMakeLists.txt 
-<span class="go">...</span>
-<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ </span>make
-<span class="go">...</span>
-<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ </span>./ddriver_test 
+                <h1 id="_1">实验提示<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 如何调试？<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>按下F5后，文件系统运行为前台模式，那么如何输入命令呢？事实上，可以ctrl + shift +｀呼出另一个终端，然后在另一个终端操作。</p>
+<p><img alt="image-20211024170839872" src="../part3.assets/image-20211024170839872.png" /></p>
+<p>另外，如下图所示，可以按这个 <strong>拆分键</strong> ，就可以同时显示两个终端了。</p>
+<p><img alt="image-20211024170743344" src="../part3.assets/image-20211024170743344.png" /></p>
+<h2 id="2">2. 挂载失败？<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>提示"fuse: bad mount point" 如下图所示：</p>
+<p><img alt="image-20211024171103128" src="../part3.assets/image-20211024171103128.png" /></p>
+<p>这种情况就是不正常的卸载文件系统，我们显式地调用 <strong>卸载文件系统</strong> 即可：</p>
+<div class="highlight"><pre><span></span><code>teststu_8@OSLabExecNode0:~/pyq/user-land-filesystem/fs/newfs$ fusermount -u ./tests/mnt
+teststu_8@OSLabExecNode0:~/pyq/user-land-filesystem/fs/newfs$ 
 </code></pre></div>
+<h2 id="3">3. 挂载点不空？<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>提示"mountpoint is not empty" 如下图所示：</p>
+<p><img alt="image-20211024171348041" src="../part3.assets/image-20211024171348041.png" /></p>
+<p>这种情况就是在测试的时候，不小心给<code>mnt</code>文件夹下创建了一个文件，导致错误发生，把 <strong>文件删除</strong> 就行。</p>
+<h2 id="4-ext2">4. 如何解读EXT2文件系统布局？<a class="headerlink" href="#4-ext2" title="Permanent link">&para;</a></h2>
+<p>可以查看<code>dump</code>文件系统镜像，对镜像进行解读：</p>
+<p><img alt="image-20221115113807498" src="../part5.assets/image-20221115113807498.png" /></p>
+<p>利用 <code>ddriver -d</code> 生成ddriver镜像命令查看镜像。</p>
+<p>以simplefs镜像为例：</p>
+<div class="highlight"><pre><span></span><code><span class="go">~/user-land-filesystem/fs/simplefs$ ddriver -d</span>
+<span class="go">[sudo] password for test_19:</span>
+<span class="go">目标设备 /home/students/test_19/ddriver</span>
+<span class="go">8192+0 records in</span>
+<span class="go">8192+0 records out</span>
+<span class="go">4194304 bytes (4.2 MB, 4.0 MiB) copied, 0.0632482 s, 66.3 MB/s</span>
+<span class="go">文件已导出至/home/students/test_19/user-land-filesystem/fs/simplefs/ddriver_dump，请安装HexEditor插件查看其内容</span>
+</code></pre></div>
+<p>在VSCode上安装HexEditor插件，即可查看<code>ddriver_dump</code>镜像的内容。</p>
+<h2 id="5">5. 实验评测中的位图检查原理<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>为避免大家照搬Simple File System代码，实验评测脚本<code>./tests/checkbm/check_bm.py</code>会根据大家填写的fs.layout文件，确定ddriver磁盘布局，检查super、inode_map、data_map各项内容，如果检查失败，check_bm.py会返回相应的错误，大家依错自行查改即可。</p>
+<p>具体检查原理可以查看：<a href="https://gitee.com/ftutorials/user-land-filesystem/blob/main/fs/template/tests/checkbm/README.md">https://gitee.com/ftutorials/user-land-filesystem/blob/main/fs/template/tests/checkbm/README.md</a></p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../part3-1/" class="btn btn-neutral float-left" title="环境搭建与上手"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../part3-3/" class="btn btn-neutral float-right" title="任务二：基于FUSE实现青春版EXT2文件系统">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../part4/" class="btn btn-neutral float-left" title="提交文档"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -203,10 +236,8 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../part3-1/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../part4/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
-    
-      <span><a href="../part3-3/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
