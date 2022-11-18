@@ -179,11 +179,13 @@ teststu_8@OSLabExecNode0:~/$
 
 ![image-20211024145359896](part3.assets/image-20211024145359896.png)
 
--   **Step 2** . 在远程实验平台上安装CMake和CMake Tools两个插件。
+-   **Step 2** . 在远程实验平台上安装CMake、CMake Tools、C/C++三个插件。
 
 ![image-20221108102247328](part3-1.assets/image-20221108102247328.png)
 
 ![image-20221108102514630](part3-1.assets/image-20221108102514630.png)
+
+![image-20221118212435901](part3-1.assets/image-20221118212435901.png)
 
 -   **Step 3** . 打开CMakeLists.txt文件
 -   **Step 4** . ctrl + shift + p呼出命令菜单
