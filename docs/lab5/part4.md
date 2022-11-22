@@ -51,15 +51,15 @@
      ```
    
       - **remount测试（16分）**
-   
+      
      ```console
      fusermount -u ./tests/mnt
      ddriver -r
      # F5再次挂载文件系统
      mkdir ./tests/mnt/hello
      ls ./tests/mnt
-     python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json
      fusermount -u ./tests/mnt
+     python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json
      ```
    
    以上命令均测试成功（**ls输出正常**），则测试通过。

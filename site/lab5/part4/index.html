@@ -224,8 +224,8 @@ ls ./tests/mnt/dir0/dir1/dir2
 <span class="gp"># </span>F5再次挂载文件系统
 <span class="go">mkdir ./tests/mnt/hello</span>
 <span class="go">ls ./tests/mnt</span>
-<span class="go">python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json</span>
 <span class="go">fusermount -u ./tests/mnt</span>
+<span class="go">python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json</span>
 </code></pre></div>
 </li>
 </ol>
