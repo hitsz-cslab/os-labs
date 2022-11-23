@@ -9,10 +9,10 @@
 编译运行测试程序的步骤：
 
 ```console
-teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ cmake CMakeLists.txt 
-...
-teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ make
-...
-teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ ./ddriver_test 
+teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ mkdir -p build 
+teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ cd build
+teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver/build$ cmake ..
+teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver/build$ make
+teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver/build$ ./ddriver_test 
 ```
 

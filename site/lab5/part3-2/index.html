@@ -168,11 +168,11 @@
 <p>任务一要求熟悉DDRIVER驱动，我们要求大家根据注释看懂<code>user-land-filesystem/tests/test_ddriver/src/test.c</code>的代码，并 <strong>根据提示</strong> 修改其中的 <strong>一处错误</strong> ：</p>
 <p><img alt="image-20211024153154797" src="../part3.assets/image-20211024153154797.png" /></p>
 <p>编译运行测试程序的步骤：</p>
-<div class="highlight"><pre><span></span><code><span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ </span>cmake CMakeLists.txt 
-<span class="go">...</span>
-<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ </span>make
-<span class="go">...</span>
-<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ </span>./ddriver_test 
+<div class="highlight"><pre><span></span><code><span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ </span>mkdir -p build 
+<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver$ </span><span class="nb">cd</span> build
+<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver/build$ </span>cmake ..
+<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver/build$ </span>make
+<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/tests/test_ddriver/build$ </span>./ddriver_test 
 </code></pre></div>
               
             </div>
