@@ -10,7 +10,7 @@
 
   Linux登录方式主要有两种：
 
-  - 本地登录：只要启动虚拟机即可，类似于打开自己电脑直接连接显示器的方式；可以通过`Ctrl + Alt + F[1-6]`在6个虚拟控制台之间进行切换。远程实验平台不能用本地登录。
+  - 本地登录：只要启动虚拟机即可，类似于打开自己电脑直接连接显示器的方式；可以通过`Ctrl + Alt + F[1-6]`在6个虚拟控制台之间进行切换。需要注意的是，远程实验平台不能用本地登录。
   - 远程登录：可以通过MobaXterm、Windows Terminal、putty等工具远程登录。
 
 ## 2. shell简介
@@ -18,7 +18,7 @@
 
   常见的shell有：`bash`、`sh`、`csh`、`ksh`等，可以在创建用户时指定用户的登录shell，也可以输入shell名称打开一个新的shell。
 
-![image-20210902150719185](Linux.assets/image-20210902150719185.png)
+<div align="center"> <img src="../Linux.assets/image-20210902150719185.png" /> </div>
 
 openEuler用户的默认登录shell是`bash`。
 
@@ -48,7 +48,7 @@ root是Linux系统中的一个特殊管理员，通常称为超级管理员，�
 
 如果该用户在root下没有权限（一般来说，系统当然不会允许任何用户都能够以超级用户的身份运行命令），需要在root下给该用户添加权限。
 
-![image-20210906094037645](Linux.assets/image-20210906094037645.png)
+<div align="center"> <img src="../Linux.assets/image-20210906094037645.png" /> </div>
 
 !!! warning ""
     下面以openEuler系统为例，介绍如何添加用户权限。使用远程实验平台的同学可以忽略这一小节。
@@ -67,13 +67,14 @@ cs	ALL=(ALL)	ALL
 
 授权cs用户在任何主机上执行任何命令。第一个ALL表示所有计算机；第二个ALL表示所有用户，第三个ALL表示所有命令。
 
-![image-20210906102459543](Linux.assets/image-20210906102459543.png)
+
+<div align="center"> <img src="../Linux.assets/image-20210906102459543.png" /> </div>
 
 编辑完成后，按`Esc`键退出编辑模式，再输入`:wq`，回车，保存并退出。（输入`:q!`是不保存并退出）
 
 再到cs用户下，执行sudo命令，这时就能够执行sudo命令了。
 
-![image-20210906100511534](Linux.assets/image-20210906100511534.png)
+<div align="center"> <img src="../Linux.assets/image-20210906100511534.png" /> </div>
 
 
 
@@ -147,34 +148,44 @@ Linux `ls`（英文全拼：list files）命令用于显示指定工作目录下
 - `-F` 在列出的文件名称后加一符号；例如可执行档则加`*`, 目录则加`/`
 - `-R` 若目录下有文件，则以下之文件亦皆依序列出
 
-### 7.2 `ip addr` 显示或设置网络状态
+示例：
 
-可以使用 `ip addr`命令查看IP地址
+假设一个目录下有文件`foo`, `bar`, `foobar`, `.foo`, `.bar`和子目录`baz`, `.foobar`，那么输入
 
 ```bash
-# ip addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host
-       valid_lft forever preferred_lft forever
-2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether 00:0c:29:61:40:aa brd ff:ff:ff:ff:ff:ff
-    inet 192.168.163.134/24 brd 192.168.163.255 scope global dynamic noprefixroute ens33
-       valid_lft 1729sec preferred_lft 1729sec
-    inet6 fe80::3b1e:b490:7d7f:ebd0/64 scope link noprefixroute
-       valid_lft forever preferred_lft forever
+$ ls
 ```
 
-上述命令结果显示两部分，lo和ens33，如果有多块网卡，每块网卡都会显示一部分。
+则结果是
 
-1.  `lo`：全称loopback，是回环地址，经常被分配到`127.0.0.1`地址上，用于本机通信，经过内核处理后直接返回，不会在任何网络中出现。
-2. `ens33`：网卡名，如果有多块网卡，会有多个ens 或其它名称。上述IP地址是`192.168.163.134/24`
+```bash
+bar  baz  foo  foobar
+```
+
+以“.”开头的文件是隐藏文件或目录，因此不在这里显示。若要显示隐藏项，则需要加上`-a`或`-A`参数。这两者的区别是，前者会显示`.`和`..`这两个特殊的目录，后者则不显示。下面给出一段`bash`输入输出示例
+
+```bash
+$ ls -a
+.  ..  .bar  bar  baz  .foo  foo  .foobar  foobar
+$ ls -A
+.bar  bar  baz  .foo  foo  .foobar  foobar
+```
+
+有的时候，我们需要显示文件和目录的详细信息，如访问权限、所有者、文件大小、修改时间等，这时需要用到`-l`参数
+
+```bash
+$ ls -l
+total 4
+-rw-rw-r-- 1 camel camel    0 Sep 16 23:31 bar
+drwxrwxr-x 2 camel camel 4096 Sep 16 23:32 baz
+-rw-rw-r-- 1 camel camel    0 Sep 16 23:31 foo
+-rw-rw-r-- 1 camel camel    0 Sep 16 23:31 foobar
+```
+
+同前面一样，`ls`默认不显示隐藏文件或目录。如果需要同时显示隐藏文件或目录的详细信息，应该再加上`-a`或`-A`参数，可以输入`ls -la`, `ls -lA`, `ls -l -a`, `ls -l -A`等。参数的顺序在这里不重要。
 
 
-
-### 7.3 `mkdir` 建立文件夹
+### 7.2 `mkdir` 建立文件夹
 
 Linux `mkdir`（英文全拼：make directory）命令用于创建目录。
 
@@ -187,7 +198,32 @@ Linux `mkdir`（英文全拼：make directory）命令用于创建目录。
 $ mkdir [-p] dirName
 ```
 
-### 7.4 `rmdir` 删除文件夹
+示例：在一个不包含任何文件和子目录的目录下，创建目录`foo`和`foo/bar/foobar`。
+
+```bash
+$ ls
+$ mkdir foo
+$ ls
+foo
+$ mkdir foo/bar/foobar
+mkdir: cannot create directory 'foo/bar/foobar': No such file or directory
+$ mkdir -p foo/bar/foobar
+$ ls -R
+.:
+foo
+
+./foo:
+bar
+
+./foo/bar:
+foobar
+
+./foo/bar/foobar:
+```
+
+在这里，我们先创建了目录`foo`，再尝试创建目录`foo/bar/foobar`，但是后面一个目录无法直接创建，这是因为`mkdir`默认情况下只能在上级目录（这里是`foo/bar`）已存在的时候创建指定目录。如果希望能逐级将`foo`、`foo/bar`和`foo/bar/foobar`依次创建，则需要加上`-p`参数，即运行`mkdir -p foo/bar/foobar`。后面使用`ls -R`命令依次列出当前目录及其所有子目录下面包含的内容，可以说明前面命令成功执行。
+
+### 7.3 `rmdir` 删除文件夹
 
 Linux `rmdir`（英文全拼：remove directory）命令删除空的目录。
 
@@ -200,7 +236,7 @@ $ rmdir [-p] dirName
 ```
 
 
-### 7.5 `rm` 删除命令
+### 7.4 `rm` 删除命令
 
 上述rmdir命令只能删除空目录，当要删除非空目录时，就要使用带有`-r`选项的`rm`命令。
 
@@ -208,12 +244,14 @@ Linux `rm`（英文全拼：remove）命令用于删除一个文件或者目录�
 
 ``` shell
 $ rm [options] name...
-- -i 删除前逐一询问确认。
-- -f 即使原档案属性设为唯读，亦直接删除，无需逐一确认。
-- -r 将目录及以下之档案亦逐一删除。
+ -i 删除前逐一询问确认。
+ -f 即使原档案属性设为唯读，亦直接删除，无需逐一确认。
+ -r 将目录及以下之档案亦逐一删除。
 ```
 
-### 7.6 `cd` 切换目录
+如果需要将一个目录及其所有内容都删除，则可以使用`rm -r`。
+
+### 7.5 `cd` 切换目录
 
 Linux `cd`（英文全拼：change directory）命令用于切换当前工作目录。
 
@@ -227,13 +265,13 @@ $ cd [dirName]
 
 - dirName：要切换的目标目录。
 
-### 7.7 `vi` 文本编辑模式
+### 7.6 `vi` 文本编辑模式
 
 ``` shell
 $ vi/vim/bash
 ```
 
-### 7.8 `echo` 命令
+### 7.7 `echo` 命令
 
 - 显示普通字符串:  
 
@@ -259,13 +297,14 @@ $ vi/vim/bash
 
 - 显示变量 
 
-  ```bash
-  #!/bin/sh
-  read name 
-  echo "$name It is a test"
-  ```
+```bash
+$ export temp_var=haha
+$ echo $temp_var
+```
 
-###  7.9 `cat` 打印文件
+其中，`export`命令用于定义变量。之后，若需要在`echo`中使用到之前的定义，应在变量名前加上\$符号。
+
+###  7.8 `cat` 打印文件
 
 `cat`（英文全拼：concatenate）命令用于连接文件并打印到标准输出设备上。
 
@@ -273,25 +312,39 @@ $ vi/vim/bash
 $ cat [-AbeEnstTuv] [--help] [--version] fileName
 ```
 
-`-n` 或 `--number`：由 1 开始对所有输出的行数编号。
+- `-n` 或 `--number`：由 1 开始对所有输出的行数编号。
+- `-b` 或 `--number-nonblank`：和 -n 相似，只不过对于空白行不编号。
+- `-s` 或 `--squeeze-blank`：当遇到有连续两行以上的空白行，就代换为一行的空白行。
+- `-v` 或 `--show-nonprinting`：使用 ^ 和 M- 符号，除了 LFD 和 TAB 之外。
+- `-E` 或 `--show-ends` : 在每行结束处显示 $。
+- `-T` 或 `--show-tabs`: 将 TAB 字符显示为 ^I。
+- `-A`, `--show-all`：等价于 -vET。
+- `-e`：等价于"-vE"选项；
+- `-t`：等价于"-vT"选项；
 
-`-b` 或 `--number-nonblank`：和 -n 相似，只不过对于空白行不编号。
+示例：显示某个文件内容（如`ln.c`文件），并将其各行进行编号
 
-`-s` 或 `--squeeze-blank`：当遇到有连续两行以上的空白行，就代换为一行的空白行。
+```bash
+$ cat -n ln.c
+     1  #include "kernel/types.h"
+     2  #include "kernel/stat.h"
+     3  #include "user/user.h"
+     4
+     5  int
+     6  main(int argc, char *argv[])
+     7  {
+     8    if(argc != 3){
+     9      fprintf(2, "Usage: ln old new\n");
+    10      exit(1);
+    11    }
+    12    if(link(argv[1], argv[2]) < 0)
+    13      fprintf(2, "link %s %s: failed\n", argv[1], argv[2]);
+    14    exit(0);
+    15  }
+```
 
-`-v` 或 `--show-nonprinting`：使用 ^ 和 M- 符号，除了 LFD 和 TAB 之外。
 
-`-E` 或 `--show-ends` : 在每行结束处显示 $。
-
-`-T` 或 `--show-tabs`: 将 TAB 字符显示为 ^I。
-
-`-A`, `--show-all`：等价于 -vET。
-
-`-e`：等价于"-vE"选项；
-
-`-t`：等价于"-vT"选项；
-
-### 7.10 `cp` 复制文件
+### 7.9 `cp` 复制文件
 
 Linux `cp`（英文全拼：copy file）命令主要用于复制文件或目录。
 
@@ -309,7 +362,7 @@ $ cp [options] source... directory
 - `-r`：若给出的源文件是一个目录文件，此时将复制该目录下所有的子目录和文件。
 - `-l`：不复制文件，只是生成链接文件。
 
-### 7.11 `mv` 改名或移动文件
+### 7.10 `mv` 改名或移动文件
 
 Linux `mv`（英文全拼：move file）命令用来为文件或目录改名、或将文件或目录移入其它位置。
 
@@ -324,7 +377,18 @@ $ mv [options] source... directory
 - `-n`: 不要覆盖任何已存在的文件或目录。
 - `-u`：当源文件比目标文件新或者目标文件不存在时，才执行移动操作。
 
-### 7.12 `find` 查找文件
+示例：假设有个文件`foo`，现需要将它重命名为`bar`
+
+```bash
+$ ls
+foo
+$ mv foo bar
+$ ls
+bar
+```
+
+
+### 7.11 `find` 查找文件
 
 Linux `find` 命令用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名。如果使用该命令时，不设置任何参数，则 `find` 命令将在当前目录下查找子目录与文件。并且将查找到的子目录和文件全部进行显示。
 
@@ -366,7 +430,7 @@ updatedb
 
 
 
-### 7.13 `grep` 正则匹配文件内容
+### 7.12 `grep` 正则匹配文件内容
 
 Linux `grep` 命令用于查找文件里符合条件的字符串。
 
@@ -393,7 +457,7 @@ testfile_2:Linux test #列出testfile_2 文件中包含test字符的行
 
 
 
-### 7.14 `man` 帮助命令
+### 7.13 `man` 帮助命令
 
 `man`命令是Linux下的帮助指令，通过`man`指令可以查看Linux中的指令帮助、配置文件帮助和编程帮助等信息。
 
@@ -406,9 +470,13 @@ man [options] [args]
 - `-P`：指定内容时使用分页程序；
 - `-M`：指定man手册搜索的路径。
 
+示例：查询`ps`命令的手册
 
+```bash
+man ps
+```
 
-### 7.15 `diff`比较差异
+### 7.14 `diff`比较差异
 
 Linux `diff`命令用于比较文件的差异。
 
@@ -418,9 +486,31 @@ Linux `diff`命令用于比较文件的差异。
 diff [-abBcdefHilnNpPqrstTuvwy][-<行数>][-C <行数>][-D <巨集名称>][-I <字符或字符串>][-S <文件>][-W <宽度>][-x <文件或目录>][-X <文件>][--help][--left-column][--suppress-common-line][文件或目录1][文件或目录2]
 ```
 
+示例：有两个文件`foo.txt`和`bar.txt`，内容分别为
+
+```bash
+$ cat -n foo.txt
+abc
+def
+$ cat -n bar.txt
+abd
+def
+ghj
+```
+
+使用`diff`命令比较它们的不同
+
+```bash
+1c1
+< abc
+----
+> abd
+2a3,
+> ghj
+```
 
 
-### 7.16 `ps`查看进程状态
+### 7.15 `ps`查看进程状态
 
 Linux `ps` （英文全拼：process status）命令用于显示当前进程的状态.
 
@@ -433,7 +523,7 @@ ps [options] [--help]
 - -au 显示较详细的资讯
 - -aux 显示所有包含其他使用者的行程
 
-### 7.17 `top`任务管理器
+### 7.16 `top`任务管理器
 
 Linux `top`命令用于实时显示 process 的动态。
 
@@ -443,7 +533,7 @@ top [-] [d delay] [q] [c] [S] [s] [i] [n] [b]
 
 ![image-20201013231048250](Linux.assets/image-20201013231048250-1602986429233.png)
 
-### 7.18 `tar`打包和解包
+### 7.17 `tar`打包和解包
 
 Linux `tar`（英文全拼：tape archive ）命令用于备份文件。
 
@@ -487,6 +577,48 @@ tar -jxvf file.tar.bz2 //解压 tar.bz2
 unzip file.zip //解压zip
 ```
 
+### 7.18 ln链接
+
+`ln`命令用于创建链接，分为硬链接和软链接。
+
+创建硬链接的方式为
+
+```bash
+ln file_name link_name
+```
+
+创建软链接的方式为
+
+```bash
+ln -s file_name link_name
+```
+
+### 7.19 `ip addr` 显示或设置网络状态
+
+可以使用 `ip addr`命令查看IP地址
+
+```bash
+# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:0c:29:61:40:aa brd ff:ff:ff:ff:ff:ff
+    inet 192.168.163.134/24 brd 192.168.163.255 scope global dynamic noprefixroute ens33
+       valid_lft 1729sec preferred_lft 1729sec
+    inet6 fe80::3b1e:b490:7d7f:ebd0/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+```
+
+上述命令结果显示两部分，lo和ens33，如果有多块网卡，每块网卡都会显示一部分。
+
+1.  `lo`：全称loopback，是回环地址，经常被分配到`127.0.0.1`地址上，用于本机通信，经过内核处理后直接返回，不会在任何网络中出现。
+2. `ens33`：网卡名，如果有多块网卡，会有多个ens 或其它名称。上述IP地址是`192.168.163.134/24`
+
+
 ## 8. Linux重定向和管道  
 
 ```bash
@@ -495,6 +627,8 @@ command1 | command2 | command3 | ...
 ```
 
 ### 8.1 重定向
+
+<center>
 
 | 命令            | 说明                                               |
 | :-------------- | :------------------------------------------------- |
@@ -506,6 +640,8 @@ command1 | command2 | command3 | ...
 | n >& m          | 将输出文件 m 和 n 合并。                           |
 | n <& m          | 将输入文件 m 和 n 合并。                           |
 | << tag          | 将开始标记 tag 和结束标记 tag 之间的内容作为输入。 |
+
+</center>
 
 一般情况下，每个 Unix/Linux 命令运行时都会打开三个文件：
 
@@ -531,11 +667,11 @@ $ command 2 >> file
 
 若想统计 /etc目录下文件的详细信息，正常的使用需要两个步骤。
 
-![image-20201014230336988](Linux.assets/image-20201014230336988.png)
+<div align="center"> <img src="../Linux.assets/image-20201014230336988.png" /> </div>
 
 显然，etc.txt 作为中间buffer，没有二次使用的需要，为省略这种麻烦，同时提高代码效率，我们需要使用管道这个功能。
 
-![image-20201014230644371](Linux.assets/image-20201014230644371.png)
+<div align="center"> <img src="../Linux.assets/image-20201014230644371.png" /> </div>
 
 对比以上两种方法，我们也可以理解为，管道本质上就是一个文件，前面的进程以写方式打开文件，后面的进程以读方式打开。这样前面写完后面读，于是就实现了通信。实际上管道的设计也是遵循UNIX的“一切皆文件”设计原则的，它本质上就是一个文件。Linux系统直接把管道实现成了一种文件系统，借助VFS给应用程序提供操作接口。
 

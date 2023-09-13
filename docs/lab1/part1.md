@@ -12,12 +12,27 @@
     （2） 请认真阅读实验一中的内容，了解xv6源码的运行环境，做好实验前的[准备工作](../part3/#2)。
     
     遇到凡（考）事（核）不要慌，当你能完成上述要求时，相信一定能通过本次考核! 
-    
+
 
 !!! note "实验说明"
     该部分说明了该实验需要完成的任务，以及要求达到怎样的目标。需要注意，本章实验上手很难，但是内容简单，大家需要 **耐心理清楚** 实验指导书的脉络。
 
-    特别推荐同学们观看B站上的[MIT 6.S081/Fall 2020课程视频](https://www.bilibili.com/video/BV19k4y1C7kA?p=1)，通过学习这门课程可以让你对xv6操作系统有一个全面的认识。
+    特别推荐同学们观看由我校OS课题组、各级学长助教们合力为大家录制的XV6讲解视频，希望能够让大家对整个XV6系统有一个更为直观的认识，推荐大家按需观看：
+    
+    1. 【HITSZ操作系统课程组讲解XV6（一）启动过程】 			 
+    
+    	- 视频链接: https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析1-进程管理.pdf)
+    2. 【HITSZ操作系统课程组讲解XV6（二）进程管理】 
+    
+    	- 视频链接: https://www.bilibili.com/video/BV1ge4y1J7Je?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析2-内存管理.pdf)
+    3. 【HITSZ操作系统课程组讲解XV6（三）内存管理】 
+    
+    	- 视频链接: https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析3-启动过程.pdf)
+    
+    也可以观看B站上的[MIT 6.S081/Fall 2020课程视频](https://www.bilibili.com/video/BV19k4y1C7kA?p=1)，通过学习这门课程可以让你对xv6操作系统有一个全面的认识。
 
 ## 1.  实验目的
 
@@ -30,7 +45,7 @@
 
 ## 3.  实验内容
 
-本次实验需要实现5个Unix实用程序。这里展示的是程序功能和实验测试的最终效果，更多详细的介绍可在后续章节中阅读。
+**与xv6原有的实验不一样的是，本次实验需要实现3个Unix实用程序和xv6启动流程实验** 。这里展示的是程序功能和实验测试的最终效果，更多详细的介绍可在后续章节中阅读。
 
 （1）了解xv6上用户程序sleep的实现。sleep程序会等待用户指定的时间。请将代码写在user/sleep.c文件中。运行效果应该如下：
 
@@ -38,60 +53,39 @@
 
 输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义)，然后输出"(nothing happens for a little while)"。
 
-在xv6-labs-2020中，执行下面指令，测试程序
+在xv6-oslab23-hitsz中，执行下面指令`./grade-lab-util sleep`，测试程序
 
-![image-20210913094528437](part1.assets/image-20210913094528437.png)
+![image-20230913171327769](part1.assets/image-20230913171327769.png)
 
 （2）在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印`<pid>：received ping` ，其中`<pid>`是子进程的进程ID。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印`<pid>：received pong`，其中`<pid>`是父进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：
 
 ![image-20201017230846238](part1.assets/image-20201017230846238.png)
 
-在xv6-labs-2020中，执行下面指令，测试程序
+在xv6-oslab23-hitsz中，执行下面指令`./grade-lab-util pingpong`，测试程序
 
-![image-20210913094617315](part1.assets/image-20210913094617315.png)
+![image-20230913171417978](part1.assets/image-20230913171417978.png)
 
-
-
-（3）在xv6上使用管道实现“质数筛选”, 输出2~35之间的而所有质数。请将代码写在user/primes.c文件中。运行效果应该如下：
-
-![image-20201017230855254](part1.assets/image-20201017230855254.png)
-
-在xv6-labs-2020中，执行下面指令，测试程序
-
-![image-20210913094654462](part1.assets/image-20210913094654462.png)
-
-（4）在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 **命令格式为“find path file_name”** 。请将代码写在user/find.c文件中。当文件系统包含文件b和a/b时，输出效果应该如下：
+（3）在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 **命令格式为“find path file_name”** 。请将代码写在user/find.c文件中。当文件系统包含文件b和a/b时，输出效果应该如下：
 
 ![image-20210914091100817](part1.assets/image-20210914091100817.png)
 
-在xv6-labs-2020中，执行下面指令，测试程序
+在xv6-oslab23-hitsz中，执行下面指令`./grade-lab-util find`，测试程序
 
-![image-20210913094755912](part1.assets/image-20210913094755912.png)
+![image-20230913171456245](part1.assets/image-20230913171456245.png)
 
-（5）在xv6上实现用户程序xargs，即从标准输入中读取行并 **为每行运行一次** 指定的命令，且将该行作为命令的参数提供。请将代码写在user/xargs.c中。运行效果应该如下：
+如果上述3个程序都能正常运行，可以用如下指令测试5个程序：
 
-![image-20201017230906954](part1.assets/image-20201017230906954.png)
+![image-20230913171631689](part1.assets/image-20230913171631689.png)
 
+（4）xv6启动流程实验。在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab23-hitsz中，执行下面指令`make qemu`，运⾏的效果应该如下：
 
+![image-20230913172857112](part1.assets/image-20230913172857112.png)
 
-下列是xargs的用法。`echo 1 2`，附加参数是`3 4`，即`echo 1 2 3 4`输出`1 2 3 4`。
-
-```shell
-$ make qemu
-...
-$ echo 3 4|xargs echo 1 2
-1 2 3 4
-$
-```
+上图红色框框内的信息是你要打印的内容，格式为：`[你的学号] 该函数的作用`，总共是5条打印信息。前4条是在内核态下打印，上图中已经给出了具体的文件名、函数名以及打印语句所在的代码行数。最后1条要在用户态下执行`sh`进程之前打印。
 
 
 
-在xv6-labs-2020中，执行下面指令，测试程序
 
-![image-20210913094918606](part1.assets/image-20210913094918606.png)
 
-（6）完成上述5个小实验后，在xv6-labs-2020目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
 
-如果上述5个程序都能正常运行，可以用如下指令测试5个程序：
 
-![image-20210913095200221](part1.assets/image-20210913095200221.png)

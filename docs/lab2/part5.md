@@ -1,36 +1,8 @@
-# GDB调试系统调用（补充说明）
+# 远程实验平台环境图形化调试指南(二)——系统调用
 
 这部分深入介绍了VS Code图形化界面GDB调试系统调用的过程，涉及到了page table的部分内容以及汇编代码，虽然有些晦涩难懂，但如果想要深入了解整个系统调用的过程，这些都是要掌握的必不可少的知识点。下面以ls.c文件中的`fstat`系统调用执行过程为例，采用GDB调试分析`ecall`指令前后的系统调用过程，供同学们进行参考。
 
-为了给同学们演示如何用VSCode图形化调试XV6系统调用的过程，我们录制了两个演示视频：
-
-VSCode调试系统调用过程（包含pagetable和汇编）：
-
-<iframe 
-    width= 600  
-    height= 400
-	src="//player.bilibili.com/player.html?aid=303366017&bvid=BV12P411J7xq&cid=842020250&page=1" 
-    scrolling="no" 
-    border="0" 
-    frameborder="no" 
-    framespacing="0" 
-    allowfullscreen="true"
-> </iframe>
-
-VSCode调试系统调用——从内核到用户，再从用户返回内核：
-
-<iframe
-	width= 600  
-    height= 400
-	src="//player.bilibili.com/player.html?aid=515834353&bvid=BV1ug411m7ir&cid=842020440&page=1" 
-    scrolling="no" 
-    border="0" 
-    frameborder="no" 
-    framespacing="0" 
-    allowfullscreen="true"
-> </iframe>
-
-如果视频不太清晰，建议到bilibili上观看。
+为了给同学们演示如何用VSCode图形化调试XV6系统调用的过程，我们录制了4个演示视频：
 
 1. 【1. VSCode调试xv6内核代码】 https://www.bilibili.com/video/BV1ZB4y1E7X5?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
 2. 【2. VSCode调试xv6用户代码】 https://www.bilibili.com/video/BV1i14y1Y7ZZ?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
@@ -197,7 +169,7 @@ satp寄存器给出的物理内存地址是0x8000000000087f48。
 
 ## 3. 汇编之后的C代码
 
-自从见到了usertrap，我们就已经进入了C语言的世界，相比上述汇编代码来说，少了很多晦涩难懂的地方，是不是觉得生活更加美好了呢:-)
+自从见到了usertrap，我们就已经进入了C语言的世界，相比上述汇编代码来说，少了很多晦涩难懂的地方，是不是觉得生活更加美好了呢: )
 
 从前面实验原理的部分，我们已经知道，有很多原因都可以让程序进入usertrap函数中来。对于本实验来说，我们更关心的是系统调用的过程代码，那么我们可以在第67行`syscall();`打上断点，点击“运行”，让程序停留在syscall()函数。当然，喜欢探索的同学也可以深入分析usertrap()函数的执行流程。
 

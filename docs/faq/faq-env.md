@@ -8,7 +8,7 @@
 
 ### 1.1 xv6如何在QEMU>=6.0.0上启动？
 
-具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/8
+具体解决方案详见piazza （Fall 2022） ：https://piazza.com/class/l7fs47nofoc4pm/post/8
 
 ![qemu](faq.assets/qemu.png)
 
@@ -18,7 +18,7 @@ Patch文件：[pmp.patch](../code/pmp.patch)
 
 ### 1.2 使用高版本gcc (≥12)出现报错
 
-具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/22 
+具体解决方案详见piazza （Fall 2022）  ：https://piazza.com/class/l7fs47nofoc4pm/post/22 
 
 ![gcc](faq.assets/gcc.png)
 
@@ -40,7 +40,7 @@ https://hitsz-cslab.gitee.io/os-labs/remote_env/
 
 具体可以查看：https://www.cnblogs.com/Akkuman/p/11187776.html
 
-### 2.3 在远程实验平台上clone xv6-labs-2020失败？
+### 2.3 在远程实验平台上clone xv6-oslab23-hitsz失败？
 
 如图：
 
@@ -54,7 +54,7 @@ https://hitsz-cslab.gitee.io/os-labs/remote_env/
 
 ![image-20220916154734658](faq-env.assets/image-20220916154734658.png)
 
-使用`rm -rf *`删除后，应该就能clone xv6-labs-2020。
+使用`rm -rf *`删除后，应该就能clone xv6-oslab23-hitsz。
 
 
 ### 2.4 VS Code连接远程实验平台时提示`mkdir: cannot create directory '/home/students/XXX'`
@@ -82,7 +82,7 @@ VSCode远程调试时，提示如下错误：
 
 ![gdb1](faq.assets/gdb1.jpg)
 
-具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/20
+具体解决方案详见piazza （Fall 2022）  ：https://piazza.com/class/l7fs47nofoc4pm/post/20
 
 打开xv6工作目录下的.gdbint文件，将第三行`target remote 127.0.0.1:***`用`#`注释掉。
 
@@ -117,7 +117,7 @@ VSCode工作区路径不是XV6路径，嵌套了外面一层文件夹。
 首先 **确认你的VS Code工作区路径是否是你的xv6路径，没有额外嵌套一层文件夹** 。按下`` Ctrl+` ``，呼出终端，输入`ls`。你应该会看到如下情景：
 
 ```console
-ldap_example@OSLabExecNode0:~/xv6-labs-2020$ ls
+ldap_example@OSLabExecNode0:~/xv6-oslab23-hitsz$ ls
 conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefile  mkfs  README  user
 ```
 
@@ -137,9 +137,9 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 
 用ps或top命令查看一下是不是已经开启了qemu？如果qemu已经在运行，请先结束该进程。
 
-具体解决方案详见piazza ：https://piazza.com/class/l7fs47nofoc4pm/post/23 
+具体解决方案详见piazza （Fall 2022）  ：https://piazza.com/class/l7fs47nofoc4pm/post/23 
 
-另外一种解决方案：输入在xv6-labs-2020目录下输入`make clean`清除fs.img，然后再运行`make qemu`
+另外一种解决方案：输入在xv6-oslab23-hitsz目录下输入`make clean`清除fs.img，然后再运行`make qemu`
 
 ![image-20220916094737504](faq-env.assets/image-20220916094737504.png)
 
@@ -168,10 +168,10 @@ and the repository exists
 通常而言，实验要求同学们提交 **所有** 被修改过的文件。通过将当前工作路径与上游仓库（课程实验提供的仓库）对应分支的内容相比较，可以方便地知道自己曾经修改过哪些文件，并打包提交。这里，我们将当前分支与上游仓库的`syscall`分支相比较：
 
 ```console
-lgz_admin@OSLabExecNode0:~/git_demo/xv6-labs-2020$ git fetch --all
+lgz_admin@OSLabExecNode0:~/git_demo/xv6-oslab23-hitsz$ git fetch --all
 Fetching origin
 Fetching upstream
-lgz_admin@OSLabExecNode0:~/git_demo/xv6-labs-2020$ git diff --stat upstream/syscall *
+lgz_admin@OSLabExecNode0:~/git_demo/xv6-oslab23-hitsz$ git diff --stat upstream/syscall *
  kernel/kalloc.c  | 2 ++
  kernel/syscall.c | 1 +
  kernel/syscall.h | 1 +
@@ -192,7 +192,7 @@ lgz_admin@OSLabExecNode0:~/git_demo/xv6-labs-2020$ git diff --stat upstream/sysc
 通常而言，不能切换分支的主要原因是你当前有尚未保存的修改，此时checkout的话会触发以下错误：
 
 ```console
-lgz_admin@OSLabExecNode0: ~/git_demo/xv6-labs-2020$ git checkout util                                                                                                ─╯
+lgz_admin@OSLabExecNode0: ~/git_demo/xv6-oslab23-hitsz$ git checkout util                                                                                                ─╯
 error: Your local changes to the following files would be overwritten by checkout:
         Makefile
 Please commit your changes or stash them before you switch branches.
@@ -202,7 +202,7 @@ Aborting
 通过`git status`指令，我们可以检查当前git的状态。如果你的输出如下所示：
 
 ```console
-lgz_admin@OSLabExecNode0: ~/git_demo/xv6-labs-2020$ git status
+lgz_admin@OSLabExecNode0: ~/git_demo/xv6-oslab23-hitsz$ git status
 On branch syscall
 Your branch is up to date with 'origin/syscall'.
 

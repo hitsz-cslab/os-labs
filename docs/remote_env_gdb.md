@@ -3,33 +3,9 @@
 !!! note "调试说明"
     通常来说，使用简单粗暴的`printf大法`（在特定的地方打印日志）就能够处理绝大多数的bug。但是对于大型的项目开发或数量超多的源码，printf大法就不能快速地去定位问题所在。功能强大的GDB调试是Linux系统下的一个程序调试利器，使用GDB调试可以说是作为Linux下的程序员应当要掌握的一大技能。然而，GDB因其命令行的方式想必会挡住了一大波同学，默默地继续使用printf。那有没有带图形化调试界面的调试方法呢？
 
-    接下来，我们为同学们介绍调试手段的重头戏：使用VS Code来调试xv6 :-) 
+    接下来，我们为同学们介绍调试手段的重头戏：使用VS Code来调试xv6 : ) 
 
-为了给同学们演示如何用VSCode图形化调试XV6，我们录制了两个演示视频：
-
-<iframe 
-    width= 600  
-    height= 400
-    src="//player.bilibili.com/player.html?aid=603268135&bvid=BV1ZB4y1E7X5&cid=842011406&page=1" 
-    scrolling="no" 
-    border="0" 
-    frameborder="no" 
-    framespacing="0" 
-    allowfullscreen="true"
-> </iframe>
-
-<iframe 
-    width= 600  
-    height= 400
-    src="//player.bilibili.com/player.html?aid=773255983&bvid=BV1i14y1Y7ZZ&cid=842019673&page=1" 
-    scrolling="no" 
-    border="0" 
-    frameborder="no" 
-    framespacing="0" 
-    allowfullscreen="true"
-> </iframe>
-
-如果视频不太清晰，建议到bilibili上观看。
+为了给同学们演示如何用VSCode图形化调试XV6，我们录制了两个演示视频，建议到bilibili上观看。
 
 1. 【1. VSCode调试xv6内核代码】 https://www.bilibili.com/video/BV1ZB4y1E7X5?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
 2. 【2. VSCode调试xv6用户代码】 https://www.bilibili.com/video/BV1i14y1Y7ZZ?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
@@ -37,13 +13,13 @@
 !!! warning "注意事项"
     如果不想使用VS Code调试，还是想在远程实验环境使用gdb命令行的同学，请使用可以支持多种硬件体系架构的“gdb-multiarch”而非“gdb”或者“riscv64-unknown-elf-gdb”。
 
-    1. 打开终端，到xv6-labs-2020目录下输入：
+    1. 打开终端，到xv6-oslab23-hitsz目录下输入：
     
     ```bash
     make qemu-gdb
     ```
     
-    1. 打开另外一个终端，到xv6-labs-2020目录下输入
+    1. 打开另外一个终端，到xv6-oslab23-hitsz目录下输入
     
     ```bash
     gdb-multiarch
@@ -82,7 +58,7 @@ ldap_example@OSLabExecNode0:~$ expr $(id -u) % 5000 + 25000
 首先 **确认你的VS Code工作区路径是否是你的xv6路径，没有额外嵌套一层文件夹** 。按下`` Ctrl+` ``，呼出终端，输入`ls`。你应该会看到如下情景：
 
 ```console
-ldap_example@OSLabExecNode0:~/xv6-labs-2020$ ls
+ldap_example@OSLabExecNode0:~/xv6-oslab23-hitsz$ ls
 conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefile  mkfs  README  user
 ```
 
@@ -277,7 +253,7 @@ xv6的内核态和用户态并不共享页表，调试符号也完全不同。�
     ls的elf文件位于`user/_ls`：
 
     ```console
-    lgz_stu@OSLabExecNode1:~/xv6-labs-2020$ readelf -h user/_ls
+    lgz_stu@OSLabExecNode1:~/xv6-oslab23-hitsz$ readelf -h user/_ls
     ELF Header:
       Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
       Class:                             ELF64

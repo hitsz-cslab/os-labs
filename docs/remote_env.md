@@ -8,13 +8,13 @@
 远程实验平台IP地址： `10.249.12.98` ，端口号： `6666`
 
 !!! info ""
-    没错:-)本课程与《计算机设计与实践》共用同一个远程实验平台。我们已经在远程实验平台上部署了XV6的运行环境，你只需要登录后下载实验代码就可以做实验。
+    没错: ) 本课程与《计算机设计与实践》共用同一个远程实验平台。我们已经在远程实验平台上部署了XV6的运行环境，你只需要登录后下载实验代码就可以做实验。
     
     用户名和初始密码都是`你的学号`，出于安全考虑，建议你初次登录后修改初始密码。如果遇到问题，请寻求助教或老师的帮助。
 
 远程实验平台共有8个计算节点，每一个计算节点都提供相同的服务，可能你每次登录的计算节点会不一样，但无须担心，你看到的文件都是一样的。
 
-![image-20210910105707775](remote_env.assets/image-20210910105707775.png)
+<div align="center"> <img src="../remote_env.assets/image-20210910105707775.png" /> </div>
 
 ## 1 快速入门
 
@@ -40,7 +40,8 @@ Visual Studio Code安装完成后，从开始菜单打开它。我们需要安�
 左侧边栏应该会多出一个这样的图标：![图标:](remote_env.assets/icon.png)
 点击这个图标，选择SSH TARGETS右侧的`+`号：
 
-![增加host](remote_env.assets/ssh_add_host.png)
+
+<div align="center"> <img src="../remote_env.assets/ssh_add_host.png" /> </div>
 
 这会在屏幕上方中央弹出输入框，要求输入ssh指令。在这里输入`ssh 你的学号@远程实验平台IP`，例如`ssh 200110101@10.249.12.98 -p 6666`就是学号为200110101的同学希望连接到远程实验平台。
 
@@ -52,7 +53,7 @@ Visual Studio Code安装完成后，从开始菜单打开它。我们需要安�
 
 现在，SSH Target添加成功，左侧SSH Target中应该增加了一栏。将鼠标移上去，点击这一栏右侧的小图标：
 
-![connect1-16618272820231](remote_env.assets/connect1-16618272820231.png)
+<div align="center"> <img src="../remote_env.assets/connect1-16618272820231.png" /> </div>
 
 
 
@@ -86,19 +87,20 @@ passwd
 此时，它会要求你输入旧密码。旧密码（即默认密码）为你的学号。完成后回车。
 随后，它会要求你输入新密码，并进行确认。
 
-![change password](remote_env.assets/passwd.png)
 
-接下来，我们将存放xv6-labs-2020复制到自己的工作空间。
+<div align="center"> <img src="../remote_env.assets/passwd.png" /> </div>
+
+接下来，我们将存放xv6-oslab23-hitsz复制到自己的工作空间。
 在终端中键入以下内容，并回车：
 
 ```bash
-git clone https://gitee.com/hitsz-lab/xv6-labs-2020.git
+git clone https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
 ```
 
 你应该会看到这样的输出：
 
 ```none
-Cloning into 'xv6-labs-2020'...
+Cloning into 'xv6-oslab23-hitsz'...
 done.
 ```
 
@@ -106,7 +108,7 @@ done.
 
 ![打开文件夹](remote_env.assets/open_folder.png)
 
-在弹出的菜单中，选择`xv6-labs-2020`，并按下“确认”：
+在弹出的菜单中，选择`xv6-oslab23-hitsz`，并按下“确认”：
 
 ![打开文件夹2](remote_env.assets/open_folder2.png)
 
@@ -205,7 +207,7 @@ Visual Studio Code也有Linux版和macOS版，具体操作大同小异，毕竟�
 
 确保你输入的是正常的半角英文字符与英文标点符号，如图所示：
 
-![全半角](remote_env.assets/char.png)
+<div align="center"> <img src="../remote_env.assets/char.png" /> </div>
 
 这可以通过一起按下shift+空格，或者切换到英文输入法解决。**永远不要在中文输入法下输入命令！**
 
