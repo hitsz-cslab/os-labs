@@ -112,11 +112,6 @@ e)    测试时需要创建新的文件和文件夹，可使用`make clean`清�
 
 - 系统调用接口的示例可查阅《xv6 book》chapter 1的内容， **尤其是1.2、1.3节的内容** 。
 
-
-##### 3.2.3   xv6启动流程实验
-
-建议你在实验前观看由我校OS课题组、各级学长助教们合力为大家录制的XV6讲解视频[HITSZ操作系统课程组讲解XV6（⼀）启动过程](https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)视频，这会帮助你更好的理解xv6的启动流程。
-
 #### 3.3 回答问题
 
 一、阅读sleep.c，回答下列问题
