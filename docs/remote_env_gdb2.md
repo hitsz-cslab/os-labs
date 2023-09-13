@@ -15,41 +15,41 @@
 
 在第38行打上断点。
 
-![image-20220922094635420](part5.assets/image-20220922094635420.png)
+![image-20220922094635420](remote_env_gdb2.assets/image-20220922094635420.png)
 
 点击“运行”，程序将自动运行到第38行并停止：
 
-![image-20220922094744944](part5.assets/image-20220922094744944.png)
+![image-20220922094744944](remote_env_gdb2.assets/image-20220922094744944.png)
 
 在调试控制台输入`display/10i $pc`，让gdb持续自动显示从pc起的10条指令。
 
-![image-20220922095149572](part5.assets/image-20220922095149572.png)
+![image-20220922095149572](remote_env_gdb2.assets/image-20220922095149572.png)
 
 在user/ls.asm反汇编文件中，可以看到ecall指令汇编地址是0x59c。
 
-![image-20220922095717980](part5.assets/image-20220922095717980.png)
+![image-20220922095717980](remote_env_gdb2.assets/image-20220922095717980.png)
 
 接着，输入`b *0x59c`在ecall指令上打断点。再点击“运行”，程序自动停在了ecall指令那一行上。
 
 或者，也可以连续多次输入`si`（stepi命令），单步执行每一条汇编指令，直到程序停止ecall指令处。
 
-![image-20220922100008332](part5.assets/image-20220922100008332.png)
+![image-20220922100008332](remote_env_gdb2.assets/image-20220922100008332.png)
 
 我们还可以输入`info reg`打印全部32个寄存器的值
 
-![image-20220922100826291](part5.assets/image-20220922100826291.png)
+![image-20220922100826291](remote_env_gdb2.assets/image-20220922100826291.png)
 
 我们需要关心的是a0、a1寄存器，ls程序传递给fstat系统调用的参数。其中，a0是`fd`文件描述符，a1是要获取stat结构体信息的指针。
 
 此时，我们也可以通过输入`print/x $satp`或者`p/x $satp`查看satp寄存器（页表所在的物理地址）。
 
-![image-20220922104511551](part5.assets/image-20220922104511551.png)
+![image-20220922104511551](remote_env_gdb2.assets/image-20220922104511551.png)
 
 satp寄存器给出的物理内存地址是0x8000000000087f48。
 
 如果想进一步查看page table的映射关系，在QEMU界面中（注意，是在`终端`，不是在调试控制台），输入`ctrl a + c`就可以进入QEMU的console，之后再输入`info mem`。
 
-![image-20220922103905096](part5.assets/image-20220922103905096.png)
+![image-20220922103905096](remote_env_gdb2.assets/image-20220922103905096.png)
 
 上面打印出来的是用户程序`ls`的page table，非常小，只包含了5条映射关系。
 
@@ -66,7 +66,7 @@ satp寄存器给出的物理内存地址是0x8000000000087f48。
 	
 	最后两条PTE的虚拟地址非常大（接近虚拟地址的顶端），它们分别是trapframe page和	trampoline page（详见xv6 book P24-26）。这两个PTE没有u标志位，用户代码不能访问它们。当进入supervisor mode时，才能够访问。
 	
-	![image-20220922124624540](part5.assets/image-20220922124624540.png)
+	![image-20220922124624540](remote_env_gdb2.assets/image-20220922124624540.png)
 	
 	我们在kernel/memlayout.h头文件中，也可以看到trapframe的定义。
 	
@@ -96,17 +96,17 @@ satp寄存器给出的物理内存地址是0x8000000000087f48。
 
 在调试控制台上输入`b *0x3ffffff000`。
 
-![image-20220922163531277](part5.assets/image-20220922163531277.png)
+![image-20220922163531277](remote_env_gdb2.assets/image-20220922163531277.png)
 
 点击”运行“，或者输入`si`单步执行ecall指令。
 
-![image-20220922163711214](part5.assets/image-20220922163711214.png)
+![image-20220922163711214](remote_env_gdb2.assets/image-20220922163711214.png)
 
 从这里可以看到，已经进入了trampoline。
 
 此时，我们在QEMU的console，之后再输入`info mem`。
 
-![image-20220922164434984](part5.assets/image-20220922164434984.png)
+![image-20220922164434984](remote_env_gdb2.assets/image-20220922164434984.png)
 
 可以看出，page table并没有发生改变，也就是说ecall并没有切换page table。
 
@@ -134,25 +134,25 @@ satp寄存器给出的物理内存地址是0x8000000000087f48。
 
 输入`b *0x3ffffff08e`
 
-![image-20220922165128856](part5.assets/image-20220922165128856.png)
+![image-20220922165128856](remote_env_gdb2.assets/image-20220922165128856.png)
 
 点击”运行“。
 
-![image-20220922165205475](part5.assets/image-20220922165205475.png)
+![image-20220922165205475](remote_env_gdb2.assets/image-20220922165205475.png)
 
 在跳转到内核C语言代码运行之前，加载kernel的调试符号，输入`file kernel/kernel`
 
-![image-20220922165315546](part5.assets/image-20220922165315546.png)
+![image-20220922165315546](remote_env_gdb2.assets/image-20220922165315546.png)
 
 接着，输入`si`单步执行汇编指令。
 
-![image-20220922165428369](part5.assets/image-20220922165428369.png)
+![image-20220922165428369](remote_env_gdb2.assets/image-20220922165428369.png)
 
 可以看到已经进入了trap.c的usertrap函数中了。
 
 此时我们再观察page table，在qemu控制台输入`info mem`
 
-![image-20220922171000913](part5.assets/image-20220922171000913.png)
+![image-20220922171000913](remote_env_gdb2.assets/image-20220922171000913.png)
 
 可以看出与之前的page table不一样了，已经从user page table切换到了kernel page table，说明已经准备好了执行内核中的C代码了。
 

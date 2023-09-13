@@ -75,7 +75,7 @@ Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找�
 
 Step3. 编译xv6并运行sleep。
 
-<div align="center"> <img src="../part3.assets/image-20201018125249828.png"  width = 25%/> </div>
+<div align="center"> <img src="../part3.assets/image-20201018125249828.png"  width = 40%/> </div>
 
 Step4.回答3.3中的[相关问题](#33)。
 
