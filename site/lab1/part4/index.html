@@ -904,7 +904,7 @@ git config --global user.email &quot;your email&quot;
 <div align="center"> <img src="../part4.assets/checkout.png" width = 70%/> </div>
 
 <p><strong>值得注意的是：如果你在当前分支有改动未提交，切换到其他分支时，如果目标分支与当前分支的改动没有冲突，那么，当前分支的改动会直接移动到目标分支；反之会切换分支失败，命令行应该会有相应提示。</strong></p>
-<p>我们建议大家养成先commit再切换分支的习惯，如果你*不想提交当前更改，同时又有切换分支的需求*，那么请看下面关于<a href="typora://app/typemark/window.html#储藏更改">储藏更改</a>的介绍。</p>
+<p>我们建议大家养成先commit再切换分支的习惯，如果你 <em>不想提交当前更改，同时又有切换分支的需求</em> ，那么请看下面关于<a href="typora://app/typemark/window.html#储藏更改">储藏更改</a>的介绍。</p>
 <h3 id="_7">储藏更改<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <p>git为开发者提供储藏当前分支的所有更改（默认情况下不包括新建文件，因为git stash只暂存git已追踪的文件更改）的方法，这种方法称为git stash。</p>
 <div class="highlight"><pre><span></span><code>git stash
@@ -919,6 +919,7 @@ git config --global user.email &quot;your email&quot;
 <div class="highlight"><pre><span></span><code>git status
 </code></pre></div>
 <p>通过上面的命令可以查看仓库的状态，如果此时存在没有提交的更改，git会提示你： </p>
+<p><img alt="image-20230913200741995" src="../part4.assets/image-20230913200741995.png" /></p>
 
               
             </article>

@@ -84,7 +84,7 @@ $ sudo apt-get install autoconf automake autotools-dev curl libmpc-dev libmpfr-d
 ```console
 $ cd riscv-gnu-toolchain
 $ ./configure --prefix=/usr/local
-$ make
+$ sudo make
 $ cd ..
  
 $ rm riscv-gnu-toolchain.tar.gz
