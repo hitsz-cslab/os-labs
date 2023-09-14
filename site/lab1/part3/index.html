@@ -627,8 +627,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    3.1  代码示例
+  <a href="#31-sleep" class="md-nav__link">
+    3.1  代码示例sleep
   </a>
   
 </li>
@@ -784,8 +784,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31" class="md-nav__link">
-    3.1  代码示例
+  <a href="#31-sleep" class="md-nav__link">
+    3.1  代码示例sleep
   </a>
   
 </li>
@@ -891,9 +891,9 @@ $ git checkout util
 </ol>
 </div>
 <h3 id="3">3.  编写用户程序<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
-<h4 id="31">3.1  代码示例<a class="headerlink" href="#31" title="Permanent link">&para;</a></h4>
-<p>sleep程序已经实现，你需要理解其代码并成功将其运行：</p>
-<p>Step1. 阅读user/sleep.c文件，理解代码和注释；</p>
+<h4 id="31-sleep">3.1  代码示例sleep<a class="headerlink" href="#31-sleep" title="Permanent link">&para;</a></h4>
+<p>为帮助同学们理解xv6用户程序的编写方法，我们提供了一个sleep用户程序示例，你需要理解其代码并成功将其运行：</p>
+<p>Step1. 新建user/sleep.c文件，编写如下代码，理解代码和注释；</p>
 <div align="center"> <img src="../part3.assets/image-20210913110416368.png" /> </div>
 
 <p>Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在UPROGS上增加一行<code>$U/_sleep</code>：</p>
@@ -904,6 +904,7 @@ $ git checkout util
 
 <p>Step4.回答3.3中的<a href="#33">相关问题</a>。</p>
 <h4 id="32">3.2  实验提示<a class="headerlink" href="#32" title="Permanent link">&para;</a></h4>
+<p>在做完上述实验后，请同学们根据以下提示，编写pingpong和find两个用户程序。</p>
 <h5 id="321-pingpong">3.2.1   pingpong<a class="headerlink" href="#321-pingpong" title="Permanent link">&para;</a></h5>
 <p>a)   使用<code>pipe()</code>创建管道，详见<a href="../part2/">实验原理</a>；</p>
 <p>b)   使用<code>fork()</code>创建子进程，注意根据返回值，判断父子进程；</p>
@@ -958,6 +959,7 @@ $ git checkout util
 <li>sh程序是控制台进程。它被启动后就会输出'$'</li>
 </ul>
 <p>有兴趣的同学可以用GDB在<code>_entry</code>函数处打断点，调试跟踪xv6的启动（详见<a href="../../remote_env_gdb">VSCode图形化调试指南</a>）</p>
+<p>在理解xv6的启动流程后，就可以开始编写xv6启动流程实验了，详见<a href="../../lab1/part1/#34-xv6">实验内容及要求</a></p>
 <div align="center"> <img src="../part3.assets/image-20230914120057118.png" width = 60%/> </div>
 
               

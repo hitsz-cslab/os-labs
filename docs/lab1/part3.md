@@ -61,11 +61,11 @@ Step2 当可以看到“init: starting sh”的字样表示xv6已经正常启动
 
 ### 3.  编写用户程序
 
-#### 3.1  代码示例
+#### 3.1  代码示例sleep
 
-sleep程序已经实现，你需要理解其代码并成功将其运行：
+为帮助同学们理解xv6用户程序的编写方法，我们提供了一个sleep用户程序示例，你需要理解其代码并成功将其运行：
 
-Step1. 阅读user/sleep.c文件，理解代码和注释；
+Step1. 新建user/sleep.c文件，编写如下代码，理解代码和注释；
 
 <div align="center"> <img src="../part3.assets/image-20210913110416368.png" /> </div>
 
@@ -80,6 +80,8 @@ Step3. 编译xv6并运行sleep。
 Step4.回答3.3中的[相关问题](#33)。
 
 #### 3.2  实验提示
+
+在做完上述实验后，请同学们根据以下提示，编写pingpong和find两个用户程序。
 
 ##### 3.2.1   pingpong
 
@@ -164,6 +166,8 @@ init程序被放在磁盘上，它就是所有进程的祖先（0号进程）。
 - sh程序是控制台进程。它被启动后就会输出'$'
 
 有兴趣的同学可以用GDB在`_entry`函数处打断点，调试跟踪xv6的启动（详见[VSCode图形化调试指南](../../remote_env_gdb)）
+
+在理解xv6的启动流程后，就可以开始编写xv6启动流程实验了，详见[实验内容及要求](../../lab1/part1/#34-xv6)
 
 <div align="center"> <img src="../part3.assets/image-20230914120057118.png" width = 60%/> </div>
 
