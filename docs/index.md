@@ -16,6 +16,8 @@
 
 <font color=red> **由于我们已经对XV6的实验内容及要求进行了修改，请大家从下面的[“3. 获取XV6实验框架代码”](#3-xv6)仓库下载代码，务必在这套代码上完成实验，使用其他xv6仓库代码的同学极有可能通不过实验考核！！！** </font>  在实验开始之前，请同学们务必先按顺序阅读指导书，掌握实验平台的搭建/使用方法，掌握Linux系统下的一些基本命令/操作，熟练使用GDB调试工具。对于有兴趣有余力的同学，建议完成XV6的所有实验，若能完成会有意想不到的惊喜！
 
+为了帮助同学们理解xv6的概貌、代码结构以及调试方法，我校OS课题组、各级学长助教们合力为大家录制的[XV6讲解视频和调试视频](#4)，推荐大家按需观看。
+
 如果同学们对本课程实验内容、实验安排、实验指导书或者代码框架等各方面有宝贵的意见或建议，请在[piazza在线交流平台](https://piazza.com/harbin_institute_of_technology_shenzhen/fall2023/comp3001)（access code：comp3001）提出来或私信老师或助教。
 
 
@@ -48,6 +50,37 @@ $ git clone https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
 ```
 
 获取框架代码，将克隆xv6-oslab23-hitsz到当前目录。如遇问题请联系老师或助教。
+
+## 4. 视频链接
+
+### 4.1 xv6讲解视频链接
+    
+1. 【HITSZ操作系统课程组讲解XV6（一）启动过程】 			 
+    
+    - 视频链接: https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    - 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析1-进程管理.pdf)
+  
+2. 【HITSZ操作系统课程组讲解XV6（二）进程管理】 
+    
+    - 视频链接: https://www.bilibili.com/video/BV1ge4y1J7Je?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    - 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析2-内存管理.pdf)
+  
+3. 【HITSZ操作系统课程组讲解XV6（三）内存管理】 
+    
+    - 视频链接: https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
+    - 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析3-启动过程.pdf)
+    
+也可以观看B站上的[MIT 6.S081/Fall 2020课程视频](https://www.bilibili.com/video/BV19k4y1C7kA?p=1)，通过学习这门课程可以让你对xv6操作系统有一个全面的认识。
+
+### 4.2 xv6调试演示视频链接
+
+1. 【1. VSCode调试xv6内核代码】 https://www.bilibili.com/video/BV1ZB4y1E7X5?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
+
+2. 【2. VSCode调试xv6用户代码】 https://www.bilibili.com/video/BV1i14y1Y7ZZ?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
+
+3. 【3. VSCode调试系统调用过程（包含pagetable和汇编）】 https://www.bilibili.com/video/BV12P411J7xq?share_source=copy_webvd_source=a822dcda3537564ccdd0bb45aa0afe33
+
+4. 【4. VSCode调试系统调用——从内核到用户，再从用户返回内核】 https://www.bilibili.com/video/BV1ug411m7ir?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33vd_source=a822dcda3537564ccdd0bb45aa0afe33
 
 
 ## 致谢
