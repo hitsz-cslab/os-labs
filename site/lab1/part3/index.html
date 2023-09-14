@@ -672,6 +672,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#4-xv6" class="md-nav__link">
+    4.  xv6启动流程分析
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -822,6 +829,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#4-xv6" class="md-nav__link">
+    4.  xv6启动流程分析
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -920,6 +934,31 @@ $ git checkout util
 <p>1) 简要说明你是怎么创建管道的，又是怎么使用管道传输数据的。  </p>
 <p>2) fork之后，我们怎么用管道在父子进程传输数据？ </p>
 <p>3) 试解释，为什么要提前关闭管道中不使用的一端？（提示：结合管道的阻塞机制）</p>
+<h3 id="4-xv6">4.  xv6启动流程分析<a class="headerlink" href="#4-xv6" title="Permanent link">&para;</a></h3>
+<p>当我们输入<code>make qemu</code>后，就能启动qemu，从控制台参数加载资源，将xv6整体加载到物理内存中。xv6启动涉及kernel目录下的entry.S、start.c与main.c等少数几个文件，entry、start两个函数运行在机器态（类似于BIOS），main运行在内核态（特权级），后面的用户程序运行在用户态。</p>
+<p>启动流程步骤如下:</p>
+<p>（1）QEMU将pc设为0x8000_0000，开始运行xv6的首个函数：_entry (kernel/entry.S)。</p>
+<p>（2）entry函数设置当前CPU的栈寄存器(sp)，拥有栈后就可以调用函数了，进入start。</p>
+<p>（3）start函数进行了如下操作：</p>
+<ul>
+<li>初始化机器态特权寄存器</li>
+<li>启用时钟中断</li>
+<li>把当前CPU的id放入tp寄存器</li>
+</ul>
+<p>（4）start函数完成了机器态初始化，随后就进入了内核态的首个函数：main。</p>
+<p>（5）main函数初始化了各种外设的驱动、内存模块、进程模块、文件系统。</p>
+<p>（6）在main函数调用的userinit()里面，xv6在内核加载了第一个用户程序initcode，只有不到100字节。这个程序运行时只占用一个内存页（数据来自initcode），这个页兼具代码段、数据段、栈的功能。</p>
+<p>（7）从main函数进入scheduler函数（调度器）之后，scheduler调度到初始进程initcode，它只做一件事：运行exec(“/init”)，然后进入第一个进程。这样，xv6已经可以正常运行用户程序了，只要用户进程存在就会被CPU调度运行。</p>
+<p>init程序被放在磁盘上，它就是所有进程的祖先（0号进程）。</p>
+<ul>
+<li>从磁盘加载应用程序的过程是exec系统调用完成的</li>
+<li>它通过fork+exec的方式启动控制台程序sh</li>
+<li>它不断地调用wait(0)来回收所有僵尸进程</li>
+<li>它被启动后会输出一行“init: starting sh”</li>
+<li>sh程序是控制台进程。它被启动后就会输出'$'</li>
+</ul>
+<p>有兴趣的同学可以用GDB在<code>_entry</code>函数处打断点，调试跟踪xv6的启动（详见<a href="../../remote_env_gdb">VSCode图形化调试指南</a>）</p>
+<div align="center"> <img src="../part3.assets/image-20230914120057118.png" width = 60%/> </div>
 
               
             </article>
