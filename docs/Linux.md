@@ -11,7 +11,7 @@
   Linux登录方式主要有两种：
 
   - 本地登录：只要启动虚拟机即可，类似于打开自己电脑直接连接显示器的方式；可以通过`Ctrl + Alt + F[1-6]`在6个虚拟控制台之间进行切换。需要注意的是，远程实验平台不能用本地登录。
-  - 远程登录：可以通过MobaXterm、Windows Terminal、putty等工具远程登录。
+  - 远程登录：对于Windows用户来说，可以通过MobaXterm、Windows Terminal、putty等工具远程登录。
 
 ## 2. shell简介
   Shell意思为命令行界面，是运行命令行的应用程序，它本身是一个用C语言编写的程序。shell是用户使用Linux的桥梁，用户通过shell来控制Linux系统，Linux系统通过shell展示系统信息。
@@ -402,6 +402,7 @@ $ find path -option [ -print ] [ -exec -ok command ] {} \;
 $ find . -name "*.c"
 ```
 
+上述示例功能：寻找当前目录及其各级子目录下.c后缀的文件。
 
 
 Linux locate命令用于查找符合条件的文档，他会去保存文档和目录名称的数据库内，查找合乎范本样式条件的文档或目录。

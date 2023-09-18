@@ -62,7 +62,7 @@
 
 ### 3.2 pingpong
 
-在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印`<pid>：received ping` ，其中`<pid>`是子进程的进程ID。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印`<pid>：received pong`，其中`<pid>`是父进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：
+在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印`<pid>: received ping` ，其中`<pid>`是子进程的进程ID。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印`<pid>: received pong`，其中`<pid>`是父进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：
 
 ![image-20201017230846238](part1.assets/image-20201017230846238.png)
 
