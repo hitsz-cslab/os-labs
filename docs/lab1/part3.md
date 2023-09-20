@@ -14,7 +14,7 @@ xv6运行环境详见[实验平台及环境配置](../../env/)。
 
 请clone最新代码到本地进行实验：   
 
-```
+```shell
 $ git clone https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
 ```
 
@@ -26,6 +26,12 @@ $ git checkout util
 ```
 
 <div align="center"> <img src="../part3.assets/image-20210913105916234.png" /> </div>
+
+另外，由于我们的[官方仓库](https://gitee.com/greenhandzpx/xv6-oslab23-hitsz) **随时可能更新**，所以做实验前需要先拉取最新的代码：先切到对应的分支（util），然后：
+
+```shell
+$ git pull
+```
 
  xv6的代码结构：
 
