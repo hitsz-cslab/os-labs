@@ -26,7 +26,7 @@ Patch文件：[pmp.patch](../code/pmp.patch)
 
 ## 2. VSCode无法连接实验平台
 
-### 2.1  VS Code连接远程实验平台时提示`ssh: connect to host 10.249.12.98 port 22: Connection timed out`？
+### 2.1  VSCode连接远程实验平台时提示`ssh: connect to host 10.249.12.98 port 22: Connection timed out`？
 
 端口号写错了，请参考实验指导书要求来连接。
 
@@ -34,7 +34,7 @@ https://hitsz-cslab.gitee.io/os-labs/remote_env/
 
 远程实验平台IP地址： `10.249.12.98` ，端口号： `6666`
 
-### 2.2 VS Code连接远程实验平台时出现`bad owner or permission`报错？
+### 2.2 VSCode连接远程实验平台时出现`bad owner or permission`报错？
 
 解决方法：进入路径`C:\Users\用户名\.ssh`，右击config文件进入属性中高级安全管理，选择禁止继承，并且删除所有此对象中继承的权限。
 
@@ -57,7 +57,7 @@ https://hitsz-cslab.gitee.io/os-labs/remote_env/
 使用`rm -rf *`删除后，应该就能clone xv6-oslab23-hitsz。
 
 
-### 2.4 VS Code连接远程实验平台时提示`mkdir: cannot create directory '/home/students/XXX'`
+### 2.4 VSCode连接远程实验平台时提示`mkdir: cannot create directory '/home/students/XXX'`
 
 如图：
 
@@ -114,7 +114,7 @@ VSCode工作区路径不是XV6路径，嵌套了外面一层文件夹。
 
 解决方法：
 
-首先 **确认你的VS Code工作区路径是否是你的xv6路径，没有额外嵌套一层文件夹** 。按下`` Ctrl+` ``，呼出终端，输入`ls`。你应该会看到如下情景：
+首先 **确认你的VSCode工作区路径是否是你的xv6路径，没有额外嵌套一层文件夹** 。按下`` Ctrl+` ``，呼出终端，输入`ls`。你应该会看到如下情景：
 
 ```console
 ldap_example@OSLabExecNode0:~/xv6-oslab23-hitsz$ ls
@@ -214,5 +214,5 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](../../tools/#331)或者[3.3.2 使用VS Code内建的图形化界面完成操作](../../tools/#332-vs-code)节，完成commit操作。
+这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](../../tools/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../../tools/#332-vs-code)节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。

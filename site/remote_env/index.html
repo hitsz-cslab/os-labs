@@ -1073,7 +1073,7 @@
 <p>打开Visual Studio Code的<a href="https://code.visualstudio.com/">官方网站</a>，点击中间的“Download for Windows”下载它的安装包。双击运行安装包，并完成安装即可。你可以从开始菜单找到新安装上的Visual Studio Code。</p>
 <h3 id="12">1.2 连接到实验平台<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
 <h4 id="121-visual-studio-code">1.2.1 将Visual Studio Code连接到实验平台<a class="headerlink" href="#121-visual-studio-code" title="Permanent link">&para;</a></h4>
-<p>Visual Studio Code安装完成后，从开始菜单打开它。我们需要安装Remote - SSH插件。点击VS Code左侧扩展(extension)按钮，在搜索框中键入“remote ssh”，点击Remote - SSH插件，并安装。</p>
+<p>Visual Studio Code安装完成后，从开始菜单打开它。我们需要安装Remote - SSH插件。点击VSCode左侧扩展(extension)按钮，在搜索框中键入“remote ssh”，点击Remote - SSH插件，并安装。</p>
 <p><img alt="安装插件" src="../remote_env.assets/vscode_extension.png" /></p>
 <p>左侧边栏应该会多出一个这样的图标：<img alt="图标:" src="../remote_env.assets/icon.png" />
 点击这个图标，选择SSH TARGETS右侧的<code>+</code>号：</p>
@@ -1086,7 +1086,7 @@
 <p>现在，SSH Target添加成功，左侧SSH Target中应该增加了一栏。将鼠标移上去，点击这一栏右侧的小图标：</p>
 <div align="center"> <img src="../remote_env.assets/connect1-16618272820231.png" /> </div>
 
-<p>这会打开一个新的VS Code窗口。新打开的窗口会要求你选择目标机器的平台，选择Linux，按下回车：</p>
+<p>这会打开一个新的VSCode窗口。新打开的窗口会要求你选择目标机器的平台，选择Linux，按下回车：</p>
 <p><img alt="connect2" src="../remote_env.assets/connect2.png" /></p>
 <p>如果如下图所示要求你确认是否连接，则再次按下回车：</p>
 <p><img alt="连接3" src="../remote_env.assets/connect3.png" /></p>
@@ -1144,7 +1144,7 @@ $
 <div class="highlight"><pre><span></span><code>ssh-add 你的私钥的完整路径
 # 例如，如上图所示，我应该键入ssh-add C:\Users\willson\.ssh\id_rsa_priv_20210909
 </code></pre></div>
-<p>在你的Windows上将公钥文件打开（用你喜欢的纯文本编辑器，比如记事本或者VS Code），复制其中的内容。</p>
+<p>在你的Windows上将公钥文件打开（用你喜欢的纯文本编辑器，比如记事本或者VSCode），复制其中的内容。</p>
 <p>最后，登录你想要快捷认证的远程实验平台终端，并执行下面的命令：</p>
 <div class="highlight"><pre><span></span><code>mkdir -p ~/.ssh
 vi ~/.ssh/authorized_keys

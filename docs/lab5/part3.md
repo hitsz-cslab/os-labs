@@ -159,7 +159,7 @@ teststu_8@OSLabExecNode0:~/$
 
 项目编译的过程在新建项目的SPEC.txt文件中有所交代，这里提出来讲一讲：
 
--   **Step 1** . SSH打开`./fs/newfs`。打开VS Code软件，点击左上角 "文件" → "打开文件夹"，选择实验包目录下的fs/newfs文件夹。
+-   **Step 1** . SSH打开`./fs/newfs`。打开VSCode软件，点击左上角 "文件" → "打开文件夹"，选择实验包目录下的fs/newfs文件夹。
 
 ![image-20211024145359896](part3.assets/image-20211024145359896.png)
 

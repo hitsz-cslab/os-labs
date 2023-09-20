@@ -15,7 +15,7 @@
 
 MobaXterm 是一款远程控制工具，支持创建SSH、Telnet、Rsh、Xdmc、RDP、VNC、FTP、 SFTP、串口(Serial COM)、本地Shell、Mosh、Aws、WSL(微软子系统)等超多连接功能。MobaXterm 提供了人性化的操作界面，支持与主流的操作系统连接进行控制和管理操作，功能十分强大。
 
-MobaXterm 下载链接： <http://10.249.14.14:8000/index.php/s/7vlEVZPKaMTIpi0>
+MobaXterm 下载链接： <http://10.249.12.85/misc/>
 
 打开MobaXterm，单击打开工具Session（位于左上角）选择New sessions打开新建窗口，选择SSH，输入远程服务器的IP地址、登陆用户名及端口（默认是22，远程实验平台端口号是6666），点击OK。
 
@@ -27,7 +27,7 @@ SSH配置信息根据实验环境来配置：
 
 <div align="center"> <img src="../tools.assets/image-20201017220316972.png" width = 90%/> </div>
 
-- 自行部署的实验环境。如果你用的是你自己的实验环境，可以使用ip addr命令来查询IP地址，详见[ip addr 显示或设置网络状态](../Linux/#72-ip-addr)。端口号如果在没有修改的情况下，默认是22。用户名和密码是Linux系统中的用户名和密码。
+- 自行部署的实验环境。如果你用的是你自己的实验环境，可以使用ip addr命令来查询IP地址，详见[ip addr 显示或设置网络状态](../Linux/#719-ip-addr)。端口号如果在没有修改的情况下，默认是22。用户名和密码是Linux系统中的用户名和密码。
 
 点击OK后，输入密码（输入过程是没有显示的，输入完成后敲回车键）
 
@@ -41,7 +41,7 @@ SSH远程登录完毕，在左下角有Sftp图标，双击它，就出现了远�
 
 <div align="center"> <img src="../tools.assets/mobaxterm-6.png" width = 90%/> </div>
 
-接下来在可以点击红色框框的按钮“Upload to current folder”或者“Download selected files”，在windows系统和虚拟机/远程实验平台之间上传或下载文件。
+接下来，可以点击红色框框的按钮“Upload to current folder”或者“Download selected files”，在windows系统和虚拟机/远程实验平台之间上传或下载文件。
 
 ## 2 VScode
 
@@ -69,7 +69,7 @@ SSH远程登录完毕，在左下角有Sftp图标，双击它，就出现了远�
 !!! 提示
     使用前，需要安装Remote-SSH插件。
 
-在左侧边栏的远程资源管理器工具栏中点击+号，在顶部输入" `ssh 你的用户名@IP地址 -p 端口号` "命令并一路回车。
+在左侧边栏的远程资源管理器工具栏中点击+号，在顶部输入`ssh 你的用户名@IP地址 -p 端口号` 命令并一路回车。
 
 此时在工具栏中可以看到新添加的远程主机。在远程电脑上点击连接，输入密码后将会打开新窗口连接到远程主机中。
 
@@ -89,7 +89,6 @@ SSH远程登录完毕，在左下角有Sftp图标，双击它，就出现了远�
 
 此时，可以像本地一样使用远程机器进行工作了。
 
-VScode的详细用法查看“使用VSCode阅读源代码教程.pdf”。
 
 ## 3 git
 
@@ -237,7 +236,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-如果本地有尚未commit的更改，请参照[3.3.1.1 Commit](#3311)中的操作（命令行操作）或者[3.3.2 使用VS Code内建的图形化界面完成操作](#332)中的操作（VS code图形化界面操作），完成commit。你没有推送到上游仓库（本课程实验提供的远程仓库）的权限，所以不必push。
+如果本地有尚未commit的更改，请参照[3.3.1.1 Commit](#3311)中的操作（命令行操作）或者[3.3.2 使用VSCode内建的图形化界面完成操作](#332)中的操作（VSCode图形化界面操作），完成commit。你没有推送到上游仓库（本课程实验提供的远程仓库）的权限，所以不必push。
 
 #### 3.2.3 修改远程仓库地址并推送
 
@@ -257,7 +256,7 @@ git push -u origin syscall
 
 ### 3.3 常用git操作
 
-你可以选择使用命令行完成`commit`/`push`/`pull`/`merge`等操作，也可以通过VS Code内建的图形化界面完成这些操作。
+你可以选择使用命令行完成`commit`/`push`/`pull`/`merge`等操作，也可以通过VSCode内建的图形化界面完成这些操作。
 
 git工作过程
 
@@ -324,9 +323,9 @@ git merge 远程仓库名称/分支名称
 !!! waning "仓库权限"
     你可以从公共仓库拉取，但你只能推送到你拥有权限的仓库。为了验证你的身份，你需要设置自己的ssh密钥对。请参照[3.4节 ssh密钥设置](#34-ssh)完成设置。
 
-#### 3.3.2 使用VS Code内建的图形化界面完成操作
+#### 3.3.2 使用VSCode内建的图形化界面完成操作
 
-VS Code的版本控制界面在左侧从上往下数第二个按钮处；下方会显示当前所处的分支，点击可以切换当前所处分支；右侧的圆形双箭头则代表与远程环境同步。右侧Changes显示工作区中被修改的文件，而Staged则显示将被加入到下次Commit中的修改。如图，这个界面显示我们有两个被修改的文件：
+VSCode的版本控制界面在左侧从上往下数第二个按钮处；下方会显示当前所处的分支，点击可以切换当前所处分支；右侧的圆形双箭头则代表与远程环境同步。右侧Changes显示工作区中被修改的文件，而Staged则显示将被加入到下次Commit中的修改。如图，这个界面显示我们有两个被修改的文件：
 
 <div align="center"> <img src="../tools.assets/vs_git.png" width = 100%/> </div>
 
@@ -528,7 +527,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](#331)或者[3.3.2 使用VS Code内建的图形化界面完成操作](#332-vs-code)节，完成commit操作。
+这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](#332-vs-code)节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。
 
 ## 4 gcc

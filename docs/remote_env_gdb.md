@@ -3,7 +3,7 @@
 !!! note "调试说明"
     通常来说，使用简单粗暴的`printf大法`（在特定的地方打印日志）就能够处理绝大多数的bug。但是对于大型的项目开发或数量超多的源码，printf大法就不能快速地去定位问题所在。功能强大的GDB调试是Linux系统下的一个程序调试利器，使用GDB调试可以说是作为Linux下的程序员应当要掌握的一大技能。然而，GDB因其命令行的方式想必会挡住了一大波同学，默默地继续使用printf。那有没有带图形化调试界面的调试方法呢？
 
-    接下来，我们为同学们介绍调试手段的重头戏：使用VS Code来调试xv6 : ) 
+    接下来，我们为同学们介绍调试手段的重头戏：使用VSCode来调试xv6 : ) 
 
 为了给同学们演示如何用VSCode图形化调试XV6，我们录制了两个演示视频，建议到bilibili上观看。
 
@@ -11,7 +11,7 @@
 2. 【2. VSCode调试xv6用户代码】 https://www.bilibili.com/video/BV1i14y1Y7ZZ?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
 
 !!! warning "注意事项"
-    如果不想使用VS Code调试，还是想在远程实验环境使用gdb命令行的同学，请使用可以支持多种硬件体系架构的“gdb-multiarch”而非“gdb”或者“riscv64-unknown-elf-gdb”。
+    如果不想使用VSCode调试，还是想在远程实验环境使用gdb命令行的同学，请使用可以支持多种硬件体系架构的“gdb-multiarch”而非“gdb”或者“riscv64-unknown-elf-gdb”。
 
     1. 打开终端，到xv6-oslab23-hitsz目录下输入：
     
@@ -30,7 +30,7 @@
 
 
 
-使用远程实验平台和VS Code，可以方便快捷地使用图形化界面完成调试功能。以下是设置步骤。
+使用VSCode可以方便快捷地使用图形化界面完成调试功能。以下是设置步骤。
 
 ## 1. 设置GDB信任
 
@@ -53,9 +53,9 @@ ldap_example@OSLabExecNode0:~$ expr $(id -u) % 5000 + 25000
 
 请记好这串数字，后面会用到。
 
-## 3. 设置VS Code
+## 3. 设置VSCode
 
-首先 **确认你的VS Code工作区路径是否是你的xv6路径，没有额外嵌套一层文件夹** 。按下`` Ctrl+` ``，呼出终端，输入`ls`。你应该会看到如下情景：
+首先 **确认你的VSCode工作区路径是否是你的xv6路径，没有额外嵌套一层文件夹** 。按下`` Ctrl+` ``，呼出终端，输入`ls`。你应该会看到如下情景：
 
 ```console
 ldap_example@OSLabExecNode0:~/xv6-oslab23-hitsz$ ls
@@ -64,14 +64,14 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 
 如果不是，打开新的工作区，选择xv6所在的文件夹打开即可。
 
-**在VS Code左侧，点击扩展选项，搜索、安装`Native Debug`插件** ，点击安装：
+**在VSCode左侧，点击扩展选项，搜索、安装`Native Debug`插件** ，点击安装：
 
 ![native_debug](remote_env_gdb.assets/native_debug.png)
 
 !!! note "插件推荐"
-    同时，我们也强烈推荐你安装VS Code的C/C++插件。这会给你带来自动补全、Ctrl-点击跳转等各种方便的功能。
+    同时，我们也强烈推荐你安装VSCode的C/C++插件。这会给你带来自动补全、Ctrl-点击跳转等各种方便的功能。
 
-在VS Code左侧，点击“运行和调试”选项，如图：
+在VSCode左侧，点击“运行和调试”选项，如图：
 
 ![debug_tab](remote_env_gdb.assets/debug_tab.png)
 

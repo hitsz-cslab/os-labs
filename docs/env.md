@@ -68,7 +68,7 @@ $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
 
 如果下载太慢，可以直接用已经下载好的包。
 
-> 下载地址： http://10.249.14.14:8000/index.php/s/7vlEVZPKaMTIpi0， 选择riscv-gnu-toolchain.tar.gz。下载完成后，需要将riscv-gnu-toolchain.tar.gz上传至Linux系统中，上传方法详见MobaXterm(SSH工具)这一节中的[文件传输SFTP服务](../tools/#12-sftp)。上传到Linux系统中，需要对RISC-V GNU编译器工具链进行解压，解压命令如下：
+> 下载地址： http://10.249.12.85/misc/， 选择riscv-gnu-toolchain.tar.gz。下载完成后，需要将riscv-gnu-toolchain.tar.gz上传至Linux系统中，上传方法详见MobaXterm(SSH工具)这一节中的[文件传输SFTP服务](../tools/#12-sftp)。上传到Linux系统中，需要对RISC-V GNU编译器工具链进行解压，解压命令如下：
 
 > ```console
 > $ tar zxvf riscv-gnu-toolchain.tar.gz

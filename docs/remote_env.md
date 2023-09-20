@@ -33,7 +33,7 @@
 
 #### 1.2.1 将Visual Studio Code连接到实验平台
 
-Visual Studio Code安装完成后，从开始菜单打开它。我们需要安装Remote - SSH插件。点击VS Code左侧扩展(extension)按钮，在搜索框中键入“remote ssh”，点击Remote - SSH插件，并安装。
+Visual Studio Code安装完成后，从开始菜单打开它。我们需要安装Remote - SSH插件。点击VSCode左侧扩展(extension)按钮，在搜索框中键入“remote ssh”，点击Remote - SSH插件，并安装。
 
 ![安装插件](remote_env.assets/vscode_extension.png)
 
@@ -57,7 +57,7 @@ Visual Studio Code安装完成后，从开始菜单打开它。我们需要安�
 
 
 
-这会打开一个新的VS Code窗口。新打开的窗口会要求你选择目标机器的平台，选择Linux，按下回车：
+这会打开一个新的VSCode窗口。新打开的窗口会要求你选择目标机器的平台，选择Linux，按下回车：
 
 ![connect2](remote_env.assets/connect2.png)
 
@@ -162,7 +162,7 @@ ssh-add 你的私钥的完整路径
 # 例如，如上图所示，我应该键入ssh-add C:\Users\willson\.ssh\id_rsa_priv_20210909
 ```
 
-在你的Windows上将公钥文件打开（用你喜欢的纯文本编辑器，比如记事本或者VS Code），复制其中的内容。
+在你的Windows上将公钥文件打开（用你喜欢的纯文本编辑器，比如记事本或者VSCode），复制其中的内容。
 
 最后，登录你想要快捷认证的远程实验平台终端，并执行下面的命令：
 
