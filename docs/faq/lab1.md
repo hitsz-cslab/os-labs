@@ -17,13 +17,15 @@
 
 ![image-20220926180507976](lab1.assets/image-20220926180507976.png)
 
-### 2.2 pingpong出现如下报错usertrap()
+### 2.2 pingpong出现usertrap()报错
 
+1. 数组越界、内存溢出（scause=13）
 ![pingpong2](lab1.assets/pingpong2.png)
-
 解决方案：
-
 ![image-20220926180632009](lab1.assets/image-20220926180632009.png)
+2. 用户程序退出时使用return（scause=2）
+![pingpong3](lab1.assets/pingpong3.png)
+解决方案：用户程序退出时使用 `exit()` 函数退出，不要使用 `return` 返回。
 
 ## 3. primes
 
