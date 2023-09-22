@@ -70,12 +70,11 @@ nav:
     - 实验原理: lab1/part2.md
     - 实验步骤: lab1/part3.md
     - 提交文档: lab1/part4.md  
-#  - Lab2：系统调用: 
-#    - 实验概述: lab2/part1.md
-#    - 实验原理: lab2/part2.md
-#    - 实验实现: lab2/part3.md
-#    - 提交文档: lab2/part4.md   
-#    - GDB调试系统调用（补充材料）: lab2/part5.md     
+  - Lab2：系统调用: 
+    - 实验概述: lab2/part1.md
+    - 实验原理: lab2/part2.md
+    - 实验实现: lab2/part3.md
+    - 提交文档: lab2/part4.md   
 #  - Lab3：锁机制的应用: 
 #    - 实验概述: lab3/part1.md
 #    - 实验原理: lab3/part2.md

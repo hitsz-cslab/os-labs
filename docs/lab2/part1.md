@@ -49,8 +49,11 @@
 1. **参数`status`** ：退出状态，0表示正常退出，-1（大部分）表示异常退出。  
 2. **返回值** ：无，函数调用exit之后该进程在内核态进行exit相关的资源回收之后，对应进程终止，不会返回。  
 3. **功能** ：回收进程资源，回收完毕之后终止进程。  
-（1）exit系统调用在处理当前进程的资源时，流程为：关闭所有打开文件 -> 将当前进程的所有子进程交给初始进程initproc -> 更改当前进程状态 -> 手动进入调度器（等待回收）。  
-（2）需要完成的：当前进程的父进程的信息输出格式： `proc %d exit, parent pid %d, name %s, state %s`；当前进程的子进程的信息输出格式：`proc %d exit, child %d, pid %d, name %s, state %s`  
+（1）exit系统调用在处理当前进程的资源时，流程为：关闭所有打开文件 -> **将当前进程的所有子进程交给初始进程init** -> 更改当前进程状态 -> 手动进入调度器（等待回收）。  
+（2）需要完成的信息输出格式：  
+当前进程的父进程的信息输出格式： `proc PID exit, parent pid PID, name NAME, state STATE`；  
+当前进程的子进程的信息输出格式：`proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE`。  
+其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示进程名，STATE表示进程状态。
 
 #### 3.2.2 运行结果
 
@@ -66,60 +69,28 @@
 
 /* 一大波输出 …… */
 
-xv6 kernel is booting
-
-hart 2 starting
-hart 1 starting
+kernel/main.c:14
+kernel/main.c:15	xv6 kernel is booting
+kernel/main.c:16
+kernel/main.c:36	hart 2 starting
+kernel/main.c:36	hart 1 starting
 init: starting sh
 $
 
-/* 例子1，手动输入:trace 32 grep hello README */
+/* 手动输入exittest */
 
-$ trace 32 grep hello README
-3: sys_read(3) -> 1023
-3: sys_read(3) -> 966
-3: sys_read(3) -> 70
-3: sys_read(3) -> 0
-$
-
-/* 例子2，手动输入:trace 2147483647 grep hello README */
-
-$ trace 2147483647 grep hello README
-4: sys_trace(2147483647) -> 0
-4: sys_exec(12240) -> 3
-4: sys_open(12240) -> 3
-4: sys_read(3) -> 1023
-4: sys_read(3) -> 966
-4: sys_read(3) -> 70
-4: sys_read(3) -> 0
-4: sys_close(3) -> 0
-$
-
-/* 例子3，手动输入:grep hello README */
-
-$ grep hello README
-$
-
-
-/* 例子4，手动输入:trace 2 usertests forkforkfork */
-
-$ trace 2 usertests forkforkfork
-usertests starting
-test forkforkfork: 407: syscall fork -> 408
-408: sys_fork(-1) -> 409
-409: sys_fork(-1) -> 410
-410: sys_fork(-1) -> 411
-409: sys_fork(-1) -> 412
-410: sys_fork(-1) -> 413
-409: sys_fork(-1) -> 414
-411: sys_fork(-1) -> 415
-...
-$   
+$ exittest
+exit test
+kernel/proc.c:280	proc 3 exit, parent pid 2, name sh, state run
+kernel/proc.c:291	proc 3 exit, child 0, pid 4, name exittest, state runble
+kernel/proc.c:291	proc 3 exit, child 1, pid 5, name exittest, state runble
+kernel/proc.c:291	proc 3 exit, child 2, pid 6, name exittest, state runble
+$ kernel/proc.c:280	proc 4 exit, parent pid 1, name init, state run
+kernel/proc.c:280	proc 5 exit, parent pid 1, name init, state run
+kernel/proc.c:280	proc 6 exit, parent pid 1, name init, state run
 ```
 
-我们先不着急动手，先看看结果长什么样。
-
-1. 在 **第一个例子** 中，`trace 32 grep hello README`，其中，trace表示我们希望执行用户态应用程序trace（见user/trace.c），后面则是trace应用程序附带的入参：
+<!-- 1. 在 **第一个例子** 中，`trace 32 grep hello README`，其中，trace表示我们希望执行用户态应用程序trace（见user/trace.c），后面则是trace应用程序附带的入参：
 
     - `32`是"1 << SYS_read"，表示只追踪系统调用read；  
     - `grep`是trace应用程序中通过"exec"启动的另一个程序（见 user/grep.    c）；  
@@ -146,13 +117,40 @@ $
       // kernel printing usertrap messages, which can be ignored if test
       // prints "OK".
       ```
-    
+     -->
+我们先不着急动手，先看看结果长什么样。在输出当中，存在两种不同的输出：  
+对当前进程的父进程的信息的输出：
+```
+kernel/proc.c:280	proc 3 exit, parent pid 2, name sh, state run
+```
+以及  
+对当前进程的子进程的信息的输出：
+```
+kernel/proc.c:291	proc 3 exit, child 0, pid 4, name exittest, state runble
+```
+你需要使用尝试在与exit相关的函数当中找到 **合适的位置** 来进行输出。
       
 
-### 3.3 任务二：添加系统调用sysinfo
+### 3.3 任务二：wait系统调用的非阻塞选项实现
 
-在该任务中，你需要加入一条新的系统调用，叫做`sysinfo`。该系统调用将收集xv6运行的一些信息。
-sysinfo只需要一个参数，这个参数是结构体 `sysinfo`的指针， **这个结构体在kernel/sysinfo.h** 可以找到。xv6内核的工作就是把这个结构体填上应有的数值。下面介绍结构体每个成员的含义
+在该任务中，你需要对wait系统调用进行更改，使其增加一个参数`int flags`，用以表示是否需要进行阻塞等待。
+
+原版阻塞实现的wait：`int wait(int *status)`，在`kernel/proc.c`当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
+```
+// Wait for a child to exit.
+sleep(p, &p->lock);  // DOC: wait-sleep
+```
+在父进程调用该函数之后，通过sleep进行睡眠，无法再执行其他任务，也就是阻塞在这里。
+
+同学们需要实现的wait：`int wait(int *status, int flags)`。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  
+
+具体来说，同学们需要：
+1. 尝试在`kernel/sysproc.c`的`sys_wait`函数中获取新添加的参数；
+2. 更改头文件中的wait的定义；
+3. 更改wait函数以满足当前的语义。
+
+
+<!-- sysinfo只需要一个参数，这个参数是结构体 `sysinfo`的指针， **这个结构体在kernel/sysinfo.h** 可以找到。xv6内核的工作就是把这个结构体填上应有的数值。下面介绍结构体每个成员的含义
 
 ```c
  1  struct sysinfo {
@@ -164,13 +162,14 @@ sysinfo只需要一个参数，这个参数是结构体 `sysinfo`的指针， **
 
 - `freemem`：当前剩余的内存 **字节** 数
 - `nproc`： **状态为UNUSED** 的进程个数
-- `freefd`：当前进程可用文件描述符的数量，即 **尚未使用** 的文件描述符数量
+- `freefd`：当前进程可用文件描述符的数量，即 **尚未使用** 的文件描述符数量 -->
 
-实验提供了一个`sysinfotest`用户级应用程序（见`user/sysinfotest.c`），依次测试剩余的内存字节数、UNUSED的进程个数、未被使用的文件描述符数量。
+实验提供了一个`waittest`用户级应用程序（见`user/waittest.c`）。
 
-完成任务后，你可以在xv6中运行`sysinfotest`程序，通过测试会显示如下内容：
+完成任务后，你可以在xv6中运行`waittest`程序，通过测试会显示如下内容：
 
-![image-20211005130943125](part1.assets/image-20211005130943125.png)
+<!-- ![image-20211005130943125](part1.assets/image-20211005130943125.png) -->
+![waittest-result](part1.assets/waittest-ans.png)
 
 ### 3.4 测试
 
