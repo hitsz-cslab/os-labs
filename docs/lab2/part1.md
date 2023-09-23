@@ -33,7 +33,7 @@
 
     **Step 2.** 切换的方法可以参考实验 -> 实验实用工具 -> [3.1同步上游仓库 ~ 3.3.3 合并冲突更改](../tools.md#31)。
 
-本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用`exittest`和`waittest`测试程序。具体来说，本实验有三部分：
+本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用`exittest`, `waittest`和`yieldtest`测试程序。具体来说，本实验有三部分：
 
 
 ### 3.2 任务一：进程信息收集
@@ -81,13 +81,13 @@ $
 
 $ exittest
 exit test
-kernel/proc.c:280	proc 3 exit, parent pid 2, name sh, state run
-kernel/proc.c:291	proc 3 exit, child 0, pid 4, name exittest, state runble
-kernel/proc.c:291	proc 3 exit, child 1, pid 5, name exittest, state runble
-kernel/proc.c:291	proc 3 exit, child 2, pid 6, name exittest, state runble
-$ kernel/proc.c:280	proc 4 exit, parent pid 1, name init, state run
-kernel/proc.c:280	proc 5 exit, parent pid 1, name init, state run
-kernel/proc.c:280	proc 6 exit, parent pid 1, name init, state run
+proc 3 exit, parent pid 2, name sh, state run
+proc 3 exit, child 0, pid 4, name exittest, state runble
+proc 3 exit, child 1, pid 5, name exittest, state runble
+proc 3 exit, child 2, pid 6, name exittest, state runble
+$ proc 4 exit, parent pid 1, name init, state run
+proc 5 exit, parent pid 1, name init, state run
+proc 6 exit, parent pid 1, name init, state run
 ```
 
 <!-- 1. 在 **第一个例子** 中，`trace 32 grep hello README`，其中，trace表示我们希望执行用户态应用程序trace（见user/trace.c），后面则是trace应用程序附带的入参：
@@ -121,19 +121,19 @@ kernel/proc.c:280	proc 6 exit, parent pid 1, name init, state run
 我们先不着急动手，先看看结果长什么样。在输出当中，存在两种不同的输出：  
 对当前进程的父进程的信息的输出：
 ```
-kernel/proc.c:280	proc 3 exit, parent pid 2, name sh, state run
+proc 3 exit, parent pid 2, name sh, state run
 ```
 以及  
 对当前进程的子进程的信息的输出：
 ```
-kernel/proc.c:291	proc 3 exit, child 0, pid 4, name exittest, state runble
+proc 3 exit, child 0, pid 4, name exittest, state runble
 ```
 你需要使用尝试在与exit相关的函数当中找到 **合适的位置** 来进行输出。
       
 
 ### 3.3 任务二：wait系统调用的非阻塞选项实现
 
-在该任务中，你需要对wait系统调用进行更改，使其增加一个参数`int flags`，用以表示是否需要进行阻塞等待。
+在该任务中，你需要 **对wait系统调用进行更改，使其增加一个参数`int flags`，用以表示是否需要进行阻塞等待**。
 
 原版阻塞实现的wait：`int wait(int *status)`，在`kernel/proc.c`当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
 ```
@@ -145,6 +145,7 @@ sleep(p, &p->lock);  // DOC: wait-sleep
 同学们需要实现的wait：`int wait(int *status, int flags)`。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  
 
 具体来说，同学们需要：
+
 1. 尝试在`kernel/sysproc.c`的`sys_wait`函数中获取新添加的参数；
 2. 更改头文件中的wait的定义；
 3. 更改wait函数以满足当前的语义。
@@ -171,7 +172,25 @@ sleep(p, &p->lock);  // DOC: wait-sleep
 <!-- ![image-20211005130943125](part1.assets/image-20211005130943125.png) -->
 ![waittest-result](part1.assets/waittest-ans.png)
 
-### 3.4 测试
+
+### 3.4 任务三：实现yield系统调用
+
+在该任务中，你需要实现一个新的系统调用`yield`，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程，另外还有些额外要求。
+
+具体来说，当调用`yield`系统调用时：
+
+1. 需要打印此时用户态的pc值，也就是陷入内核的那条指令地址，按如下格式：
+```shell
+start to yield, user pc 0x???????
+```
+   也就是在某个位置，添加上这样一句代码：
+```c
+printf("start to yield, user pc %p\n", pc);
+```
+2. 将当前进程让出CPU，从而调度到别的进程
+
+
+### 3.5 测试
 
 当完成上述的两个任务后，与Lab1一样，你也需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
 
