@@ -49,6 +49,7 @@
 
 - 在user.h添加相关的系统调用声明；
 - 在usys.pl文件中新增一个entry。
+- 在Makefile的UPROGS变量中新增一个用户程序`_yieldtest`
 
 在内核部分：
 
