@@ -9,10 +9,14 @@
       
       
       
+        <link rel="prev" href="../../lab1/part4/">
+      
+      
+        <link rel="next" href="../part2/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.0">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.2">
     
     
       
@@ -20,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.9f615399.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.30068a00.min.css">
       
       
 
@@ -212,6 +216,26 @@
           
   
   Lab1：XV6与Unix实用程序
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Lab2：进程与系统调用
 
         </a>
       </li>
@@ -697,6 +721,251 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lab2：进程与系统调用
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Lab2：进程与系统调用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1.  实验目的
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2.  实验学时
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3.  实验内容及要求
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 实验内容及要求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 切换分支
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 任务一：进程信息收集
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 任务一：进程信息收集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-exit" class="md-nav__link">
+    3.2.1 exit系统调用的功能
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2 运行结果
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-wait" class="md-nav__link">
+    3.3 任务二：wait系统调用的非阻塞选项实现
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-yield" class="md-nav__link">
+    3.4 任务三：实现yield系统调用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    3.5 测试
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    提交文档
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -754,15 +1023,15 @@
         
           <li class="md-nav__item">
   <a href="#32" class="md-nav__link">
-    3.2 任务一：系统调用信息打印
+    3.2 任务一：进程信息收集
   </a>
   
-    <nav class="md-nav" aria-label="3.2 任务一：系统调用信息打印">
+    <nav class="md-nav" aria-label="3.2 任务一：进程信息收集">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#321" class="md-nav__link">
-    3.2.1 系统调用接口定义
+  <a href="#321-exit" class="md-nav__link">
+    3.2.1 exit系统调用的功能
   </a>
   
 </li>
@@ -780,15 +1049,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#33-sysinfo" class="md-nav__link">
-    3.3 任务二：添加系统调用sysinfo
+  <a href="#33-wait" class="md-nav__link">
+    3.3 任务二：wait系统调用的非阻塞选项实现
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#34" class="md-nav__link">
-    3.4 测试
+  <a href="#34-yield" class="md-nav__link">
+    3.4 任务三：实现yield系统调用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    3.5 测试
   </a>
   
 </li>
@@ -827,11 +1103,13 @@
 <ol>
 <li>了解xv6系统调用的工作原理。</li>
 <li>熟悉xv6通过系统调用给用户程序提供服务的机制。</li>
+<li>熟悉进程上下文切换的过程。</li>
+<li>了解进程的完整生命周期。</li>
 </ol>
 <h2 id="2">2.  实验学时<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>本实验为4学时。</p>
 <h2 id="3">3.  实验内容及要求<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
-<p>实验要求可以参考<code>MIT XV6 lab2</code>提供的官方说明：<a href="https://pdos.csail.mit.edu/6.828/2020/labs/syscallhtml">Lab: System calls(mit.edu)</a>， <strong>但请以指导书为准，否则可能无法通过测试！</strong> </p>
+<p>实验要求可以参考<code>MIT XV6 lab2</code>和<code>lab4</code>提供的部分官方说明：<a href="https://pdos.csail.mit.edu/6.828/2020/labs/syscallhtml">[Lab: System calls(mit.edu)]</a> <a href="https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html">[Lab: Trap(mit.edu)]</a>， <strong>但请以指导书为准，否则可能无法通过测试！</strong> </p>
 <h3 id="31">3.1 切换分支<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">请先同步上游远程仓库，并注意切换到syscall分支进行试验</p>
@@ -839,114 +1117,72 @@
 <p><strong>Step 1.</strong> 首先，保存实验一的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VSCode内建的图形化界面完成操作</a>这两小节，完成commit操作。或者， <strong>如果你希望直接放弃掉上一次commit后的所有更改</strong> ，那么你也可以使用-f选项强制切换分支，例如<code>git checkout -f syscall</code>。</p>
 <p><strong>Step 2.</strong> 切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
 </div>
-<p>本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用<code>trace</code>程序和<code>sysinfotest</code>测试程序。具体来说，本实验有两部分：</p>
-<h3 id="32">3.2 任务一：系统调用信息打印<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
-<p>在该任务中，你需要在xv6加入具有跟踪功能的<code>trace</code>系统调用，它可以打印系统调用信息，来帮助你在之后的实验中进行debug。</p>
-<p><strong>具体要求：添加一个名为 <em>trace</em> 的系统调用。</strong> </p>
-<h4 id="321">3.2.1 系统调用接口定义<a class="headerlink" href="#321" title="Permanent link">&para;</a></h4>
-<p><code>int trace(int mask)</code></p>
+<p>本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用<code>exittest</code>, <code>waittest</code>和<code>yieldtest</code>测试程序。具体来说，本实验有三部分：</p>
+<h3 id="32">3.2 任务一：进程信息收集<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>在该任务中，你需要在理解xv6的<code>exit</code>系统调用的基础上，实现 <strong>进程在退出时打印自己的父进程和子进程的信息</strong> 这一功能。</p>
+<p><strong>具体要求：在exit系统调用当中寻找合适的输出时间点，在相应的函数内进行父子进程信息的打印。</strong> </p>
+<h4 id="321-exit">3.2.1 exit系统调用的功能<a class="headerlink" href="#321-exit" title="Permanent link">&para;</a></h4>
+<p><code>void exit(int status)</code></p>
 <ol>
-<li><strong>参数<code>mask</code></strong> ：每一位对应一个系统调用，位的比特值与系统调用编号相对应，指示是否需要追踪其对应的系统调用。<br />
-（1）如调用<code>trace(1 &lt;&lt; SYS_fork)</code>，则代表只追踪系统调用fork，其中SYS_fork是在kernel/syscall.h中定义的fork系统调用的编号。<br />
-（2）如调用<code>trace(0xffffffff)</code>，则代表追踪所有系统调用。  </li>
-<li><strong>返回值</strong> ：正常执行返回0，异常返回-1。  </li>
-<li><strong>功能</strong> ：设置该程序的<code>mask</code>。<br />
-（1）设置mask之后，内核每 <strong>处理完一次系统调用后</strong> ，即系统调用返回前，若mask指示了该系统调用，则打印对应信息。<br />
-（2）打印格式： <code>PID: sys_$name(arg0) -&gt; return_value</code> <br />
-其中<code>$name</code>为需要追踪的系统调用的名称；<code>arg0</code>为需要追踪的系统调用的第一个参数，<code>return_value</code>为需要追踪的系统调用的返回值，以十进制型打印。</li>
+<li><strong>参数<code>status</code></strong> ：退出状态，0表示正常退出，-1（大部分）表示异常退出。  </li>
+<li><strong>返回值</strong> ：无，函数调用exit之后该进程在内核态进行exit相关的资源回收之后，对应进程终止，不会返回。  </li>
+<li><strong>功能</strong> ：回收进程资源，回收完毕之后终止进程。<br />
+（1）exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -&gt; <strong>将当前进程的所有子进程交给初始进程init</strong> -&gt; 更改当前进程状态 -&gt; 手动进入调度器（等待回收）。详细原理请参考<a href="../part2/#3">实验原理</a>部分。<br />
+（2）需要完成的信息输出格式：<br />
+当前进程的父进程的信息输出格式： <code>proc PID exit, parent pid PID, name NAME, state STATE</code>；<br />
+当前进程的子进程的信息输出格式：<code>proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE</code>。<br />
+其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示进程名，STATE表示进程状态。</li>
 </ol>
 <h4 id="322">3.2.2 运行结果<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
-<p>实验提供了一个trace（见 <code>user/trace.c</code>）用户级应用程序，该程序首先通过trace系统调用设置需要跟踪的系统调用，然后再启动另一个程序，打印出该程序执行指定系统调用的情况。</p>
+<p>实验提供了一个exittest（见 <code>user/exittest.c</code>）用户级应用程序，该程序首先通过fork系统调用创建3个子进程，并通过sleep保证父进程在退出时子进程还没有退出，然后父进程先退出，3个子进程再退出。</p>
 <div class="admonition note">
 <p class="admonition-title">提示</p>
-<p>大家不要修改 <code>user/trace.c</code>应用程序，它只是用于测试<a href="#321">3.2.1 新增的trace系统调用</a>。</p>
+<p>大家不要修改 <code>user/exittest.c</code>应用程序，它只是用于测试<a href="#321">3.2.1 exit系统调用的功能</a>。</p>
 </div>
-<p>在你添加完该系统调用之后，运行用户程序 trace运行正确的情况下，你可以看到以下输出：</p>
-<div class="highlight"><pre><span></span><code><span class="o">[</span>cs@localhost<span class="w"> </span>xv6-oslab23-hitsz<span class="o">]</span>$<span class="w"> </span>make<span class="w"> </span>qemu
+<p>在你实现完上述功能之后，运行用户程序 exittest运行正确的情况下，你可以看到以下输出：</p>
+<div class="highlight"><pre><span></span><code>[cs@localhost xv6-oslab23-hitsz]$ make qemu
 
-/*<span class="w"> </span>一大波输出<span class="w"> </span>……<span class="w"> </span>*/
+/* 一大波输出 …… */
 
-xv6<span class="w"> </span>kernel<span class="w"> </span>is<span class="w"> </span>booting
-
-hart<span class="w"> </span><span class="m">2</span><span class="w"> </span>starting
-hart<span class="w"> </span><span class="m">1</span><span class="w"> </span>starting
-init:<span class="w"> </span>starting<span class="w"> </span>sh
+kernel/main.c:14
+kernel/main.c:15    xv6 kernel is booting
+kernel/main.c:16
+kernel/main.c:36    hart 2 starting
+kernel/main.c:36    hart 1 starting
+init: starting sh
 $
 
-/*<span class="w"> </span>例子1，手动输入:trace<span class="w"> </span><span class="m">32</span><span class="w"> </span>grep<span class="w"> </span>hello<span class="w"> </span>README<span class="w"> </span>*/
+/* 手动输入exittest */
 
-$<span class="w"> </span>trace<span class="w"> </span><span class="m">32</span><span class="w"> </span>grep<span class="w"> </span>hello<span class="w"> </span>README
-<span class="m">3</span>:<span class="w"> </span>sys_read<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">1023</span>
-<span class="m">3</span>:<span class="w"> </span>sys_read<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">966</span>
-<span class="m">3</span>:<span class="w"> </span>sys_read<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">70</span>
-<span class="m">3</span>:<span class="w"> </span>sys_read<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">0</span>
-$
-
-/*<span class="w"> </span>例子2，手动输入:trace<span class="w"> </span><span class="m">2147483647</span><span class="w"> </span>grep<span class="w"> </span>hello<span class="w"> </span>README<span class="w"> </span>*/
-
-$<span class="w"> </span>trace<span class="w"> </span><span class="m">2147483647</span><span class="w"> </span>grep<span class="w"> </span>hello<span class="w"> </span>README
-<span class="m">4</span>:<span class="w"> </span>sys_trace<span class="o">(</span><span class="m">2147483647</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">0</span>
-<span class="m">4</span>:<span class="w"> </span>sys_exec<span class="o">(</span><span class="m">12240</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">3</span>
-<span class="m">4</span>:<span class="w"> </span>sys_open<span class="o">(</span><span class="m">12240</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">3</span>
-<span class="m">4</span>:<span class="w"> </span>sys_read<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">1023</span>
-<span class="m">4</span>:<span class="w"> </span>sys_read<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">966</span>
-<span class="m">4</span>:<span class="w"> </span>sys_read<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">70</span>
-<span class="m">4</span>:<span class="w"> </span>sys_read<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">0</span>
-<span class="m">4</span>:<span class="w"> </span>sys_close<span class="o">(</span><span class="m">3</span><span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">0</span>
-$
-
-/*<span class="w"> </span>例子3，手动输入:grep<span class="w"> </span>hello<span class="w"> </span>README<span class="w"> </span>*/
-
-$<span class="w"> </span>grep<span class="w"> </span>hello<span class="w"> </span>README
-$
-
-
-/*<span class="w"> </span>例子4，手动输入:trace<span class="w"> </span><span class="m">2</span><span class="w"> </span>usertests<span class="w"> </span>forkforkfork<span class="w"> </span>*/
-
-$<span class="w"> </span>trace<span class="w"> </span><span class="m">2</span><span class="w"> </span>usertests<span class="w"> </span>forkforkfork
-usertests<span class="w"> </span>starting
-<span class="nb">test</span><span class="w"> </span>forkforkfork:<span class="w"> </span><span class="m">407</span>:<span class="w"> </span>syscall<span class="w"> </span>fork<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">408</span>
-<span class="m">408</span>:<span class="w"> </span>sys_fork<span class="o">(</span>-1<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">409</span>
-<span class="m">409</span>:<span class="w"> </span>sys_fork<span class="o">(</span>-1<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">410</span>
-<span class="m">410</span>:<span class="w"> </span>sys_fork<span class="o">(</span>-1<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">411</span>
-<span class="m">409</span>:<span class="w"> </span>sys_fork<span class="o">(</span>-1<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">412</span>
-<span class="m">410</span>:<span class="w"> </span>sys_fork<span class="o">(</span>-1<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">413</span>
-<span class="m">409</span>:<span class="w"> </span>sys_fork<span class="o">(</span>-1<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">414</span>
-<span class="m">411</span>:<span class="w"> </span>sys_fork<span class="o">(</span>-1<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span><span class="m">415</span>
-...
-$<span class="w">   </span>
+$ exittest
+exit test
+proc 3 exit, parent pid 2, name sh, state run
+proc 3 exit, child 0, pid 4, name exittest, state runble
+proc 3 exit, child 1, pid 5, name exittest, state runble
+proc 3 exit, child 2, pid 6, name exittest, state runble
+$ proc 4 exit, parent pid 1, name init, state run
+proc 5 exit, parent pid 1, name init, state run
+proc 6 exit, parent pid 1, name init, state run
 </code></pre></div>
-<p>我们先不着急动手，先看看结果长什么样。</p>
-<ol>
-<li>
-<p>在 <strong>第一个例子</strong> 中，<code>trace 32 grep hello README</code>，其中，trace表示我们希望执行用户态应用程序trace（见user/trace.c），后面则是trace应用程序附带的入参：</p>
-<ul>
-<li><code>32</code>是"1 &lt;&lt; SYS_read"，表示只追踪系统调用read；  </li>
-<li><code>grep</code>是trace应用程序中通过"exec"启动的另一个程序（见 user/grep.    c）；  </li>
-<li><code>hello README</code>则是grep程序的入参；  </li>
-<li>该命令的作用是使用grep程序查找README文件中匹配"hello"的行，并将其所使用到的read系统调用的信息打印出来，打印的格式为：<code>PID: sys_read(read系统调用的arg0) -&gt; read系统调用的return_value</code>。</li>
-</ul>
-</li>
-<li>
-<p>在 <strong>第二个例子</strong> 中，trace也是启动了<code>grep</code>程序，同时追踪所有的系统调用其中<code>2147583647</code>是<code>31</code>位bit全置一的十进制整型。可以看出，打的第一条信息就是系统调用trace，其第一个参数即命令行中输入2147583647。</p>
-</li>
-<li>
-<p>在 <strong>第三个例子</strong> 中，启动了<code>grep</code>程序，但是没有使用trace，所以什么trace都不会出现。</p>
-</li>
-<li>
-<p>在 <strong>第四个例子</strong> 中，trace启动了<code>usertests</code>程序中<code>forkforkfork</code>（见 user/usertests.c），追踪系统调用了fork，每次fork后代都会打印对的进程id。</p>
-<ul>
-<li>
-<p>该例中的fork实际上并没有参数，方便起见，你可以直接打印用于传该参数的寄存器的值，它可能是任意值。</p>
-</li>
-<li>
-<p>forkforkfork 会一直不停的fork子进程，直到进程数超过<code>NPROC</code>，其定义见kernel/param.h。</p>
-</li>
-<li>
-<p>usertests是实验提供的用于测试xv6的系统调用，详见user/usertests.c。</p>
-</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="cm">/* user/usertest.c */</span>
+<!-- 1. 在 **第一个例子** 中，`trace 32 grep hello README`，其中，trace表示我们希望执行用户态应用程序trace（见user/trace.c），后面则是trace应用程序附带的入参：
+
+    - `32`是"1 << SYS_read"，表示只追踪系统调用read；  
+    - `grep`是trace应用程序中通过"exec"启动的另一个程序（见 user/grep.    c）；  
+    - `hello README`则是grep程序的入参；  
+    - 该命令的作用是使用grep程序查找README文件中匹配"hello"的行，并将其所使用到的read系统调用的信息打印出来，打印的格式为：`PID: sys_read(read系统调用的arg0) -> read系统调用的return_value`。
+
+- 在 **第二个例子** 中，trace也是启动了`grep`程序，同时追踪所有的系统调用其中`2147583647`是`31`位bit全置一的十进制整型。可以看出，打的第一条信息就是系统调用trace，其第一个参数即命令行中输入2147583647。
+
+- 在 **第三个例子** 中，启动了`grep`程序，但是没有使用trace，所以什么trace都不会出现。
+
+- 在 **第四个例子** 中，trace启动了`usertests`程序中`forkforkfork`（见 user/usertests.c），追踪系统调用了fork，每次fork后代都会打印对的进程id。
+    - 该例中的fork实际上并没有参数，方便起见，你可以直接打印用于传该参数的寄存器的值，它可能是任意值。
+
+    - forkforkfork 会一直不停的fork子进程，直到进程数超过`NPROC`，其定义见kernel/param.h。
+
+    - usertests是实验提供的用于测试xv6的系统调用，详见user/usertests.c。
+
+      <div class="highlight"><pre><span></span><code><span class="cm">/* user/usertest.c */</span>
 <span class="c1">//Tests xv6 system calls.  usertests without arguments runs them all</span>
 <span class="c1">// and usertests &lt;name&gt; runs &lt;name&gt; test. The test runner creates for</span>
 <span class="c1">// each test a process and based on the exit status of the process,</span>
@@ -954,26 +1190,60 @@ $<span class="w">   </span>
 <span class="c1">// kernel printing usertrap messages, which can be ignored if test</span>
 <span class="c1">// prints &quot;OK&quot;.</span>
 </code></pre></div>
-</li>
+     -->
+<p>我们先不着急动手，先看看结果长什么样。在输出当中，存在两种不同的输出：<br />
+对当前进程的父进程的信息的输出：
+<div class="highlight"><pre><span></span><code>proc 3 exit, parent pid 2, name sh, state run
+</code></pre></div>
+以及<br />
+对当前进程的子进程的信息的输出：
+<div class="highlight"><pre><span></span><code>proc 3 exit, child 0, pid 4, name exittest, state runble
+</code></pre></div>
+你需要使用尝试在与exit相关的函数当中找到 <strong>合适的位置</strong> 来进行输出，我们建议你先阅读<a href="../part2/#3">实验原理</a>，这会帮助你更好的了解系统调用和exit的工作流程。</p>
+<h3 id="33-wait">3.3 任务二：wait系统调用的非阻塞选项实现<a class="headerlink" href="#33-wait" title="Permanent link">&para;</a></h3>
+<p>在该任务中，你需要 <strong>对wait系统调用进行更改，使其增加一个参数<code>int flags</code>，用以表示是否需要进行阻塞等待</strong>。</p>
+<p>原版阻塞实现的wait：<code>int wait(int *status)</code>，在<code>kernel/proc.c</code>当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
+<div class="highlight"><pre><span></span><code>// Wait for a child to exit.
+sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
+</code></pre></div>
+在父进程调用该函数之后，通过sleep进行睡眠，无法再执行其他任务，也就是阻塞在这里。</p>
+<p>同学们需要实现的wait：<code>int wait(int *status, int flags)</code>。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  </p>
+<p>具体来说，同学们需要：</p>
+<ol>
+<li>尝试在<code>kernel/sysproc.c</code>的<code>sys_wait</code>函数中获取新添加的参数；</li>
+<li>更改头文件中的wait的定义；</li>
+<li>更改wait函数以满足当前的语义。</li>
 </ol>
-<h3 id="33-sysinfo">3.3 任务二：添加系统调用sysinfo<a class="headerlink" href="#33-sysinfo" title="Permanent link">&para;</a></h3>
-<p>在该任务中，你需要加入一条新的系统调用，叫做<code>sysinfo</code>。该系统调用将收集xv6运行的一些信息。
-sysinfo只需要一个参数，这个参数是结构体 <code>sysinfo</code>的指针， <strong>这个结构体在kernel/sysinfo.h</strong> 可以找到。xv6内核的工作就是把这个结构体填上应有的数值。下面介绍结构体每个成员的含义</p>
+<!-- sysinfo只需要一个参数，这个参数是结构体 `sysinfo`的指针， **这个结构体在kernel/sysinfo.h** 可以找到。xv6内核的工作就是把这个结构体填上应有的数值。下面介绍结构体每个成员的含义
+
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">sysinfo</span><span class="w"> </span><span class="p">{</span>
 <span class="w"> </span><span class="mi">2</span><span class="w">    </span><span class="n">uint64</span><span class="w"> </span><span class="n">freemem</span><span class="p">;</span><span class="w">   </span><span class="c1">// amount of free memory (bytes)</span>
 <span class="w"> </span><span class="mi">3</span><span class="w">    </span><span class="n">uint64</span><span class="w"> </span><span class="n">nproc</span><span class="p">;</span><span class="w">     </span><span class="c1">// number of process</span>
 <span class="w"> </span><span class="mi">4</span><span class="w">    </span><span class="n">uint64</span><span class="w"> </span><span class="n">freefd</span><span class="p">;</span><span class="w">    </span><span class="c1">// number of free file descriptor</span>
 <span class="w"> </span><span class="mi">5</span><span class="w">  </span><span class="p">};</span>
 </code></pre></div>
-<ul>
-<li><code>freemem</code>：当前剩余的内存 <strong>字节</strong> 数</li>
-<li><code>nproc</code>： <strong>状态为UNUSED</strong> 的进程个数</li>
-<li><code>freefd</code>：当前进程可用文件描述符的数量，即 <strong>尚未使用</strong> 的文件描述符数量</li>
-</ul>
-<p>实验提供了一个<code>sysinfotest</code>用户级应用程序（见<code>user/sysinfotest.c</code>），依次测试剩余的内存字节数、UNUSED的进程个数、未被使用的文件描述符数量。</p>
-<p>完成任务后，你可以在xv6中运行<code>sysinfotest</code>程序，通过测试会显示如下内容：</p>
-<p><img alt="image-20211005130943125" src="../part1.assets/image-20211005130943125.png" /></p>
-<h3 id="34">3.4 测试<a class="headerlink" href="#34" title="Permanent link">&para;</a></h3>
+
+- `freemem`：当前剩余的内存 **字节** 数
+- `nproc`： **状态为UNUSED** 的进程个数
+- `freefd`：当前进程可用文件描述符的数量，即 **尚未使用** 的文件描述符数量 -->
+
+<p>实验提供了一个<code>waittest</code>用户级应用程序（见<code>user/waittest.c</code>）。</p>
+<p>完成任务后，你可以在xv6中运行<code>waittest</code>程序，通过测试会显示如下内容：</p>
+<!-- ![image-20211005130943125](part1.assets/image-20211005130943125.png) -->
+<p><img alt="waittest-result" src="../part1.assets/waittest-ans.png" /></p>
+<h3 id="34-yield">3.4 任务三：实现yield系统调用<a class="headerlink" href="#34-yield" title="Permanent link">&para;</a></h3>
+<p>在该任务中，你需要实现一个新的系统调用<code>yield</code>，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程，另外还有些额外要求。</p>
+<p>具体来说，当调用<code>yield</code>系统调用时：</p>
+<ol>
+<li>需要打印此时用户态的pc值，也就是陷入内核的那条指令地址，按如下格式：
+<div class="highlight"><pre><span></span><code>start<span class="w"> </span>to<span class="w"> </span>yield,<span class="w"> </span>user<span class="w"> </span>pc<span class="w"> </span>0x???????
+</code></pre></div>
+   也就是在某个位置，添加上这样一句代码：
+<div class="highlight"><pre><span></span><code><span class="n">printf</span><span class="p">(</span><span class="s">&quot;start to yield, user pc %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pc</span><span class="p">);</span>
+</code></pre></div></li>
+<li>将当前进程让出CPU，从而调度到别的进程</li>
+</ol>
+<h3 id="35">3.5 测试<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
 <p>当完成上述的两个任务后，与Lab1一样，你也需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。</p>
 <p>最后，在命令行输入 <code>make grade</code> 进行测试。如果通过测试，会显示如下内容：</p>
 <p><img alt="image-20211005131516101" src="../part1.assets/image-20211005131516101.png" /></p>
@@ -1018,10 +1288,10 @@ sysinfo只需要一个参数，这个参数是结构体 <code>sysinfo</code>的�
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.4e0fa4ba.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
         <script src="../../js/baidu-tongji.js"></script>
       

@@ -9,10 +9,14 @@
       
       
       
+        <link rel="prev" href="../part1/">
+      
+      
+        <link rel="next" href="../part3/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.0">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.2">
     
     
       
@@ -20,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.9f615399.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.30068a00.min.css">
       
       
 
@@ -212,6 +216,26 @@
           
   
   Lab1：XV6与Unix实用程序
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../part1/" class="md-tabs__link">
+          
+  
+  Lab2：进程与系统调用
 
         </a>
       </li>
@@ -697,6 +721,367 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lab2：进程与系统调用
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Lab2：进程与系统调用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 系统调用
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 系统调用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 系统调用的使用：用户的权力
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 系统调用的接口：操作系统内核和用户程序的中间体
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    1.3 系统调用的参数：寄存器传参
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    1.4 系统调用的分发和实现：解耦合
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 举例：系统调用的实现
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 举例：系统调用的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 用户程序调用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-usyss" class="md-nav__link">
+    2.2 usys.S汇编
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-uservec" class="md-nav__link">
+    2.3 uservec汇编
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-usertrap" class="md-nav__link">
+    2.4 usertrap
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-syscall" class="md-nav__link">
+    2.5 syscall
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-sys_sleep" class="md-nav__link">
+    2.6 sys_sleep
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27" class="md-nav__link">
+    2.7 执行完后返回用户空间
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-exit" class="md-nav__link">
+    3. exit系统调用工作流程
+  </a>
+  
+    <nav class="md-nav" aria-label="3. exit系统调用工作流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 进程资源回收
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 进程资源回收">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311" class="md-nav__link">
+    3.1.1 打开文件回收
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312" class="md-nav__link">
+    3.1.2 子进程回收
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 更改当前进程状态
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 进入调度器等待被回收
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-wait" class="md-nav__link">
+    4. wait系统调用（阻塞与非阻塞）的工作流程
+  </a>
+  
+    <nav class="md-nav" aria-label="4. wait系统调用（阻塞与非阻塞）的工作流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-wait" class="md-nav__link">
+    4.1 阻塞方式的wait
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-wait" class="md-nav__link">
+    4.2 非阻塞方式的wait
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-yield" class="md-nav__link">
+    5. yield进程挂起的语义介绍
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    6. 参考资料
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    提交文档
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -827,15 +1212,96 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    3. 内核空间和用户空间交换数据
+  <a href="#3-exit" class="md-nav__link">
+    3. exit系统调用工作流程
+  </a>
+  
+    <nav class="md-nav" aria-label="3. exit系统调用工作流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 进程资源回收
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 进程资源回收">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311" class="md-nav__link">
+    3.1.1 打开文件回收
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312" class="md-nav__link">
+    3.1.2 子进程回收
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 更改当前进程状态
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 进入调度器等待被回收
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-wait" class="md-nav__link">
+    4. wait系统调用（阻塞与非阻塞）的工作流程
+  </a>
+  
+    <nav class="md-nav" aria-label="4. wait系统调用（阻塞与非阻塞）的工作流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-wait" class="md-nav__link">
+    4.1 阻塞方式的wait
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-wait" class="md-nav__link">
+    4.2 非阻塞方式的wait
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-yield" class="md-nav__link">
+    5. yield进程挂起的语义介绍
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    4. 参考资料
+  <a href="#6" class="md-nav__link">
+    6. 参考资料
   </a>
   
 </li>
@@ -1005,16 +1471,114 @@
 <h3 id="27">2.7 执行完后返回用户空间<a class="headerlink" href="#27" title="Permanent link">&para;</a></h3>
 <p>当sleep完成之后，返回至syscall函数。在syscall函数中调用usertrapret，用于完成部分方便在C代码实现的返回用户空间的工作。还有一些工作只能在汇编语言完成，即trampoline.s中的userret函数。最后，这个函数执行sret指令，切回用户空间，执行用户空间ecall的下一条指令ret。当ret执行完后，返回调用函数的位置，执行用户程序的下一条语句。</p>
 <p>以上，即是系统调用过程中大致的代码执行流程。</p>
-<h2 id="3">3. 内核空间和用户空间交换数据<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
-<p>一些系统调用传递的参数是指针，内核需要使用这些指针来读写用户空间。但由于内核页表的映射和用户页表的映射不一样，内核不能使用普通的指令访问用户空间，这样就涉及到内核空间和用户空间的地址转换问题。在xv6中，我们可以使用<code>copyout</code>/<code>copyin</code>这两个函数分别完成内核空间到用户空间、用户空间到内核空间的数据拷贝。具体可以查看copyout/copyin的实现细节（kernel/vm.c）。</p>
-<p>例如，当shell执行ls命令时，调用<code>fstat</code>系统调用（user/ls.c）获取当前目录下的信息。</p>
-<p><img alt="image-20220920181414750" src="../part2.assets/image-20220920181414750.png" /></p>
-<p>fstat系统调用陷入内核调用<code>sys_fstat</code>，最终执行<code>filestat</code>函数，其中<code>st</code>是从用户空间传进来的入参（指针）。</p>
-<p><img alt="image-20220920181501174" src="../part2.assets/image-20220920181501174.png" /></p>
-<p>在filestat函数中，通过<code>stati</code>函数获取到inode节点信息，再调用<code>copyout</code>将获取到的信息拷贝给起始地址为filestat函数的入参addr，大小为sizeof(st)的用户空间。</p>
-<p><img alt="image-20220920181634893" src="../part2.assets/image-20220920181634893.png" /></p>
-<p>之后，返回<code>sys_fstat</code>，即可将内核空间的数据传递至用户空间。</p>
-<h2 id="4">4. 参考资料<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h2 id="3-exit">3. exit系统调用工作流程<a class="headerlink" href="#3-exit" title="Permanent link">&para;</a></h2>
+<p>在上面关于系统调用的通用执行流程的基础上，为了便于同学们更好的完成实验，我们在此为同学们详细介绍exit系统调用的工作流程。</p>
+<p>首先我们先来看一张图：</p>
+<p><img alt="exit" src="../part2.assets/exit.png" /></p>
+<p>exit系统调用与其他的系统调用一样，在陷入内核之前都需要进行相应的ecall、usertrap等操作，这一部分可以参考上面的<a href="#2">举例：系统调用的实现</a>。我们在这里不再进行详细介绍，我们着重介绍exit在内核态的主体函数（<code>proc.c: exit(int)</code>）的工作流程。</p>
+<h3 id="31">3.1 进程资源回收<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>exit系统调用的主要功能实际上就是退出当前进程，那么退出当前进程就必须 <strong>先要将当前进程的资源进行回收</strong> ，否则会导致内存泄漏等一系列奇怪的问题。</p>
+<p>我们接下来从xv6的源码来分析进程主要需要进哪那两方面的资源回收。</p>
+<h4 id="311">3.1.1 打开文件回收<a class="headerlink" href="#311" title="Permanent link">&para;</a></h4>
+<p>首先回收当前进程打开的所有文件：
+<div class="highlight"><pre><span></span><code><span class="c1">// Close all open files.</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">fd</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NOFILE</span><span class="p">;</span><span class="w"> </span><span class="n">fd</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">ofile</span><span class="p">[</span><span class="n">fd</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">file</span><span class="w"> </span><span class="o">*</span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">ofile</span><span class="p">[</span><span class="n">fd</span><span class="p">];</span>
+<span class="w">    </span><span class="n">fileclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+<span class="w">    </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">ofile</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+xv6使用上述代码进行打开文件的回收。通过for循环遍历所有可能的文件描述符（fd），依次判断该文件描述符是否存在于当前进程的PCB中的ofile（open file）数组当中，如果存在，意味着当前fd对应的文件处于打开状态，需要关闭回收。</p>
+<h4 id="312">3.1.2 子进程回收<a class="headerlink" href="#312" title="Permanent link">&para;</a></h4>
+<p>子进程回收需要多步进行：</p>
+<ol>
+<li>唤醒初始进程（initproc），为切换当前进程的子进程的父进程做准备<br />
+<div class="highlight"><pre><span></span><code><span class="n">acquire</span><span class="p">(</span><span class="o">&amp;</span><span class="n">initproc</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+<span class="n">wakeup1</span><span class="p">(</span><span class="n">initproc</span><span class="p">);</span>
+<span class="n">release</span><span class="p">(</span><span class="o">&amp;</span><span class="n">initproc</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</code></pre></div></li>
+<li>保存当前进程的父进程指针，为后续唤醒做准备<br />
+<div class="highlight"><pre><span></span><code><span class="n">acquire</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">proc</span><span class="w"> </span><span class="o">*</span><span class="n">original_parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">;</span>
+<span class="n">release</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</code></pre></div></li>
+<li>将当前进程的 <strong>子进程</strong> 的父进程指针更改成initproc，即理论课上提到： <strong>所有孤儿进程会被initproc管理</strong><br />
+<div class="highlight"><pre><span></span><code><span class="n">acquire</span><span class="p">(</span><span class="o">&amp;</span><span class="n">original_parent</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+
+<span class="n">acquire</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+
+<span class="c1">// Give any children to init.</span>
+<span class="n">reparent</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</code></pre></div>
+希望同学们能够自己查看<code>proc.c: reparent(struct proc *p)</code>函数，并理解里面查找当前进程的子进程的逻辑，这会对你解决<a href="../part1/#32">任务一</a>有帮助 (=  </li>
+<li>唤醒当前进程的父进程
+<div class="highlight"><pre><span></span><code><span class="n">wakeup1</span><span class="p">(</span><span class="n">original_parent</span><span class="p">);</span>
+</code></pre></div>
+关于为什么唤醒父进程：因为父进程此时可能处在wait()当中，而xv6的wait的实现是让当前进程睡眠，等待被唤醒，如果子进程退出时不唤醒父进程，那么父进程将会一直睡下去...<br />
+我们的<a href="../part1/#33">任务二</a>就是在更改wait的这一实现。</li>
+</ol>
+<h3 id="32">3.2 更改当前进程状态<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">p</span><span class="o">-&gt;</span><span class="n">xstate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+<span class="n">p</span><span class="o">-&gt;</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ZOMBIE</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="33">3.3 进入调度器等待被回收<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Jump into the scheduler, never to return.</span>
+<span class="n">sched</span><span class="p">();</span>
+<span class="n">panic</span><span class="p">(</span><span class="s">&quot;zombie exit&quot;</span><span class="p">);</span>
+</code></pre></div>
+<!-- ## 4. 内核空间和用户空间交换数据
+
+一些系统调用传递的参数是指针，内核需要使用这些指针来读写用户空间。但由于内核页表的映射和用户页表的映射不一样，内核不能使用普通的指令访问用户空间，这样就涉及到内核空间和用户空间的地址转换问题。在xv6中，我们可以使用`copyout`/`copyin`这两个函数分别完成内核空间到用户空间、用户空间到内核空间的数据拷贝。具体可以查看copyout/copyin的实现细节（kernel/vm.c）。
+
+例如，当shell执行ls命令时，调用`fstat`系统调用（user/ls.c）获取当前目录下的信息。
+
+![image-20220920181414750](part2.assets/image-20220920181414750.png)
+
+fstat系统调用陷入内核调用`sys_fstat`，最终执行`filestat`函数，其中`st`是从用户空间传进来的入参（指针）。
+
+![image-20220920181501174](part2.assets/image-20220920181501174.png)
+
+在filestat函数中，通过`stati`函数获取到inode节点信息，再调用`copyout`将获取到的信息拷贝给起始地址为filestat函数的入参addr，大小为sizeof(st)的用户空间。
+
+![image-20220920181634893](part2.assets/image-20220920181634893.png)
+
+之后，返回`sys_fstat`，即可将内核空间的数据传递至用户空间。 -->
+
+<h2 id="4-wait">4. wait系统调用（阻塞与非阻塞）的工作流程<a class="headerlink" href="#4-wait" title="Permanent link">&para;</a></h2>
+<p>同样的，我们先来看张图：</p>
+<p><img alt="wait" src="../part2.assets/wait.png" /></p>
+<h3 id="41-wait">4.1 阻塞方式的wait<a class="headerlink" href="#41-wait" title="Permanent link">&para;</a></h3>
+<p>就像刚刚图片当中看见的，阻塞方式实现的wait会在经历系统调用的通用调用流程之后来到内核中的wait主体函数：<code>proc.c: wait(int)</code>。</p>
+<p>在wait函数当中，我们希望学有余力的同学可以自行阅读代码，理解其查找僵尸子进程的逻辑。当然不理解也是可以完成我们的任务二的 (=。</p>
+<p>首先，xv6原本的实现当中，在<code>proc.c: wait(int)</code>函数的最后几行：
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// 一大堆代码，作用就是用来查找是否存在僵尸子进程，有就返回对应的僵尸子进程的pid</span>
+<span class="w">  </span><span class="c1">// Wait for a child to exit.</span>
+<span class="w">  </span><span class="n">sleep</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span><span class="w">  </span><span class="c1">// DOC: wait-sleep</span>
+<span class="p">}</span>
+</code></pre></div>
+实际上，这里的sleep就是让当前进程进行睡觉的地方，当你查看<code>proc.c: sleep(void *chan, struct spinlock *lk)</code>函数的时候：
+<div class="highlight"><pre><span></span><code><span class="c1">// Go to sleep.</span>
+<span class="n">p</span><span class="o">-&gt;</span><span class="n">chan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chan</span><span class="p">;</span>
+<span class="n">p</span><span class="o">-&gt;</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SLEEPING</span><span class="p">;</span>
+</code></pre></div>
+在这2行代码完成了当前进程的状态更改，此后调度器就会发现该进程在睡觉，不会调度到它，那么就会有我们图中展现的 <strong>在内核态睡觉，等待子进程唤醒</strong> 的现象，这时，父进程就是被阻塞了。</p>
+<h3 id="42-wait">4.2 非阻塞方式的wait<a class="headerlink" href="#42-wait" title="Permanent link">&para;</a></h3>
+<p>我们在了解了阻塞方式的wait之后，相比同学们已经猜到了该如何实现非阻塞的wait了：没错，就是跳过sleep！</p>
+<p>但是，阻塞实现和非阻塞实现的wait在实际操作系统实现当中都有大用处，比如：<br />
+可以通过使用非阻塞的wait来判断子进程是否准备好需要的资源，如果没有，父进程可以先并行执行其他任务，等待需要子进程提供的资源时，使用阻塞wait来保证程序的语义正确，这是一种可行的并行优化手段。<br />
+所以我们必须 <strong>新增一个标志参数flags</strong> 来表示是否进行非阻塞wait，而不是直接将原有的阻塞wait改成非阻塞。</p>
+<p>我们假设这个<code>flags=1</code>时表示进行非阻塞wait，那么我们的测试用例流程就可以用上图的右半边来展现。</p>
+<p>这里需要大家实现<code>flags=1</code>时，不进行sleep，而是直接返回-1。为此，你可能需要知道：<br />
+1. 如何<a href="#4">获取用户态传入的参数</a><br />
+2. 在<code>proc.c: wait(int)</code>当中为了保证进程PCB的操作的互斥性，需要上锁<code>acquire(&amp;p-&gt;lock)</code>，所以 <strong>记得在返回之前解锁</strong> ：<code>release(&amp;p-&gt;lock)</code></p>
+<h2 id="5-yield">5. yield进程挂起的语义介绍<a class="headerlink" href="#5-yield" title="Permanent link">&para;</a></h2>
+<p>我们知道，每个进程的运行过程其实就是CPU在该进程的指令段逐条取指执行，那么当CPU跳转到另外一个进程的指令段进行取指执行时，便发生了进程的切换。</p>
+<p>我们在操作系统理论课上已经学习过进程调度是怎么一回事了，那么yield（进程挂起）是什么意思呢？我们知道进程运行时需要占用CPU，如上所述，那么进程挂起就是让该进程让出CPU，从而使CPU可以调度到别的进程，如下图所示：</p>
+<p><img alt="yield" src="../part2.assets/yield.png" /></p>
+<h2 id="6">6. 参考资料<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <p>[1] xv6 book, Sections 4.3 and 4.4 of Chapter 4<br />
 [2] Related source files:  </p>
 <ul>
@@ -1064,10 +1628,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.4e0fa4ba.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
         <script src="../../js/baidu-tongji.js"></script>
       
