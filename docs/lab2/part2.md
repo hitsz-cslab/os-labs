@@ -178,7 +178,86 @@ syscall函数里有一个表单，根据传入的代表系统调用的数字进�
 
 以上，即是系统调用过程中大致的代码执行流程。
 
-## 3. 内核空间和用户空间交换数据
+## 3. exit系统调用工作流程
+
+在上面关于系统调用的通用执行流程的基础上，为了便于同学们更好的完成实验，我们在此为同学们详细介绍exit系统调用的工作流程。
+
+首先我们先来看一张图：
+
+![exit](part2.assets/exit.png)
+
+exit系统调用与其他的系统调用一样，在陷入内核之前都需要进行相应的ecall、usertrap等操作，这一部分可以参考上面的[举例：系统调用的实现](#2-举例系统调用的实现)。我们在这里不再进行详细介绍，我们着重介绍exit在内核态的主体函数（`proc.c: exit(int)`）的工作流程。
+
+### 3.1 进程资源回收
+
+exit系统调用的主要功能实际上就是退出当前进程，那么退出当前进程就必须 **先要将当前进程的资源进行回收** ，否则会导致内存泄漏等一系列奇怪的问题。
+
+我们接下来从xv6的源码来分析进程主要需要进哪那两方面的资源回收。
+
+#### 3.1.1 打开文件回收
+
+首先回收当前进程打开的所有文件：
+```c
+// Close all open files.
+for (int fd = 0; fd < NOFILE; fd++) {
+  if (p->ofile[fd]) {
+    struct file *f = p->ofile[fd];
+    fileclose(f);
+    p->ofile[fd] = 0;
+  }
+}
+```
+xv6使用上述代码进行打开文件的回收。通过for循环遍历所有可能的文件描述符（fd），依次判断该文件描述符是否存在于当前进程的PCB中的ofile（open file）数组当中，如果存在，意味着当前fd对应的文件处于打开状态，需要关闭回收。
+
+#### 3.1.2 子进程回收
+
+子进程回收需要多步进行：
+
+1. 唤醒初始进程（initproc），为切换当前进程的子进程的父进程做准备  
+```c
+acquire(&initproc->lock);
+wakeup1(initproc);
+release(&initproc->lock);
+```
+2. 保存当前进程的父进程指针，为后续唤醒做准备  
+```c
+acquire(&p->lock);
+struct proc *original_parent = p->parent;
+release(&p->lock);
+```
+3. 将当前进程的 **子进程** 的父进程指针更改成initproc，即理论课上提到： **所有孤儿进程会被initproc管理**  
+```c
+acquire(&original_parent->lock);
+
+acquire(&p->lock);
+
+// Give any children to init.
+reparent(p);
+```
+希望同学们能够自己查看`proc.c: reparent(struct proc *p)`函数，并理解这里查找当前进程的子进程的逻辑，这会对你解决[任务一](./part1.md#321-exit系统调用的功能)有帮助 (=  
+4. 唤醒当前进程的父进程
+```c
+wakeup1(original_parent);
+```
+关于为什么唤醒父进程：因为父进程此时可能处在wait()当中，而xv6的wait的实现是让当前进程睡眠，等待被唤醒，如果子进程退出时不唤醒父进程，那么父进程将会一直睡下去...  
+我们的[任务二](./part1.md#33-任务二wait系统调用的非阻塞选项实现)就是在更改wait的这一实现。
+
+### 3.2 更改当前进程状态
+
+```c
+p->xstate = status;
+p->state = ZOMBIE;
+```
+
+### 3.3 进入调度器等待被回收
+
+```c
+// Jump into the scheduler, never to return.
+sched();
+panic("zombie exit");
+```
+
+## 4. 内核空间和用户空间交换数据
 
 一些系统调用传递的参数是指针，内核需要使用这些指针来读写用户空间。但由于内核页表的映射和用户页表的映射不一样，内核不能使用普通的指令访问用户空间，这样就涉及到内核空间和用户空间的地址转换问题。在xv6中，我们可以使用`copyout`/`copyin`这两个函数分别完成内核空间到用户空间、用户空间到内核空间的数据拷贝。具体可以查看copyout/copyin的实现细节（kernel/vm.c）。
 
@@ -196,7 +275,29 @@ fstat系统调用陷入内核调用`sys_fstat`，最终执行`filestat`函数，
 
 之后，返回`sys_fstat`，即可将内核空间的数据传递至用户空间。
 
-## 4. 参考资料
+## 5. wait系统调用（阻塞与非阻塞）的工作流程
+
+同样的，我们先来看张图：
+
+![wait](part2.assets/wait.png)
+
+### 5.1 阻塞方式的wait
+
+就像刚刚图片当中看见的，阻塞方式实现的wait会在经历系统调用的通用调用流程之后来到内核中的wait主体函数：`proc.c: wait(int)`。
+
+在wait函数当中，我们希望学有余力的同学可以自行阅读代码，理解其查找僵尸子进程的逻辑。当然不理解也是可以完成我们的任务二的 (=。
+
+首先，xv6原本的实现当中，在`proc.c: wait(int)`函数的最后几行：
+```c
+for (;;) {
+  // 一大堆代码，作用就是用来查找是否存在僵尸子进程，有就返回对应的僵尸子进程的pid
+  // Wait for a child to exit.
+  sleep(p, &p->lock);  // DOC: wait-sleep
+}
+```
+实际上
+
+## 6. 参考资料
 
 [1] xv6 book, Sections 4.3 and 4.4 of Chapter 4  
 [2] Related source files:  
