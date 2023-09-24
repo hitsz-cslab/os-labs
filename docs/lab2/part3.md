@@ -6,81 +6,38 @@
     
     如果在实现过程中遇到困难，可以 **先尝试回答任务三** 提出的问题，它们或许可以帮助你更好地理解。
 
-## 1. 任务一：系统调用信息打印
+## 1. 任务一：进程信息收集
 
-**具体要求：添加一个名为 *trace* 的系统调用。**
+**具体要求：在exit系统调用当中寻找合适的输出时间点，在相应的函数内进行父子进程信息的打印。**
 
 ### 1.1 流程
 
 在用户部分：
 
 - 参考[这个指南](../../tools/#31)，切换到syscall分支并同步上游仓库；
-- 记得在Makefile中给 `UPROGS` 加 `$U/_trace`。
-- 然后 `make qemu` 会发现无法编译 user/trace.c，这是因为我们没有在用户态包装好 `trace()` ，因此我们需要按照 ”实验原理“ 中所述，慢慢添加一个系统调用的接口。
-  
-    - 在 `user/user.h` 加入函数定义；
-    - 在 `user/usys.pl` 加入用户系统调用名称（也就是之前所说的entry）；
-    - 在 `kernel/syscall.h` 加入系统调用号SYS_trace，以给trace做一个标识，该调用号的取值可自行决定。
-    
-- 然后启动xv6，在shell输入 `trace 32 grep hello README` ，会发现xv6崩溃了，因为这条系统调用没有在内核中实现。
+- 然后启动xv6，在shell输入 `exittest` ，你会看见[实验概述](../part1/#322)中提到的输出。
 
 在内核部分：
 
-- 在 `kernel/sysproc.c` 中添加 `sys_trace()`。
-- 在 `kernel/syscall.c` 中加入对应的系统调用分发逻辑。
-- 开始实现 `sys_trace()` 对应的逻辑，同时该系统调用还需要修改其他函数的逻辑。
+- 参考[exit系统调用工作流程](../part2/#3)，阅读`proc.c: exit(int)`相关源码，在合适的位置使用printf输出。
 
-### 1.2 实现提示
+## 2. 任务二：wait系统调用的非阻塞选项实现
 
-- 进程启动`trace`后，如果fork，子进程也应该开启trace，并且继承父进程的`mask`，也就是trace系统调用的入参。（这需要注意修改`kernel/proc.c`中fork()的代码）
-
-- 可以在PCB （`struct proc`）中添加成员 `int mask`，这样我们可以记住trace告知进程的mask。PCB定义于`kernel/proc.h`。
-
-- 为了让每个系统调用都可以输出信息，我们应该在 `kernel/syscall.c` 中的 `syscall()` 添加相应逻辑。（添加一个系统调用对应名字的数组，好像可以大大简化实现噢！）
-
-- 其他的系统调用实现可以参考，详见`kernel/sysproc.c`。
-
-    
-
-## 2. 任务二：添加系统调用sysinfo
-
-**具体要求：添加一个名为 *sysinfo* 的系统调用。**
+**具体要求：更改原有的wait系统调用，添加新参数，实现wait系统调用的非阻塞选项。**
 
 ### 2.1 流程
 
 在用户部分：
 
-- 切至 `syscall` git分支
-- 记得在`Makefile`中给 `UPROGS` 加 `$U/_sysinfotest`
-- 然后 `make qemu` 会发现无法编译 `user/sysinfotest.c` ，问题和前面一样，一顿操作猛如虎。
-  
-  ```c
-  /* 你需要在user/user.h添加如下定义 */
-  struct sysinfo;  // 需要预先声明结构体，参考fstat的参数stat
-  int sysinfo(struct sysinfo *);
-  ```
+- 切至 `syscall` git分支；
+- 由于我们已经将用户态的wait接口做好了更改，同学们只需要运行即可；
+- 然后启动xv6，在shell输入 `waittest` ，你会看见[实验概述](../part1/#33)中提到的输出。
 
 在内核部分：
 
-- 请参考之前的流程自行完成设计。
-  
-### 2.2 实现提示
-
-- `sysinfo` 需要在内核地址空间中填写结构体，然后将其复制到用户地址空间。可以参考`kernel/file.c fstat()` 以及 `kernel/sysfile.csys_fstat()` 中通过 `copyout()` 函数对该过程的实现。
-
-- 计算剩余的内存空间的函数代码，最好写在文件 `kernel/kalloc.c` 里。
-
-- 计算空闲进程数量的函数代码，最好写在文件`kernel/proc.c` 里。
-
-- 计算可用文件描述符数量的代码，最好写在文件`kernel/proc.c` 里。
-
-  - 文件描述符的值实际上就是`PCB`成员`ofile`的下标（见`kernel/proc.h`）。
-
-- 在添加上述两个函数后，可以在`kernel/defs.h`中声明，以便在其他文件中调用这些函数。
-
-- 查阅《xv6 book》`chapter1`和`chapter2`中相关的内容。
-
-​      
+- 更改内核部分的wait接口定义（在`defs.h`中），以及相应的函数接口（`proc.c: wait(uint64)`）；
+- 在`sysproc.c: sys_wait(void)`函数中获取用户态传入的新参数；
+- 在`proc.c: wait(uint64, int)`中实现非阻塞逻辑。
 
 ## 3. 任务三：回答问题
 
