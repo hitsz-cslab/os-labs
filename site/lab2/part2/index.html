@@ -1520,9 +1520,10 @@ xv6使用上述代码进行打开文件的回收。通过for循环遍历所有�
 我们的<a href="../part1/#33">任务二</a>就是在更改wait的这一实现。</li>
 </ol>
 <h3 id="32">3.2 更改当前进程状态<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="n">p</span><span class="o">-&gt;</span><span class="n">xstate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+<p><div class="highlight"><pre><span></span><code><span class="n">p</span><span class="o">-&gt;</span><span class="n">xstate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
 <span class="n">p</span><span class="o">-&gt;</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ZOMBIE</span><span class="p">;</span>
 </code></pre></div>
+其中xstate表示退出时返回给父进程的状态，state表示当前进程的状态，这两个状态都存储在进程的PCB（<code>proc.h: struct proc</code>）当中。</p>
 <h3 id="33">3.3 进入调度器等待被回收<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1">// Jump into the scheduler, never to return.</span>
 <span class="n">sched</span><span class="p">();</span>

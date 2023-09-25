@@ -1117,6 +1117,9 @@
 <p><strong>Step 1.</strong> 首先，保存实验一的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VSCode内建的图形化界面完成操作</a>这两小节，完成commit操作。或者， <strong>如果你希望直接放弃掉上一次commit后的所有更改</strong> ，那么你也可以使用-f选项强制切换分支，例如<code>git checkout -f syscall</code>。</p>
 <p><strong>Step 2.</strong> 切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
 </div>
+<p>同学们也可以参考下面的图片进行分支切换：</p>
+<p><img alt="checkout" src="../part1.assets/git_checkout.png" /></p>
+<p>我们建议同学们在切换分支之后进行<code>make clean</code>将上一个分支的<code>fs.img</code>删除，不然会出现无法启动qemu的问题（会显示fs.img被其他的进程占用）。</p>
 <p>本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用<code>exittest</code>, <code>waittest</code>和<code>yieldtest</code>测试程序。具体来说，本实验有三部分：</p>
 <h3 id="32">3.2 任务一：进程信息收集<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
 <p>在该任务中，你需要在理解xv6的<code>exit</code>系统调用的基础上，实现 <strong>进程在退出时打印自己的父进程和子进程的信息</strong> 这一功能。</p>
@@ -1128,11 +1131,16 @@
 <li><strong>返回值</strong> ：无，函数调用exit之后该进程在内核态进行exit相关的资源回收之后，对应进程终止，不会返回。  </li>
 <li><strong>功能</strong> ：回收进程资源，回收完毕之后终止进程。<br />
 （1）exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -&gt; <strong>将当前进程的所有子进程交给初始进程init</strong> -&gt; 更改当前进程状态 -&gt; 手动进入调度器（等待回收）。详细原理请参考<a href="../part2/#3">实验原理</a>部分。<br />
-（2）需要完成的信息输出格式：<br />
+（2）<strong>需要完成</strong> 的信息输出格式：<br />
 当前进程的父进程的信息输出格式： <code>proc PID exit, parent pid PID, name NAME, state STATE</code>；<br />
 当前进程的子进程的信息输出格式：<code>proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE</code>。<br />
 其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示进程名，STATE表示进程状态。</li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">提示</p>
+<p>大家不要使用printf输出，这样会影响到其他实验， <strong>请使用我们为大家封装好的<code>exit_info</code>函数输出</strong><br />
+该函数的使用方法与printf一样，例如：<code>exit_info("proc %d exit\n", p-&gt;pid);</code>。</p>
+</div>
 <h4 id="322">3.2.2 运行结果<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
 <p>实验提供了一个exittest（见 <code>user/exittest.c</code>）用户级应用程序，该程序首先通过fork系统调用创建3个子进程，并通过sleep保证父进程在退出时子进程还没有退出，然后父进程先退出，3个子进程再退出。</p>
 <div class="admonition note">
@@ -1144,11 +1152,10 @@
 
 /* 一大波输出 …… */
 
-kernel/main.c:14
-kernel/main.c:15    xv6 kernel is booting
-kernel/main.c:16
-kernel/main.c:36    hart 2 starting
-kernel/main.c:36    hart 1 starting
+xv6 kernel is booting
+
+hart 1 starting
+hart 2 starting
 init: starting sh
 $
 
@@ -1156,13 +1163,13 @@ $
 
 $ exittest
 exit test
-proc 3 exit, parent pid 2, name sh, state run
-proc 3 exit, child 0, pid 4, name exittest, state runble
-proc 3 exit, child 1, pid 5, name exittest, state runble
-proc 3 exit, child 2, pid 6, name exittest, state runble
-$ proc 4 exit, parent pid 1, name init, state run
-proc 5 exit, parent pid 1, name init, state run
-proc 6 exit, parent pid 1, name init, state run
+[INFO] proc 3 exit, parent pid 2, name sh, state run
+[INFO] proc 3 exit, child 0, pid 4, name exittest, state runble
+[INFO] proc 3 exit, child 1, pid 5, name exittest, state runble
+[INFO] proc 3 exit, child 2, pid 6, name exittest, state runble
+$ [INFO] proc 4 exit, parent pid 1, name init, state run
+[INFO] proc 5 exit, parent pid 1, name init, state run
+[INFO] proc 6 exit, parent pid 1, name init, state run
 </code></pre></div>
 <!-- 1. 在 **第一个例子** 中，`trace 32 grep hello README`，其中，trace表示我们希望执行用户态应用程序trace（见user/trace.c），后面则是trace应用程序附带的入参：
 
@@ -1199,15 +1206,21 @@ proc 6 exit, parent pid 1, name init, state run
 对当前进程的子进程的信息的输出：
 <div class="highlight"><pre><span></span><code>proc 3 exit, child 0, pid 4, name exittest, state runble
 </code></pre></div>
+同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
+<div class="highlight"><pre><span></span><code>$ proc 4 exit, parent pid 1, name init, state run
+proc 5 exit, parent pid 1, name init, state run
+proc 6 exit, parent pid 1, name init, state run
+</code></pre></div>
+关于这点我们会在<a href="../part2/#3">实验原理</a>当中详细介绍。<br />
 你需要使用尝试在与exit相关的函数当中找到 <strong>合适的位置</strong> 来进行输出，我们建议你先阅读<a href="../part2/#3">实验原理</a>，这会帮助你更好的了解系统调用和exit的工作流程。</p>
 <h3 id="33-wait">3.3 任务二：wait系统调用的非阻塞选项实现<a class="headerlink" href="#33-wait" title="Permanent link">&para;</a></h3>
 <p>在该任务中，你需要 <strong>对wait系统调用进行更改，使其增加一个参数<code>int flags</code>，用以表示是否需要进行阻塞等待</strong>。</p>
-<p>原版阻塞实现的wait：<code>int wait(int *status)</code>，在<code>kernel/proc.c</code>当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
+<p>原版阻塞实现的wait：<code>int wait(int *status)</code>，其中参数status表示存储子进程退出状态的地址。在<code>kernel/proc.c</code>当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
 <div class="highlight"><pre><span></span><code>// Wait for a child to exit.
 sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
 </code></pre></div>
 在父进程调用该函数之后，通过sleep进行睡眠，无法再执行其他任务，也就是阻塞在这里。</p>
-<p>同学们需要实现的wait：<code>int wait(int *status, int flags)</code>。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  </p>
+<p>同学们需要实现的wait：<code>int wait(int *status, int flags)</code>，其中flags参数用以 <strong>表示是否阻塞等待</strong> 子进程退出。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  </p>
 <p>具体来说，同学们需要：</p>
 <ol>
 <li>尝试在<code>kernel/sysproc.c</code>的<code>sys_wait</code>函数中获取新添加的参数；</li>
@@ -1241,14 +1254,16 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
    也就是在某个位置，添加上这样一句代码：
 <div class="highlight"><pre><span></span><code><span class="n">printf</span><span class="p">(</span><span class="s">&quot;start to yield, user pc %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pc</span><span class="p">);</span>
 </code></pre></div></li>
-<li>
-<p>将当前进程让出CPU，从而调度到别的进程</p>
-</li>
-<li>
-<p>另外注意一点，该任务测试的时候需要 <strong>设置CPU的数量为1</strong> ，即使用如下命令运行xv6:
+<li>将当前进程让出CPU，从而调度到别的进程</li>
+</ol>
+<p>实验提供了一个<code>yieldtest</code>用户态测试程序（见user/yieldtest.c）。</p>
+<p>完成任务后，你可以在xv6中运行<code>yieldtest</code>程序，不过有以下几点需要注意：</p>
+<ol>
+<li>该任务测试的时候需要 <strong>设置CPU的数量为1</strong> ，即使用如下命令运行xv6:
 <div class="highlight"><pre><span></span><code>make<span class="w"> </span>qemu<span class="w"> </span><span class="nv">CPUS</span><span class="o">=</span><span class="m">1</span>
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
+<li>需要手动将<code>yieldtest</code>添加进Makefile中进行编译，即找到<code>UPROGS</code>变量，添加一行：
+<img alt="" src="../part1.assets/yield-test.png" /></li>
 </ol>
 <h3 id="35">3.5 测试<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
 <p>当完成上述的两个任务后，与Lab1一样，你也需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。</p>

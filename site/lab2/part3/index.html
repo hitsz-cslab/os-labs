@@ -1076,7 +1076,7 @@
 </ul>
 <p>在内核部分：</p>
 <ul>
-<li>参考<a href="../part2/#3">exit系统调用工作流程</a>，阅读<code>proc.c: exit(int)</code>相关源码，在合适的位置使用printf输出。</li>
+<li>参考<a href="../part2/#3">exit系统调用工作流程</a>，阅读<code>proc.c: exit(int)</code>相关源码，在合适的位置使用<code>exit_info</code>输出。</li>
 </ul>
 <h2 id="2-wait">2. 任务二：wait系统调用的非阻塞选项实现<a class="headerlink" href="#2-wait" title="Permanent link">&para;</a></h2>
 <p><strong>具体要求：更改原有的wait系统调用，添加新参数，实现wait系统调用的非阻塞选项。</strong></p>
@@ -1105,9 +1105,11 @@
 <p>在内核部分：</p>
 <ul>
 <li>在syscall.h中增加一个新的系统调用号，具体值你自己决定；</li>
-<li>在sysproc.c中增加一个sys_yield函数，在该函数中：</li>
+<li>在sysproc.c中增加一个sys_yield函数，在该函数中：<ul>
 <li>首先需要获取到用户上下文中保存的PC值，然后打印出来；</li>
 <li>然后将当前进程挂起，XV6内核态已经帮我们实现了一个yield函数了。</li>
+</ul>
+</li>
 </ul>
 <h2 id="4">4. 任务四：回答问题<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <div class="admonition question">
@@ -1115,11 +1117,9 @@
 <p>(1) 阅读<code>kernel/syscall.c</code>，试解释函数 <code>syscall()</code> 如何根据系统调用号调用对应的系统调用处理函数（例如<code>sys_fork</code>）？<code>syscall()</code> 将具体系统调用的返回值存放在哪里？</p>
 <p>(2) 阅读<code>kernel/syscall.c</code>，哪些函数用于传递系统调用参数？试解释argraw()函数的含义。</p>
 <p>(3) 阅读<code>kernel/proc.c</code>和<code>proc.h</code>，进程控制块存储在哪个数组中？进程控制块中哪个成员指示了进程的状态？一共有哪些状态？</p>
-<p>(4)</p>
-<p>(5)</p>
-<p>(6) 在任务三当中，我们提到测试时需要指定CPU的数量为1，因为如果CPU数量大于1的话，输出结果会出现乱码，这是为什么呢？（提示：多核心调度和单核心调度有什么区别？）</p>
-<!-- (4) 阅读<code>kernel/kalloc.c</code>，哪个结构体中的哪个成员可以指示空闲的内存页？Xv6中的一个页有多少字节？ -->
-<!-- (5) 阅读<code>kernel/vm.c</code>，试解释<code>copyout()</code>函数各个参数的含义。 -->
+<p>(4) 在任务一当中，为什么子进程（4、5、6号进程）的输出之前会 <strong>稳定的</strong> 出现一个<code>$</code>符号？
+<img alt="q4" src="../part3.assets/q4.png" /></p>
+<p>(5) 在任务三当中，我们提到测试时需要指定CPU的数量为1，因为如果CPU数量大于1的话，输出结果会出现乱码，这是为什么呢？（提示：多核心调度和单核心调度有什么区别？）</p>
 </div>
 <p>​      </p>
 
