@@ -1241,7 +1241,14 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
    也就是在某个位置，添加上这样一句代码：
 <div class="highlight"><pre><span></span><code><span class="n">printf</span><span class="p">(</span><span class="s">&quot;start to yield, user pc %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pc</span><span class="p">);</span>
 </code></pre></div></li>
-<li>将当前进程让出CPU，从而调度到别的进程</li>
+<li>
+<p>将当前进程让出CPU，从而调度到别的进程</p>
+</li>
+<li>
+<p>另外注意一点，该任务测试的时候需要 <strong>设置CPU的数量为1</strong> ，即使用如下命令运行xv6:
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>qemu<span class="w"> </span><span class="nv">CPUS</span><span class="o">=</span><span class="m">1</span>
+</code></pre></div></p>
+</li>
 </ol>
 <h3 id="35">3.5 测试<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
 <p>当完成上述的两个任务后，与Lab1一样，你也需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。</p>

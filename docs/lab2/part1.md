@@ -189,6 +189,11 @@ printf("start to yield, user pc %p\n", pc);
 ```
 2. 将当前进程让出CPU，从而调度到别的进程
 
+3. 另外注意一点，该任务测试的时候需要 **设置CPU的数量为1** ，即使用如下命令运行xv6:
+```shell
+make qemu CPUS=1
+```
+
 
 ### 3.5 测试
 
