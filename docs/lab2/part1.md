@@ -33,6 +33,12 @@
 
     **Step 2.** 切换的方法可以参考实验 -> 实验实用工具 -> [3.1同步上游仓库 ~ 3.3.3 合并冲突更改](../tools.md#31)。
 
+同学们也可以参考下面的图片进行分支切换：
+
+![checkout](part1.assets/git_checkout.png)
+
+我们建议同学们在切换分支之后进行`make clean`将上一个分支的`fs.img`删除，不然会出现无法启动qemu的问题（会显示fs.img被其他的进程占用）。
+
 本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用`exittest`, `waittest`和`yieldtest`测试程序。具体来说，本实验有三部分：
 
 
@@ -50,10 +56,14 @@
 2. **返回值** ：无，函数调用exit之后该进程在内核态进行exit相关的资源回收之后，对应进程终止，不会返回。  
 3. **功能** ：回收进程资源，回收完毕之后终止进程。  
 （1）exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -> **将当前进程的所有子进程交给初始进程init** -> 更改当前进程状态 -> 手动进入调度器（等待回收）。详细原理请参考[实验原理](../part2/#3)部分。  
-（2）需要完成的信息输出格式：  
+（2）**需要完成** 的信息输出格式：  
 当前进程的父进程的信息输出格式： `proc PID exit, parent pid PID, name NAME, state STATE`；  
 当前进程的子进程的信息输出格式：`proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE`。  
 其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示进程名，STATE表示进程状态。
+
+!!! note  "提示"
+    大家不要使用printf输出，这样会影响到其他实验， **请使用我们为大家封装好的`exit_info`函数输出**  
+    该函数的使用方法与printf一样，例如：`exit_info("proc %d exit\n", p->pid);`。
 
 #### 3.2.2 运行结果
 
@@ -69,11 +79,10 @@
 
 /* 一大波输出 …… */
 
-kernel/main.c:14
-kernel/main.c:15	xv6 kernel is booting
-kernel/main.c:16
-kernel/main.c:36	hart 2 starting
-kernel/main.c:36	hart 1 starting
+xv6 kernel is booting
+
+hart 1 starting
+hart 2 starting
 init: starting sh
 $
 
@@ -81,13 +90,13 @@ $
 
 $ exittest
 exit test
-proc 3 exit, parent pid 2, name sh, state run
-proc 3 exit, child 0, pid 4, name exittest, state runble
-proc 3 exit, child 1, pid 5, name exittest, state runble
-proc 3 exit, child 2, pid 6, name exittest, state runble
-$ proc 4 exit, parent pid 1, name init, state run
-proc 5 exit, parent pid 1, name init, state run
-proc 6 exit, parent pid 1, name init, state run
+[INFO] proc 3 exit, parent pid 2, name sh, state run
+[INFO] proc 3 exit, child 0, pid 4, name exittest, state runble
+[INFO] proc 3 exit, child 1, pid 5, name exittest, state runble
+[INFO] proc 3 exit, child 2, pid 6, name exittest, state runble
+$ [INFO] proc 4 exit, parent pid 1, name init, state run
+[INFO] proc 5 exit, parent pid 1, name init, state run
+[INFO] proc 6 exit, parent pid 1, name init, state run
 ```
 
 <!-- 1. 在 **第一个例子** 中，`trace 32 grep hello README`，其中，trace表示我们希望执行用户态应用程序trace（见user/trace.c），后面则是trace应用程序附带的入参：
@@ -128,6 +137,13 @@ proc 3 exit, parent pid 2, name sh, state run
 ```
 proc 3 exit, child 0, pid 4, name exittest, state runble
 ```
+同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
+```
+$ proc 4 exit, parent pid 1, name init, state run
+proc 5 exit, parent pid 1, name init, state run
+proc 6 exit, parent pid 1, name init, state run
+```
+关于这点我们会在[实验原理](../part2/#3)当中详细介绍。  
 你需要使用尝试在与exit相关的函数当中找到 **合适的位置** 来进行输出，我们建议你先阅读[实验原理](../part2/#3)，这会帮助你更好的了解系统调用和exit的工作流程。
       
 
@@ -135,14 +151,14 @@ proc 3 exit, child 0, pid 4, name exittest, state runble
 
 在该任务中，你需要 **对wait系统调用进行更改，使其增加一个参数`int flags`，用以表示是否需要进行阻塞等待**。
 
-原版阻塞实现的wait：`int wait(int *status)`，在`kernel/proc.c`当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
+原版阻塞实现的wait：`int wait(int *status)`，其中参数status表示存储子进程退出状态的地址。在`kernel/proc.c`当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
 ```
 // Wait for a child to exit.
 sleep(p, &p->lock);  // DOC: wait-sleep
 ```
 在父进程调用该函数之后，通过sleep进行睡眠，无法再执行其他任务，也就是阻塞在这里。
 
-同学们需要实现的wait：`int wait(int *status, int flags)`。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  
+同学们需要实现的wait：`int wait(int *status, int flags)`，其中flags参数用以 **表示是否阻塞等待** 子进程退出。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  
 
 具体来说，同学们需要：
 
