@@ -1138,8 +1138,8 @@
 </ol>
 <div class="admonition note">
 <p class="admonition-title">提示</p>
-<p>大家不要使用printf输出，这样会影响到其他实验， <strong>请使用我们为大家封装好的<code>exit_info</code>函数输出</strong><br />
-该函数的使用方法与printf一样，例如：<code>exit_info("proc %d exit\n", p-&gt;pid);</code>。</p>
+<p>大家不要使用printf输出， <strong>请使用我们为大家封装好的<code>exit_info</code>函数输出</strong> ，<code>exit_info</code>提供不同颜色和标记的输出，可以更加清晰地看出哪些是本任务需要的打印输出。</p>
+<p>该函数的使用方法与printf一样，例如：<code>exit_info("proc %d exit\n", p-&gt;pid);</code>。</p>
 </div>
 <h4 id="322">3.2.2 运行结果<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
 <p>实验提供了一个exittest（见 <code>user/exittest.c</code>）用户级应用程序，该程序首先通过fork系统调用创建3个子进程，并通过sleep保证父进程在退出时子进程还没有退出，然后父进程先退出，3个子进程再退出。</p>
