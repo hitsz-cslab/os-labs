@@ -47,16 +47,16 @@
 
 在用户部分：
 
-- 在user.h添加相关的系统调用声明；
-- 在usys.pl文件中新增一个entry。
-- 在Makefile的UPROGS变量中新增一个用户程序`_yieldtest`
+- 在`user.h`添加相关的系统调用声明；
+- 在`usys.pl`文件中新增一个entry；
+- 在`Makefile`的`UPROGS`变量中新增一个用户程序`_yieldtest`。
 
 在内核部分：
 
-- 在syscall.h中增加一个新的系统调用号，具体值你自己决定；
-- 在sysproc.c中增加一个sys_yield函数，在该函数中：
+- 在`syscall.h`中增加一个新的系统调用号，具体值你自己决定；
+- 在`sysproc.c`中增加一个`sys_yield`函数，在该函数中：
     - 首先需要获取到用户上下文中保存的PC值，然后打印出来；
-    - 然后将当前进程挂起，XV6内核态已经帮我们实现了一个yield函数了。
+    - 然后将当前进程挂起，XV6内核态已经帮我们实现了一个`yield`函数了。
 
 
 ## 4. 任务四：回答问题

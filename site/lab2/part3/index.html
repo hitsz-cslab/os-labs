@@ -1098,16 +1098,16 @@
 <h3 id="31">3.1 流程<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
 <p>在用户部分：</p>
 <ul>
-<li>在user.h添加相关的系统调用声明；</li>
-<li>在usys.pl文件中新增一个entry。</li>
-<li>在Makefile的UPROGS变量中新增一个用户程序<code>_yieldtest</code></li>
+<li>在<code>user.h</code>添加相关的系统调用声明；</li>
+<li>在<code>usys.pl</code>文件中新增一个entry；</li>
+<li>在<code>Makefile</code>的<code>UPROGS</code>变量中新增一个用户程序<code>_yieldtest</code>。</li>
 </ul>
 <p>在内核部分：</p>
 <ul>
-<li>在syscall.h中增加一个新的系统调用号，具体值你自己决定；</li>
-<li>在sysproc.c中增加一个sys_yield函数，在该函数中：<ul>
+<li>在<code>syscall.h</code>中增加一个新的系统调用号，具体值你自己决定；</li>
+<li>在<code>sysproc.c</code>中增加一个<code>sys_yield</code>函数，在该函数中：<ul>
 <li>首先需要获取到用户上下文中保存的PC值，然后打印出来；</li>
-<li>然后将当前进程挂起，XV6内核态已经帮我们实现了一个yield函数了。</li>
+<li>然后将当前进程挂起，XV6内核态已经帮我们实现了一个<code>yield</code>函数了。</li>
 </ul>
 </li>
 </ul>
