@@ -189,11 +189,16 @@ printf("start to yield, user pc %p\n", pc);
 ```
 2. 将当前进程让出CPU，从而调度到别的进程
 
-3. 另外注意一点，该任务测试的时候需要 **设置CPU的数量为1** ，即使用如下命令运行xv6:
+实验提供了一个`yieldtest`用户态测试程序（见user/yieldtest.c）。
+
+完成任务后，你可以在xv6中运行`yieldtest`程序，不过有以下几点需要注意：
+
+1. 该任务测试的时候需要 **设置CPU的数量为1** ，即使用如下命令运行xv6:
 ```shell
 make qemu CPUS=1
 ```
-
+2. 需要手动将`yieldtest`添加进Makefile中进行编译，即找到`UPROGS`变量，添加一行：
+![](part1.assets/yield-test.png)
 
 ### 3.5 测试
 
