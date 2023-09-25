@@ -1232,7 +1232,7 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
 <!-- ![image-20211005130943125](part1.assets/image-20211005130943125.png) -->
 <p><img alt="waittest-result" src="../part1.assets/waittest-ans.png" /></p>
 <h3 id="34-yield">3.4 任务三：实现yield系统调用<a class="headerlink" href="#34-yield" title="Permanent link">&para;</a></h3>
-<p>在该任务中，你需要实现一个新的系统调用<code>yield</code>，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程，另外还有些额外要求。</p>
+<p>在该任务中，你需要实现一个新的系统调用<code>yield</code>，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程，当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码；另外我们的实验还有些额外要求。</p>
 <p>具体来说，当调用<code>yield</code>系统调用时：</p>
 <ol>
 <li>需要打印此时用户态的pc值，也就是陷入内核的那条指令地址，按如下格式：
@@ -1246,7 +1246,7 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
 <h3 id="35">3.5 测试<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
 <p>当完成上述的两个任务后，与Lab1一样，你也需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。</p>
 <p>最后，在命令行输入 <code>make grade</code> 进行测试。如果通过测试，会显示如下内容：</p>
-<p><img alt="image-20211005131516101" src="../part1.assets/image-20211005131516101.png" /></p>
+<p><img alt="image-20211005131516101" src="../part1.assets/result.png" /></p>
 
 
 
