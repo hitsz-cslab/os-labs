@@ -1248,7 +1248,7 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
 <p>在该任务中，你需要实现一个新的系统调用<code>yield</code>，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程，当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码；另外我们的实验还有些额外要求。</p>
 <p>具体来说，当调用<code>yield</code>系统调用时：</p>
 <ol>
-<li>需要打印此时用户态的pc值，也就是陷入内核的那条指令地址，按如下格式：
+<li>需要打印此时用户态的pc值，也就是陷入内核的那条指令地址，即<code>ecall</code>指令的地址，详情见<a href="../part2/#12">系统调用的接口</a>中提到的系统调用步骤，按如下格式打印：
 <div class="highlight"><pre><span></span><code>start<span class="w"> </span>to<span class="w"> </span>yield,<span class="w"> </span>user<span class="w"> </span>pc<span class="w"> </span>0x???????
 </code></pre></div>
    也就是在某个位置，添加上这样一句代码：
