@@ -248,6 +248,7 @@ wakeup1(original_parent);
 p->xstate = status;
 p->state = ZOMBIE;
 ```
+其中xstate表示退出时返回给父进程的状态，state表示当前进程的状态，这两个状态都存储在进程的PCB（`proc.h: struct proc`）当中。
 
 ### 3.3 进入调度器等待被回收
 
