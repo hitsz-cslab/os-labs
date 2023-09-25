@@ -217,6 +217,10 @@ make qemu CPUS=1
 2. 需要手动将`yieldtest`添加进Makefile中进行编译，即找到`UPROGS`变量，添加一行：
 ![](part1.assets/yield-test.png)
 
+正确完成任务后 `yieldtest`的输出如下：
+
+![](part1.assets/yield-ans.png)
+
 ### 3.5 测试
 
 当完成上述的两个任务后，与Lab1一样，你也需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
