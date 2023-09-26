@@ -1134,7 +1134,7 @@
 （2）<strong>需要完成</strong> 的信息输出格式：<br />
 当前进程的父进程的信息输出格式： <code>proc PID exit, parent pid PID, name NAME, state STATE</code>；<br />
 当前进程的子进程的信息输出格式：<code>proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE</code>。<br />
-其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示进程名，STATE表示进程状态。</li>
+其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示进程状态。</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">提示</p>
@@ -1164,9 +1164,9 @@ $
 $ exittest
 exit test
 [INFO] proc 3 exit, parent pid 2, name sh, state run
-[INFO] proc 3 exit, child 0, pid 4, name exittest, state runble
-[INFO] proc 3 exit, child 1, pid 5, name exittest, state runble
-[INFO] proc 3 exit, child 2, pid 6, name exittest, state runble
+[INFO] proc 3 exit, child 0, pid 4, name child0, state runble
+[INFO] proc 3 exit, child 1, pid 5, name child1, state runble
+[INFO] proc 3 exit, child 2, pid 6, name child2, state runble
 $ [INFO] proc 4 exit, parent pid 1, name init, state run
 [INFO] proc 5 exit, parent pid 1, name init, state run
 [INFO] proc 6 exit, parent pid 1, name init, state run
@@ -1204,7 +1204,7 @@ $ [INFO] proc 4 exit, parent pid 1, name init, state run
 </code></pre></div>
 以及<br />
 对当前进程的子进程的信息的输出：
-<div class="highlight"><pre><span></span><code>proc 3 exit, child 0, pid 4, name exittest, state runble
+<div class="highlight"><pre><span></span><code>proc 3 exit, child 0, pid 4, name child0, state runble
 </code></pre></div>
 同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
 <div class="highlight"><pre><span></span><code>$ proc 4 exit, parent pid 1, name init, state run
