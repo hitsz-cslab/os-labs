@@ -219,6 +219,8 @@ struct proc {
 
 在这里我们对trapframe这一概念进行详细介绍。
 
+我们知道，当进程从用户态陷入内核时，由于内核态也需要用到寄存器，因此需要将用户态的上下文（寄存器信息）保存起来，以便于后面返回用户态时重新恢复这些上下文（寄存器）。
+
 ```c
 struct trapframe {
   /*   0 */ uint64 kernel_satp;   // kernel page table
@@ -259,9 +261,9 @@ struct trapframe {
   /* 280 */ uint64 t6;
 };
 ```
-上面是xv6对trapframe结构体的定义，我们可以看见，trapframe当中包含内核的栈指针（kernel_sp）、内核页表指针（kernel_satp）和 **用户程序的PC（epc）** 等信息。
+上面是xv6对trapframe结构体的定义，我们可以看见，trapframe当中包含内核的栈指针（`kernel_sp`）、内核页表指针（`kernel_satp`）等内核态相关的信息。
 
-同时，trapframe当中保存全套的寄存器信息，用以保存进程的完整信息，不仅仅是上下文（context）信息。
+同时，trapframe也保存了全套的用户态寄存器信息，以及用户态陷入内核时对应的PC值（`epc`）。
 
 ## 4. exit系统调用工作流程
 
