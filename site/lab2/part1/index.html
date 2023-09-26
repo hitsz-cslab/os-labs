@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.30068a00.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d451bc0e.min.css">
       
       
 
@@ -284,15 +284,20 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    
+    
       
-        
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
         
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
-          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -465,15 +470,20 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    
+    
       
-        
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
         
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -499,14 +509,16 @@
     
     
     
+    
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
         
+          
           <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
             
   
@@ -608,15 +620,20 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    
+    
       
-        
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
         
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -731,15 +748,20 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    
       
-        
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
         
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -1096,7 +1118,31 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">提示</p>
-<p>本节实验与理论课的 <strong>“导论与操作系统结构”</strong> 和 <strong>“进程与线程：进程”</strong> 这两章课程内容相关，在开始实验前，请复习这两章课程内容。</p>
+<p>本节实验与理论课的 <strong>导论与操作系统结构</strong> 和 <strong>进程与线程：进程</strong> 这两章课程内容相关，在开始实验前，请复习这两章课程内容。</p>
+<ul>
+<li>
+<p>特别推荐同学们观看我校的XV6讲解视频：</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1ge4y1J7Je?share_source=copy_web&amp;vd_source=225a99017e082147ac525beeddd6e3e2">HITSZ操作系统课程组讲解XV6（二）进程管理</a></li>
+<li>课程PPT: <a href="https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析2-内存管理.pdf">点这里下载</a></li>
+</ul>
+</li>
+<li>
+<p>B站上的MIT 6.S081/Fall 2020课程视频：</p>
+<ul>
+<li>
+<p><a href="https://www.bilibili.com/video/BV19k4y1C7kA?p=2&amp;vd_source=d43f6077de789bb822e80882b94ffca4">Lecture 3 - OS Organization and System Calls</a> </p>
+</li>
+<li>
+<p><a href="https://www.bilibili.com/video/BV19k4y1C7kA?p=5&amp;vd_source=d43f6077de789bb822e80882b94ffca4">Lecture 6 - Isolation &amp; System Call Entry_Exit</a></p>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">xv6 book</a>, Sections 4.3 and 4.4 of Chapter 4</p>
+</li>
+<li>推荐同学们用GDB跟踪XV6系统调用过程，详细步骤请查看<a href="../../remote_env_gdb2">VSCode调试系统调用指南</a></li>
+</ul>
 </div>
 <h2 id="1">1.  实验目的<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>本节实验的目的是对操作系统的系统调用模块进行修改，尽可能在真正修改操作系统之前，先对操作系统有一定的了解。</p>
@@ -1109,7 +1155,7 @@
 <h2 id="2">2.  实验学时<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>本实验为4学时。</p>
 <h2 id="3">3.  实验内容及要求<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
-<p>实验要求可以参考<code>MIT XV6 lab2</code>和<code>lab4</code>提供的部分官方说明：<a href="https://pdos.csail.mit.edu/6.828/2020/labs/syscallhtml">[Lab: System calls(mit.edu)]</a> <a href="https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html">[Lab: Trap(mit.edu)]</a>， <strong>但请以指导书为准，否则可能无法通过测试！</strong> </p>
+<p>实验要求可以参考<code>MIT XV6 lab2</code>和<code>lab4</code>提供的部分官方说明：<a href="https://pdos.csail.mit.edu/6.828/2020/labs/syscall.html">[Lab: System calls(mit.edu)]</a> 、<a href="https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html">[Lab: Trap(mit.edu)]</a>， <strong>但请以指导书为准，否则可能无法通过测试！</strong> </p>
 <h3 id="31">3.1 切换分支<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">请先同步上游远程仓库，并注意切换到syscall分支进行试验</p>
@@ -1129,17 +1175,19 @@
 <ol>
 <li><strong>参数<code>status</code></strong> ：退出状态，0表示正常退出，-1（大部分）表示异常退出。  </li>
 <li><strong>返回值</strong> ：无，函数调用exit之后该进程在内核态进行exit相关的资源回收之后，对应进程终止，不会返回。  </li>
-<li><strong>功能</strong> ：回收进程资源，回收完毕之后终止进程。<br />
-（1）exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -&gt; <strong>将当前进程的所有子进程交给初始进程init</strong> -&gt; 更改当前进程状态 -&gt; 手动进入调度器（等待回收）。详细原理请参考<a href="../part2/#3">实验原理</a>部分。<br />
-（2）<strong>需要完成</strong> 的信息输出格式：<br />
-当前进程的父进程的信息输出格式： <code>proc PID exit, parent pid PID, name NAME, state STATE</code>；<br />
-当前进程的子进程的信息输出格式：<code>proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE</code>。<br />
+<li><strong>功能</strong> ：回收进程资源，回收完毕之后终止进程。  <ul>
+<li>exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -&gt; <strong>调用reparent将当前进程的所有子进程交给初始进程init</strong> -&gt; 更改当前进程状态 -&gt; 手动进入调度器（等待回收）。详细原理请参考<a href="../part2/#3">实验原理</a>部分。  </li>
+<li>本任务 <strong>需要完成</strong> 的信息输出格式：<br />
+<em>当前进程的父进程的信息输出格式</em> ： <code>proc PID exit, parent pid PID, name NAME, state STATE</code><br />
+<em>当前进程的子进程的信息输出格式</em> ：<code>proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE</code><br />
 其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示进程状态。</li>
+</ul>
+</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">提示</p>
 <p>大家不要使用printf输出， <strong>请使用我们为大家封装好的<code>exit_info</code>函数输出</strong> ，<code>exit_info</code>提供不同颜色和标记的输出，可以更加清晰地看出哪些是本任务需要的打印输出。</p>
-<p>该函数的使用方法与printf一样，例如：<code>exit_info("proc %d exit\n", p-&gt;pid);</code>。</p>
+<p>该函数的使用方法与printf一样，例如：<code>exit_info("proc %d exit\n", p-&gt;pid);</code></p>
 </div>
 <h4 id="322">3.2.2 运行结果<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
 <p>实验提供了一个exittest（见 <code>user/exittest.c</code>）用户级应用程序，该程序首先通过fork系统调用创建3个子进程，并通过sleep保证父进程在退出时子进程还没有退出，然后父进程先退出，3个子进程再退出。</p>
@@ -1202,8 +1250,7 @@ $ [INFO] proc 4 exit, parent pid 1, name init, state run
 对当前进程的父进程的信息的输出：
 <div class="highlight"><pre><span></span><code>proc 3 exit, parent pid 2, name sh, state run
 </code></pre></div>
-以及<br />
-对当前进程的子进程的信息的输出：
+以及对当前进程的子进程的信息的输出：
 <div class="highlight"><pre><span></span><code>proc 3 exit, child 0, pid 4, name child0, state runble
 </code></pre></div>
 同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
@@ -1215,16 +1262,22 @@ proc 6 exit, parent pid 1, name init, state run
 你需要使用尝试在与exit相关的函数当中找到 <strong>合适的位置</strong> 来进行输出，我们建议你先阅读<a href="../part2/#3">实验原理</a>，这会帮助你更好的了解系统调用和exit的工作流程。</p>
 <h3 id="33-wait">3.3 任务二：wait系统调用的非阻塞选项实现<a class="headerlink" href="#33-wait" title="Permanent link">&para;</a></h3>
 <p>在该任务中，你需要 <strong>对wait系统调用进行更改，使其增加一个参数<code>int flags</code>，用以表示是否需要进行阻塞等待</strong>。</p>
-<p>原版阻塞实现的wait：<code>int wait(int *status)</code>，其中参数status表示存储子进程退出状态的地址。在<code>kernel/proc.c</code>当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
-<div class="highlight"><pre><span></span><code>// Wait for a child to exit.
+<ul>
+<li>
+<p><em>原版阻塞实现的wait</em> ：<code>int wait(int *status)</code>，其中参数status表示存储子进程退出状态的地址。在<code>kernel/proc.c</code>当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
+    <div class="highlight"><pre><span></span><code>// Wait for a child to exit.
 sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
 </code></pre></div>
-在父进程调用该函数之后，通过sleep进行睡眠，无法再执行其他任务，也就是阻塞在这里。</p>
-<p>同学们需要实现的wait：<code>int wait(int *status, int flags)</code>，其中flags参数用以 <strong>表示是否阻塞等待</strong> 子进程退出。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  </p>
+    在父进程调用该函数之后，通过sleep进行睡眠，无法再执行其他任务，也就是阻塞在这里。</p>
+</li>
+<li>
+<p><em>本任务需要实现的wait</em> ：<code>int wait(int *status, int flags)</code>，其中flags参数用以 <strong>表示是否阻塞等待</strong> 子进程退出。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  </p>
+</li>
+</ul>
 <p>具体来说，同学们需要：</p>
 <ol>
 <li>尝试在<code>kernel/sysproc.c</code>的<code>sys_wait</code>函数中获取新添加的参数；</li>
-<li>更改头文件中的wait的定义；</li>
+<li>更改<code>kernel/defs.h</code>头文件中的wait的定义；</li>
 <li>更改wait函数以满足当前的语义。</li>
 </ol>
 <!-- sysinfo只需要一个参数，这个参数是结构体 `sysinfo`的指针， **这个结构体在kernel/sysinfo.h** 可以找到。xv6内核的工作就是把这个结构体填上应有的数值。下面介绍结构体每个成员的含义
@@ -1245,7 +1298,7 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
 <!-- ![image-20211005130943125](part1.assets/image-20211005130943125.png) -->
 <p><img alt="waittest-result" src="../part1.assets/waittest-ans.png" /></p>
 <h3 id="34-yield">3.4 任务三：实现yield系统调用<a class="headerlink" href="#34-yield" title="Permanent link">&para;</a></h3>
-<p>在该任务中，你需要实现一个新的系统调用<code>yield</code>，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程，当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码；另外我们的实验还有些额外要求。</p>
+<p>在该任务中，你需要实现一个 <em>新的系统调用</em> <code>yield</code>，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程。当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码。另外我们的实验还有些额外要求。</p>
 <p>具体来说，当调用<code>yield</code>系统调用时：</p>
 <ol>
 <li>需要打印此时用户态的pc值，也就是陷入内核的那条指令地址，即<code>ecall</code>指令的地址，详情见<a href="../part2/#12">系统调用的接口</a>中提到的系统调用步骤，按如下格式打印：
@@ -1254,10 +1307,9 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
    也就是在某个位置，添加上这样一句代码：
 <div class="highlight"><pre><span></span><code><span class="n">printf</span><span class="p">(</span><span class="s">&quot;start to yield, user pc %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pc</span><span class="p">);</span>
 </code></pre></div></li>
-<li>将当前进程让出CPU，从而调度到别的进程</li>
+<li>将当前进程让出CPU，从而调度到别的进程。</li>
 </ol>
-<p>实验提供了一个<code>yieldtest</code>用户态测试程序（见user/yieldtest.c）。</p>
-<p>完成任务后，你可以在xv6中运行<code>yieldtest</code>程序，不过有以下几点需要注意：</p>
+<p>实验提供了一个<code>yieldtest</code>用户态测试程序（见user/yieldtest.c）。完成任务后，你可以在xv6中运行<code>yieldtest</code>程序，不过有以下几点需要注意：</p>
 <ol>
 <li>该任务测试的时候需要 <strong>设置CPU的数量为1</strong> ，即使用如下命令运行xv6:
 <div class="highlight"><pre><span></span><code>make<span class="w"> </span>qemu<span class="w"> </span><span class="nv">CPUS</span><span class="o">=</span><span class="m">1</span>
@@ -1268,7 +1320,7 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
 <p>正确完成任务后 <code>yieldtest</code>的输出如下：</p>
 <p><img alt="" src="../part1.assets/yield-ans.png" /></p>
 <h3 id="35">3.5 测试<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
-<p>当完成上述的两个任务后，与Lab1一样，你也需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。</p>
+<p>当完成上述的两个任务后，你需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。</p>
 <p>最后，在命令行输入 <code>make grade</code> 进行测试。如果通过测试，会显示如下内容：</p>
 <p><img alt="image-20211005131516101" src="../part1.assets/result.png" /></p>
 
@@ -1312,10 +1364,10 @@ sleep(p, &amp;p-&gt;lock);  // DOC: wait-sleep
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.726fbb30.min.js"></script>
       
         <script src="../../js/baidu-tongji.js"></script>
       

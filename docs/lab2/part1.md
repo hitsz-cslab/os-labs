@@ -4,8 +4,24 @@
     本课程实验已引入代码自动查重系统，请同学们保持[学术诚信](https://integrity.mit.edu/)！
 
 !!! note   "提示"
-    本节实验与理论课的 **“导论与操作系统结构”** 和 **“进程与线程：进程”** 这两章课程内容相关，在开始实验前，请复习这两章课程内容。
-    
+    本节实验与理论课的 **导论与操作系统结构** 和 **进程与线程：进程** 这两章课程内容相关，在开始实验前，请复习这两章课程内容。
+
+    - 特别推荐同学们观看我校的XV6讲解视频：
+
+        - [HITSZ操作系统课程组讲解XV6（二）进程管理](https://www.bilibili.com/video/BV1ge4y1J7Je?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)
+    	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析2-内存管理.pdf)
+
+    - B站上的MIT 6.S081/Fall 2020课程视频：
+
+        - [Lecture 3 - OS Organization and System Calls](https://www.bilibili.com/video/BV19k4y1C7kA?p=2&vd_source=d43f6077de789bb822e80882b94ffca4) 
+
+        - [Lecture 6 - Isolation & System Call Entry_Exit](https://www.bilibili.com/video/BV19k4y1C7kA?p=5&vd_source=d43f6077de789bb822e80882b94ffca4)
+
+    - [xv6 book](https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf), Sections 4.3 and 4.4 of Chapter 4
+    - 推荐同学们用GDB跟踪XV6系统调用过程，详细步骤请查看[VSCode调试系统调用指南](../../remote_env_gdb2)
+
+
+
 
 ## 1.  实验目的
 
@@ -22,7 +38,7 @@
 
 ## 3.  实验内容及要求
 
-实验要求可以参考`MIT XV6 lab2`和`lab4`提供的部分官方说明：[[Lab: System calls(mit.edu)]](https://pdos.csail.mit.edu/6.828/2020/labs/syscallhtml) [[Lab: Trap(mit.edu)]](https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html)， **但请以指导书为准，否则可能无法通过测试！** 
+实验要求可以参考`MIT XV6 lab2`和`lab4`提供的部分官方说明：[[Lab: System calls(mit.edu)]](https://pdos.csail.mit.edu/6.828/2020/labs/syscall.html) 、[[Lab: Trap(mit.edu)]](https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html)， **但请以指导书为准，否则可能无法通过测试！** 
 
 ### 3.1 切换分支
 
@@ -55,16 +71,16 @@
 1. **参数`status`** ：退出状态，0表示正常退出，-1（大部分）表示异常退出。  
 2. **返回值** ：无，函数调用exit之后该进程在内核态进行exit相关的资源回收之后，对应进程终止，不会返回。  
 3. **功能** ：回收进程资源，回收完毕之后终止进程。  
-（1）exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -> **将当前进程的所有子进程交给初始进程init** -> 更改当前进程状态 -> 手动进入调度器（等待回收）。详细原理请参考[实验原理](../part2/#3)部分。  
-（2）**需要完成** 的信息输出格式：  
-当前进程的父进程的信息输出格式： `proc PID exit, parent pid PID, name NAME, state STATE`；  
-当前进程的子进程的信息输出格式：`proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE`。  
+    - exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -> **调用reparent将当前进程的所有子进程交给初始进程init** -> 更改当前进程状态 -> 手动进入调度器（等待回收）。详细原理请参考[实验原理](../part2/#3)部分。  
+    - 本任务 **需要完成** 的信息输出格式：  
+  *当前进程的父进程的信息输出格式* ： `proc PID exit, parent pid PID, name NAME, state STATE`  
+*当前进程的子进程的信息输出格式* ：`proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE`  
 其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示进程状态。
 
 !!! note  "提示"
     大家不要使用printf输出， **请使用我们为大家封装好的`exit_info`函数输出** ，`exit_info`提供不同颜色和标记的输出，可以更加清晰地看出哪些是本任务需要的打印输出。
 
-    该函数的使用方法与printf一样，例如：`exit_info("proc %d exit\n", p->pid);`。
+    该函数的使用方法与printf一样，例如：`exit_info("proc %d exit\n", p->pid);`
 
 #### 3.2.2 运行结果
 
@@ -133,8 +149,7 @@ $ [INFO] proc 4 exit, parent pid 1, name init, state run
 ```
 proc 3 exit, parent pid 2, name sh, state run
 ```
-以及  
-对当前进程的子进程的信息的输出：
+以及对当前进程的子进程的信息的输出：
 ```
 proc 3 exit, child 0, pid 4, name child0, state runble
 ```
@@ -152,21 +167,20 @@ proc 6 exit, parent pid 1, name init, state run
 
 在该任务中，你需要 **对wait系统调用进行更改，使其增加一个参数`int flags`，用以表示是否需要进行阻塞等待**。
 
-原版阻塞实现的wait：`int wait(int *status)`，其中参数status表示存储子进程退出状态的地址。在`kernel/proc.c`当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
-```
-// Wait for a child to exit.
-sleep(p, &p->lock);  // DOC: wait-sleep
-```
-在父进程调用该函数之后，通过sleep进行睡眠，无法再执行其他任务，也就是阻塞在这里。
+- *原版阻塞实现的wait* ：`int wait(int *status)`，其中参数status表示存储子进程退出状态的地址。在`kernel/proc.c`当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
+    ```
+    // Wait for a child to exit.
+    sleep(p, &p->lock);  // DOC: wait-sleep
+    ```
+    在父进程调用该函数之后，通过sleep进行睡眠，无法再执行其他任务，也就是阻塞在这里。
 
-同学们需要实现的wait：`int wait(int *status, int flags)`，其中flags参数用以 **表示是否阻塞等待** 子进程退出。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  
+- *本任务需要实现的wait* ：`int wait(int *status, int flags)`，其中flags参数用以 **表示是否阻塞等待** 子进程退出。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  
 
 具体来说，同学们需要：
 
 1. 尝试在`kernel/sysproc.c`的`sys_wait`函数中获取新添加的参数；
-2. 更改头文件中的wait的定义；
+2. 更改`kernel/defs.h`头文件中的wait的定义；
 3. 更改wait函数以满足当前的语义。
-
 
 <!-- sysinfo只需要一个参数，这个参数是结构体 `sysinfo`的指针， **这个结构体在kernel/sysinfo.h** 可以找到。xv6内核的工作就是把这个结构体填上应有的数值。下面介绍结构体每个成员的含义
 
@@ -192,7 +206,7 @@ sleep(p, &p->lock);  // DOC: wait-sleep
 
 ### 3.4 任务三：实现yield系统调用
 
-在该任务中，你需要实现一个新的系统调用`yield`，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程，当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码；另外我们的实验还有些额外要求。
+在该任务中，你需要实现一个 *新的系统调用* `yield`，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程。当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码。另外我们的实验还有些额外要求。
 
 具体来说，当调用`yield`系统调用时：
 
@@ -204,11 +218,9 @@ start to yield, user pc 0x???????
 ```c
 printf("start to yield, user pc %p\n", pc);
 ```
-2. 将当前进程让出CPU，从而调度到别的进程
+2. 将当前进程让出CPU，从而调度到别的进程。
 
-实验提供了一个`yieldtest`用户态测试程序（见user/yieldtest.c）。
-
-完成任务后，你可以在xv6中运行`yieldtest`程序，不过有以下几点需要注意：
+实验提供了一个`yieldtest`用户态测试程序（见user/yieldtest.c）。完成任务后，你可以在xv6中运行`yieldtest`程序，不过有以下几点需要注意：
 
 1. 该任务测试的时候需要 **设置CPU的数量为1** ，即使用如下命令运行xv6:
 ```shell
@@ -223,7 +235,7 @@ make qemu CPUS=1
 
 ### 3.5 测试
 
-当完成上述的两个任务后，与Lab1一样，你也需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
+当完成上述的两个任务后，你需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
 
 最后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
 
