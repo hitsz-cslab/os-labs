@@ -1443,6 +1443,7 @@
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">trapframe</span><span class="o">-&gt;</span><span class="n">a0</span><span class="p">;</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">trapframe</span><span class="o">-&gt;</span><span class="n">a1</span><span class="p">;</span>
+<span class="w">   </span><span class="c1">// ……  </span>
 </code></pre></div>
 <p>其中 <strong>trapframe就是用户进程的寄存器状态</strong> （上下文，详见<a href="#31-trapframe">3.1 trapframe</a>）。</p>
 </div>
@@ -1650,7 +1651,7 @@
 <span class="p">};</span>
 </code></pre></div>
 上面是xv6对trapframe结构体的定义，我们可以看见，trapframe当中包含内核的栈指针（<code>kernel_sp</code>）、内核页表指针（<code>kernel_satp</code>）等内核态相关的信息。</p>
-<p>同时，trapframe也保存了全套的用户态寄存器信息，以及用户态陷入内核时对应的PC值（<code>epc</code>）。</p>
+<p>同时，trapframe也保存了全套的用户态寄存器信息，以及 <strong>用户态陷入内核时对应的PC值（<code>epc</code>）</strong> 。</p>
 <h2 id="4-exit">4. exit系统调用工作流程<a class="headerlink" href="#4-exit" title="Permanent link">&para;</a></h2>
 <p>在上面关于系统调用的通用执行流程的基础上，为了便于同学们更好的完成实验，我们在此为同学们详细介绍exit系统调用的工作流程。</p>
 <p>首先我们先来看一张图：</p>

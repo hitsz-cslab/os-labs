@@ -76,6 +76,7 @@
         return p->trapframe->a0;
       case 1:
         return p->trapframe->a1;
+       // ……  
 
     ```
     
@@ -313,7 +314,7 @@ struct trapframe {
 ```
 上面是xv6对trapframe结构体的定义，我们可以看见，trapframe当中包含内核的栈指针（`kernel_sp`）、内核页表指针（`kernel_satp`）等内核态相关的信息。
 
-同时，trapframe也保存了全套的用户态寄存器信息，以及用户态陷入内核时对应的PC值（`epc`）。
+同时，trapframe也保存了全套的用户态寄存器信息，以及 **用户态陷入内核时对应的PC值（`epc`）** 。
 
 ## 4. exit系统调用工作流程
 

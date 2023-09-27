@@ -165,7 +165,7 @@ proc 6 exit, parent pid 1, name init, state run
 
 ### 3.3 任务二：wait系统调用的非阻塞选项实现
 
-在该任务中，你需要 **对wait系统调用进行更改，使其增加一个参数`int flags`，用以表示是否需要进行阻塞等待**。
+在该任务中，你需要 **对wait系统调用进行更改，使其增加一个非阻塞选项参数`int flags`，当`flags`为1时表示不需要进行阻塞等待**，否则需要进行阻塞等待。
 
 - *原版阻塞实现的wait* ：`int wait(int *status)`，其中参数status表示存储子进程退出状态的地址。在`kernel/proc.c`当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
     ```
@@ -222,12 +222,14 @@ printf("start to yield, user pc %p\n", pc);
 
 实验提供了一个`yieldtest`用户态测试程序（见user/yieldtest.c）。完成任务后，你可以在xv6中运行`yieldtest`程序，不过有以下几点需要注意：
 
-1. 该任务测试的时候需要 **设置CPU的数量为1** ，即使用如下命令运行xv6:
+- （1） 需要手动将`yieldtest`添加进Makefile中进行编译，即找到`UPROGS`变量，添加一行：
+![](part1.assets/yield-test.png)
+
+- （2） 该任务测试的时候需要 **设置CPU的数量为1** ，即使用如下命令运行xv6:
 ```shell
 make qemu CPUS=1
 ```
-2. 需要手动将`yieldtest`添加进Makefile中进行编译，即找到`UPROGS`变量，添加一行：
-![](part1.assets/yield-test.png)
+
 
 正确完成任务后 `yieldtest`的输出如下：
 
@@ -235,7 +237,7 @@ make qemu CPUS=1
 
 ### 3.5 测试
 
-当完成上述的两个任务后，你需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
+当完成上述的三个任务后，你需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
 
 最后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
 
