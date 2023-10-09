@@ -51,7 +51,9 @@
 
 同学们也可以参考下面的图片进行分支切换：
 
-![checkout](part1.assets/git_checkout.png)
+![checkout](part1.assets/prepare.png)
+
+注意切换分支后需要运行`git pull`以获取代码的最新版本。
 
 我们建议同学们在切换分支之后进行`make clean`将上一个分支的`fs.img`删除，不然会出现无法启动qemu的问题（会显示fs.img被其他的进程占用）。
 
