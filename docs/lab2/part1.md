@@ -151,7 +151,7 @@ proc 3 exit, parent pid 2, name sh, state run
 ```
 以及对当前进程的子进程的信息的输出：
 ```
-proc 3 exit, child 0, pid 4, name child0, state runble
+proc 3 exit, child 0, pid 4, name child0, state sleep
 ```
 同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
 ```
@@ -237,7 +237,7 @@ make qemu CPUS=1
 
 ### 3.5 测试
 
-当完成上述的三个任务后，你需要在在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
+当完成上述的三个任务后，你需要在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
 
 最后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
 

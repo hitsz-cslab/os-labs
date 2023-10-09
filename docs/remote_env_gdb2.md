@@ -62,7 +62,7 @@ satp寄存器给出的物理内存地址是0x8000000000087f48。
 	- `g`：Global
 	- `d`：Dirty，表明这条PTE是否被写过。
 	
-	最后两条PTE的虚拟地址非常大（接近虚拟地址的顶端），它们分别是trapframe page和	trampoline page（详见xv6 book P24-26）。这两个PTE没有u标志位，用户代码不能访问它们。当进入supervisor mode时，才能够访问。
+	最后两条PTE的虚拟地址非常大（接近虚拟地址的顶端），它们分别是trapframe page和	trampoline page（详见xv6 book P24-26）。这两个PTE没有u标志位，用户代码不能访问它们。当进入supervisor mode时，才能够访问。可能有同学注意到，第二条PTE也没有u标志位，这是一个无效的page（guard page），以防止用户程序尝试使用过多的stack page。
 	
 	![image-20220922124624540](remote_env_gdb2.assets/image-20220922124624540.png)
 	
@@ -155,14 +155,35 @@ satp寄存器给出的物理内存地址是0x8000000000087f48。
 可以看出与之前的page table不一样了，已经从user page table切换到了kernel page table，说明已经准备好了执行内核中的C代码了。
 
 !!! note "`trampoline`拓展知识"
-	注意观察的同学可能已经发现了，user page table和kernel page table的trampoline page的映射是完全一样的，因此我们在切换page table时，寻址的结果不会改变，否则当trampoline切完页表就可能因找不到指令而崩溃了。这也正是trampoline page的特殊之处。
+	注意观察的同学可能已经发现了，user page table和kernel page table的trampoline page的映射是完全一样的（虚拟地址都是`0x3ffffff000`），因此我们在切换page table时，寻址的结果不会改变，否则当trampoline切完页表就可能因找不到指令而崩溃了。这也正是trampoline page的特殊之处。
 
 !!! note "`trapframe`拓展知识"
-	可能还有同学注意到，user page table中倒数第二个PTE的vaddr（虚拟地址：0x3ffffffe00）也是比较大。它是由kernel设置好的映射关系，用于指向一个可以用来存放每个进程的用户寄存器的内存位置（如果你想查看xv6在trapframe page中存放了什么，详见proc.h的trapframe结构体）。在内核切换用户空间时，内核会执行set sscratch指令，将这个寄存器的内容设置为0x3ffffffe00，也就是trapframe page的虚拟地址。在运行用户代码时，sscratch保存的就是指向TRAPFRAME的地址。
+	可能还有同学注意到，user page table中倒数第二个PTE的vaddr（虚拟地址：0x3ffffffe00）也是比较大。它是由kernel设置好的映射关系，用于指向一个可以用来存放每个进程的用户寄存器的内存位置（如果你想查看xv6在trapframe page中存放了什么，详见proc.h的trapframe结构体）。在内核切换用户空间时，内核会执行set sscratch指令，将SSCRATCH（Supervisor Scratch Register）寄存器的内容设置为0x3ffffffe00，也就是trapframe page的虚拟地址。在运行用户代码时，SSCRATCH寄存器保存的就是指向TRAPFRAME的地址。
 
 	那为什么内核要保存这些用户寄存器呢？
 	
 	是因为内核即将要运行会覆盖这些寄存器的C代码。当从内核再次切回至用户空间时，如果要想正确恢复用户程序，则需要将用户寄存器恢复成在ecall指令执行之前的状态。因此，需要将所有的寄存器都保存在trapframe中，这样才能在之后恢复寄存器的值。
+
+!!! tip "小结"
+	通过上述分析可知，是通过ecall指令走到`trampoline page`，那ecall指令都做了什么事情呢？实际上，ecall只会改变三件事情（都是硬件来做的）：
+
+	1. ecall将代码从user mode改到supervisor mode，即更新CPU中的mode标志位位supervisor。
+	2. ecall将程序计数器的值保存在SEPC（Supervisor Exception Program Counter）寄存器，就是ecall指令在用户空间的地址。在usertrap函数中，再将SEPC寄存器的值保存到`trapframe`的epc里面。  
+    ![ecall-epc](remote_env_gdb2.assets/ecall-epc.png)
+	3. ecall会跳转到STVEC（Supervisor Trap Vector Base Address Register）寄存器指向的指令。STVEC寄存器是在usertrapret函数（位于trap.c中，这个函数完成了部分方便在C代码中实现的返回到用户空间的工作）中被设置为`TRAMPOLINE + (uservec - trampoline)`，即`0x3ffffff000`，这就是执行ecall指令之后下一条指令所在的位置。也就是，在进入用户空间之前，内核会将trampoline page的地址存在STVEC寄存器中。  
+    ![stvec](remote_env_gdb2.assets/stvec.png)
+
+	而在ecall之后，在执行内核中的C代码之前，接下来还有一些工作是汇编来做的：
+
+	1. 保存32个用户寄存器，这样当从内核态返回用户态时，才能恢复这些寄存器的内容。
+	2. 从user page table切换到kernel page table，也就是找到`kernel satp`。
+	3. 将sp（Stack Pointer）寄存器指向`kernel stack`，这样才能给内核C代码提供栈。
+
+	 其中，`kernel satp`和`kernel stack`是在usertrapret函数中设置好的，即之前内核在进入用户空间时就设置好的。
+	 ![kernel-sp](remote_env_gdb2.assets/kernel-sp.png)
+
+	 之后，才能跳转到内核中C代码的usertrap函数中。
+
 
 
 ## 3. 汇编之后的C代码
