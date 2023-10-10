@@ -1104,6 +1104,7 @@
 <p>在内核部分：</p>
 <ul>
 <li>在<code>syscall.h</code>中增加一个新的系统调用号，具体值你自己决定；</li>
+<li>在<code>syscall.c</code>中增加一个extern函数声明，以及在<code>syscalls</code>数组中增加一项；</li>
 <li>在<code>sysproc.c</code>中增加一个<code>sys_yield</code>函数，在该函数中：<ul>
 <li>首先需要获取到用户上下文中保存的PC值，然后打印出来；</li>
 <li>然后将当前进程挂起，XV6内核态已经帮我们实现了一个<code>yield</code>函数了。</li>
