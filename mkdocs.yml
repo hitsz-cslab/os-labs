@@ -61,9 +61,10 @@ nav:
 #  - OS竞赛招新: 
 #    - 2023年“全国大学生计算机系统能力大赛操作系统设计赛”火热报名中！: oscomp/oscomp.md   
   - 常见问题:
-    - 2022: 
+    - 2022/2023: 
         - 实验环境问题: faq/faq-env.md
         - Lab1问题: faq/lab1.md
+        - Lab2问题: faq/lab2.md
         - Lab3问题: faq/lab3.md
   - Lab1：XV6与Unix实用程序: 
     - 实验概述: lab1/part1.md

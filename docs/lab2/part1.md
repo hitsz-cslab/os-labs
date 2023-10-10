@@ -80,7 +80,7 @@
     - 本任务 **需要完成** 的信息输出格式：  
   *当前进程的父进程的信息输出格式* ： `proc PID exit, parent pid PID, name NAME, state STATE`  
 *当前进程的子进程的信息输出格式* ：`proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE`  
-其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示父进程或子进程状态。
+其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示父进程或子进程状态，**注意：这里统一用小写字母表示进程状态**。
 
 !!! note  "提示"
     大家不要使用printf输出， **请使用我们为大家封装好的`exit_info`函数输出** ，`exit_info`提供不同颜色和标记的输出，可以更加清晰地看出哪些是本任务需要的打印输出。
