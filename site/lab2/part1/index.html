@@ -1161,7 +1161,7 @@
 <li>本任务 <strong>需要完成</strong> 的信息输出格式：<br />
 <em>当前进程的父进程的信息输出格式</em> ： <code>proc PID exit, parent pid PID, name NAME, state STATE</code><br />
 <em>当前进程的子进程的信息输出格式</em> ：<code>proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE</code><br />
-其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示进程状态。</li>
+其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示父进程或子进程状态。</li>
 </ul>
 </li>
 </ol>
@@ -1192,12 +1192,12 @@ $
 
 $ exittest
 exit test
-[INFO] proc 3 exit, parent pid 2, name sh, state run
+[INFO] proc 3 exit, parent pid 2, name sh, state sleep
 [INFO] proc 3 exit, child 0, pid 4, name child0, state sleep
 [INFO] proc 3 exit, child 1, pid 5, name child1, state sleep
 [INFO] proc 3 exit, child 2, pid 6, name child2, state sleep
-$ [INFO] proc 4 exit, parent pid 1, name init, state run
-[INFO] proc 5 exit, parent pid 1, name init, state run
+$ [INFO] proc 5 exit, parent pid 1, name init, state runble
+[INFO] proc 4 exit, parent pid 1, name init, state run
 [INFO] proc 6 exit, parent pid 1, name init, state run
 </code></pre></div>
 <!-- 1. 在 **第一个例子** 中，`trace 32 grep hello README`，其中，trace表示我们希望执行用户态应用程序trace（见user/trace.c），后面则是trace应用程序附带的入参：
@@ -1229,15 +1229,15 @@ $ [INFO] proc 4 exit, parent pid 1, name init, state run
      -->
 <p>我们先不着急动手，先看看结果长什么样。在输出当中，存在两种不同的输出：<br />
 对当前进程的父进程的信息的输出：
-<div class="highlight"><pre><span></span><code>proc 3 exit, parent pid 2, name sh, state run
+<div class="highlight"><pre><span></span><code>[INFO] proc 3 exit, parent pid 2, name sh, state sleep
 </code></pre></div>
 以及对当前进程的子进程的信息的输出：
-<div class="highlight"><pre><span></span><code>proc 3 exit, child 0, pid 4, name child0, state sleep
+<div class="highlight"><pre><span></span><code>[INFO] proc 3 exit, child 0, pid 4, name child0, state sleep
 </code></pre></div>
 同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
-<div class="highlight"><pre><span></span><code>$ proc 4 exit, parent pid 1, name init, state run
-proc 5 exit, parent pid 1, name init, state run
-proc 6 exit, parent pid 1, name init, state run
+<div class="highlight"><pre><span></span><code>$ [INFO] proc 5 exit, parent pid 1, name init, state runble
+[INFO] proc 4 exit, parent pid 1, name init, state run
+[INFO] proc 6 exit, parent pid 1, name init, state run
 </code></pre></div>
 关于这点我们会在<a href="../part2/#3">实验原理</a>当中详细介绍。<br />
 你需要使用尝试在与exit相关的函数当中找到 <strong>合适的位置</strong> 来进行输出，我们建议你先阅读<a href="../part2/#3">实验原理</a>，这会帮助你更好的了解系统调用和exit的工作流程。</p>

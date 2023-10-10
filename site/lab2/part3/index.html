@@ -1116,7 +1116,7 @@
 <p>(1) 阅读<code>kernel/syscall.c</code>，试解释函数 <code>syscall()</code> 如何根据系统调用号调用对应的系统调用处理函数（例如<code>sys_fork</code>）？<code>syscall()</code> 将具体系统调用的返回值存放在哪里？</p>
 <p>(2) 阅读<code>kernel/syscall.c</code>，哪些函数用于传递系统调用参数？试解释argraw()函数的含义。</p>
 <p>(3) 阅读<code>kernel/proc.c</code>和<code>proc.h</code>，进程控制块存储在哪个数组中？进程控制块中哪个成员指示了进程的状态？一共有哪些状态？</p>
-<p>(4) 在任务一当中，为什么子进程（4、5、6号进程）的输出之前会 <strong>稳定的</strong> 出现一个<code>$</code>符号？（提示：shell程序(<code>sh.c</code>)中什么时候打印出<code>$</code>符号？）
+<p>(4) 在任务一当中，为什么子进程（4、5、6号进程）的输出之前会 <strong>稳定的</strong> 出现一个<code>$</code>符号？（提示：shell程序(<code>sh.c</code>)中什么时候打印出<code>$</code>符号？）<br />
 <img alt="q4" src="../part3.assets/q4.png" /></p>
 <p>(5) 在任务三当中，我们提到测试时需要指定CPU的数量为1，因为如果CPU数量大于1的话，输出结果会出现乱码，这是为什么呢？（提示：多核心调度和单核心调度有什么区别？）</p>
 </div>

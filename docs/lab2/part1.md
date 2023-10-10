@@ -80,7 +80,7 @@
     - 本任务 **需要完成** 的信息输出格式：  
   *当前进程的父进程的信息输出格式* ： `proc PID exit, parent pid PID, name NAME, state STATE`  
 *当前进程的子进程的信息输出格式* ：`proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE`  
-其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示进程状态。
+其中，PID代表进程的进程号，CHILD_NUM表示该信息是第几个子进程的信息，NAME表示父进程或者子进程名，STATE表示父进程或子进程状态。
 
 !!! note  "提示"
     大家不要使用printf输出， **请使用我们为大家封装好的`exit_info`函数输出** ，`exit_info`提供不同颜色和标记的输出，可以更加清晰地看出哪些是本任务需要的打印输出。
@@ -112,12 +112,12 @@ $
 
 $ exittest
 exit test
-[INFO] proc 3 exit, parent pid 2, name sh, state run
+[INFO] proc 3 exit, parent pid 2, name sh, state sleep
 [INFO] proc 3 exit, child 0, pid 4, name child0, state sleep
 [INFO] proc 3 exit, child 1, pid 5, name child1, state sleep
 [INFO] proc 3 exit, child 2, pid 6, name child2, state sleep
-$ [INFO] proc 4 exit, parent pid 1, name init, state run
-[INFO] proc 5 exit, parent pid 1, name init, state run
+$ [INFO] proc 5 exit, parent pid 1, name init, state runble
+[INFO] proc 4 exit, parent pid 1, name init, state run
 [INFO] proc 6 exit, parent pid 1, name init, state run
 ```
 
@@ -152,17 +152,17 @@ $ [INFO] proc 4 exit, parent pid 1, name init, state run
 我们先不着急动手，先看看结果长什么样。在输出当中，存在两种不同的输出：  
 对当前进程的父进程的信息的输出：
 ```
-proc 3 exit, parent pid 2, name sh, state run
+[INFO] proc 3 exit, parent pid 2, name sh, state sleep
 ```
 以及对当前进程的子进程的信息的输出：
 ```
-proc 3 exit, child 0, pid 4, name child0, state sleep
+[INFO] proc 3 exit, child 0, pid 4, name child0, state sleep
 ```
 同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
 ```
-$ proc 4 exit, parent pid 1, name init, state run
-proc 5 exit, parent pid 1, name init, state run
-proc 6 exit, parent pid 1, name init, state run
+$ [INFO] proc 5 exit, parent pid 1, name init, state runble
+[INFO] proc 4 exit, parent pid 1, name init, state run
+[INFO] proc 6 exit, parent pid 1, name init, state run
 ```
 关于这点我们会在[实验原理](../part2/#3)当中详细介绍。  
 你需要使用尝试在与exit相关的函数当中找到 **合适的位置** 来进行输出，我们建议你先阅读[实验原理](../part2/#3)，这会帮助你更好的了解系统调用和exit的工作流程。

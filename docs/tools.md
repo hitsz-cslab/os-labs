@@ -15,7 +15,7 @@
 
 MobaXterm 是一款远程控制工具，支持创建SSH、Telnet、Rsh、Xdmc、RDP、VNC、FTP、 SFTP、串口(Serial COM)、本地Shell、Mosh、Aws、WSL(微软子系统)等超多连接功能。MobaXterm 提供了人性化的操作界面，支持与主流的操作系统连接进行控制和管理操作，功能十分强大。
 
-MobaXterm 下载链接： <http://10.249.12.85/misc/>
+MobaXterm 下载链接： <https://mirrors.osa.moe/misc/>
 
 打开MobaXterm，单击打开工具Session（位于左上角）选择New sessions打开新建窗口，选择SSH，输入远程服务器的IP地址、登陆用户名及端口（默认是22，远程实验平台端口号是6666），点击OK。
 
