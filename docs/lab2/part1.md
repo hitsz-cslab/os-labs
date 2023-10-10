@@ -51,11 +51,14 @@
 
 同学们也可以参考下面的图片进行分支切换：
 
-![checkout](part1.assets/prepare.png)
+<!-- ![checkout](part1.assets/prepare.png) -->
+![checkout](part1.assets/pre.png)
 
-注意切换分支后需要运行`git pull`以获取代码的最新版本。
+如图所示，通过`git remote -v`可以看到此时关联的所有远程仓库，然后从中找出对应的链接是我们的官方仓库(`https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git`，在上图中是`git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git`，是一样的)的远程仓库名字（上图中是`public`，同学们可能是`upstream`之类的别的名字）
 
-我们建议同学们在切换分支之后进行`make clean`将上一个分支的`fs.img`删除，不然会出现无法启动qemu的问题（会显示fs.img被其他的进程占用）。
+然后需要运行`git pull 官方远程仓库名字 syscall`以获取代码的最新版本。
+
+我们建议同学们在切换分支之后进行`make clean`将上一个分支的`fs.img`删除，不然会出现无法启动qemu的问题（会显示`fs.img`被其他的进程占用）。
 
 本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用`exittest`, `waittest`和`yieldtest`测试程序。具体来说，本实验有三部分：
 

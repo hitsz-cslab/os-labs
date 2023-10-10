@@ -1142,9 +1142,11 @@
 <p><strong>Step 2.</strong> 切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
 </div>
 <p>同学们也可以参考下面的图片进行分支切换：</p>
-<p><img alt="checkout" src="../part1.assets/prepare.png" /></p>
-<p>注意切换分支后需要运行<code>git pull</code>以获取代码的最新版本。</p>
-<p>我们建议同学们在切换分支之后进行<code>make clean</code>将上一个分支的<code>fs.img</code>删除，不然会出现无法启动qemu的问题（会显示fs.img被其他的进程占用）。</p>
+<!-- ![checkout](part1.assets/prepare.png) -->
+<p><img alt="checkout" src="../part1.assets/pre.png" /></p>
+<p>如图所示，通过<code>git remote -v</code>可以看到此时关联的所有远程仓库，然后从中找出对应的链接是我们的官方仓库(<code>https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git</code>，在上图中是<code>git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git</code>，是一样的)的远程仓库名字（上图中是<code>public</code>，同学们可能是<code>upstream</code>之类的别的名字）</p>
+<p>然后需要运行<code>git pull 官方远程仓库名字 syscall</code>以获取代码的最新版本。</p>
+<p>我们建议同学们在切换分支之后进行<code>make clean</code>将上一个分支的<code>fs.img</code>删除，不然会出现无法启动qemu的问题（会显示<code>fs.img</code>被其他的进程占用）。</p>
 <p>本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用<code>exittest</code>, <code>waittest</code>和<code>yieldtest</code>测试程序。具体来说，本实验有三部分：</p>
 <h3 id="32">3.2 任务一：进程信息收集<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
 <p>在该任务中，你需要在理解xv6的<code>exit</code>系统调用的基础上，实现 <strong>进程在退出时打印自己的父进程和子进程的信息</strong> 这一功能。</p>
