@@ -31,7 +31,7 @@
 ## 2. 实验相关链接
 
 -  **实验代码** 下载地址：https://gitee.com/greenhandzpx/xv6-oslab23-hitsz
--  **实验工具** 下载地址（校内网）：http://10.249.12.85/misc/
+-  **实验工具** 下载地址（校内网）：https://mirrors.osa.moe/misc/
 -  **实验提交** 地址（校内网）：http://10.249.12.98:8000/#/login
 -  **远程实验环境** （校内网），详见[远程实验环境使用指南](remote_env/)
 -  **piazza在线交流平台（access code：comp3001）** 欢迎同学们在piazza上提问，提问的内容第一时间会由助教或老师回答，当然也欢迎同学们来回答：https://piazza.com/harbin_institute_of_technology_shenzhen/fall2023/comp3001
