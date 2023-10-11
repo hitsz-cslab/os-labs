@@ -1087,6 +1087,17 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <p>当我们提交完代码后，我们的项目便存储了一个新的版本，这个时候我们通过如下命令即可获取这个新的版本跟原先版本之间的差异，即我们所做的改动，也就是这次实验需要提交的东西：</p>
 <div class="highlight"><pre><span></span><code>make<span class="w"> </span>diff
 </code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">注意</p>
+<p>如果改命令执行出现报错：
+<code>fatal: ambiguous argument syscall-base': unknown revision or path not in the working tree.</code>
+那么证明你当前的仓库并没有获取到我们在远程仓库里面冻结的仓库版本，也就是<code>syscall-base</code>这个tag，我们所有的更改都是跟这个tag来比对出来的。</p>
+<p>所以你需要将远程仓库中的tag获取下来，我们建议你直接<code>fetch</code>远程仓库的所有更改：
+<code>git fetch 远程仓库在本地的标志</code>
+这个 <strong>远程仓库在本地标志</strong> 指的是：
+<img alt="git-tag" src="../part4.assets/git-tag.png" />
+上图中的红色方框的就是远程仓库在本地的标志，但是要注意的是，我们有多个远程仓库的时候需要注意<code>fetch</code>的对象一定是跟黄色方框中的网址一样的（也就是我们的远程实验代码仓库，不是自己的远程仓库）！</p>
+</div>
 <p>执行完该命令后会在项目目录下生成一个 <strong>commit.patch</strong> 文件，该文件记录了这次实验我们所做的所有更改，也就是本次实验你需要提交的 <strong>代码部分</strong>，将其拷贝到本地电脑，再跟实验报告一起打包上传至作业提交平台即可。</p>
 
 
