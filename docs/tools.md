@@ -118,11 +118,11 @@ origin  git@gitee.com:willson0v0/xv6-oslab23-hitsz.git (push)
 lgz_admin@OSLabExecNode0:~/xv6-oslab23-hitsz$ git remote -v
 origin  git@gitee.com:willson0v0/xv6-oslab23-hitsz.git (fetch)
 origin  git@gitee.com:willson0v0/xv6-oslab23-hitsz.git (push)
-upstream        git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git (fetch)
-upstream        git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git (push)
+upstream        https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git (fetch)
+upstream        https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git (push)
 ```
 
-其中，远程仓库`origin`的地址（在此处显示为`git@gitee.com:willson0v0/xv6-oslab23-hitsz.git`）应该是是你自己的远程仓库地址，而远程仓库`upstream`的地址应该显示为本课程实验提供的远程仓库地址，即`git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git`或者`https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git`。  
+其中，远程仓库`origin`的地址（在此处显示为`git@gitee.com:willson0v0/xv6-oslab23-hitsz.git`）应该是是你自己的远程仓库地址，而远程仓库`upstream`的地址应该显示为本课程实验提供的远程仓库地址，即`https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git`。  
 如果你的远程仓库已经设置完成，那么跳到[3.1.3 同步上游仓库更改](#313)继续。否则，请按照[3.1.2 完成远程仓库设置](#312)节完成远程仓库设置。
 
 #### 3.1.2 完成远程仓库设置
@@ -131,7 +131,7 @@ upstream        git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git (push)
 如果你的`origin`仓库正确设置为自己的远程仓库，那么请输入以下指令，设置上游仓库为本课程实验提供的仓库：
 
 ```bash
-git remote add upstream git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git
+git remote add upstream https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
 ```
 
 此时，如果在输入`git remote -v`，应该能显示出[3.1.1 检查上游仓库设置](#311)中设置完成一样的效果。
