@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../../lab2/part4/">
+      
+      
+        <link rel="next" href="../part2/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -230,6 +234,26 @@
           
   
   Lab2：进程与系统调用
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Lab3：锁机制的应用
 
         </a>
       </li>
@@ -878,6 +902,282 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Lab3：锁机制的应用
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Lab3：锁机制的应用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1.  实验目的
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2.  实验学时
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3.  实验内容及要求
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 实验内容及要求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-memory-allocator" class="md-nav__link">
+    3.1 任务一：内存分配器（Memory allocator）
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 任务一：内存分配器（Memory allocator）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-kalloctest" class="md-nav__link">
+    3.1.1 关于测评程序kalloctest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312" class="md-nav__link">
+    3.1.2 具体要求
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-buffer-cache" class="md-nav__link">
+    3.2 任务二：磁盘缓存（Buffer cache）
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 任务二：磁盘缓存（Buffer cache）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-bcachetest" class="md-nav__link">
+    3.2.1 关于测评程序bcachetest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2 具体要求
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 测试
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    xv-6中Lock的实现（选读）
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    提交文档
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1036,7 +1336,7 @@
 <div class="admonition note">
 <p class="admonition-title">课程复习和预习要求</p>
 <p>本节实验与理论课的 <strong>“多线程”</strong> 、  <strong>“信号量”</strong>   和 <strong>“死锁”</strong> 这三章课程内容相关，请同学们复习这三章课程内容。</p>
-<p>在做实验之前，请同学们阅读<a href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">xv6手册</a>的以下章节及相关源代码：</p>
+<p>在做实验之前，请同学们阅读<a href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">xv6 book</a>的以下章节及相关源代码：</p>
 <ul>
 <li>[1] xv6 book, Chapter 6 Locking (锁)</li>
 <li>[2] xv6 book, 3.5 Code: Physical memory allocator（物理内存分配器）</li>
@@ -1046,7 +1346,7 @@
 <div class="admonition info">
 <p class="admonition-title">实验背景</p>
 <p>锁起到了保护作用，让一些关键的数据结构在并行环境下仍能保持一致性。</p>
-<p>在这个实验中，我们需要为xv6内存分配器和磁盘缓存（buffer cache）重新设计代码以提高并行性。这两个实验分别用到了两种 <strong>不同</strong> 的设计方法，来适用自身的结构，大大减少锁争用（在保证功能正确的前提下）。</p>
+<p>在这个实验中，我们需要为多CPU核的xv6内存分配器和磁盘缓存（buffer cache）重新设计代码以提高并行性。这两个实验分别用到了两种 <strong>不同</strong> 的设计方法，来适用自身的结构，大大减少锁争用（在保证功能正确的前提下）。</p>
 </div>
 <h2 id="1">1.  实验目的<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <ol>
@@ -1066,7 +1366,7 @@
 </div>
 <h3 id="31-memory-allocator">3.1 任务一：内存分配器（Memory allocator）<a class="headerlink" href="#31-memory-allocator" title="Permanent link">&para;</a></h3>
 <p><strong>修改内存分配器（主要修改kernel/kalloc.c）</strong> ，使每个CPU核使用独立的内存链表，而不是现在的共享链表。</p>
-<p>XV6的内存分配器只有一个内存链表供多个CPU核使用。在使用<code>kalloc()</code>获取内存时，由于添加了内存锁<code>kmem.lock</code>，其他CPU如果要切换进行内存申请必须等待当前进程释放内存锁。要消除锁争用的情况，需要重新设计内存链表管理机制以避免单个锁和单个链表。实验基本任务是让每个CPU拥有自己的内存链表，每个链表都有自己的锁，同时，当一个CPU内存链表不足时，还可以从其他链表 <strong>窃取</strong> 内存块，这样，就不会让所有的CPU争抢一个空闲区域（窃取可能会引发锁争用，但这也是不可避免的情况）。</p>
+<p>XV6的内存分配器只有一个内存链表供多个CPU核使用。在使用<code>kalloc()</code>获取内存时，由于添加了内存锁<code>kmem.lock</code>，其他CPU如果要切换进行内存申请必须等待当前进程释放内存锁。要消除锁争用的情况，需要重新设计内存链表管理机制以避免单个锁和单个链表。实验基本任务是让每个CPU拥有自己的内存链表，每个链表都有自己的锁。其中最具挑战的就是，当一个CPU内存链表不足时，还可以从其他链表 <strong>窃取</strong> 内存块，这样，就不会让所有的CPU争抢一个空闲区域（窃取可能会引发锁争用，但这也是不可避免的情况）。</p>
 <div class="admonition note">
 <p class="admonition-title">怎么查看XV6开启了多少个CPU核？</p>
 <p>在输入make qemu时，默认会启动3个CPU核，具体可以查看Makefile文件：</p>
@@ -1078,14 +1378,21 @@
 </div>
 <h4 id="311-kalloctest">3.1.1 关于测评程序kalloctest<a class="headerlink" href="#311-kalloctest" title="Permanent link">&para;</a></h4>
 <p>测评程序<code>kalloctest</code>（见user/kalloctest.c）有两个test，分别是test1和test2。</p>
-<p>1) 在test1中fork出多个进程，它们并发运行于不同CPU核心，用 <code>sbrk()</code> 进行频繁获取空闲内存（调用<code>kalloc()</code>实现），然后又释放（调用<code>kfree()</code>实现）。在获取内存的时候不同CPU核心可能会争抢锁。</p>
-<div class="admonition note">
-<p class="admonition-title"><code>sbrk()</code>函数功能说明</p>
-<p>sbrk()是xv6提供的系统调用接口，其内核文件位置在kernel/sysproc.c。作用：为进程分配或回收内存。它有一个参数，代表要分配的字节数。它返回的是新分配内存的地址。</p>
-<p>这个系统调用是通过<code>growproc</code>来实现的。如果给的参数是正数，<code>growproc</code>使用<code>uvmalloc</code>来分配内存；如果给的参数是负数，使用<code>uvmdealloc</code>来释放内存。</p>
-<p><code>uvmalloc</code>首先使用<code>kalloc</code>来分配物理内存，然后再用<code>mappages</code>把PTE加到用户的页表里。<code>uvmdealloc</code>调用<code>uvmunmap</code>实现其功能，<code>uvmunmap</code>首先用<code>walk</code>来找到对应的PTE，然后使用<code>kfree</code>来释放相应的物理内存。</p>
-</div>
-<p>2) 在test2中测试所有空闲内存的获取和释放，由于test2未使用fork，只在单进程中测试。</p>
+<ul>
+<li>(1) 在test1中fork出多个进程，它们并发运行于不同CPU核心，用 <code>sbrk()</code> 进行频繁获取空闲内存（通过调用<code>kalloc()</code>实现），然后又释放（通过调用<code>kfree()</code>实现）。在获取内存的时候不同CPU核心可能会争抢锁。</li>
+</ul>
+<!--
+!!! note   "`sbrk()`函数功能说明"
+    sbrk()是xv6提供的系统调用接口，其内核文件位置在kernel/sysproc.c。作用：为进程分配或回收内存。它有一个参数，代表要分配的字节数。它返回的是新分配内存的地址。
+
+    这个系统调用是通过`growproc`来实现的。如果给的参数是正数，`growproc`使用`uvmalloc`来分配内存；如果给的参数是负数，使用`uvmdealloc`来释放内存。
+
+    `uvmalloc`首先使用`kalloc`来分配物理内存，然后再用`mappages`把PTE加到用户的页表里。`uvmdealloc`调用`uvmunmap`实现其功能，`uvmunmap`首先用`walk`来找到对应的PTE，然后使用`kfree`来释放相应的物理内存。
+-->
+
+<ul>
+<li>(2) 在test2中测试所有空闲内存的获取和释放，由于test2未使用fork，只在单进程中测试。</li>
+</ul>
 <p>测评程序kalloctest最终会打印出<code>fetch-and-add</code>的数目，也就是 <strong>没有成功获取</strong> 到kmem锁的次数，这种粗略测量锁争用的方式（实验前，即未修改前）如下：</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>kalloctest
 <span class="go">start test1</span>
@@ -1106,38 +1413,42 @@
 <span class="go">.....</span>
 <span class="go">test2 OK</span>
 </code></pre></div>
-<p>其中，"kmem"、"bcache"、"proc" 等指示了锁的类型，acquire()记录了每种锁 <strong>被请求</strong> 的次数，fetch-and-add就是 <strong>进程没有成功获取到此锁</strong> 的次数。例如， <em>lock: kmem: #fetch-and-add 46375 #acquire() 433016</em> 这句话的意思是，kmem.lock请求了433016次，仅成功了433016 - 46375 = 386641次，这就是发生了锁争用了（lock contention）。这些计数来自于在kalloctest调用的ntas()，它通过执行statistics()函数，打开"statistics"设备文件，获取内核打印的那些针对kmem和bcache锁(<em>本验的重点</em>)及5个竞争最激烈的锁的计数（见kernel/spinlock.c中的<code>statslock()</code>）。</p>
-<p>如果存在锁争用，fetch-and-add的数量将会很高，因为在acquire()获得锁之前要进行许多循环迭代，"statistics"设备文件会返回kmem和bcache锁的#test-and-set的总和（也就是<code>tot</code>）。</p>
+<p>其中，"lock: kmem"、"lock: bcache"、"lock: proc" 等指示了锁的类型，acquire()记录了每种锁 <strong>被请求</strong> 的次数，fetch-and-add就是 <strong>进程没有成功获取到此锁</strong> 的次数。例如， <em>lock: kmem: #fetch-and-add 46375 #acquire() 433016</em> 这句话的意思是，kmem.lock请求了433016次，仅成功了433016 - 46375 = 386641次，这就是发生了锁争用了（lock contention）。</p>
+<p>这些计数来自于在kalloctest调用的ntas()，它通过执行statistics()函数，打开"statistics"设备文件，获取内核打印的那些针对kmem和bcache锁( <strong>本验的重点</strong> )及5个竞争最激烈的锁的计数（见kernel/spinlock.c中的<code>statslock()</code>）。关于#acquire和#fetch-and-add的计数算法见<a href="../part4/#4-kalloctest">测评程序kalloctest对锁的检测</a>。</p>
+<p>如果存在锁争用，fetch-and-add的数量将会很高，因为在acquire()获得锁之前要进行许多循环迭代，"statistics"设备文件会返回kmem和bcache锁的#test-and-set的总和（也就是<code>tot</code>的值，即没有获取到此锁的次数）。</p>
 <h4 id="312">3.1.2 具体要求<a class="headerlink" href="#312" title="Permanent link">&para;</a></h4>
-<p>1)   本实验必须使用 <strong>专用空载多核</strong> 的环境，否则数据将没有意义。你可以使用远程实验平台或你的笔记本电脑。<br />
-2)   请使用<code>initlock()</code>初始化锁，并要求锁名字以<code>kmem</code>开头；<br />
-3)   运行<code>kalloctest</code>查看实现的代码是否减少了锁争用（<code>tot</code>没有获取到此锁的次数小于10则为通过）；<br />
-4)   运行 <code>usertests sbrkmuch</code> 以测试修改代码后系统是否仍可以分配所有的内存；<br />
-5)   运行<code>usertests</code>，确保其能能够全部通过；<br />
-6)   kalloctest和usertests的输出如下图（锁争用的次数大大减少），具体的数据会有所差别：</p>
-<p><img alt="kalloc_proc" src="../part1.assets/kalloc_proc.jpg" /></p>
+<p>1)   请使用<code>initlock()</code>初始化锁，并要求锁名字以<code>kmem</code>开头；<br />
+2)   运行<code>kalloctest</code>查看实现的代码是否减少了锁争用（<code>tot</code>没有获取到此锁的次数小于10则为通过）；<br />
+3)   运行 <code>usertests sbrkmuch</code> 以测试修改代码后系统是否仍可以分配所有的内存；<br />
+4)   运行<code>usertests</code>，确保其能能够全部通过；<br />
+5)   kalloctest和usertests的输出如下图（锁争用的次数大大减少），具体的数据会有所差别：</p>
+<div align="center"> <img src="../part1.assets/kalloc_proc.jpg" width = 70%/> </div>
+
 <h3 id="32-buffer-cache">3.2 任务二：磁盘缓存（Buffer cache）<a class="headerlink" href="#32-buffer-cache" title="Permanent link">&para;</a></h3>
-<p>在访问文件数据的时候，操作系统会将文件的数据放置在磁盘缓存中。磁盘缓存是不同进程之间的共享资源，因此需要通过锁确保使用的正确性。如果有多进程密集地使用文件系统，他们可能会竞争磁盘缓存的<code>bcache.lock</code>锁。
-目前，xv6采用单个锁管理磁盘缓存，我们需要 <strong>修改磁盘缓存块列表的管理机制（主要修改kernel/bio.c）</strong> ，使得可用多个锁管理缓存块，从而减少缓存块管理的锁争用。</p>
-<div class="admonition tip">
-<p class="admonition-title">提示</p>
-<p>在任务一中我们可以为每个CPU分配属于自己的内存链表，但在任务二中不能为每个CPU分配属于自己的磁盘缓存区。主要原因是多个进程间（或者说多个CPU间）访问磁盘同一块区域时会访问同一块缓存数据块（也就是缓存数据块是共享的），此外，一个磁盘缓存本身比较大，为每个CPU核都分配一个磁盘缓存显然会造成空间浪费。</p>
-</div>
+<p>在访问文件数据的时候，操作系统会将文件的数据放置在磁盘缓存中。磁盘缓存是不同进程之间的共享资源，因此需要通过锁确保使用的正确性。如果有多进程密集地使用文件系统，他们可能会竞争磁盘缓存的<code>bcache.lock</code>锁。</p>
+<p>目前，xv6采用单个锁来管理磁盘缓存。假设有三个进程大量读写磁盘，而由于磁盘缓存只有一个<code>bcache.lock</code>锁，这就导致三个进程的竞争异常激烈。因此，我们需要 <strong>修改磁盘缓存块列表的管理机制（主要修改kernel/bio.c）</strong> ，使得可用多个锁管理缓存块，从而减少缓存块管理的锁争用。</p>
+<!--
+!!! tip   "提示"
+    在任务一中我们可以为每个CPU分配属于自己的内存链表，但在任务二中不能为每个CPU分配属于自己的磁盘缓存区。主要原因是多个进程间（或者说多个CPU间）访问磁盘同一块区域时会访问同一块缓存数据块（也就是缓存数据块是共享的），此外，一个磁盘缓存本身比较大，为每个CPU核都分配一个磁盘缓存显然会造成空间浪费。
+-->
+
 <h4 id="321-bcachetest">3.2.1 关于测评程序bcachetest<a class="headerlink" href="#321-bcachetest" title="Permanent link">&para;</a></h4>
 <p>测评程序bcachetest（见user/bcachetest.c）通过创建多个进程重复去读取不同的文件，从而造成bcache.lock锁争用。</p>
 <p>测试方式如下：</p>
 <p>实验前（即未修改前），测评程序bcachetest的输出如下：</p>
-<p><img alt="image-20211019205157241" src="../part1.assets/image-20211019205157241.png" /></p>
+<div align="center"> <img src="../part1.assets/image-20211019205157241.png" width = 80%/> </div>
+
 <p>可以看到，bcache的<code>fetch-and-add</code>值非常大，说明磁盘缓存锁的争用非常严重。</p>
 <p>修改buffer cache的设计后，所有锁的fetch-and-add的数目应当接近于0。</p>
 <h4 id="322">3.2.2 具体要求<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
 <p>1)   理想状态下，<code>bcachetest</code>中数据块缓存相关的所有锁<code>fetch-and-add</code>的总和应该为0，但本实验中总和<code>tot</code>不超过500即可；<br />
 2)   请修改<code>bget()</code>和<code>brelse()</code>，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等bcache.lock；<br />
 3)   同样要求<code>usertests</code>中的用例全部通过，最后的输出如下（具体数据有所出入）：  </p>
-<p><img alt="image-20211019205449169" src="../part1.assets/image-20211019205449169.png" /></p>
+<div align="center"> <img src="../part1.assets/image-20211019205449169.png" width = 70%/> </div>
+
 <h3 id="33">3.3 测试<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
 <p>当完成上述的两个实验后，在命令行输入 <code>make grade</code> 进行最终测试。</p>
-<p><img alt="grade" src="../part1.assets/grade-16349752282893.png" /></p>
+<div align="center"> <img src="../part1.assets/grade-16349752282893.png" /> </div>
 
 
 

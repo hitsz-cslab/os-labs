@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../part1/">
+      
+      
+        <link rel="next" href="../part3/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -230,6 +234,26 @@
           
   
   Lab2：进程与系统调用
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../part1/" class="md-tabs__link">
+          
+  
+  Lab3：锁机制的应用
 
         </a>
       </li>
@@ -878,6 +902,310 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Lab3：锁机制的应用
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Lab3：锁机制的应用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-memory-allocator" class="md-nav__link">
+    1. 内存分配器（Memory Allocator）
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 内存分配器（Memory Allocator）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 简介
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 功能与操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    1.3 锁机制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    1.4 优化方法（重要）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-buffer-cache" class="md-nav__link">
+    2. 磁盘缓存（Buffer Cache）
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 磁盘缓存（Buffer Cache）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 简介
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 基本结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    2.3 功能与操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    2.4 优化方法（重要）
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 优化方法（重要）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241" class="md-nav__link">
+    2.4.1 哈希桶
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242" class="md-nav__link">
+    2.4.2 时间戳
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#243-clock" class="md-nav__link">
+    2.4.3 CLOCK算法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    2.5 避免死锁（重要）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    xv-6中Lock的实现（选读）
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    提交文档
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -979,6 +1307,40 @@
     2.4 优化方法（重要）
   </a>
   
+    <nav class="md-nav" aria-label="2.4 优化方法（重要）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241" class="md-nav__link">
+    2.4.1 哈希桶
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242" class="md-nav__link">
+    2.4.2 时间戳
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#243-clock" class="md-nav__link">
+    2.4.3 CLOCK算法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    2.5 避免死锁（重要）
+  </a>
+  
 </li>
         
       </ul>
@@ -1030,7 +1392,7 @@
 <span class="cp">#define KERNBASE 0x80000000L</span>
 <span class="cp">#define PHYSTOP (KERNBASE + 128*1024*1024)</span>
 </code></pre></div>
-<p>在xv6 book 3.2小节，给出了物理地址和虚拟地址的分布及映射关系（见下图）。下图左边是内核的虚拟地址，右边上半部分是物理内存（DRAM），右边下半部分是I/O设备。本次实验主要关注图中的右边上半部分（我们会在下一个实验中再次介绍左边部分的虚拟地址：-)。当操作系统启动时，会从地址0x80000000开始运行，这个地址其实是由硬件设计者决定的。在xv6内核刚启动时，从kernel结束地址（end）一直到PHYSTOP的空间都是空闲的。实际上，内核代码段（kernel text）和数据段（kernel data）会占用一部分空间，导致剩余的空闲空间比128MB要小。</p>
+<p>在xv6 book 3.2小节，给出了物理地址和虚拟地址的分布及映射关系（见下图）。下图左边是内核的虚拟地址，右边上半部分是物理内存（DRAM），右边下半部分是I/O设备。本次实验主要关注图中的右边上半部分（我们会在下一个实验中再次介绍左边部分的虚拟地址：）。当操作系统启动时，会从地址0x80000000开始运行，这个地址其实是由硬件设计者决定的。在xv6内核刚启动时，从kernel结束地址（end）一直到PHYSTOP的空间都是空闲的。实际上，内核代码段（kernel text）和数据段（kernel data）会占用一部分空间，导致剩余的空闲空间比128MB要小。</p>
 <p><img alt="image-20221012175648080" src="../part2.assets/image-20221012175648080.png" /></p>
 <div class="admonition info">
 <p class="admonition-title">拓展阅读</p>
@@ -1038,7 +1400,7 @@
 <li><strong>trampoline</strong>：用户态-内核态跳板</li>
 <li><strong>kstack</strong> ：每个进程的内核栈空间</li>
 <li><strong>Guard page</strong>：同时在内核空间和用户空间用来保护Stack。如果kernel stack耗尽了，它会溢出到Guard page，但是因为Guard page的PTE中Valid标志位未设置，会导致立即触发page fault，这样的结果好过内存越界之后造成的数据混乱。</li>
-<li><strong>free memory</strong>：页分配器管理的地址空间</li>
+<li><strong>free memory</strong>：页分配器管理的地址空间，即本次实验中freerange要管理的地址空间</li>
 <li><strong>kernel data/text</strong>：数据段/代码段</li>
 <li><strong>KERNBASE</strong>：内核态基址</li>
 <li><strong>VIRTIO disk</strong>：磁盘IO操作地址</li>
@@ -1061,7 +1423,9 @@
 </code></pre></div>
 <p>分配器的核心数据结构是由空闲物理页组成的链表<code>freelist</code>，这个空闲页链表将物理内存划分成4KB大小的页帧来管理，并使用 <strong>自旋锁</strong> （spinlock）进行保护。每个空闲页在链表里都是<code>struct run next</code>指向下一个空闲物理页。</p>
 <p>这可能比较难理解，我们不妨从这个链表的构建开始了解。在系统启动时，<code>main()</code>函数（见kernel/main.c）调用<code>kinit()</code>来初始化分配器，它通过保存所有空闲页来初始化链表。kinit()调用<code>freerange()</code>来把空闲内存页加到链表里，freerange()则是通过调用<code>kfree()</code>把每个空闲页（地址范围从pa_start至pa_end）逐一加到链表里来实现此功能的。kfree() 函数用于释放指定的物理内存页，将其添加至<code>freelist</code>中，参数<code>pa</code>为需要释放的物理页页号，即物理页的首地址，它被看作一个没有类型的指针。在kfree()中，pa被 <strong>强制转换</strong> 为run类型的指针，进而可以放入freelist中。因为空闲页里什么都没有，所以结构体<code>run</code>的成员可以直接 <strong>保存在空闲页自身里</strong> 。</p>
-<p><img alt="kalloc执行流" src="../part2.assets/kalloc%E6%89%A7%E8%A1%8C%E6%B5%81.png" /></p>
+<div align="center"> <img src="../part2.assets/kalloc执行流.png" width = 60%/> </div>
+
+<!--
 <div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">freerange</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">pa_start</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">pa_end</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">;</span>
@@ -1080,24 +1444,30 @@
 <span class="w">  </span><span class="n">release</span><span class="p">(</span><span class="o">&amp;</span><span class="n">kmem</span><span class="p">.</span><span class="n">lock</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
+-->
 <h3 id="12">1.2 功能与操作<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
 <p>关于链表的操作主要有两个：</p>
 <p>1、释放内存</p>
 <p>释放内存的函数是<code>kfree(void *pa)</code>，首先将 <code>void *pa</code> 开始的物理页的内容全部置为1，这是为了让之前使用它的代码不能再读取到有效的内容，使得这些代码能尽早崩溃以暴露问题。然后将这空闲页物理内存加到链表头。</p>
-<p><img alt="image-20201121160342435" src="../part2.assets/image-20201121160342435.png" /></p>
+<div align="center"> <img src="../part2.assets/image-20201121160342435.png" width = 60%/> </div>
+
 <p>2、申请内存</p>
 <p><code>void* kalloc(void *)</code>用来分配内存物理页，功能很简单，就是移除并返回空闲链表头的第一个元素，即给调用者分配1页物理内存。</p>
-<p><img alt="image-20201121160419011" src="../part2.assets/image-20201121160419011.png" /></p>
+<div align="center"> <img src="../part2.assets/image-20201121160419011.png" width = 70%/> </div>
+
 <p>由于物理内存是在多进程之间共享的，所以不管是分配还是释放页面，每次操作kmem.freelist时都需要先申请kmem.lock，此后再进行内存页面的操作。</p>
-<p><img alt="freelist" src="../part2.assets/freelist.png" /></p>
+<div align="center"> <img src="../part2.assets/freelist.png" width = 70%/> </div>
+
 <h3 id="13">1.3 锁机制<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
 <p class="admonition-title"><code>kalloc</code>在什么情况下使用了锁？</p>
-<p>查阅<code>kalloc.c</code>代码可知，<code>kalloc</code>只在<code>kalloc()</code>和<code>kfree()</code>中使用了锁，那这两个用锁的情况有什么共同之处呢？没错，他们都是把 <strong>对<code>freelist</code>的操作</strong> 锁了起来。<code>kfree()</code>在往<code>freelist</code>里加入空闲页前锁了一下，操作完之后解锁了。<code>kalloc()</code>在移除<code>freelist</code>第一个元素时也同样加了锁，操作完成再释放锁。所以对于内存分配器中需要锁保护的只有对<code>freelist</code>的操作。</p>
+<p>查阅<code>kalloc.c</code>代码可知，<code>kalloc</code>只在<code>kalloc()</code>和<code>kfree()</code>中使用了锁，那这两个用锁的情况有什么共同之处呢？</p>
+<p>没错，他们都是把 <strong>对<code>freelist</code>的操作</strong> 锁了起来。<code>kfree()</code>在往<code>freelist</code>里加入空闲页前锁了一下，操作完之后解锁了。<code>kalloc()</code>在移除<code>freelist</code>第一个元素时也同样加了锁，操作完成再释放锁。所以对于内存分配器中需要锁保护的只有对<code>freelist</code>的操作。</p>
 </div>
 <h3 id="14">1.4 优化方法（重要）<a class="headerlink" href="#14" title="Permanent link">&para;</a></h3>
 <p>修改空闲内存链表就是<code>freelist</code>，现在我们要减少锁的争抢， <strong>使每个<code>CPU</code>核使用独立的链表</strong> ，而不是现在的共享链表。这样等分，就不会让所有的<code>CPU</code>争抢一个空闲区域。<strong>注意</strong>：每个空闲物理页只能存在于一个freelist中。 </p>
-<p><img alt="kalloc" src="../part2.assets/kalloc.png" /></p>
+<div align="center"> <img src="../part2.assets/kalloc.png" width = 70%/> </div>
+
 <h2 id="2-buffer-cache">2. 磁盘缓存（Buffer Cache）<a class="headerlink" href="#2-buffer-cache" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">注意</p>
@@ -1110,14 +1480,15 @@
 </ul>
 </div>
 <h3 id="21">2.1 简介<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
-<p>xv6的文件系统是以磁盘数据块为单位从磁盘读写数据的。由于对磁盘的读取非常慢，而内存的速度要快得多，因此将最近经常访问的磁盘块缓存在内存里可以大大提升性能（此时内存起到cache的作用）。Buffer Cache（也称为bcache）就担任了磁盘缓存一职，它是磁盘与文件系统交互的中间层。
-xv6的磁盘缓存模块主要提供了以下功能：</p>
+<p>xv6的文件系统是以磁盘数据块为单位从磁盘读写数据的。由于对磁盘的读取非常慢，而内存的速度要快得多，因此将最近经常访问的磁盘块缓存在内存里可以大大提升性能（此时内存起到cache的作用）。Buffer Cache（也称为bcache）就担任了磁盘缓存一职，它是磁盘与文件系统交互的中间层。</p>
+<p>xv6的磁盘缓存模块主要提供了以下功能：</p>
 <ol>
 <li>同步访问磁盘块以确保内存里每个块只有一份复制，且每次只有一个内核进程可以使用那份复制。  </li>
 <li>缓存常用块，使得不必每次都从硬盘上读取它们。  </li>
 <li>修改缓存块的内容后，确保磁盘中对应内容的更新。  </li>
 </ol>
-<p><img alt="bcache3" src="../part2.assets/bcache3.png" /></p>
+<div align="center"> <img src="../part2.assets/bcache3.png" width = 70%/> </div>
+
 <h3 id="22">2.2 基本结构<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
 <p>数据结构bcache（见kernel/bio.c）维护了一个由静态数组<code>struct buf buf[NBUF]</code>组成的双向链表，它以块为单位，每次读入或写出一个磁盘块，放到一个内存缓存块中（bcache.buf），同时自旋锁<code>bcache.lock</code>用于用户互斥访问。所有对缓存块的访问都是通过<code>bcache.head</code>引用链表来实现的，而不是buf数组。</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
@@ -1142,21 +1513,22 @@ xv6的磁盘缓存模块主要提供了以下功能：</p>
 </code></pre></div>
 <p>每个缓存块（见struct buf）都由三个部分组成：</p>
 <ul>
-<li><code>data</code>字段标示了它的内容;</li>
-<li><code>指针字段（\*prev，\*next）</code>用于组成链表;</li>
+<li>（1）<strong><code>data</code>字段</strong> <code>（data[BSIZE]）</code>标示了它的内容;</li>
+<li>（2）<strong>指针字段</strong> <code>（\*prev，\*next）</code>用于组成链表;</li>
 <li>
-<p><code>数值字段</code>用于标示它的属性，如</p>
+<p>（3）<strong>数值字段</strong> 用于标示它的属性，如</p>
 <ul>
-<li>字段<code>valid</code>是缓存区包含了一个块的复制（即该buffer包含对应磁盘块的数据）;</li>
-<li>字段<code>disk</code>是缓存区的内容是否已经被提交到了磁盘;</li>
-<li>字段<code>dev</code>是设备号;</li>
-<li>字段<code>blockno</code>是缓存的磁盘块号;</li>
-<li>字段<code>refcnt</code>是该块被引用次数（即被多少个进程拥有）;</li>
-<li><code>lock</code>是睡眠锁。</li>
+<li><em><code>valid</code></em> 是缓存区包含了一个块的复制（即该buffer包含对应磁盘块的数据）;</li>
+<li><em><code>disk</code></em> 是缓存区的内容是否已经被提交到了磁盘;</li>
+<li><em><code>dev</code></em> 是磁盘块的设备号，本实验中dev都是0;</li>
+<li><em><code>blockno</code></em> 是缓存的磁盘块号;</li>
+<li><em><code>refcnt</code></em> 是该块被引用次数（即被多少个进程拥有）;</li>
+<li><em><code>lock</code></em> 是缓存磁盘块的睡眠锁。</li>
 </ul>
 </li>
 </ul>
-<p><img alt="buffercache" src="../part2.assets/buffercache.png" /></p>
+<div align="center"> <img src="../part2.assets/buffercache.png" width = 40%/> </div>
+
 <p>上图是bcache结构示意图。bcache.lock是自旋锁，用于表示 bcache 链表是否被锁住。b-&gt;lock是睡眠锁，用于表示缓存数据块buf是否被锁住。</p>
 <div class="admonition note">
 <p class="admonition-title">关于bcache</p>
@@ -1167,8 +1539,9 @@ xv6的磁盘缓存模块主要提供了以下功能：</p>
 <ul>
 <li>在系统启动时，<code>main()</code>函数（见kernel/main.c）调用<code>binit()</code>来初始化缓存，随即调用initlock()初始化bcache.lock，然后循环遍历buf数组，采用头插法逐个链接到bcache.head后面。</li>
 <li>上层文件系统读磁盘时，调用<code>bread()</code>，随即调用<code>bget()</code>检查请求的磁盘块是否在缓存中，如果命中，返回缓存命令结果。如果未命中，转到底层的<code>virtio_disk_rw()</code>函数先将此磁盘块从磁盘加载进缓存中，再返回此磁盘块。</li>
-<li>上层文件写磁盘时，调用<code>bwrite()</code>，随即调用<code>virtio_disk_rw()</code>函数直接将缓存中的数据写入磁盘。</li>
+<li>上层文件系统写磁盘时，调用<code>bwrite()</code>，随即调用<code>virtio_disk_rw()</code>函数直接将缓存中的数据写入磁盘。</li>
 <li>上层文件系统可通过调用<code>brelse()</code>释放一块不再使用的缓存块。</li>
+<li>上层文件系统可通过<code>bpin()</code>让该buf缓存块始终存着某些数据，即固定该缓存块不能被替换。<code>bunpin()</code>则反之。</li>
 </ul>
 <div class="admonition info">
 <p class="admonition-title">提示</p>
@@ -1182,12 +1555,14 @@ xv6的磁盘缓存模块主要提供了以下功能：</p>
 </div>
 <h3 id="24">2.4 优化方法（重要）<a class="headerlink" href="#24" title="Permanent link">&para;</a></h3>
 <p>在kernel/bio.c中，可以看到，所有的buffer都被组织到 <strong>一条链表</strong> 中，因此如果有多个进程要使用buffer，它们并发的请求只能被顺序地处理。</p>
-<p><img alt="bcache2" src="../part2.assets/bcache2.png" /></p>
-<p>MIT官方指导书推荐使用以下两种方案（可以两个方案一起使用，也可以单独分开用，
-需要自行测试看看能否通过测评程序） ：</p>
-<ol>
-<li>
-<p>使用 <strong>哈希表</strong> ，将各块块号blockno的某种散列值作为key对块进行分组，并为每个哈希桶分配一个专用的锁。通过哈希桶来代替链表，当要获取和释放缓存块时，只需要对某个哈希桶进行加锁，桶之间的操作就可以并行进行，提供并行性能。  </p>
+<div align="center"> <img src="../part2.assets/bcache2.png" width = 65%/> </div>
+
+<div class="admonition note">
+<p class="admonition-title">关于bcache的优化策略</p>
+<p>MIT官方指导书推荐使用 <strong>哈希桶</strong> 和 <strong>时间戳</strong> 两个方案，此外，本实验还给出了基于 <strong>CLOCK算法</strong> 的优化策略，大家可以自行选择优化策略，也可以一起使用（如哈希桶结合时间戳），也可以单独分开用，需要自行测试看看能否通过测评程序。</p>
+</div>
+<h4 id="241">2.4.1 哈希桶<a class="headerlink" href="#241" title="Permanent link">&para;</a></h4>
+<p>使用哈希桶，将各块块号blockno的某种散列值作为key对块进行分组，并为每个哈希桶分配一个专用的锁。通过哈希桶来代替链表，当要获取和释放缓存块时，只需要对某个哈希桶进行加锁，桶之间的操作就可以并行进行，提供并行性能。  </p>
 <ol>
 <li>
 <p>在<code>bget()</code>中查找指定块时，锁上对应的锁（获取空闲块号须另作处理）。  </p>
@@ -1200,11 +1575,11 @@ xv6的磁盘缓存模块主要提供了以下功能：</p>
 </li>
 <li>
 <p>哈希表的搜索和空闲缓存块的查找需要保证原子性。 </p>
-<p><img alt="hash" src="../part2.assets/hash.png" /></p>
 </li>
 </ol>
-</li>
-<li>
+<div align="center"> <img src="../part2.assets/hash.png" width = 70%/> </div>
+
+<h4 id="242">2.4.2 时间戳<a class="headerlink" href="#242" title="Permanent link">&para;</a></h4>
 <p>移除空闲缓存块列表(<code>bcache.head</code>)。使用 <strong>时间戳</strong> 作为判断缓存块最一次被访问的顺序的依据。  </p>
 <ol>
 <li>
@@ -1215,15 +1590,62 @@ xv6的磁盘缓存模块主要提供了以下功能：</p>
 </li>
 <li>
 <p>时间戳可通过kernel/trap.c中的ticks函数获得（ticks已在kernel/def.h中声明，bio.c中可直接使用）。  </p>
-<p><img alt="timestamp" src="../part2.assets/timestamp.png" /></p>
+</li>
+</ol>
+<div align="center"> <img src="../part2.assets/timestamp.png" width = 70%/> </div>
+
+<h4 id="243-clock">2.4.3 CLOCK算法<a class="headerlink" href="#243-clock" title="Permanent link">&para;</a></h4>
+<p>除此之外，理论课上我们还学习过除了 LRU 以外的替换算法，例如 CLOCK 算法等，也可以在本实验中使用。</p>
+<div align="center"> <img src="../part2.assets/CLOCK.png" width = 70%/> </div>
+
+<p>CLOCK 算法的实现思路为:</p>
+<ol>
+<li>
+<p>将数据结构改为使用 <strong>数组</strong> 构成的循环队列，每个 buf 拥有自己的锁。</p>
+</li>
+<li>
+<p><code>bget()</code> 查找时，不需要获取对应的锁，查找到时，锁上对应的锁，然后重新检查这个 buf 是否是想要的，检查完后进行对应的操作。</p>
+</li>
+<li>
+<p>每个 buf 维护一个访问位，当 <code>bget()</code> 没有找到对应的缓存 buf 时，根据 CLOCK 算法维护访问位并分配一个 buf。</p>
+<ol>
+<li>
+<p>如当前查询的 buf 命中，访问位 -&gt; 置“1”，指针保持不动</p>
+</li>
+<li>
+<p>否则，循环检查各页面的使用情况。若访问位为“0”，选择该页淘汰，指针前进一步。若访问位为“1”，复位访问位为“0”，指针进一步。</p>
 </li>
 </ol>
 </li>
 </ol>
-<p>以下情况中，锁争用是允许的：</p>
-<p>a)   当两个进程同时访问同一个缓存数据块号blockno时；</p>
-<p>b)   当两个进程同时没有命中cache，需要找一个未使用的block来替代时；</p>
-<p>c)   当两个进程同时使用块时，无论使用何种模式划分数据块和锁，都会产生争用的情况，如，如果两个进程使用的两个数据块，通过哈希表映射到同一个哈希组部分（这取决于具体的设计，请尝试调整具体的模式来避免争用，比如可以调整哈希表的大小）。</p>
+<p>CLOCK 算法实现思路中我们提到，查找时不需要获取对应的锁，那么这个是否安全？如果查找时也获取对应的锁，会发生什么？其实这两种做法分别对应“ <strong>乐观锁</strong> ”和“ <strong>悲观锁</strong> ”。“乐观锁”每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据。“悲观锁”总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁。感兴趣的同学可以尝试比较这两种做法，再与网上搜索的常见用途相对比。</p>
+<hr />
+<p>上述三个方案在以下情况中都存在少量锁争用，在本实验中，这是允许的：</p>
+<ol>
+<li>当两个进程同时访问同一个缓存数据块号blockno时；</li>
+<li>当两个进程同时没有命中cache，需要找一个未使用的block来替代时；</li>
+<li>当两个进程同时使用块时，无论使用何种模式划分数据块和锁，都会产生争用的情况，比如在哈希桶的优化策略中，如果两个进程使用的两个数据块，通过哈希表映射到同一个哈希组部分（这取决于具体的设计，请尝试调整具体的模式来避免争用，比如可以调整哈希表的大小）。</li>
+</ol>
+<h3 id="25">2.5 避免死锁（重要）<a class="headerlink" href="#25" title="Permanent link">&para;</a></h3>
+<p>bcache 与前面 kalloc 实验的重要区别是，bcache 实验需要处理替换/分配情况，因此同学们第一次设计 <strong>极易</strong> 出现死锁。</p>
+<p>死锁的发生具有概率性，所以<code>bcachetest</code>通过并不代表你编写的代码不存在死锁。实验要求同学们通过的<code>usertests</code>是较为全面的测试，对操作系统的各方面均进行了较大强度的测试，所以如果你的代码不能够通过<code>usertests</code>或在测试中卡死，或 <strong>有概率不通过</strong> 测试，那么一般来说代表你的代码出现死锁/竞争条件。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>即使你的设计通过了全部的测试，也不代表你的代码100%没有死锁。如何确保代码是无 bug 的超出了操作系统课程的范畴，感兴趣的同学可以了解 <strong>形式化验证</strong>。</p>
+<p>同样，设计方案时形式化地思考理论课上学习的知识，有助于你设计出正确的代码。</p>
+</div>
+<p>为什么会出现死锁？以哈希桶的优化为例，同学们一般做法都会为每个哈希桶设置一个锁。但是在需要进行替换/分配的时候，往届同学们的做法通常是内核持有一个桶的锁，然后同时抢另一个桶的锁，此时出现了同时持有 <strong>两个自旋锁</strong>，这种情况在实际业务代码里是比较危险的，在本实验也会导致死锁，请同学们思考这是为什么。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>有的同学为了解决死锁问题，设计了一种方法：</p>
+<p>先释放原有桶的锁，然后再获取另一个桶的锁。</p>
+<p>这种做法是不安全的，请大家思考为什么不安全？</p>
+</div>
+<p>下面以哈希桶的优化方式为例给出一种替换/分配思路，这个思路也出现了同时持有两个或以上自旋锁的情况，请同学们思考这种做法是否有死锁，是否出现竞争。</p>
+<ol>
+<li>首先获取请求对应桶的锁，查找不到以后进入替换/分配流程，释放锁。</li>
+<li>然后获取全局分配大锁，获取原有桶的锁，获取新桶的锁，检查是否已完成替换，如未完成则进行替换，最后按序释放所有锁。</li>
+</ol>
 
 
 

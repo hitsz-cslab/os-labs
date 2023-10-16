@@ -30,7 +30,7 @@ kalloc.c中调用acquire()和release()来获取锁和释放锁。首先需要知
 
 
 那acquire到底是怎么实现的呢？这个仅凭软件是无法实现的，需要硬件参与辅助实现。
-在这里我们先介绍一条特殊的CPU指令amoswap。amoswap实现了在一条指令完成一次 load 和 store，更具体的说，就是可以将一个寄存器的值和某一内存地址的值做交换，将指定内存地址的值放入寄存器，同时将寄存器的值放入内存。此外，CPU还会保证某一CPU核在执行这一指令时，其他CPU核不能读或写对应的内存地址。
+在这里我们先介绍一条特殊的CPU指令`amoswap`。`amoswap`实现了在一条指令完成一次 load 和 store，更具体的说，就是可以将一个寄存器的值和某一内存地址的值做交换，将指定内存地址的值放入寄存器，同时将寄存器的值放入内存。此外，CPU还会保证某一CPU核在执行这一指令时，其他CPU核不能读或写对应的内存地址。
 
 !!! tip   "amoswap指令和__sync_lock_test_and_set"
 
@@ -78,7 +78,7 @@ kalloc.c中调用acquire()和release()来获取锁和释放锁。首先需要知
 
 到这里对Lock的实现解释就结束了。在进行下一步的阅读前，强烈建议对上面的两个实现做比较和揣摩，直到你对为什么锁要使用__sync_lock_test_and_set有了清晰的认识。
     
-注：以上解释可在xv6的Locking章节中找到。
+注：以上解释可在[xv6 book](https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf)的Locking章节中找到。
     
 
 
@@ -161,7 +161,7 @@ b.lock用于表示bcache缓存块数据结构中的当前缓存数据块buf是�
 
 ## 4. 测评程序kalloctest对锁的检测
 
-测评程序会检查锁被阻塞的情况，还记得“XV6中Lock的实现”中提到的acquire代码吗？
+测评程序会检查锁被阻塞的情况，还记得上文提到的acquire代码吗？
 
 ```c
 1.    // Acquire the lock.
@@ -190,10 +190,14 @@ b.lock用于表示bcache缓存块数据结构中的当前缓存数据块buf是�
 23.    }
 ```
 
-`lk->n`：即\#acquire，获取锁的次数。
+`lk->n`：即\#acquire，想要获取锁的次数。
 
 `lk->nts`：即\#fetch-and-add，没有获取到锁的次数。
 
-每当执行一次acquire()函数，第9行`__sync_fetch_and_add(&(lk->n), 1);`就会将lk->n加1，当执行到第14行时，如果 `__sync_lock_test_and_set(&lk->locked, 1)`的返回值为1（即锁已被其他进程锁上），lk->nts的值就会加1，而测评程序会检查lk->nts的值。当lk->nts值接近0时，才能通过测试。所以这次实验中需要做的就是减少进程中的锁冲突，尽量让进程在获取锁时，锁的状态都是未被锁上的。
+每当执行一次acquire()函数，第9行`__sync_fetch_and_add(&(lk->n), 1);`就会将lk->n加1。
+
+当执行到第14行时，如果 `__sync_lock_test_and_set(&lk->locked, 1)`的返回值为1（即锁已被其他进程锁上），lk->nts的值就会加1。
+
+测评程序会检查lk->nts的值。当lk->nts值接近0时，才能通过测试。所以这次实验中需要做的就是减少进程中的锁冲突，尽量让进程在获取锁时，锁的状态都是未被锁上的。
     
 

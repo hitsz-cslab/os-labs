@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../part3/">
+      
+      
+        <link rel="next" href="../part5/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>xv6中Lock的实现（选读） - 操作系统2023秋 | 哈工大（深圳）</title>
+        <title>xv-6中Lock的实现（选读） - 操作系统2023秋 | 哈工大（深圳）</title>
       
     
     
@@ -95,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              xv6中Lock的实现（选读）
+              xv-6中Lock的实现（选读）
             
           </span>
         </div>
@@ -230,6 +234,26 @@
           
   
   Lab2：进程与系统调用
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../part1/" class="md-tabs__link">
+          
+  
+  Lab3：锁机制的应用
 
         </a>
       </li>
@@ -878,6 +902,242 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Lab3：锁机制的应用
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Lab3：锁机制的应用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    xv-6中Lock的实现（选读）
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    xv-6中Lock的实现（选读）
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 锁的基本实验原理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-kalloc" class="md-nav__link">
+    2. 锁与kalloc
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-bio" class="md-nav__link">
+    3. 锁与bio
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 锁与bio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 自旋锁
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 睡眠锁
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-kalloctest" class="md-nav__link">
+    4. 测评程序kalloctest对锁的检测
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    提交文档
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -994,7 +1254,7 @@
 </ul>
 </div>
 <p>那acquire到底是怎么实现的呢？这个仅凭软件是无法实现的，需要硬件参与辅助实现。
-在这里我们先介绍一条特殊的CPU指令amoswap。amoswap实现了在一条指令完成一次 load 和 store，更具体的说，就是可以将一个寄存器的值和某一内存地址的值做交换，将指定内存地址的值放入寄存器，同时将寄存器的值放入内存。此外，CPU还会保证某一CPU核在执行这一指令时，其他CPU核不能读或写对应的内存地址。</p>
+在这里我们先介绍一条特殊的CPU指令<code>amoswap</code>。<code>amoswap</code>实现了在一条指令完成一次 load 和 store，更具体的说，就是可以将一个寄存器的值和某一内存地址的值做交换，将指定内存地址的值放入寄存器，同时将寄存器的值放入内存。此外，CPU还会保证某一CPU核在执行这一指令时，其他CPU核不能读或写对应的内存地址。</p>
 <div class="admonition tip">
 <p class="admonition-title">amoswap指令和__sync_lock_test_and_set</p>
 <p>在C语言中使用这一汇编指令的语句调用是<code>__sync_lock_test_and_set()</code>。
@@ -1041,7 +1301,7 @@
 </li>
 </ul>
 <p>到这里对Lock的实现解释就结束了。在进行下一步的阅读前，强烈建议对上面的两个实现做比较和揣摩，直到你对为什么锁要使用__sync_lock_test_and_set有了清晰的认识。</p>
-<p>注：以上解释可在xv6的Locking章节中找到。</p>
+<p>注：以上解释可在<a href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">xv6 book</a>的Locking章节中找到。</p>
 <h2 id="2-kalloc">2. 锁与kalloc<a class="headerlink" href="#2-kalloc" title="Permanent link">&para;</a></h2>
 <p>在前面的实验原理部分，我们已经解释了“<code>kalloc</code>在什么情况下使用了锁？”这个问题。那为什么要在操作freelist的时候上锁呢？上锁必然是为了防止并行运行的时候出问题，如果我们能设想出一场景（这个场景显然是并行情况下的）让没上锁的链表操作出问题，那就可以解释为什么要上锁了。</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Allocate one 4096-byte page of physical memory.</span>
@@ -1114,7 +1374,7 @@
       3. 持有Sleep-lock期间允许中断发生，但不允许在中断程序中使用。  </p>
 </div>
 <h2 id="4-kalloctest">4. 测评程序kalloctest对锁的检测<a class="headerlink" href="#4-kalloctest" title="Permanent link">&para;</a></h2>
-<p>测评程序会检查锁被阻塞的情况，还记得“XV6中Lock的实现”中提到的acquire代码吗？</p>
+<p>测评程序会检查锁被阻塞的情况，还记得上文提到的acquire代码吗？</p>
 <div class="highlight"><pre><span></span><code><span class="mf">1.</span><span class="w">    </span><span class="c1">// Acquire the lock.</span>
 <span class="mf">2.</span><span class="w">    </span><span class="c1">// Loops (spins) until the lock is acquired.</span>
 <span class="mf">3.</span><span class="w">    </span><span class="kt">void</span>
@@ -1140,9 +1400,11 @@
 <span class="mf">22.</span><span class="w">        </span><span class="n">lk</span><span class="o">-&gt;</span><span class="n">cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mycpu</span><span class="p">();</span>
 <span class="mf">23.</span><span class="w">    </span><span class="p">}</span>
 </code></pre></div>
-<p><code>lk-&gt;n</code>：即#acquire，获取锁的次数。</p>
+<p><code>lk-&gt;n</code>：即#acquire，想要获取锁的次数。</p>
 <p><code>lk-&gt;nts</code>：即#fetch-and-add，没有获取到锁的次数。</p>
-<p>每当执行一次acquire()函数，第9行<code>__sync_fetch_and_add(&amp;(lk-&gt;n), 1);</code>就会将lk-&gt;n加1，当执行到第14行时，如果 <code>__sync_lock_test_and_set(&amp;lk-&gt;locked, 1)</code>的返回值为1（即锁已被其他进程锁上），lk-&gt;nts的值就会加1，而测评程序会检查lk-&gt;nts的值。当lk-&gt;nts值接近0时，才能通过测试。所以这次实验中需要做的就是减少进程中的锁冲突，尽量让进程在获取锁时，锁的状态都是未被锁上的。</p>
+<p>每当执行一次acquire()函数，第9行<code>__sync_fetch_and_add(&amp;(lk-&gt;n), 1);</code>就会将lk-&gt;n加1。</p>
+<p>当执行到第14行时，如果 <code>__sync_lock_test_and_set(&amp;lk-&gt;locked, 1)</code>的返回值为1（即锁已被其他进程锁上），lk-&gt;nts的值就会加1。</p>
+<p>测评程序会检查lk-&gt;nts的值。当lk-&gt;nts值接近0时，才能通过测试。所以这次实验中需要做的就是减少进程中的锁冲突，尽量让进程在获取锁时，锁的状态都是未被锁上的。</p>
 
 
 

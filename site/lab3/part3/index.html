@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../part2/">
+      
+      
+        <link rel="next" href="../part4/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -230,6 +234,26 @@
           
   
   Lab2：进程与系统调用
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../part1/" class="md-tabs__link">
+          
+  
+  Lab3：锁机制的应用
 
         </a>
       </li>
@@ -878,6 +902,255 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Lab3：锁机制的应用
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Lab3：锁机制的应用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0" class="md-nav__link">
+    0. 任务零：回答问题
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 任务一 内存分配器
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 任务一 内存分配器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 流程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 实现提示
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 任务二 磁盘缓存
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 任务二 磁盘缓存">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 流程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 实现提示
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    xv-6中Lock的实现（选读）
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    提交文档
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -982,7 +1255,7 @@
 
 <h1 id="_1">实验实现<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>这里，我们将对一些实现的细节做一定的提醒。但是完整的流程需要自己把握，我们 <strong>不会给出每一步实现步骤</strong> 。因此，最重要的还是阅读 <a href="../part2/#_1">实验原理</a> 内容，得出自己的解决方案，然后参考<a href="../part3/#_1">实验实现</a>这部分的内容。</p>
-<p>值得注意的是，xv6的代码是可以参考的，可以看看相关实验原理是怎么实现的。同时，还可以插桩，使用printf/GDB等方法看看具体的内容。同时，还可以阅读 xv6 指导书，看看背后的设计机理。</p>
+<p>值得注意的是，xv6的代码是可以参考的，可以看看相关实验原理是怎么实现的。同时，还可以插桩，使用printf/GDB等方法看看具体的内容。同时，还可以阅读<a href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">xv6 book</a>，看看背后的设计机理。</p>
 <h2 id="0">0. 任务零：回答问题<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
 <div class="admonition tip">
 <p class="admonition-title">回答问题</p>
@@ -1043,7 +1316,7 @@
 </ul>
 <h2 id="2">2. 任务二 磁盘缓存<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p><strong>具体要求：修改磁盘缓存块列表的管理机制</strong> ，使得可用多个锁管理缓存块，从而减少缓存块管理的锁争用。</p>
-<p>xv6 book中8.2 - 8.3 节有关于块缓存的描述。</p>
+<p><a href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">xv6 book</a>中8.2 - 8.3 节有关于块缓存的描述。</p>
 <h3 id="21">2.1 流程<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
 <p>具体步骤如下：</p>
 <p><strong>Step 1</strong> ： 理解bio.c中代码的行为以及原理；</p>
@@ -1070,10 +1343,10 @@
 <p>请将本实验涉及的锁以<code>bcache</code>开头来命名，可以调用initlock()来初始化bcache锁。  </p>
 </li>
 <li>
-<p>哈希桶的数量可以使用固定的数目，不需要动态地扩展哈希表的大小。请使用素数（比如13）来定义哈希组的数目来尽可能减少哈希争用；  </p>
+<p>哈希桶的数量可以使用固定的数目，不需要动态地扩展哈希表的大小。请使用素数（比如13）来定义哈希组的数目来尽可能减少哈希争用。  </p>
 </li>
 <li>
-<p>在哈希表中搜索块缓存且为未命中的缓存分配一个新的条目，这整个操作必须是原子性操作的（似乎要加锁噢）；  </p>
+<p>在哈希表中搜索块缓存且为未命中的缓存分配一个新的条目，这整个操作必须是原子性操作的（似乎要加锁噢）。 </p>
 </li>
 <li>
 <p>允许按顺序查找未被使用的数据缓存块（即引用计数refcnt为0），也就是说当bget()查找数据块未命中时，bget可以选择一个这样的未被使用的缓存块，移入到以blockno为key的哈希组链表中使用。</p>
@@ -1082,7 +1355,7 @@
 <p>如果你的实现中出现了同时锁上两个以上的锁的情况（比如说，bget()在获取空闲块时，可能需要移动一个内存块从一个哈希组到另一个哈希组），注意避免死锁的出现。  </p>
 </li>
 <li>
-<p>一些调试的提示：限制CPU串行访问可以便于调试锁竞争之外的问题。例如，使用哈希表的方法优化时，可以先保留bget中对全局锁 bcache.lock 的使用，当确保你的设计没问题时，再将其去除。你也可以在调试此类问题时仅开启单个CPU，使用命令 <code>make CPUS=1 qemu</code> 重新编译即可，但请记得在测试前打开。</p>
+<p><strong>一些调试的提示</strong> ：限制CPU串行访问可以便于调试锁竞争之外的问题。例如，使用哈希表的方法优化时，可以先保留bget中对全局锁 bcache.lock 的使用，当确保你的设计没问题时，再将其去除。你也可以在调试此类问题时仅开启单个CPU，使用命令 <code>make CPUS=1 qemu</code> 重新编译即可，但请记得在测试前打开。</p>
 </li>
 </ul>
 
