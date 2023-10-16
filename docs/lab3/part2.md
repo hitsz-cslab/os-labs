@@ -206,11 +206,11 @@ struct buf {
 
 对bcache的操作如下：
 
-- 在系统启动时，`main()`函数（见kernel/main.c）调用`binit()`来初始化缓存，随即调用initlock()初始化bcache.lock，然后循环遍历buf数组，采用头插法逐个链接到bcache.head后面。
-- 上层文件系统读磁盘时，调用`bread()`，随即调用`bget()`检查请求的磁盘块是否在缓存中，如果命中，返回缓存命令结果。如果未命中，转到底层的`virtio_disk_rw()`函数先将此磁盘块从磁盘加载进缓存中，再返回此磁盘块。
+- 在系统启动时，`main()`函数（见kernel/main.c）调用`binit()`来初始化缓存，随即调用`initlock()`初始化`bcache.lock`，然后循环遍历`buf`数组，采用头插法逐个链接到`bcache.head`后面。
+- 上层文件系统读磁盘时，调用`bread()`，随即调用`bget()`检查请求的磁盘块是否在缓存中。`bget()`使用LRU（Least Recent Used）算法首先从链表头部开始查找，如果命中，返回缓存命令结果；如果未命中，则从链表尾部开始找到最不常使用的block cache，腾出空间以用来存放新的block cache。然后，转到底层的`virtio_disk_rw()`函数先将此磁盘块从磁盘加载进block cache中，再返回此磁盘块。
 - 上层文件系统写磁盘时，调用`bwrite()`，随即调用`virtio_disk_rw()`函数直接将缓存中的数据写入磁盘。
-- 上层文件系统可通过调用`brelse()`释放一块不再使用的缓存块。
-- 上层文件系统可通过`bpin()`让该buf缓存块始终存着某些数据，即固定该缓存块不能被替换。`bunpin()`则反之。
+- 上层文件系统可通过调用`brelse()`首先释放了sleep clock，之后获取bcahce的锁，减少block cache的引用计数，表明某个进程不再对block cache进行操作。如果当引用计数为0时，则将block cache脱离出链表，再将它插入到链表头部，这样表示这个block cache是最近使用过的block cache，以便在bget()中使用LRU算法。也就是说如果一个block cache最近被使用过，那么很有可能它很快会再被使用。
+- 上层文件系统可通过`bpin()`将block固定在buffer cache中，它是通过给block cache增加引用计算来避免cache撤回对应的blcok。因为在`brelse()`中，如果引用计数不为0，那么bcache是不会撤回block cache的。`bunpin()`的用法则与之相反。
   
 
 !!! info   "提示"
@@ -236,27 +236,27 @@ struct buf {
 使用哈希桶，将各块块号blockno的某种散列值作为key对块进行分组，并为每个哈希桶分配一个专用的锁。通过哈希桶来代替链表，当要获取和释放缓存块时，只需要对某个哈希桶进行加锁，桶之间的操作就可以并行进行，提供并行性能。  
       
 1. 在`bget()`中查找指定块时，锁上对应的锁（获取空闲块号须另作处理）。  
-      
+   
 2. 当bget()查找数据块未命中时，bget()可从其他哈希桶选择一个未被使用的缓存块，移入到当前的哈希桶链表中使用。
-      
+   
 3. 选择合适的散列函数以分组，分组的数量不必动态调整，可以取定值，推荐使用质数组（如13组）以减少哈希争用。  
-      
+   
 4. 哈希表的搜索和空闲缓存块的查找需要保证原子性。 
-      
+   
 
 <div align="center"> <img src="../part2.assets/hash.png" width = 70%/> </div>
 
 
 #### 2.4.2 时间戳
-      
+
 移除空闲缓存块列表(`bcache.head`)。使用 **时间戳** 作为判断缓存块最一次被访问的顺序的依据。  
       
 1. 此项改动可使`brelse`不再需要锁上`bcache lock`。  
-      
+   
 2. bget在找空闲块时也可通过时间戳得知最后一次被访问时间最早的空闲缓存块。  
-      
+   
 3. 时间戳可通过kernel/trap.c中的ticks函数获得（ticks已在kernel/def.h中声明，bio.c中可直接使用）。  
-      
+   
 <div align="center"> <img src="../part2.assets/timestamp.png" width = 70%/> </div>
 
 #### 2.4.3 CLOCK算法

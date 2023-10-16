@@ -1537,11 +1537,11 @@
 <h3 id="23">2.3 功能与操作<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
 <p>对bcache的操作如下：</p>
 <ul>
-<li>在系统启动时，<code>main()</code>函数（见kernel/main.c）调用<code>binit()</code>来初始化缓存，随即调用initlock()初始化bcache.lock，然后循环遍历buf数组，采用头插法逐个链接到bcache.head后面。</li>
-<li>上层文件系统读磁盘时，调用<code>bread()</code>，随即调用<code>bget()</code>检查请求的磁盘块是否在缓存中，如果命中，返回缓存命令结果。如果未命中，转到底层的<code>virtio_disk_rw()</code>函数先将此磁盘块从磁盘加载进缓存中，再返回此磁盘块。</li>
+<li>在系统启动时，<code>main()</code>函数（见kernel/main.c）调用<code>binit()</code>来初始化缓存，随即调用<code>initlock()</code>初始化<code>bcache.lock</code>，然后循环遍历<code>buf</code>数组，采用头插法逐个链接到<code>bcache.head</code>后面。</li>
+<li>上层文件系统读磁盘时，调用<code>bread()</code>，随即调用<code>bget()</code>检查请求的磁盘块是否在缓存中。<code>bget()</code>使用LRU（Least Recent Used）算法首先从链表头部开始查找，如果命中，返回缓存命令结果；如果未命中，则从链表尾部开始找到最不常使用的block cache，腾出空间以用来存放新的block cache。然后，转到底层的<code>virtio_disk_rw()</code>函数先将此磁盘块从磁盘加载进block cache中，再返回此磁盘块。</li>
 <li>上层文件系统写磁盘时，调用<code>bwrite()</code>，随即调用<code>virtio_disk_rw()</code>函数直接将缓存中的数据写入磁盘。</li>
-<li>上层文件系统可通过调用<code>brelse()</code>释放一块不再使用的缓存块。</li>
-<li>上层文件系统可通过<code>bpin()</code>让该buf缓存块始终存着某些数据，即固定该缓存块不能被替换。<code>bunpin()</code>则反之。</li>
+<li>上层文件系统可通过调用<code>brelse()</code>首先释放了sleep clock，之后获取bcahce的锁，减少block cache的引用计数，表明某个进程不再对block cache进行操作。如果当引用计数为0时，则将block cache脱离出链表，再将它插入到链表头部，这样表示这个block cache是最近使用过的block cache，以便在bget()中使用LRU算法。也就是说如果一个block cache最近被使用过，那么很有可能它很快会再被使用。</li>
+<li>上层文件系统可通过<code>bpin()</code>将block固定在buffer cache中，它是通过给block cache增加引用计算来避免cache撤回对应的blcok。因为在<code>brelse()</code>中，如果引用计数不为0，那么bcache是不会撤回block cache的。<code>bunpin()</code>的用法则与之相反。</li>
 </ul>
 <div class="admonition info">
 <p class="admonition-title">提示</p>
