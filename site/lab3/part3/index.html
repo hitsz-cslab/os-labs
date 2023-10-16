@@ -1281,7 +1281,7 @@
 <h2 id="1">1. 任务一 内存分配器<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <h3 id="11">1.1 流程<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
 <p>具体步骤如下：</p>
-<p><strong>Step 1</strong> ：参考<a href="../../tools/#31">这个指南</a>，切换到lock分支并同步上游仓库；</p>
+<p><strong>Step 1</strong> ：参考“Lab2：进程与系统调用”的<a href="../../lab2/part1/#31">3.1 切换分支</a>，切换到lock分支并同步上游仓库；</p>
 <p><strong>Step 2</strong> ：理解kalloc内存分配的方式和其中锁的原理；</p>
 <p><strong>Step 3</strong> ：修改内存分配器数据结构，例如，将kalloc的共享freelist改为每个CPU独立的freelist；</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">run</span><span class="w"> </span><span class="p">{</span>

@@ -1360,9 +1360,7 @@
 <h2 id="3">3.  实验内容及要求<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">请先同步上游远程仓库，并注意切换到lock分支进行试验</p>
-<p>本次实验基于 <strong>lock</strong> 分支，请同学们注意切换。</p>
-<p><strong>Step 1.</strong> 首先，保存实验二的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VSCode内建的图形化界面完成操作</a>这两小节，完成commit操作。或者， <strong>如果你希望直接放弃掉上一次commit后的所有更改</strong> ，那么你也可以使用-f选项强制切换分支，例如<code>git checkout -f lock</code>。</p>
-<p><strong>Step 2.</strong> 切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
+<p>本次实验基于 <strong>lock</strong> 分支，请同学们参考“Lab2：进程与系统调用”的<a href="../../lab2/part1/#31">3.1 切换分支</a>进行切换。</p>
 </div>
 <h3 id="31-memory-allocator">3.1 任务一：内存分配器（Memory allocator）<a class="headerlink" href="#31-memory-allocator" title="Permanent link">&para;</a></h3>
 <p><strong>修改内存分配器（主要修改kernel/kalloc.c）</strong> ，使每个CPU核使用独立的内存链表，而不是现在的共享链表。</p>
