@@ -1185,6 +1185,16 @@
 <p>实验报告也是证明实验是独立完成的重要依据，有分数追求的大佬（juanwang）们不要只放代码和指导书的截图。</p>
 <h2 id="2-commitpatch">2 实验代码(只提交commit.patch文件)<a class="headerlink" href="#2-commitpatch" title="Permanent link">&para;</a></h2>
 <p>不需要提交完整的代码包，只需要提交commit.patch文件即可，操作步骤如下：</p>
+<div class="admonition warning">
+<p class="admonition-title">请保证仓库标签的实时性</p>
+<p>由于实验测试脚本存在更新的可能性，请同学们留意仓库代码是否存在改动。如果存在改动，请及时更新代码仓库和仓库的标签。
+更新仓库标签的方法如下：<br />
+- 将原本的tag删除：<code>git tag -d 目标tag（例如：syscall-base）</code>。
+- 将新的tag拉取下来：<code>git fetch origin（或者upstream，取决于你把我们的仓库设置的标签叫啥） --tags</code>。
+如下图所示：<br />
+<img alt="git-tag-update" src="../part4.assets/git-tag-update.png" /><br />
+其中红框标出的部分就是大家需要留意是否要更改的，大家可以参考上面的命令中的描述进行更改。</p>
+</div>
 <ul>
 <li>在完成实验之后，将当前分支上的所有更改进行提交（commit，具体方法参考<a href="../../lab1/part4/#3-git">git使用教程</a>）</li>
 <li>在仓库的目录下使用<code>make diff</code>命令导出更改文件（commit.patch）</li>
