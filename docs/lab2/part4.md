@@ -61,7 +61,7 @@
 !!! warning "请保证仓库标签的实时性"
 	由于实验测试脚本存在更新的可能性，请同学们留意仓库代码是否存在改动。如果存在改动，请及时更新代码仓库和仓库的标签。
 	更新仓库标签的方法如下：  
-	- 将原本的tag删除：`git tag -d 目标tag（例如：syscall-base）`。
+	- 将原本的tag删除：`git tag -d 目标tag（例如：syscall-base）`。  
 	- 将新的tag拉取下来：`git fetch origin（或者upstream，取决于你把我们的仓库设置的标签叫啥） --tags`。
 	如下图所示：  
 	![git-tag-update](part4.assets/git-tag-update.png)  
