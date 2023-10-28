@@ -144,9 +144,11 @@
 
 - 关于scheduler调度器，可以参考[HITSZ操作系统课程组讲解XV6（三）内存管理](https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)
 
+这里我们给出一个调度器内的页表切换流程图，同学们可以对照试验原理部分的原版xv6的调度器流程比对观察区别：  
 
-![image-20221025161426577](part3.assets/image-20221025161426577.png)
+![schedular-pgtbl-perfer](part3.assets/schedular-pgtbl-prefer.png)
 
+需要注意的是：调度器作为一个永不返回的程序，其运行也需要页表的支持，所以同学们需要实现方框中红色字体的部分，这样可以使得 **每个进程都运行在自己的内核独立页表的支持下** ，**调度器运行在全局内核页表的支持下** ，不会出现地址映射混乱的情况。
 
 **Step 6** ：当进程结束的时候，你需要修改freeproc()函数来释放对应的内核页表。你需要找到 **释放页表但不释放叶子页表指向的物理页帧** 的方法。你可参考kernel/vm.c中的freewalk，其用于释放整个页表，但要求叶子页表的页项已经被清空。
 
