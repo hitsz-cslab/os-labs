@@ -146,7 +146,7 @@
 
 这里我们给出一个调度器内的页表切换流程图，同学们可以对照试验原理部分的原版xv6的调度器流程比对观察区别：  
 
-![schedular-pgtbl-perfer](part3.assets/schedular-pgtbl-prefer.png)
+![process-timeslice-perfer](part3.assets/process-timeslice-perfer.png)
 
 需要注意的是：调度器作为一个永不返回的程序，其运行也需要页表的支持，所以同学们需要实现方框中红色字体的部分，这样可以使得 **每个进程都运行在自己的内核独立页表的支持下** ，**调度器运行在全局内核页表的支持下** ，不会出现地址映射混乱的情况。
 
