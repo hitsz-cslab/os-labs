@@ -1191,10 +1191,10 @@
         
           <li class="md-nav__item">
   <a href="#32" class="md-nav__link">
-    3.2 任务二：独立内核页表（难）
+    3.2 任务二：独立内核页表（中等）
   </a>
   
-    <nav class="md-nav" aria-label="3.2 任务二：独立内核页表（难）">
+    <nav class="md-nav" aria-label="3.2 任务二：独立内核页表（中等）">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1225,10 +1225,10 @@
         
           <li class="md-nav__item">
   <a href="#33" class="md-nav__link">
-    3.3 任务三：简化软件模拟地址翻译（很难）
+    3.3 任务三：简化软件模拟地址翻译（难）
   </a>
   
-    <nav class="md-nav" aria-label="3.3 任务三：简化软件模拟地址翻译（很难）">
+    <nav class="md-nav" aria-label="3.3 任务三：简化软件模拟地址翻译（难）">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1429,10 +1429,10 @@
         
           <li class="md-nav__item">
   <a href="#32" class="md-nav__link">
-    3.2 任务二：独立内核页表（难）
+    3.2 任务二：独立内核页表（中等）
   </a>
   
-    <nav class="md-nav" aria-label="3.2 任务二：独立内核页表（难）">
+    <nav class="md-nav" aria-label="3.2 任务二：独立内核页表（中等）">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1463,10 +1463,10 @@
         
           <li class="md-nav__item">
   <a href="#33" class="md-nav__link">
-    3.3 任务三：简化软件模拟地址翻译（很难）
+    3.3 任务三：简化软件模拟地址翻译（难）
   </a>
   
-    <nav class="md-nav" aria-label="3.3 任务三：简化软件模拟地址翻译（很难）">
+    <nav class="md-nav" aria-label="3.3 任务三：简化软件模拟地址翻译（难）">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1589,15 +1589,21 @@
 <p>本实验为4学时。</p>
 <h2 id="3">3.  实验内容及要求<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
-<p class="admonition-title">请先同步上游远程仓库，并注意切换到pgtbl 分支进行试验</p>
+<p class="admonition-title">请先同步上游远程仓库，并注意切换到pgtbl分支进行试验</p>
 <p>本次实验基于 <strong>pgtbl</strong> 分支，请同学们注意切换。</p>
-<p><strong>Step 1.</strong> 首先，保存实验三的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VSCode内建的图形化界面完成操作</a>这两小节，完成commit操作。或者， <strong>如果你希望直接放弃掉上一次commit后的所有更改</strong> ，那么你也可以使用-f选项强制切换分支，例如<code>git checkout -f pgtbl</code>。</p>
-<p><strong>Step 2.</strong> 切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
-<p>同时，本次实验的 <strong>输出格式不同于MIT原版实验，请严格按照指导书要求！</strong> </p>
+<p><strong>Step 1.</strong> 首先，保存实验三的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VSCode内建的图形化界面完成操作</a>这两小节，完成commit操作。</p>
+<p><strong>Step 2.</strong> 然后，参考“Lab2：进程与系统调用”的<a href="../../lab2/part1/#31">3.1 切换分支</a>进行切换。</p>
+<p>同时，本次实验的 **输出格式不同于MIT原版实验，请严格按照指导书要求！</p>
 </div>
+<!-- !!! warning   "请先同步上游远程仓库，并注意切换到pgtbl 分支进行试验" 
+
+    本次实验基于 **pgtbl** 分支，请同学们注意切换。
+
+    **Step 2.** 切换的方法可以参考实验 -> 实验实用工具 -> [3.1同步上游仓库 ~ 3.3.3 合并冲突更改](../tools.md#31)。 -->
+
 <h3 id="31">3.1 任务一：打印页表<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
 <p>本任务中，你需要加入页表打印功能，来帮助你在之后的实验中进行debug。</p>
-<p>首先，我们需要了解页表的数据结构。然后，按层次每页打印即可，可以采用 <strong>迭代</strong> 或者 <strong>递归</strong> 的算法。</p>
+<p>首先，我们需要了解页表的数据结构。然后，按层次每页打印即可，可以采用 <strong>递归</strong> 的算法。</p>
 <h4 id="311">3.1.1 打印函数定义<a class="headerlink" href="#311" title="Permanent link">&para;</a></h4>
 <p><code>void vmprint(pagetable_t pgtbl)</code></p>
 <p>该函数将获取一个 <strong>根页表指针</strong> 作为参数，然后打印对应的页表数据。</p>
@@ -1676,7 +1682,7 @@ page table 0x0000000087f6e000
 <p>你的代码输出的物理地址与上述示例可能不相同，但显示项数和虚拟地址应相同。</p>
 <h4 id="313">3.1.3 测试<a class="headerlink" href="#313" title="Permanent link">&para;</a></h4>
 <p>运行<code>make grade</code> ，其中的<code>pte printout</code>测试就是该任务的测试（<a href="#34">可参考测评 3.4</a>）。</p>
-<h3 id="32">3.2 任务二：独立内核页表（难）<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<h3 id="32">3.2 任务二：独立内核页表（中等）<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
 <p>目前，xv6的每个进程都有自己独立的 <em>用户页表</em> （只包含该进程用户内存的映射，从虚拟地址0开始），但是每个进程进入内核的时候，会使用唯一的一个 <em>全局共享内核页表</em> 。我们需要 <strong>将全局共享内核页表改成独立内核页表</strong> ，使得每个进程拥有自己独立的内核页表，也就是全局共享内核页表的副本。</p>
 <p>这部分有一定的难度，因此指导书会尽可能给出多的描述，大家应反复阅读，并试图将知识点串联起来。</p>
 <h4 id="321">3.2.1 独立页表的背景<a class="headerlink" href="#321" title="Permanent link">&para;</a></h4>
@@ -1691,7 +1697,7 @@ page table 0x0000000087f6e000
 <p>首先，在xv6运行 <code>kvmtest</code>，如果你确实使用了独立内核页表，会看到以下结果：</p>
 <p><img alt="image-20211023161926242" src="../part1.assets/image-20211023161926242-16353841836811.png" /></p>
 <p>然后，请在xv6运行 <code>usertests</code>，确保所有测试通过（显示"ALL TESTS PASSED"）。</p>
-<h3 id="33">3.3 任务三：简化软件模拟地址翻译（很难）<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<h3 id="33">3.3 任务三：简化软件模拟地址翻译（难）<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
 <p>xv6目前使用<code>kernel/vm.c</code>中的<code>copyin()/copyinstr()</code>将用户地址空间的数据拷贝至内核地址空间，它们通过软件模拟翻译的方式获取用户空间地址对应的物理地址，然后进行复制（详情见代码注释）。</p>
 <p>任务目标：你需要 <strong>在独立内核页表加上用户地址空间的映射，同时将函数 <code>copyin()/copyinstr()</code> 中的软件模拟地址翻译改成直接访问</strong> ，使得内核能够不必花费大量时间，用软件模拟的方法一步一步遍历页表，而是直接利用硬件。</p>
 <h4 id="331">3.3.1 任务要求<a class="headerlink" href="#331" title="Permanent link">&para;</a></h4>

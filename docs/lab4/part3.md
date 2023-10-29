@@ -144,7 +144,7 @@
 
 - 关于scheduler调度器，可以参考[HITSZ操作系统课程组讲解XV6（三）内存管理](https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)
 
-这里我们给出一个调度器内的页表切换流程图，同学们可以对照试验原理部分的原版xv6的调度器流程比对观察区别：  
+这里我们给出一个调度器内的页表切换流程图，同学们可以对照[实验原理部分的原版xv6的调度器流程](../part2/#32)比对观察区别：  
 
 ![process-timeslice-perfer](part3.assets/process-timeslice-perfer.png)
 
