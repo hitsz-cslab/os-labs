@@ -1646,15 +1646,15 @@ page table 0x0000000087f6e000
 <span class="go">hart 1 starting</span>
 <span class="go">hart 2 starting</span>
 <span class="go">page table 0x0000000087f25000</span>
-<span class="go">||idx:0: pa:0x0000000087f21000, flags: ----</span>
-<span class="go">||   ||idx:0: pa:0x0000000087f20000, flags: ----</span>
-<span class="go">||   ||   ||idx:0: va:0x0000000000000000 -&gt; pa:0x0000000087f22000, flags: rwxu</span>
-<span class="go">||   ||   ||idx:1: va:0x0000000000001000 -&gt; pa:0x0000000087f1f000, flags: rwx-</span>
-<span class="go">||   ||   ||idx:2: va:0x0000000000002000 -&gt; pa:0x0000000087f1e000, flags: rwxu</span>
-<span class="go">||idx:255: pa:0x0000000087f24000, flags: ----</span>
-<span class="go">||   ||idx:511: pa:0x0000000087f23000, flags: ----</span>
-<span class="go">||   ||   ||idx:510: va:0xffffffffffffe000 -&gt; pa:0x0000000087f76000, flags: rw--</span>
-<span class="go">||   ||   ||idx:511: va:0xfffffffffffff000 -&gt; pa:0x0000000080007000, flags: r-x-</span>
+<span class="go">||idx: 0: pa: 0x0000000087f21000, flags: ----</span>
+<span class="go">||   ||idx: 0: pa: 0x0000000087f20000, flags: ----</span>
+<span class="go">||   ||   ||idx: 0: va: 0x0000000000000000 -&gt; pa: 0x0000000087f22000, flags: rwxu</span>
+<span class="go">||   ||   ||idx: 1: va: 0x0000000000001000 -&gt; pa: 0x0000000087f1f000, flags: rwx-</span>
+<span class="go">||   ||   ||idx: 2: va: 0x0000000000002000 -&gt; pa: 0x0000000087f1e000, flags: rwxu</span>
+<span class="go">||idx: 255: pa: 0x0000000087f24000, flags: ----</span>
+<span class="go">||   ||idx: 511: pa: 0x0000000087f23000, flags: ----</span>
+<span class="go">||   ||   ||idx: 510: va: 0xffffffffffffe000 -&gt; pa: 0x0000000087f76000, flags: rw--</span>
+<span class="go">||   ||   ||idx: 511: va: 0xfffffffffffff000 -&gt; pa: 0x0000000080007000, flags: r-x-</span>
 <span class="go">init: starting sh</span>
 <span class="gp">$</span>
 </code></pre></div>
@@ -1662,9 +1662,9 @@ page table 0x0000000087f6e000
 <ul>
 <li>第一行打印的是 <code>vmprint</code> 的参数，即获得的页表参数具体的值。</li>
 <li>在之后打印的则是页表项。RISC-V的页表被设计成了三层（具体见<a href="../part2/">实验原理</a>），每一个”||“都代表一层。</li>
-<li>打印的格式为： <ul>
-<li>如果是非叶节点，则为：<code>idx:[索引编号]: pa:[物理地址], flags: [四个权限位(r/w/x/u)]</code></li>
-<li>如果是叶子节点，则为：<code>idx:[索引编号]: va:[虚拟地址] -&gt; pa:[物理地址], flags: [四个权限位(r/w/x/u)]</code></li>
+<li>打印的格式为：（注意 <strong>冒号后面都接一个空格</strong> ）<ul>
+<li>如果是非叶节点，则为：<code>idx: [索引编号]: pa: [物理地址], flags: [四个权限位(r/w/x/u)]</code></li>
+<li>如果是叶子节点，则为：<code>idx: [索引编号]: va: [虚拟地址] -&gt; pa: [物理地址], flags: [四个权限位(r/w/x/u)]</code></li>
 </ul>
 </li>
 </ul>
@@ -1673,7 +1673,7 @@ page table 0x0000000087f6e000
 <li>上述的详细含义为：<ul>
 <li><code>索引编号</code>:  指示了该页表项在当前等级页表内的序号（取值范围：0-511）；</li>
 <li><code>物理地址</code>：指示了这个页表项对应的十六进制物理地址；</li>
-<li><code>flags的四个权限位</code>：指示了这个页表项的flags，包括读（R）写（W）执行（X）用户态（U）</li>
+<li><code>flags的四个权限位</code>：指示了这个页表项的flags，包括读（R）、写（W）、执行（X）、用户态（U）</li>
 </ul>
 </li>
 <li>只打印有效的pte。</li>
