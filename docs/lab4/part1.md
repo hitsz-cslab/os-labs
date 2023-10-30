@@ -17,15 +17,11 @@
     
     此外，特别推荐同学们观看由我校OS课题组、各级学长助教们合力为大家录制的XV6讲解视频，希望能够让大家对整个XV6系统有一个更为直观的认识，推荐大家按需观看：
     
-    1. 【HITSZ操作系统课程组讲解XV6（一）启动过程】 			 
-    
-    	- 视频链接: https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
-    	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析1-进程管理.pdf)
-    2. 【HITSZ操作系统课程组讲解XV6（二）进程管理】 
+    1. 【HITSZ操作系统课程组讲解XV6（二）进程管理】 
 
     	- 视频链接: https://www.bilibili.com/video/BV1ge4y1J7Je?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
     	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析2-内存管理.pdf)
-    3. 【HITSZ操作系统课程组讲解XV6（三）内存管理】 
+    2. 【HITSZ操作系统课程组讲解XV6（三）内存管理】 
 
     	- 视频链接: https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
     	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析3-启动过程.pdf)
@@ -41,10 +37,7 @@
 **1. 实验报告**
     
 - 回答实验中的问题 40%；
-- 给出实验设计思路 60%：
-    - 任务一：30%
-    - 任务二：20%
-    - 任务三：10%
+- 给出实验设计思路 60%：任务一：30%、任务二：20%、任务三：10%
     
 
 若对应任务未给出实验设计，那么对应任务代码分记0分。
@@ -78,7 +71,7 @@
     
     **Step 2.** 然后，参考“Lab2：进程与系统调用”的[3.1 切换分支](../../lab2/part1/#31)进行切换。
 
-    同时，本次实验的 **输出格式不同于MIT原版实验，请严格按照指导书要求！
+    同时，本次实验的 **输出格式不同于MIT原版实验，请严格按照指导书要求！**
 
 <!-- !!! warning   "请先同步上游远程仓库，并注意切换到pgtbl 分支进行试验" 
 
@@ -101,9 +94,9 @@
     
 **函数的使用位置** ：注意！该函数一定要插入在`exec()`逻辑结束的末尾，来打印第一个进程或刚载入程序的页表数据。在开发过程中，你可以插入到其他的地方，但是最后一定只保留这一个地方的函数使用。
 
-- 在exec.c中的返回argc之前插入vmprint()函数，以输出第一个进程或刚载入程序的页表。其中，vmprin()函数的入参可以根据你自己的设计来填入。
+- 在exec.c中的返回argc之前插入`vmprint()`函数，以输出第一个进程或刚载入程序的页表。其中，`vmprint()`函数的入参可以根据你自己的设计来填入。
 
-![image-20221024121955342](part1.assets/image-20221024121955342.png)
+<div align="center"> <img src="../part1.assets/image-20221024121955342.png" /> </div>
 
 #### 3.1.2 结果示例
 
@@ -211,8 +204,8 @@ $
 
 首先，在xv6运行 `kvmtest`，如果你确实使用了独立内核页表，会看到以下结果：
     
-![image-20211023161926242](part1.assets/image-20211023161926242-16353841836811.png)
-    
+<div align="center"> <img src="../part1.assets/image-20211023161926242-16353841836811.png" /> </div>   
+
 然后，请在xv6运行 `usertests`，确保所有测试通过（显示"ALL TESTS PASSED"）。
     
 
@@ -231,9 +224,9 @@ xv6目前使用`kernel/vm.c`中的`copyin()/copyinstr()`将用户地址空间的
    
 #### 3.3.2 结果示例
 
-首先，在xv6运行 `stats stats`，如果你正确使用了copyin_new和copyinstr_new，会看到输出的数值不为零：
+首先，在xv6运行 `stats stats`，如果你正确使用了`copyin_new`和`copyinstr_new`，会看到输出的数值不为零：
     
-![image-20211023162335116](part1.assets/image-20211023162335116-16353873302232.png)
+<div align="center"> <img src="../part1.assets/image-20211023162335116-16353873302232.png" /> </div>  
     
 然后，请在xv6运行 `usertests`，确保所有测试通过（显示"ALL TESTS PASSED"）。
 
@@ -241,9 +234,8 @@ xv6目前使用`kernel/vm.c`中的`copyin()/copyinstr()`将用户地址空间的
 
 当完成上述的三个实验后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
 
-![image-20211023160155602](part1.assets/image-20211023160155602-16353874445883.png)
     
-    
+<div align="center"> <img src="../part1.assets/image-20211023160155602-16353874445883.png"  width = 70%/> </div>    
 
 
 
