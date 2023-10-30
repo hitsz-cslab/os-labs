@@ -19,7 +19,7 @@
     
     3. 按照步骤，阐述SV39标准下，给定一个64位虚拟地址为0x123456789ABCDEF的时候，是如何一步一步得到最终的物理地址的？（页表内容可以自行假设）
     
-    3. 我们注意到，虚拟地址的L2, L1, L0 均为9位。这实际上是设计中的必然结果，它们只能是9位，不能是10位或者是8位，你能说出其中的理由吗？（提示：一个页目录的大小必须与页的大小等大）
+    3. 我们注意到，SV39标准下虚拟地址的L2, L1, L0 均为9位。这实际上是设计中的必然结果，它们只能是9位，不能是10位或者是8位，你能说出其中的理由吗？（提示：一个页目录的大小必须与页的大小等大）
     
     4. 在“实验原理”部分，我们知道SV39中的39是什么意思。但是其实还有一种标准，叫做SV48，采用了四级页表而非三级页表，你能模仿“实验原理”部分示意图，画出SV48页表的数据结构和翻译的模式图示吗？（SV39原图如下）
     
@@ -88,7 +88,7 @@
     pte_t pte = pagetable[i]; //获取第i条PTE 
 
     /* 判断PTE的Flag位，如果还有下一级页表(即当前是根页表或次页表)，
-     则递归调用freewalk释放页表项，并将对应的PTE清零 */
+       则递归调用freewalk释放页表项，并将对应的PTE清零 */
     if((pte & PTE_V) && (pte & (PTE_R|PTE_W|PTE_X)) == 0){ 
       // this PTE points to a lower-level page table.
       uint64 child = PTE2PA(pte); // 将PTE转为为物理地址
@@ -97,7 +97,7 @@
     } else if(pte & PTE_V){ 
 
       /* 如果叶子页表的虚拟地址还有映射到物理地址，报错panic。
-        因为调用freewalk之前应该会先uvmunmap释放物理内存 */    
+         因为调用freewalk之前应该会先uvmunmap释放物理内存 */    
       panic("freewalk: leaf"); 
     }
   }
@@ -170,7 +170,7 @@
 这里有必要提醒一下同学，要以最简单的方法以及工程量最小的方法实现，最好不要因为优化等问题，大改内核机制。
 
 - 好好利用 `vmprint()` 来帮助debug。
-- 页表的bug通常会导致映射缺失的traps，访存失败，指令运行错误等报错。如果 **内核** 缺失了地址映射造成了页缺失（page fault），通常会打印个 `sepc=0x00000000XXXXXXXX` ，这代表的是出错时pc的值，你可以查`kernel/kernel.asm` 看看 **对应地址** 的代码的含义。 可参考[常见问题](../../../faq/lab3/#3)来找bug：）
+- 页表的bug通常会导致映射缺失的traps，访存失败，指令运行错误等报错。如果 **内核** 缺失了地址映射造成了页缺失（page fault），通常会打印个 `sepc=0x00000000XXXXXXXX` ，这代表的是出错时pc的值，你可以查`kernel/kernel.asm` 看看 **对应地址** 的代码的含义。 可参考[常见问题](../../faq/lab3/#3)来找bug：）
 - 你的实现可以修改原有的函数或者是新增函数，最好放在 `kernel/vm.c +kernel/proc.c` 中，但是 **千万不要修改** `kernel/vmcopyin.c +kernel/stats.c + user/usertests.c + user/stats.c`。
 
 
@@ -196,7 +196,7 @@
 - **推荐方案** ：
    - 在调用`copyin_new()`/`copyinstr_new()`之前修改sstatus寄存器的SUM位： 
        - `w_sstatus(r_sstatus() | SSTATUS_SUM);` 
-   - 在凋用`copyin_new()`/`copyinstr_new()`之后去掉sstatus寄存器的SUM位：
+   - 在调用`copyin_new()`/`copyinstr_new()`之后去掉sstatus寄存器的SUM位：
        - `w_sstatus(r_sstatus() & ~SSTATUS_SUM);`
 
 
