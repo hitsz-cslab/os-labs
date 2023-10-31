@@ -1583,9 +1583,18 @@
 <p>可以看到，bcache的<code>fetch-and-add</code>值非常大，说明磁盘缓存锁的争用非常严重。</p>
 <p>修改buffer cache的设计后，所有锁的fetch-and-add的数目应当接近于0。</p>
 <h4 id="322">3.2.2 具体要求<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
-<p>1)   理想状态下，<code>bcachetest</code>中数据块缓存相关的所有锁<code>fetch-and-add</code>的总和应该为0，但本实验中总和<code>tot</code>不超过500即可；<br />
-2)   请修改<code>bget()</code>和<code>brelse()</code>，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等bcache.lock；<br />
-3)   同样要求<code>usertests</code>中的用例全部通过，最后的输出如下（具体数据有所出入）：  </p>
+<div class="admonition warning">
+<p class="admonition-title">关于bcache实验的补充说明</p>
+<p>本实验要求大家在XV6原版的bcache基础上，修改磁盘缓存块列表的管理机制，主要修改kernel/bio.c。也就是，在原有的磁盘缓存大小的基础上，可采用多个哈希桶、添加时间戳、或使用CLOCK算法等优化策略来减少磁盘缓存的锁争用。故以下修改是不允许的：</p>
+<ol>
+<li>不允许修改<code>NBUF</code>的大小；</li>
+<li>不允许修改buf的数量，比如设置N个<code>struct buf [NBUF]</code>；</li>
+<li>不允许随意修改锁的命名，本任务涉及到的锁必须以<code>bcache</code>开头来命名。</li>
+</ol>
+</div>
+<p>4)   理想状态下，<code>bcachetest</code>中数据块缓存相关的所有锁<code>fetch-and-add</code>的总和应该为0，但本实验中总和<code>tot</code>不超过500即可；<br />
+5)   请修改<code>bget()</code>和<code>brelse()</code>，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等bcache.lock；<br />
+6)   同样要求<code>usertests</code>中的用例全部通过，最后的输出如下（具体数据有所出入）：  </p>
 <div align="center"> <img src="../part1.assets/image-20211019205449169.png" width = 70%/> </div>
 
 <h3 id="33">3.3 测试<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
