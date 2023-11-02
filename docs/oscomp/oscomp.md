@@ -307,7 +307,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123111333/project1466467-176092)
 
-    ![img](oscomp.assets/功能赛-2023-2.jpg)
+    ![img](oscomp.assets/功能赛-2023-3.jpg)
     
     </font>
 
