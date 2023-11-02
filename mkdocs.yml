@@ -58,8 +58,8 @@ nav:
     - 远程实验平台使用指南: remote_env.md
     - VSCode图形化调试指南(一): remote_env_gdb.md
     - VSCode图形化调试指南(二)——系统调用: remote_env_gdb2.md    
-#  - OS竞赛招新: 
-#    - 2023年“全国大学生计算机系统能力大赛操作系统设计赛”火热报名中！: oscomp/oscomp.md   
+  - OS竞赛招新: 
+    - 2024年“全国大学生计算机系统能力大赛操作系统设计赛”火热报名中！: oscomp/oscomp.md   
   - 常见问题:
     - 2022/2023: 
         - 实验环境问题: faq/faq-env.md
