@@ -143,8 +143,8 @@ page table 0x0000000087f25000
 ||   ||   ||idx: 2: va: 0x0000000000002000 -> pa: 0x0000000087f1e000, flags: rwxu
 ||idx: 255: pa: 0x0000000087f24000, flags: ----
 ||   ||idx: 511: pa: 0x0000000087f23000, flags: ----
-||   ||   ||idx: 510: va: 0xffffffffffffe000 -> pa: 0x0000000087f76000, flags: rw--
-||   ||   ||idx: 511: va: 0xfffffffffffff000 -> pa: 0x0000000080007000, flags: r-x-
+||   ||   ||idx: 510: va: 0x0000003fffffe000 -> pa: 0x0000000087f76000, flags: rw--
+||   ||   ||idx: 511: va: 0x0000003ffffff000 -> pa: 0x0000000080007000, flags: r-x-
 init: starting sh
 $
 ```
