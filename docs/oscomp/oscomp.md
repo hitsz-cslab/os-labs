@@ -6,7 +6,7 @@
 
     - <font color=red> **全称** </font>： **全国大学生计算机系统能力大赛操作系统设计大赛** 
     
-        - 由教育部高等学校计算机类专业教学指导委员会和系统能力培养研究专家组共同发起，目前已经举办2届。
+        - 由教育部高等学校计算机类专业教学指导委员会和系统能力培养研究专家组共同发起，目前已经举办3届。
     
         - 第一届于2021年举办，**近200支队伍** 参赛。第二届/第三届的参赛队伍增加到了 **300余支** 。
     
@@ -252,7 +252,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123101314/oskernel2023-Titanix)
     
-    ![img](oscomp.assets/内核赛-2023.jpg)
+    ![img](oscomp.assets/内核赛-2023-1.jpg)
     </font>
 
 ## 5.7 获奖队伍介绍: BoesFS
@@ -271,7 +271,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123111316/project1466467-176078)
     
-    ![img](oscomp.assets/功能赛-2023.jpg)
+    ![img](oscomp.assets/功能赛-2023-1.jpg)
     </font>
 
 ## 5.8 获奖队伍介绍: COS
@@ -288,6 +288,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123111334/proj134-cfs-based-userspace-scheduler)
     
+    ![img](oscomp.assets/功能赛-2023.jpg)
     </font>
 
 ## 5.9 获奖队伍介绍: BugMaker
@@ -305,6 +306,8 @@
     这次操作系统功能赛让我们收获了很多，除了学习到用户态存储相关知识以外，还提升了我们面对陌生领域时的探索能力，这是一次很宝贵的参赛经历。祝愿全国大学生计算机系统能力大赛越办越好！”
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123111333/project1466467-176092)
+
+    ![img](oscomp.assets/功能赛-2023-4.jpg)
     
     </font>
 

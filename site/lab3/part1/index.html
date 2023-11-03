@@ -1669,7 +1669,7 @@
 <h4 id="322">3.2.2 具体要求<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
 <div class="admonition warning">
 <p class="admonition-title">关于bcache实验的补充说明</p>
-<p>本实验要求大家在XV6原版的bcache基础上，修改磁盘缓存块列表的管理机制，主要修改kernel/bio.c。也就是，在原有的磁盘缓存大小的基础上，可采用多个哈希桶、添加时间戳、或使用CLOCK算法等优化策略来减少磁盘缓存的锁争用。故以下修改是不允许的：</p>
+<p>本实验要求大家在XV6原版的bcache基础上，修改磁盘缓存块列表的管理机制，主要修改kernel/bio.c。也就是，在原有的磁盘缓存大小的基础上，可采用多个哈希桶、时间戳、或CLOCK算法等优化策略来减少磁盘缓存的锁争用。故以下修改是不允许的：</p>
 <ol>
 <li>不允许修改<code>NBUF</code>的大小；</li>
 <li>不允许修改buf的数量，比如设置N个<code>struct buf [NBUF]</code>；</li>
