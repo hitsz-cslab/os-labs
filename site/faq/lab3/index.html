@@ -805,6 +805,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#4-panic-acquire" class="md-nav__link">
+    4. 问题：panic: acquire
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1407,6 +1414,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#4-panic-acquire" class="md-nav__link">
+    4. 问题：panic: acquire
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1445,6 +1459,10 @@
 </ul>
 <h3 id="stval">stval<a class="headerlink" href="#stval" title="Permanent link">&para;</a></h3>
 <p>指对哪个地址发生了不合法的操作，上图示例中是对0x50这个地址发生了不合法的读操作</p>
+<h2 id="4-panic-acquire">4. 问题：panic: acquire<a class="headerlink" href="#4-panic-acquire" title="Permanent link">&para;</a></h2>
+<p>panic的位置可以通过vscode查到：在<code>spinlock.c: acquire()</code>中</p>
+<p><img alt="" src="../lab3.assets/acquire-panic.png" /></p>
+<p>在该函数当中报错是因为holding函数会检查当前的CPU是否持有想要的锁，如果是的话，就会产生panic。由于xv6没有实现可重入锁，所以如果将该panic注释掉会死锁，也就是自己拿着锁但是又想获取该锁。所以同学们需要检查自己的代码当中是否对同一个锁获取了两次。</p>
 
 
 
