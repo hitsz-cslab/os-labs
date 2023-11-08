@@ -1,41 +1,281 @@
 #  实验实现
 
-##  1. 任务一： 简单的文件系统demo
+## 1.任务零：环境搭建
+
+### 1.1 实验包结构介绍
+
+本次实验充分考虑到 **上手成本** ，因此我们编写了简单的环境配置脚本，帮助大家一键配置开发环境。实验包代码获取途径：
+
+```console
+# git clone https://gitee.com/ftutorials/user-land-filesystem.git
+```
+
+实验包的结构如下：
+
+```
+user-land-filesystem/
+├── driver
+│   ├── ddriver.sh
+│   ├── kernel_ddriver
+│   └── user_ddriver
+├── fs
+│   ├── demo
+│   ├── simplefs
+│   └── template
+├── LICENSE
+├── README.md
+└── setenv.sh
+```
+
+- `driver`
+
+存放驱动代码。
+
+- `fs`
+
+存放 **实现的FUSE文件系统** 。其中`demo`为任务一要完成的文件系统demo，`simplefs`为类`EXT2`文件系统（缺少数据位图），供同学们参考使用，`template`用于生成文件系统的代码结构，可忽略。
+
+- `setenv.sh`
+
+用于配置FUSE文件系统开发环境。
+
+### 1.2 配置开发环境
+
+运行`./setenv.sh`后，即可按照指导一步一步来建立环境：
+
+```console
+teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh 
+请输入工作目录名称 ([工作]目录将被至于./fs目录下): newfs
+...
+生成工作路径:  /home/guests/teststu_8/user-land-filesystem/fs/newfs
+请输入项目名称: newfs
+...
+```
+
+其中，工作目录名称即开发该文件系统的 **文件夹名称** 。可以看到，它在`fs`目录下新建了一个`newfs`目录作为工作目录。
+
+接着，项目名称即真正的文件系统名称，可以是文件系统的简写，例如：nfs（代表newfs），这里要注意项目名不能有 **特殊符号、空格** 等。
+
+项目建立完成之后的结构`newfs`如下所示：
+
+```
+./fs/newfs/
+├── .vscode
+├── CMake
+│   └── FindFUSE.cmake
+├── CMakeLists.txt
+├── include
+│    ├── ddriver_ctl_user.h
+│    ├── ddriver.h
+│    ├── fs.layout
+│    ├── newfs.h
+│    └── types.h
+├── README.md
+├── SPEC.txt
+├── src
+│   └── newfs.c
+└── tests
+    ├── checkbm
+    │   ├── checkbm.py
+    │   ├── golden-sfs.json
+    │   └── golden.json
+    ├── mnt
+    ├── stages
+    │   ├── cp.sh
+    │   ├── ls.sh
+    │   ├── mkdir.sh
+    │   ├── mount.sh
+    │   ├── remount.sh
+    │   ├── rw.sh
+    │   └── touch.sh 
+    ├── fs_test.sh
+    ├── main.sh
+    └── test.sh
+```
+
+
+
+### 1.3 项目编译
+
+本次实验任务一和任务二，均需要按照下面步骤 **分别** 完成项目编译。如需编译任务一，请在`./fs/demo`文件夹下打开VSCode软件。如需编译任务二，请在`./fs/newfs`文件夹下打开VSCode软件。
+
+项目编译的过程：
+
+-   **Step 1** . 以任务二为例，SSH打开`./fs/newfs`。打开VSCode软件，点击左上角 "文件" → "打开文件夹"，选择实验包目录下的fs/newfs文件夹。
+
+![image-20211024145359896](./part3.assets/image-20211024145359896.png)
+
+-   **Step 2** . 在远程实验平台上安装CMake、CMake Tools、C/C++三个插件。
+
+![image-20221108102247328](./part3-1.assets/image-20221108102247328.png)
+
+![image-20221108102514630](./part3-1.assets/image-20221108102514630.png)
+
+![image-20221118212435901](./part3-1.assets/image-20221118212435901.png)
+
+-   **Step 3** . 打开CMakeLists.txt文件
+-   **Step 4** . ctrl + shift + p呼出命令菜单
+-   **Step 5** . 输入CMake: Configure
+-   **Step 6** . 选择 **X86_64版本** 的GCC（不要选错为别的，如riscv64的）：
+
+![image-20221108103122575](./part3-1.assets/image-20221108103122575.png)
+
+-   **Step 7** . 点击VSCode左下角“管理”按钮，选择“设置”，然后在弹出的窗口中输入`@ext:ms-vscode.cmake-tools generator`，再点击“远程[SSH:10.249.12.98]”选项栏，在Cmake: Generator选项框中填入`Unix Makefiles`。
+
+![image-20221108111316672](./part3-1.assets/image-20221108111316672.png)
+
+-   **Step 8** . 再次用ctrl + shift + p呼出命令菜单，输入CMake: Configure，查看输出窗口是否有“Generator” (已用!!!!!标记)
+
+![image-20211024145654250](./part3.assets/image-20211024145654250.png)
+
+-   **Step 9** . 到`newfs/src/newfs.c`目录，打断点（可选，如果需要调试可打）。
+-   **Step 10** . 按下`F5`进行运行和挂载文件系统。
+
+`F5`是方便同学直接在VSCode挂载文件系统，同学也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](./part2/#32-fuse)的`F5`命令展开。
+
+打下断点，调试运行如下图：
+
+![image-20211024151032944](./part3.assets/image-20211024151032944.png)
+
+没有打断点，直接运行和挂载文件系统，文件系统挂载成功如下图所示：
+
+![f5运行成功](./part3.assets/f5运行成功.png)
+
+文件系统的卸载（参考实验原理的[FUSE文件系统的挂载与卸载](./part2/#32-fuse)），需要同学们在命令行手动输入命令来实现：
+
+```console
+teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$ fusermount -u ./tests/mnt
+teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$ 
+```
+
+##  2. 任务一： 简单的文件系统demo
 
 为了便于同学们过渡到任务二，我们在任务一要求同学们实现一个简单的文件系统小demo。通过这个简单的小demo，帮助大家理解和熟悉：
 
 - 简单的磁盘布局。磁盘逻辑块划分的概念以及本次实验逻辑块大小。
-- 简单的磁盘交互。利用本次实验提供的磁盘操作（驱动）接口。
+- 简单的磁盘交互。利用本次实验提供的磁盘操作（驱动）接口读取一个磁盘块。
 - 简单的文件系统接口实现。什么是文件系统接口等。
 
-### 1.1 实现内容
+### 2.1 实现内容
 
 这个文件系统小demo的实现要求如下：
 
-- 只需要实现`ls`命令，并且`ls`只需要在根目录显示某个的预设的普通文件名`<filename>`即可。
-- 文件系统demo的一个逻辑块是两个IO块大小，假设第500个逻辑块为根目录的数据块，这个数据块只有一个dentry，也就是名为`<filename>`的dentry。
-- 出于简单示例，除了上述的块，磁盘其他块都是空的，无需做其他复杂考虑，同学只需要根据demo的`/ * TODO */` 指引完成demo即可。
+- 只需要实现`ls`命令，并且`ls`时只会在根目录显示某个的预设的普通文件名`<filename>`即可。
+- 文件系统demo的一个逻辑块是两个IO块大小（和任务二一致），假设第500个逻辑块为根目录的数据块，这个数据块只有一个`dentry`，也就是名为`<filename>`的dentry。
+- 出于简单示例，除了上述的块，磁盘其他块都是空的，无需做其他复杂考虑。
 
 如下图所示：
 
 ![](./part3.assets/任务一设定布局.png)
 
-假设`<filename>`为`file.txt`（实际可能不是`file.txt`），文件系统的demo效果将会如下：
+假设`<filename>`为`pass_task1.txt`，挂载文件系统后，`ls`效果将会如下：
 
 ![](./part3.assets/task1效果.png)
 
-### 1.2 实现步骤
+### 2.2 实现步骤
+
+任务一的实现非常简单，只需要同学们根据`demo`代码中的`/* TODO */`指引填写几行代码。在完成任务一过程，同学们请参考实验原理部分的[驱动接口查阅](./part2.md#21)和[FUSE简单示例](./part2.md#31-fuse)。
+
+- **step 0**，熟悉demo代码（不到一百行）定义的简单数据结构`demo_super`和`demo_dentry`，以及四个钩子函数`demo_mount`，`demo_umount`，`demo_getattr`和`demo_readdir`
+
+- **step 1**，完成一个简单的全局超级块填充，维护一些后续计算需要的信息。同学可以通过`ddriver_ioctl`来获取磁盘容量和IO块大小等信息，从而得出逻辑块大小，需要在`demo_mount`函数中实现。
+
+```c
+/* 挂载文件系统 */
+static int demo_mount(){
+	...
+	/* 填充super信息 */
+    super.sz_io = /* TODO */;
+    super.sz_disk = /* TODO */;
+    super.sz_blks = /* TODO */;
+    ...
+    }
+```
+
+- **step 2**，完成遍历目录逻辑，从第500个逻辑块读取一个`demo_dentry`，将`demo_dentry`的文件名填充到filename。下面给出一个参考的`/* TODO */`指引，同学也无需严格按照这个指引。
+
+```c
+/* 遍历目录 */
+static int demo_readdir(const char* path, void* buf, fuse_fill_dir_t filler, off_t offset, struct fuse_file_info* fi)
+{
+    char filename[128]; // 待填充的
+
+    /* 根据超级块的信息，从第500逻辑块读取一个dentry，ls将只固定显示这个文件名 */
+
+    /* TODO: 计算offset，并根据offset调用ddriver_seek移动磁盘头到offset处 */
+
+    /* TODO: 调用ddriver_read读出一个磁盘块到内存，512B */
+
+    /* TODO: 使用memcpy拷贝上述512B的前sizeof(demo_dentry)字节构建一个demo_dentry结构 */
+
+    /* TODO: 根据demo_dentry的文件名填充filename */
+
+    // 此处大家先不关注filler，已经帮同学写好，同学填充好filename即可
+    return filler(buf, filename, NULL, 0);
+}
+```
 
 还有步骤
 
-- 通过磁盘驱动接口`ddriver_ioctl`获取磁盘相关信息：磁盘容量，IO块大小
+- **step 3**，完成显示文件属性函数，将这个文件显示为普通文件。
 
+```c
+/* 显示文件属性 */
+static int demo_getattr(const char* path, struct stat *stbuf)
+{
+	...
+        stbuf->st_mode = /* TODO: 显示为普通文件 */;            // 该文件显示为普通文件
+    ...
+}
+```
 
-### 1.3 测试
+### 2.3 测试
 
-TODO：测试
+测试脚本位于`./demo/tests`目录下
 
-##  2. 任务二：实现青春版EXT2文件系统
+#### 2.3.1 手动测试
+
+我们给同学提供了一个手动测试和调试用的固定文件名`pass_task1.txt`，同学按照如下方式可以验证自己实现逻辑是否正确。
+
+先运行在`tests`目录下运行：
+
+```shell
+chmod +x start.sh && ./start.sh
+```
+
+然后挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./part3#13)配置好任务一的编译环境）：
+
+![f5运行成功](./part3.assets/f5运行成功.png)
+
+然后在 **开启一个命令行** ，输入`ls`命令查看`tests`目录下的`mnt`文件夹，查看结果是否为`pass_task1.txt`，如果是，则 **手动测试通过** 。如下图：
+
+![](./part3.assets/task1效果.png)
+
+最后一定要记得输入`fusermount`命令来卸载文件系统（参考实验原理的[FUSE文件系统的挂载与卸载](./part2/#32-fuse)），**不要** 直接在VSCode终止或者按`ctrl + c`：
+
+```
+fusermount -u <挂载点>
+```
+
+![](./part3.assets/卸载示例.png)
+
+#### 2.3.2 测评脚本
+
+任务一提供了测评脚本，同学完成实验后，进入`./demo/tests`目录，输入如下命令通过本节任务的测评：
+
+```shell
+chmod +x test.sh && ./test.sh
+```
+
+测评通过的示意图如下：
+
+![](./part3.assets/test-pass.png)
+
+测评未通过，请根据提示修改：
+
+![](./part3.assets/test-fail.png)
+
+##  3. 任务二：实现青春版EXT2文件系统
 
 在实验原理部分，我们已经宏观上知道文件系统所需要做的三件事：
 
@@ -47,7 +287,7 @@ TODO：测试
 
 实验的总体结构同学可以参考是实验原理部分的实验总体结构小节。
 
-### 2.1 实现内容
+### 3.1 实现内容
 
 在任务二，需要同学们在我们提供的实验框架下实现一个完整的EXT2文件系统，这个文件系统需要满足以下一些条件：
 
@@ -61,11 +301,11 @@ TODO：测试
 
 （4）出于测评脚本考虑，本次实验 **统一规定** 不实现"."和".."两个特殊目录。此外，本次实验一个inode只对应到一个文件，无需考虑软链接和硬链接的实现（也可选做）；只用实现直接索引，无需考虑间接索引（也可选做）。
 
-### 2.2 实现步骤
+### 3.2 实现步骤
 
 为了降低同学的上手成本，我们为提供同学们提供了一个实现了完整功能的文件系统样例，`simplefs`，供同学参考学习其部分实现。**值得注意的是**，本次任务二要实现的文件系统从磁盘布局上就和simplefs不一样，因此在有关文件系统接口的实现上也会不同。评测脚本会检查同学的磁盘布局分布，`simplefs`无法通过测评。
 
-#### 2.2.1 磁盘布局设计
+#### 3.2.1 磁盘布局设计
 
 首先，在 **逻辑块大小** 上，本次实验逻辑块大小为1024B，后续的布局设计和接口实现均要使用到此大小。阅读学习`simplefs`代码的同学，需要注意到`simplefs`直接将一个磁盘IO块（512B）作为了一个逻辑块，也就是其逻辑块为512B，和本次实验不同，如下图：
 
@@ -114,7 +354,7 @@ int mount(struct options opt){
 }
 ```
 
-#### 2.2.2 磁盘交互的封装
+#### 3.2.2 磁盘交互的封装
 
 本次实验的驱动接口（见实验原理）为我们提供了读写模拟磁盘的方法，`ddriver_read`和`ddriver_write`，利用这两个接口能够实现往模拟磁盘读取或写入一个IO块大小的数据。同时提供了`ddriver_seek`来移动要读取或写入的起始位置，也就是磁盘头。
 
@@ -135,13 +375,13 @@ int your_write(int offset, void *in_content, int size);
 
 `your_write`的封装实现类似，同学可以根据上述的图示来参考实现。
 
-#### 2.2.3 文件系统接口的实现
+#### 3.2.3 文件系统接口的实现
 
 在实验原理部分，我们为同学们介绍了ext2文件系统中常用的几种数据结构，超级块`super_block`，索引节点`inode`，目录项`dentry`以及它们的两种类型（in-Mem类型和to-Disk类型）。同学们在实现下述文件系统接口的时候，根据自己的需求来添加相关字段，或者如有需要设计新的数据结构。
 
 下面给出本次实验需要完成的接口的实现参考，同学可以对照着来帮助理解`simplefs`的代码，以及参考着完成自己的文件系统实现。
 
-##### 2.2.3.1 挂载与卸载
+##### 3.2.3.1 挂载与卸载
 
 在实验原理，我们已经知道超级块常包括幻数，磁盘布局信息，根目录索引等字段。
 
@@ -201,7 +441,7 @@ void* destroy(void* p);
 
 同学创建的卸载函数需要和上述函数声明保持一致，本次实验同学们无需关注卸载函数的传入参数，照着声明即可。
 
-##### 2.2.3.2 创建文件和目录
+##### 3.2.3.2 创建文件和目录
 
 在实验原理和前面的讨论，我们知道，在文件系统中，一个文件应该包括 **索引节点** `inode`，**目录项** `dentry`（位于父目录的数据块中），以及 **文件的数据** data。创建一个文件应该要实现前两个部分的创建和维护，而文件数据为空。**目录项** `dentry`体现层级关系，索引节点`inode`用于文件自身索引。
 
@@ -288,7 +528,7 @@ int mkdir(const char* path, mode_t mode)
 
 `path`和`mode`的解释同上`mknod`。
 
-##### 2.2.3.3 显示文件和目录
+##### 3.2.3.3 显示文件和目录
 
 **（1）获取文件属性**
 
@@ -358,7 +598,10 @@ int readdir(const char * path, void * buf, fuse_fill_dir_t filler, off_t offset,
 
 其中，`path`是要读取的目录的路径;`buf`是传入的装填返回结果的缓冲区;`filler`是传入的上层自定义的装填函数;`offset`是本次要要开始读取的子文件的偏移，`fi`无需关注。
 
-### 2.3 测试
+### 3.3 测试
 
--   手工测试`touch`、`ls`、 `mkdir`、`fusermount -u`等命令的正确性；
--   通过`./tests/test.sh`脚本的基本功能测试。
+#### 3.3.1 手动测试
+
+
+
+#### 3.3.2 测评程序
