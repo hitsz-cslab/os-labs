@@ -404,7 +404,7 @@ int your_read(int offset, void *out_content, int size);
 
 挂载函数实现的大致示意如下图所示：
 
-![](./part3.assets/mount示意图.png)
+![mount](./part3.assets/mount.svg)
 
 在FUSE中，挂载函数对应的钩子是`.init`，同学们实现好挂载函数后，需要将自己的挂载函数添加到`.init`钩子上。
 
@@ -438,7 +438,7 @@ void* init(struct fuse_conn_info * conn_info);
 
 其主要流程如下图所示：
 
-![](./part3.assets/刷回文件示意图.png)
+![](./part3.assets/flush.svg)
 
 在FUSE中，挂载函数对应的钩子是`.destroy`，同学们实现好卸载函数后，需要将自己的卸载函数添加到`.destroy`钩子上。
 
@@ -460,21 +460,27 @@ void* destroy(void* p);
 
 创建普通文件和创建目录文件的主要流程如下图所示：
 
-![](./part3.assets/mknod和mkdir示意图.png)
+![mkdir-mknod](./part3.assets/mkdir-mknod.svg)
+
+<!-- TODO: 以下内容和上图代码结合一下 -->
+
 
 **（1）路径解析，得到父目录的dentry**
 
+<!-- TODO: 修改文字 -->
+
 首先介绍路径 **解析的逻辑** 。如下图所示，以`/home/test/aaa`为例，假设这个路径存在。所有的路径解析都会从 **根目录** 开始，由超级块维护的根目录`dentry`，读取根目录的`inode`（在读取`inode`的时候会把数据块的内容读取进来，即所有子文件的`dentry_d`），然后依次遍历所有子文件的`dentry`，找到文件名为`home`的`dentry`，然后再读取`home`的inode。重复上面步骤。最后如果`/home/test/aaa`存在，那么在读出`test`目录的`inode`，遍历所有子文件的`dentry`时，会匹配到`aaa`文件的`dentry`。文件存在，返回该文件对应的`dentry`。
 
-![](./part3.assets/lookup找到示意图.png)
+<!-- ![](./part3.assets/lookup找到示意图.png) -->
 
 在创建普通文件和创建目录文件时，文件还不存在，传入的路径名是无法解析到其对应的`dentry`的。相反，假设解析到存在对应的`dentry`了，则说明文件重名了，应该报错处理。此时文件还不存在，参考上图的解析逻辑，我们只需要返回其父目录的`dentry`即可，供实现两个钩子函数下一步使用，如下图所示。
 
-![](./part3.assets/lookup未找到示意图.png)
+<!-- ![](./part3.assets/lookup未找到示意图.png) -->
+![lookup](./part3.assets/lookup.svg)
 
 刚刚提到由`dentry`可以读取到对应的`inode`，因为`dentry`维护有该文件对应的`inode`编号，有了编号，就可以按照磁盘布局设计，从磁盘指定的位置读取出对应的`inode_d`，如下图所示。在读取`inode`的时候可以预先读取对应文件的内容到内存中，方便文件系统的使用。特别的，对于目录文件，读取完其内容后，还应该动态的在文件系统维护好所有子文件的`dentry`。
 
-![](./part3.assets/读取inode示意图.png)
+<!-- ![](./part3.assets/读取inode示意图.png) -->
 
 下面为同学们提供一种用链表的方式，让文件系统在内存中来维护一个目录所有子文件的`dentry`的方式。父目录的`inode`（in-Mem型）添加一个指针，指向第一个子文件的dentry。然后子文件的`dentry`（in-Mem型）添加一个指针，指向相邻的兄弟子文件的`dentry`。如下面的结构体定义。
 
@@ -492,15 +498,22 @@ struct dentry {
 }
 ```
 
-这样就可以串起父目录的所有的子文件了，如下图的蓝色部分所示。
+这样就可以通过链表串起父目录的所有的子文件了，其中`inode->first_child`指向链表头节点，`dentry->brother`指向链表下一个节点。如下图所示：
 
-![](./part3.assets/维护dentry示意图.png)
+![dentry-index](./part3.assets/dentry-index.svg)
+
+!!! note "目录项索引"
+    除了构建为链表外，现代文件系统一般通过维护哈希表、红黑树等结构索引内存中的目录项，有兴趣的同学可以阅读相关Linux代码实现。
+
+<!-- 如下图的蓝色部分所示。 -->
+
+<!-- ![](./part3.assets/维护dentry示意图.png) -->
 
 **（2）创建新的dentry结构，添加到父目录**
 
 前面我们已经介绍了一种在内存中，父目录`inode`通过链表维护所有子文件`dentry`的实现。当需要新增加一个`dentry`到父目录时，只需要修改父目录`inode`中的指针指向新增的`dentry`结构，新增的`dentry`的兄弟指针指向原来第一个子文件`dentry`即可，如下图的红色部分。
 
-![](./part3.assets/添加dentry示意图.png)
+<!-- ![](./part3.assets/添加dentry示意图.png) -->
 
 
 
@@ -511,13 +524,35 @@ struct dentry {
 
 申请一个数据块的流程示意图如下，通过逐个位查找数据块位图，找到第一个空闲数据块下表并返回。
 
-![](./part3.assets/分配数据块示意图.png)
+![bitmap](./part3.assets/bitmap.svg)
 
 **（3）分配新的索引节点inode**
 
-新创建的文件还需要分配一个索引节点`inode`。通过逐个位遍历索引节点位图，找到一个空闲的索引节点编号。创建一个新的索引节点`inode`，绑定该编号。在实验原理我们知道，目录项`dentry`能索引到对应的索引节点`inode`。我们创建好新的索引节点`inode`后，要和传入的对应目录项`dentry`进行绑定。
+<!-- TODO: 解释一下绑定 -->
+新创建的文件还需要分配一个索引节点`inode`。通过逐个位遍历索引节点位图，找到一个空闲的索引节点编号。创建一个新的索引节点`inode`，绑定该编号。在实验原理我们知道，目录项`dentry`能索引到对应的索引节点`inode`。我们创建好新的索引节点`inode`后，要和传入的对应目录项`dentry`进行绑定。参考代码如下：
 
-![](./part3.assets/分配inode示意图.png)
+```c
+/**
+ * @brief 为一个inode分配dentry，采用头插法
+ * 
+ * @param inode 
+ * @param dentry 
+ * @return int 
+ */
+int sfs_alloc_dentry(struct sfs_inode* inode, struct sfs_dentry* dentry) {
+    if (inode->dentrys == NULL) {
+        inode->dentrys = dentry;
+    }
+    else {
+        dentry->brother = inode->dentrys;
+        inode->dentrys = dentry;
+    }
+    inode->dir_cnt++;
+    return inode->dir_cnt;
+}
+```
+
+<!-- ![](./part3.assets/分配inode示意图.png) -->
 
 通过以上三大步，同学们就可以完成 **创建文件** 函数的编写，包括 **创建普通文件** 和 **创建目录文件** 。创建普通文件对应的钩子函数是`.mknod`，创建目录文件对应的钩子函数是`.mkdir`。同学们实现好创建普通文件和创建目录文件的钩子函数后，需要将自己的两个函数分别添加到`.mknod`和`.mkdir`钩子上。
 
