@@ -352,7 +352,7 @@ Hello-FUSE
 
 #### 3.2.1 挂载
 
-FUSE文件系统的挂载 **无需使用mount系统调用** ，**直接运行生成的二进制程序**即可完成挂载操作。
+FUSE文件系统的挂载 **无需使用mount系统调用** ，**直接运行生成的二进制程序** 即可完成挂载操作。
 
 通常情况下，fuse文件系统只需要运行二进制程序的时候，指定挂载设备，以及可选挂载选项（非必须）即可。
 
@@ -366,19 +366,25 @@ FUSE文件系统的挂载 **无需使用mount系统调用** ，**直接运行生
 ./hello /tmp/fuse
 ```
 
+在任务一，VSCode配置的挂载命令（F5）展开就是：
+
+```shell
+./build/demo -f -d -s ./tests/mnt/
+```
+
 在任务二实现的fuse文件系统样板中，额外添加了指定挂载设备选项：
 
 ```shell
 ./<你实现的fuse文件系统名称> --device=<指定挂载设备> <可选选项> <指定挂载点> 
 ```
 
-在任务二中，在[环境搭建](../part3-1/index.html#4)的运行部分，VSCode配置的挂载命令（F5）展开就是：
+在任务二中，在[环境搭建](../part3/#14)的运行部分，VSCode配置的挂载命令（F5）展开就是：
 
 ```shell
-./build/newfs --device=/home/test_03/ddriver -f -d -s ./tests/mnt/
+./build/newfs --device=/home/guests/teststu_8/ddriver -f -d -s ./tests/mnt/
 ```
 
-也就是指定虚拟磁盘为 `/home/test_03/ddriver`，指定挂载点为`./test/mnt/`，挂载我们实现的newfs文件系统。其中 `-f` 选项表示强制执行操作，`-d` 选项表示输出调试信息，`-s` 选项表示输出摘要信息。
+也就是指定虚拟磁盘为 `/home/guests/teststu_8/ddriver`，指定挂载点为`./test/mnt/`，挂载我们实现的newfs文件系统。其中 `-f` 选项表示强制执行操作，`-d` 选项表示输出调试信息，`-s` 选项表示输出摘要信息。
 
 #### 3.2.2 卸载
 
