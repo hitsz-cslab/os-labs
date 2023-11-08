@@ -87,9 +87,9 @@ nav:
     - 实验原理: lab4/part2.md
     - 实验实现: lab4/part3.md
     - 提交文档: lab4/part4.md  
-# - Lab5：基于FUSE的青春版EXT2文件系统: 
-#   - 环境搭建: lab5/part0.md
-#   - 实验概述: lab5/part1.md
-#   - 实验原理: lab5/part2.md
-#   - 实验实现: lab5/part3.md
-#   - 提交文档: lab5/part4.md   
+  - Lab5：基于FUSE的青春版EXT2文件系统: 
+    - 环境搭建: lab5/part0.md
+    - 实验概述: lab5/part1.md
+    - 实验原理: lab5/part2.md
+    - 实验实现: lab5/part3.md
+    - 提交文档: lab5/part4.md
