@@ -166,7 +166,7 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$
 
 如下图所示：
 
-![](./part3.assets/任务一设定布局.png)
+![task1](./part3.assets/task1.svg)
 
 假设`<filename>`为`pass_task1.txt`，挂载文件系统后，`ls`效果将会如下：
 
@@ -293,7 +293,7 @@ chmod +x test.sh && ./test.sh
 
 （1）支持 **挂载**、**卸载**、**重新挂载**、 **查看目录和文件**、**创建文件**、**创建目录** 六个最基本的功能。
 
-（2）该文件系统的 **逻辑块大小** 应该为1024B，也就是两个磁盘的IO单位（512B）。![](./part3.assets/逻辑块.png)
+（2）该文件系统的 **逻辑块大小** 应该为1024B，也就是两个磁盘的IO单位（512B）。
 
 （3）该文件系统的磁盘布局应该按顺序依次包括（如下图）：超级块、索引节点位图、数据块位图、索引节点区、数据块区。五个区域 **缺一不可**。但具体的每个区域占多少个逻辑块，同学可以自行设计。
 
@@ -303,17 +303,15 @@ chmod +x test.sh && ./test.sh
 
 ### 3.2 实现步骤
 
-为了降低同学的上手成本，我们为提供同学们提供了一个实现了完整功能的文件系统样例，`simplefs`，供同学参考学习其部分实现。**值得注意的是**，本次任务二要实现的文件系统从磁盘布局上就和simplefs不一样，因此在有关文件系统接口的实现上也会不同。评测脚本会检查同学的磁盘布局分布，`simplefs`无法通过测评。
+为了降低同学的上手成本，我们为提供同学们提供了一个实现了完整功能的文件系统样例，`simplefs`，供同学参考学习其部分实现。**值得注意的是**，本次任务二要实现的文件系统从磁盘布局上就和simplefs不一样，因此在有关文件系统接口的实现上也会不同。评测脚本会检查同学的磁盘布局分布，`simplefs`无法通过所有测评， **若布局监测未通过，则扣除一半分数** 。
 
 #### 3.2.1 磁盘布局设计
 
-首先，在 **逻辑块大小** 上，本次实验逻辑块大小为1024B，后续的布局设计和接口实现均要使用到此大小。阅读学习`simplefs`代码的同学，需要注意到`simplefs`直接将一个磁盘IO块（512B）作为了一个逻辑块，也就是其逻辑块为512B，和本次实验不同，如下图：
-
-![](./part3.assets/逻辑块大小区别.png)
+首先，在 **逻辑块大小** 上，本次实验逻辑块大小为1024B，后续的布局设计和接口实现均要使用到此大小。阅读学习`simplefs`代码的同学，需要注意到`simplefs`直接将一个磁盘IO块（512B）作为了一个逻辑块，也就是其逻辑块为512B，而本次实验要实现的青春版EXT2文件系统将两个IO块作为一个逻辑块（1024B）。**后续布局检查会基于1024B逻辑块进行检查，因此同学们需要注意**。
 
 前面提到，本次实验 **磁盘布局** 应该包括：超级块、索引节点位图、数据块位图、索引节点区、数据块区五个区域。阅读和学习`simplefs`代码的同学，也需要注意到`simplefs`的磁盘布局上和本次实验的差别，如下图：
 
-![](./part3.assets/布局的区别.png)
+![fs-diff](./part3.assets/fs-diff.svg)
 
 !!! note "补充"
     **simplefs** 采用固定分配的方式来维护文件，因此无需数据块位图，一个文件固定分配1个逻辑块当索引节点，16个逻辑块当数据块，索引节点和数据块一起放置，简单便于索引，但利用率不高。**本次实验** 将一个文件的索引节点和数据进行了分离，形成索引节点区和数据块区，灵活为每个文件按需分配数据块，但也需要数据块位图来记录数据块分配情况。
@@ -358,22 +356,23 @@ int mount(struct options opt){
 
 本次实验的驱动接口（见实验原理）为我们提供了读写模拟磁盘的方法，`ddriver_read`和`ddriver_write`，利用这两个接口能够实现往模拟磁盘读取或写入一个IO块大小的数据。同时提供了`ddriver_seek`来移动要读取或写入的起始位置，也就是磁盘头。
 
-但上述接口每次读写的数据量固定为一个磁盘IO块的大小（512B），并且移动磁盘头的位置必须和512B保持对齐。为了能够更加灵活往磁盘任何一个位置`offset`读写任意大小`size`的数据，例如从磁盘开始位置处读出或写入`struct super_block_d`超级块结构体。同学可以利用提供原始驱动接口`ddriver_read`和`ddriver_write`，完成一层封装，实现你的`your_read`和`your_write`方法。
+但上述接口每次读写的数据量固定为一个磁盘IO块的大小（512B），并且移动磁盘头的位置必须和512B保持对齐。为了能够更加灵活往磁盘任何一个位置`offset`读写任意大小`size`的数据，例如从磁盘开始位置处读出或写入`struct super_block_d`超级块结构体。同学可以利用提供原始驱动接口`ddriver_read`和`ddriver_write`，完成一层封装，大概思路是先把数据所在的磁盘块都读出来，然后再从这一部分读出的数据中读写相应的数据，若是写，则要把读入修改的部分再写回磁盘。下面简要介绍实现`your_read`方法。
 
 ```c
 int your_read(int offset, void *out_content, int size);
-int your_write(int offset, void *in_content, int size);
 ```
 
-下面的图示给出了`your_read`和`your_write`的一个实现思路：
+<!-- 下面的图示给出了`your_read`和`your_write`的一个实现思路： -->
 
-![](./part3.assets/read接口封装.png)
+![read-offset](./part3.assets/read-offset.svg)
 
 `your_read`根据传入的offset和size，确定要读取的数据段和512B对齐的下界down和上界up。利用`ddriver_seek`移动把磁盘头到down位置，然后用`ddriver_read`读取一个磁盘块，再移动磁盘头读取下一个磁盘块，最后将从down到up的磁盘块都读取到内存中。然后拷贝所需要的部分，从bias处开始，大小为size，进行返回。
 
-![](./part3.assets/write接口封装.png)
+<!-- ![](./part3.assets/write接口封装.png) -->
 
-`your_write`的封装实现类似，同学可以根据上述的图示来参考实现。
+`your_write`的封装实现类似，区别在于需要读盘后回盘，大家可以参考SimpleFS进行代码实现，这里不再赘述。
+
+<!-- 同学可以根据上述的图示来参考实现。 -->
 
 #### 3.2.3 文件系统接口的实现
 
@@ -416,9 +415,9 @@ void* init(struct fuse_conn_info * conn_info);
 
 文件系统的 **卸载函数**，主要是根据磁盘布局设计，将文件系统有关的 **数据结构写回** 到磁盘指定的位置，以供文件系统下次挂载时能够再次读取和使用。本次实验，在文件系统卸载时，要考虑将几类结构写回磁盘：（1）超级块`struct super_block_d`结构；（2）两种位图，索引节点位图和数据块位图；（3）所有的文件数据及其管理结构，包括文件数据data，文件的目录项`struct dentry_d`结构和文件的索引节点`struct inode_d`结构。最后，在本次实验中，卸载函数还需要关闭在挂载时打开的磁盘。
 
-卸载函数实现的大致示意如下图所示：
+卸载原理示意如下：
 
-![](./part3.assets/umount示意图.png)
+![umount](./part3.assets/umount.svg)
 
 !!! note "注意"
     这里的文件既包括目录文件（dir），又包括普通文件（file）。之前提到，父目录的数据块会保存所有子文件的`struct dentry_d`结构。刷回目录文件（dir）的数据内容也就是指把所有子文件的`struct dentry_d`结构刷回到目录文件的指定数据块中。
@@ -534,9 +533,11 @@ int mkdir(const char* path, mode_t mode)
 
 在显示一个文件的时候，需要查看文件的属性，如文件大小、文件类型等信息。文件的属性在Linux中通过一个`stat`的结构体来维护。
 
-获取文件属性的函数的核心就是要实现填充好对应的`stat`结构体，并向上层返回。获取文件属性的函数对应`getattr`钩子。大致的流程示意图如下所示：
+获取文件属性的函数的核心就是要实现填充好对应的`stat`结构体，并向上层返回。获取文件属性的函数对应`getattr`钩子。
 
-![](./part3.assets/getattr示意图.png)
+<!-- TODO: 这里直接写点代码就行了 -->
+
+<!-- ![](./part3.assets/getattr示意图.png) -->
 
 **路径解析的逻辑** 在创建文件一小节已经介绍过，得到传入路径对应的`dentry`结构，就可以根据`dentry`及其索引的`inode`结构的字段来填充`stat`结构体的字段。
 
@@ -574,19 +575,74 @@ int getattr(const char* path, struct stat * stat);
 
 **（2）读取目录**
 
-查看一个目录下有哪些文件的时候，需要用到读取目录的钩子函数。
+<!-- 查看一个目录下有哪些文件的时候，需要用到读取目录的钩子函数。 -->
 
-读取目录的函数主要是将 **子文件的文件名** 填充到 **指定的缓冲区** 即可。具体说来，**读取目录的函数** 会传入一个 **子文件的偏移**  `offset`，一个装载 **结果的缓冲区** `buf`，还有一个上层根据自己需求编写的 **自定义填充函数** `filler`。读取目录函数负责的是根据 **子文件偏移**`offset`获取到对应的 **子文件文件名** 。然后 **直接调用** 传入的装填函数`filler`将这个子文件文件名装填到结果缓冲区`buf`。上层的`filler`决定怎么填充这个结果，和文件系统实现无关，`readdir`只需要知道有这么个装填函数`filler`，直接调用即可。示意图如下：
+<!-- 读取目录的函数主要是将 **子文件的文件名** 填充到 **指定的缓冲区** 即可。具体说来，**读取目录的函数** 会传入一个 **子文件的偏移**  `offset`，一个装载 **结果的缓冲区** `buf`，还有一个上层根据自己需求编写的 **自定义填充函数** `filler`。读取目录函数负责的是根据 **子文件偏移**`offset`获取到对应的 **子文件文件名** 。然后 **直接调用** 传入的装填函数`filler`将这个子文件文件名装填到结果缓冲区`buf`。上层的`filler`决定怎么填充这个结果，和文件系统实现无关，`readdir`只需要知道有这么个装填函数`filler`，直接调用即可。 -->
 
-![](./part3.assets/readdir示意图.png)
+<!-- TODO: 复用前面的代码 -->
+当 **在FUSE文件系统** 下调用`ls`时，就会触发`readdir`钩子， **readdir** 在`ls`的过程中每次 **仅会返回一个目录项** ，其中`offset`参数记录着当前应该返回的目录项：
+```c
+/**
+ * @brief 
+ * 
+ * @param path 
+ * @param buf 
+ * @param filler 参数讲解:
+ * 
+ * typedef int (*fuse_fill_dir_t) (void *buf, const char *name,
+ *				const struct stat *stbuf, off_t off)
+ * buf: name会被复制到buf中
+ * name: dentry名字
+ * stbuf: 文件状态，可忽略
+ * off: 下一次offset从哪里开始，这里可以理解为第几个dentry
+ * 
+ * @param offset 
+ * @param fi 
+ * @return int 
+ */
+int sfs_readdir(const char * path, void * buf, fuse_fill_dir_t filler, off_t offset,
+			    struct fuse_file_info * fi) {
+    boolean	is_find, is_root;
+	int		cur_dir = offset;
 
-其中，调用`filler`的时候需要的`filler`钩子函数的原型如下：
+	struct sfs_dentry* dentry = sfs_lookup(path, &is_find, &is_root);
+	struct sfs_dentry* sub_dentry;
+	struct sfs_inode* inode;
+	if (is_find) {
+		inode = dentry->inode;
+		sub_dentry = sfs_get_dentry(inode, cur_dir);
+		if (sub_dentry) {
+			filler(buf, sub_dentry->fname, NULL, ++offset);
+		}
+		return SFS_ERROR_NONE;
+	}
+	return -SFS_ERROR_NOTFOUND;
+}
+```
+其中最重要的 **filler** 函数， **filler** 函数原型如下：
+
+`typedef int (*fuse_fill_dir_t) (void *buf, const char *name, const struct stat *stbuf, off_t off)`
+对各个参数做如下解释：
+
+-  `buf`：name会被复制到buf中；
+
+-  `name`：dentry名字；
+
+-  `stbuf`：文件状态，可忽略；
+
+-  `off`： 下一次offset从哪里开始，这里可以理解为第几个dentry；
+
+因此，在上述代码中，我们调用`filler(buf, fname, NULL, ++offset)`表示将`fname`放入`buf`中，并使目录项偏移加一，代表下一次访问下一个目录项。
+
+<!-- ![](./part3.assets/readdir示意图.png) -->
+
+<!-- 其中，调用`filler`的时候需要的`filler`钩子函数的原型如下：
 
 ```c
 int filler(void *buf, const char *name, const struct stat *stbuf, off_t off);
 ```
 
-`buf`是要装填结果`name`的缓冲区;`name`是获取到的子文件的文件名;`stbuf`无需关注，设置为`NULL`即可;`off`是 **下一个子文件** 的偏移（用于下次调用readdir的`offset`）。
+`buf`是要装填结果`name`的缓冲区;`name`是获取到的子文件的文件名;`stbuf`无需关注，设置为`NULL`即可;`off`是 **下一个子文件** 的偏移（用于下次调用readdir的`offset`）。 -->
 
 读取目录对应的钩子函数是`.readdir`，同学们实现好读取目录的函数后，需要将该函数添加到`.readdir`钩子上。
 
