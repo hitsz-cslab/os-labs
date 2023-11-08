@@ -1,8 +1,8 @@
-# 实验提示
+# 常见问题
 
-## 1. 如何调试？
+## 1. 如何新开一个命令行
 
-按下F5后，文件系统运行为前台模式，那么如何输入命令呢？事实上，可以ctrl + shift +｀呼出另一个终端，然后在另一个终端操作。
+按下`F5`后，文件系统运行为 **前台模式** 。想要输入命令，如执行`ls`，则需要新开一个命令行。可以通过`ctrl + shift +｀`呼出一个新的命令行，然后在命令行操作。
 
 ![image-20211024170839872](part3.assets/image-20211024170839872.png)
 
@@ -10,51 +10,30 @@
 
 ![image-20211024170743344](part3.assets/image-20211024170743344.png)
 
-## 2. 挂载失败？
+## 2. 挂载点没连接上
 
-提示"fuse: bad mount point" 如下图所示：
+提示"fuse: bad mount point ... Transports end point is not connected" 如下图所示：
 
 ![image-20211024171103128](part3.assets/image-20211024171103128.png)
 
-这种情况就是不正常的卸载文件系统，我们显式地调用 **卸载文件系统** 即可：
+这种情况就是不正常的卸载文件系统，同学直接`ctrl + c`或者在VSCode直接关掉程序，导致上次的挂载点仍被占用。我们需要完成 **文件系统的卸载** ，释放上次占用的挂载点：
 
 ```sh
-teststu_8@OSLabExecNode0:~/pyq/user-land-filesystem/fs/newfs$ fusermount -u ./tests/mnt
-teststu_8@OSLabExecNode0:~/pyq/user-land-filesystem/fs/newfs$ 
+fusermount -u ./tests/mnt
 ```
 
-## 3. 挂载点不空？
+## 3. 挂载点不空
 
 提示"mountpoint is not empty" 如下图所示：
 
 ![image-20211024171348041](part3.assets/image-20211024171348041.png)
 
-这种情况就是在测试的时候，不小心给`mnt`文件夹下创建了一个文件，导致错误发生，把 **文件删除** 就行。
+这种情况就是在测试的时候，不小心给`mnt`文件夹下创建了一个文件，导致`mnt`目录不是空的，把`mnt`下的 **文件删除** 即可，保证`mnt`目录在挂载时是空的 。
 
-## 4. 如何解读EXT2文件系统布局？
+## 4.挂载点不存在
 
-可以查看`dump`文件系统镜像，对镜像进行解读：
+提示"fuse: bad mount point ... No such file or directory" 如下图所示：
 
-![image-20221115113807498](part5.assets/image-20221115113807498.png)
+![](part5.assets/没有挂载点.png)
 
-利用 `ddriver -d` 生成ddriver镜像命令查看镜像。
-
-以simplefs镜像为例：
-
-```console
-~/user-land-filesystem/fs/simplefs$ ddriver -d
-[sudo] password for test_19:
-目标设备 /home/students/test_19/ddriver
-8192+0 records in
-8192+0 records out
-4194304 bytes (4.2 MB, 4.0 MiB) copied, 0.0632482 s, 66.3 MB/s
-文件已导出至/home/students/test_19/user-land-filesystem/fs/simplefs/ddriver_dump，请安装HexEditor插件查看其内容
-```
-
-在VSCode上安装HexEditor插件，即可查看`ddriver_dump`镜像的内容。
-
-## 5. 实验评测中的位图检查原理
-
-为避免大家照搬Simple File System代码，实验评测脚本`./tests/checkbm/check_bm.py`会根据大家填写的fs.layout文件，确定ddriver磁盘布局，检查super、inode_map、data_map各项内容，如果检查失败，check_bm.py会返回相应的错误，大家依错自行查改即可。
-
-具体检查原理可以查看：https://gitee.com/ftutorials/user-land-filesystem/blob/main/fs/template/tests/checkbm/README.md
+这种情况是，文件系统挂载的挂载点，如`./tests/mnt`不存在。需要同学提前创建好一个空的文件夹`./tests/mnt`。
