@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../part2/">
+      
+      
+        <link rel="next" href="../part4/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>实验步骤 - 操作系统2023秋 | 哈工大（深圳）</title>
+        <title>实验实现 - 操作系统2023秋 | 哈工大（深圳）</title>
       
     
     
@@ -95,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              实验步骤
+              实验实现
             
           </span>
         </div>
@@ -284,6 +288,26 @@
           
   
   Lab4：页表
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../part0.md" class="md-tabs__link">
+          
+  
+  Lab5：基于FUSE的青春版EXT2文件系统
 
         </a>
       </li>
@@ -1233,6 +1257,385 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lab5：基于FUSE的青春版EXT2文件系统
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Lab5：基于FUSE的青春版EXT2文件系统
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part0.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    环境搭建
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1.任务零：环境搭建
+  </a>
+  
+    <nav class="md-nav" aria-label="1.任务零：环境搭建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 实验包结构介绍
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 配置开发环境
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    1.3 项目编译
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-demo" class="md-nav__link">
+    2. 任务一： 简单的文件系统demo
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 任务一： 简单的文件系统demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 实现内容
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 实现步骤
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    2.3 测试
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231" class="md-nav__link">
+    2.3.1 手动测试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232" class="md-nav__link">
+    2.3.2 测评脚本
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ext2" class="md-nav__link">
+    3. 任务二：实现青春版EXT2文件系统
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 任务二：实现青春版EXT2文件系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 实现内容
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 实现步骤
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 实现步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321" class="md-nav__link">
+    3.2.1 磁盘布局设计
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2 磁盘交互的封装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#323" class="md-nav__link">
+    3.2.3 文件系统接口的实现
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2.3 文件系统接口的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3231" class="md-nav__link">
+    3.2.3.1 挂载与卸载
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3232" class="md-nav__link">
+    3.2.3.2 创建文件和目录
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3233" class="md-nav__link">
+    3.2.3.3 显示文件和目录
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 测试
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331" class="md-nav__link">
+    3.3.1 手动测试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332" class="md-nav__link">
+    3.3.2 测评程序
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    提交文档
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1260,30 +1663,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-demo" class="md-nav__link">
-    1. 任务一： 简单的文件系统demo
+  <a href="#1" class="md-nav__link">
+    1.任务零：环境搭建
   </a>
   
-    <nav class="md-nav" aria-label="1. 任务一： 简单的文件系统demo">
+    <nav class="md-nav" aria-label="1.任务零：环境搭建">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#11" class="md-nav__link">
-    1.1 实现内容
+    1.1 实验包结构介绍
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#12" class="md-nav__link">
-    1.2 实现步骤
+    1.2 配置开发环境
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#13" class="md-nav__link">
-    1.3 测试
+    1.3 项目编译
   </a>
   
 </li>
@@ -1294,11 +1697,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-ext2" class="md-nav__link">
-    2. 任务二：实现青春版EXT2文件系统
+  <a href="#2-demo" class="md-nav__link">
+    2. 任务一： 简单的文件系统demo
   </a>
   
-    <nav class="md-nav" aria-label="2. 任务二：实现青春版EXT2文件系统">
+    <nav class="md-nav" aria-label="2. 任务一： 简单的文件系统demo">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1313,66 +1716,140 @@
     2.2 实现步骤
   </a>
   
-    <nav class="md-nav" aria-label="2.2 实现步骤">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#221" class="md-nav__link">
-    2.2.1 磁盘布局设计
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#222" class="md-nav__link">
-    2.2.2 磁盘交互的封装
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#223" class="md-nav__link">
-    2.2.3 文件系统接口的实现
-  </a>
-  
-    <nav class="md-nav" aria-label="2.2.3 文件系统接口的实现">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#2231" class="md-nav__link">
-    2.2.3.1 挂载与卸载
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2232" class="md-nav__link">
-    2.2.3.2 创建文件和目录
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2233" class="md-nav__link">
-    2.2.3.3 显示文件和目录
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
   <a href="#23" class="md-nav__link">
     2.3 测试
   </a>
+  
+    <nav class="md-nav" aria-label="2.3 测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231" class="md-nav__link">
+    2.3.1 手动测试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232" class="md-nav__link">
+    2.3.2 测评脚本
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ext2" class="md-nav__link">
+    3. 任务二：实现青春版EXT2文件系统
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 任务二：实现青春版EXT2文件系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 实现内容
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 实现步骤
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 实现步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321" class="md-nav__link">
+    3.2.1 磁盘布局设计
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2 磁盘交互的封装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#323" class="md-nav__link">
+    3.2.3 文件系统接口的实现
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2.3 文件系统接口的实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3231" class="md-nav__link">
+    3.2.3.1 挂载与卸载
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3232" class="md-nav__link">
+    3.2.3.2 创建文件和目录
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3233" class="md-nav__link">
+    3.2.3.3 显示文件和目录
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 测试
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#331" class="md-nav__link">
+    3.3.1 手动测试
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#332" class="md-nav__link">
+    3.3.2 测评程序
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1396,28 +1873,220 @@
                   
 
 
-<h1 id="_1">实验步骤<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="1-demo">1. 任务一： 简单的文件系统demo<a class="headerlink" href="#1-demo" title="Permanent link">&para;</a></h2>
+<h1 id="_1">实验实现<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1.任务零：环境搭建<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="11">1.1 实验包结构介绍<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<p>本次实验充分考虑到 <strong>上手成本</strong> ，因此我们编写了简单的环境配置脚本，帮助大家一键配置开发环境。实验包代码获取途径：</p>
+<div class="highlight"><pre><span></span><code><span class="gp"># </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/ftutorials/user-land-filesystem.git
+</code></pre></div>
+<p>实验包的结构如下：</p>
+<div class="highlight"><pre><span></span><code>user-land-filesystem/
+├── driver
+│   ├── ddriver.sh
+│   ├── kernel_ddriver
+│   └── user_ddriver
+├── fs
+│   ├── demo
+│   ├── simplefs
+│   └── template
+├── LICENSE
+├── README.md
+└── setenv.sh
+</code></pre></div>
+<ul>
+<li><code>driver</code></li>
+</ul>
+<p>存放驱动代码。</p>
+<ul>
+<li><code>fs</code></li>
+</ul>
+<p>存放 <strong>实现的FUSE文件系统</strong> 。其中<code>demo</code>为任务一要完成的文件系统demo，<code>simplefs</code>为类<code>EXT2</code>文件系统（缺少数据位图），供同学们参考使用，<code>template</code>用于生成文件系统的代码结构，可忽略。</p>
+<ul>
+<li><code>setenv.sh</code></li>
+</ul>
+<p>用于配置FUSE文件系统开发环境。</p>
+<h3 id="12">1.2 配置开发环境<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<p>运行<code>./setenv.sh</code>后，即可按照指导一步一步来建立环境：</p>
+<div class="highlight"><pre><span></span><code><span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem$ </span>./setenv.sh<span class="w"> </span>
+<span class="go">请输入工作目录名称 ([工作]目录将被至于./fs目录下): newfs</span>
+<span class="go">...</span>
+<span class="go">生成工作路径:  /home/guests/teststu_8/user-land-filesystem/fs/newfs</span>
+<span class="go">请输入项目名称: newfs</span>
+<span class="go">...</span>
+</code></pre></div>
+<p>其中，工作目录名称即开发该文件系统的 <strong>文件夹名称</strong> 。可以看到，它在<code>fs</code>目录下新建了一个<code>newfs</code>目录作为工作目录。</p>
+<p>接着，项目名称即真正的文件系统名称，可以是文件系统的简写，例如：nfs（代表newfs），这里要注意项目名不能有 <strong>特殊符号、空格</strong> 等。</p>
+<p>项目建立完成之后的结构<code>newfs</code>如下所示：</p>
+<div class="highlight"><pre><span></span><code>./fs/newfs/
+├── .vscode
+├── CMake
+│   └── FindFUSE.cmake
+├── CMakeLists.txt
+├── include
+│    ├── ddriver_ctl_user.h
+│    ├── ddriver.h
+│    ├── fs.layout
+│    ├── newfs.h
+│    └── types.h
+├── README.md
+├── SPEC.txt
+├── src
+│   └── newfs.c
+└── tests
+    ├── checkbm
+    │   ├── checkbm.py
+    │   ├── golden-sfs.json
+    │   └── golden.json
+    ├── mnt
+    ├── stages
+    │   ├── cp.sh
+    │   ├── ls.sh
+    │   ├── mkdir.sh
+    │   ├── mount.sh
+    │   ├── remount.sh
+    │   ├── rw.sh
+    │   └── touch.sh 
+    ├── fs_test.sh
+    ├── main.sh
+    └── test.sh
+</code></pre></div>
+<h3 id="13">1.3 项目编译<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
+<p>本次实验任务一和任务二，均需要按照下面步骤 <strong>分别</strong> 完成项目编译。如需编译任务一，请在<code>./fs/demo</code>文件夹下打开VSCode软件。如需编译任务二，请在<code>./fs/newfs</code>文件夹下打开VSCode软件。</p>
+<p>项目编译的过程：</p>
+<ul>
+<li><strong>Step 1</strong> . 以任务二为例，SSH打开<code>./fs/newfs</code>。打开VSCode软件，点击左上角 "文件" → "打开文件夹"，选择实验包目录下的fs/newfs文件夹。</li>
+</ul>
+<p><img alt="image-20211024145359896" src="../part3.assets/image-20211024145359896.png" /></p>
+<ul>
+<li><strong>Step 2</strong> . 在远程实验平台上安装CMake、CMake Tools、C/C++三个插件。</li>
+</ul>
+<p><img alt="image-20221108102247328" src="../part3-1.assets/image-20221108102247328.png" /></p>
+<p><img alt="image-20221108102514630" src="../part3-1.assets/image-20221108102514630.png" /></p>
+<p><img alt="image-20221118212435901" src="../part3-1.assets/image-20221118212435901.png" /></p>
+<ul>
+<li><strong>Step 3</strong> . 打开CMakeLists.txt文件</li>
+<li><strong>Step 4</strong> . ctrl + shift + p呼出命令菜单</li>
+<li><strong>Step 5</strong> . 输入CMake: Configure</li>
+<li><strong>Step 6</strong> . 选择 <strong>X86_64版本</strong> 的GCC（不要选错为别的，如riscv64的）：</li>
+</ul>
+<p><img alt="image-20221108103122575" src="../part3-1.assets/image-20221108103122575.png" /></p>
+<ul>
+<li><strong>Step 7</strong> . 点击VSCode左下角“管理”按钮，选择“设置”，然后在弹出的窗口中输入<code>@ext:ms-vscode.cmake-tools generator</code>，再点击“远程[SSH:10.249.12.98]”选项栏，在Cmake: Generator选项框中填入<code>Unix Makefiles</code>。</li>
+</ul>
+<p><img alt="image-20221108111316672" src="../part3-1.assets/image-20221108111316672.png" /></p>
+<ul>
+<li><strong>Step 8</strong> . 再次用ctrl + shift + p呼出命令菜单，输入CMake: Configure，查看输出窗口是否有“Generator” (已用!!!!!标记)</li>
+</ul>
+<p><img alt="image-20211024145654250" src="../part3.assets/image-20211024145654250.png" /></p>
+<ul>
+<li><strong>Step 9</strong> . 到<code>newfs/src/newfs.c</code>目录，打断点（可选，如果需要调试可打）。</li>
+<li><strong>Step 10</strong> . 按下<code>F5</code>进行运行和挂载文件系统。</li>
+</ul>
+<p><code>F5</code>是方便同学直接在VSCode挂载文件系统，同学也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的<a href="./part2/#32-fuse">FUSE文件系统的挂载与卸载</a>的<code>F5</code>命令展开。</p>
+<p>打下断点，调试运行如下图：</p>
+<p><img alt="image-20211024151032944" src="../part3.assets/image-20211024151032944.png" /></p>
+<p>没有打断点，直接运行和挂载文件系统，文件系统挂载成功如下图所示：</p>
+<p><img alt="f5运行成功" src="../part3.assets/f5%E8%BF%90%E8%A1%8C%E6%88%90%E5%8A%9F.png" /></p>
+<p>文件系统的卸载（参考实验原理的<a href="./part2/#32-fuse">FUSE文件系统的挂载与卸载</a>），需要同学们在命令行手动输入命令来实现：</p>
+<div class="highlight"><pre><span></span><code><span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$ </span>fusermount<span class="w"> </span>-u<span class="w"> </span>./tests/mnt
+<span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$ </span>
+</code></pre></div>
+<h2 id="2-demo">2. 任务一： 简单的文件系统demo<a class="headerlink" href="#2-demo" title="Permanent link">&para;</a></h2>
 <p>为了便于同学们过渡到任务二，我们在任务一要求同学们实现一个简单的文件系统小demo。通过这个简单的小demo，帮助大家理解和熟悉：</p>
 <ul>
 <li>简单的磁盘布局。磁盘逻辑块划分的概念以及本次实验逻辑块大小。</li>
-<li>简单的磁盘交互。利用本次实验提供的磁盘操作（驱动）接口。</li>
+<li>简单的磁盘交互。利用本次实验提供的磁盘操作（驱动）接口读取一个磁盘块。</li>
 <li>简单的文件系统接口实现。什么是文件系统接口等。</li>
 </ul>
-<h3 id="11">1.1 实现内容<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<h3 id="21">2.1 实现内容<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
 <p>这个文件系统小demo的实现要求如下：</p>
 <ul>
-<li>只需要实现<code>ls</code>命令，并且<code>ls</code>只需要在根目录显示某个的固定的普通文件名<code>&lt;filename&gt;</code>即可。</li>
-<li>通过磁盘驱动接口<code>ddriver_ioctl</code>获取磁盘相关信息：磁盘容量，IO块大小</li>
-<li>文件系统demo的一个逻辑块是两个IO块大小，假设第500个逻辑块为根目录的数据块，这个数据块只有一个dentry，也就是名为<code>&lt;filename&gt;</code>的dentry。</li>
-<li>出于简单示例，除了上述的块，磁盘其他块都是空的，无需做其他复杂考虑，同学只需要根据demo的<code>/ * TODO */</code> 指引完成demo即可。</li>
+<li>只需要实现<code>ls</code>命令，并且<code>ls</code>时只会在根目录显示某个的预设的普通文件名<code>&lt;filename&gt;</code>即可。</li>
+<li>文件系统demo的一个逻辑块是两个IO块大小（和任务二一致），假设第500个逻辑块为根目录的数据块，这个数据块只有一个<code>dentry</code>，也就是名为<code>&lt;filename&gt;</code>的dentry。</li>
+<li>出于简单示例，除了上述的块，磁盘其他块都是空的，无需做其他复杂考虑。</li>
 </ul>
-<p>假设<code>&lt;filename&gt;</code>为<code>file.txt</code>（实际可能不是<code>file.txt</code>），文件系统的demo效果将会如下：</p>
+<p>如下图所示：</p>
+<p><img alt="task1" src="../part3.assets/task1.svg" /></p>
+<p>假设<code>&lt;filename&gt;</code>为<code>pass_task1.txt</code>，挂载文件系统后，<code>ls</code>效果将会如下：</p>
 <p><img alt="" src="../part3.assets/task1%E6%95%88%E6%9E%9C.png" /></p>
-<h3 id="12">1.2 实现步骤<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
-<h3 id="13">1.3 测试<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
-<p>TODO：测试</p>
-<h2 id="2-ext2">2. 任务二：实现青春版EXT2文件系统<a class="headerlink" href="#2-ext2" title="Permanent link">&para;</a></h2>
+<h3 id="22">2.2 实现步骤<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>任务一的实现非常简单，只需要同学们根据<code>demo</code>代码中的<code>/* TODO */</code>指引填写几行代码。在完成任务一过程，同学们请参考实验原理部分的<a href="../part2/#21">驱动接口查阅</a>和<a href="../part2/#31-fuse">FUSE简单示例</a>。</p>
+<ul>
+<li>
+<p><strong>step 0</strong>，熟悉demo代码（不到一百行）定义的简单数据结构<code>demo_super</code>和<code>demo_dentry</code>，以及四个钩子函数<code>demo_mount</code>，<code>demo_umount</code>，<code>demo_getattr</code>和<code>demo_readdir</code></p>
+</li>
+<li>
+<p><strong>step 1</strong>，完成一个简单的全局超级块填充，维护一些后续计算需要的信息。同学可以通过<code>ddriver_ioctl</code>来获取磁盘容量和IO块大小等信息，从而得出逻辑块大小，需要在<code>demo_mount</code>函数中实现。</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="cm">/* 挂载文件系统 */</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">demo_mount</span><span class="p">(){</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="cm">/* 填充super信息 */</span>
+<span class="w">    </span><span class="n">super</span><span class="p">.</span><span class="n">sz_io</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cm">/* TODO */</span><span class="p">;</span>
+<span class="w">    </span><span class="n">super</span><span class="p">.</span><span class="n">sz_disk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cm">/* TODO */</span><span class="p">;</span>
+<span class="w">    </span><span class="n">super</span><span class="p">.</span><span class="n">sz_blks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cm">/* TODO */</span><span class="p">;</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><strong>step 2</strong>，完成遍历目录逻辑，从第500个逻辑块读取一个<code>demo_dentry</code>，将<code>demo_dentry</code>的文件名填充到filename。下面给出一个参考的<code>/* TODO */</code>指引，同学也无需严格按照这个指引。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="cm">/* 遍历目录 */</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">demo_readdir</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">fuse_fill_dir_t</span><span class="w"> </span><span class="n">filler</span><span class="p">,</span><span class="w"> </span><span class="kt">off_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">fuse_file_info</span><span class="o">*</span><span class="w"> </span><span class="n">fi</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">filename</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span><span class="w"> </span><span class="c1">// 待填充的</span>
+
+<span class="w">    </span><span class="cm">/* 根据超级块的信息，从第500逻辑块读取一个dentry，ls将只固定显示这个文件名 */</span>
+
+<span class="w">    </span><span class="cm">/* TODO: 计算offset，并根据offset调用ddriver_seek移动磁盘头到offset处 */</span>
+
+<span class="w">    </span><span class="cm">/* TODO: 调用ddriver_read读出一个磁盘块到内存，512B */</span>
+
+<span class="w">    </span><span class="cm">/* TODO: 使用memcpy拷贝上述512B的前sizeof(demo_dentry)字节构建一个demo_dentry结构 */</span>
+
+<span class="w">    </span><span class="cm">/* TODO: 根据demo_dentry的文件名填充filename */</span>
+
+<span class="w">    </span><span class="c1">// 此处大家先不关注filler，已经帮同学写好，同学填充好filename即可</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">filler</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>还有步骤</p>
+<ul>
+<li><strong>step 3</strong>，完成显示文件属性函数，将这个文件显示为普通文件。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="cm">/* 显示文件属性 */</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">demo_getattr</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">stat</span><span class="w"> </span><span class="o">*</span><span class="n">stbuf</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">        </span><span class="n">stbuf</span><span class="o">-&gt;</span><span class="n">st_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cm">/* TODO: 显示为普通文件 */</span><span class="p">;</span><span class="w">            </span><span class="c1">// 该文件显示为普通文件</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="23">2.3 测试<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>测试脚本位于<code>./demo/tests</code>目录下</p>
+<h4 id="231">2.3.1 手动测试<a class="headerlink" href="#231" title="Permanent link">&para;</a></h4>
+<p>我们给同学提供了一个手动测试和调试用的固定文件名<code>pass_task1.txt</code>，同学按照如下方式可以验证自己实现逻辑是否正确。</p>
+<p>先运行在<code>tests</code>目录下运行：</p>
+<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>start.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./start.sh
+</code></pre></div>
+<p>然后挂载文件系统，VSCode按<code>F5</code>（前提是已经按照<a href="./part3#13">环境搭建-项目编译</a>配置好任务一的编译环境）：</p>
+<p><img alt="f5运行成功" src="../part3.assets/f5%E8%BF%90%E8%A1%8C%E6%88%90%E5%8A%9F.png" /></p>
+<p>然后在 <strong>开启一个命令行</strong> ，输入<code>ls</code>命令查看<code>tests</code>目录下的<code>mnt</code>文件夹，查看结果是否为<code>pass_task1.txt</code>，如果是，则 <strong>手动测试通过</strong> 。如下图：</p>
+<p><img alt="" src="../part3.assets/task1%E6%95%88%E6%9E%9C.png" /></p>
+<p>最后一定要记得输入<code>fusermount</code>命令来卸载文件系统（参考实验原理的<a href="./part2/#32-fuse">FUSE文件系统的挂载与卸载</a>），<strong>不要</strong> 直接在VSCode终止或者按<code>ctrl + c</code>：</p>
+<div class="highlight"><pre><span></span><code>fusermount -u &lt;挂载点&gt;
+</code></pre></div>
+<p><img alt="" src="../part3.assets/%E5%8D%B8%E8%BD%BD%E7%A4%BA%E4%BE%8B.png" /></p>
+<h4 id="232">2.3.2 测评脚本<a class="headerlink" href="#232" title="Permanent link">&para;</a></h4>
+<p>任务一提供了测评脚本，同学完成实验后，进入<code>./demo/tests</code>目录，输入如下命令通过本节任务的测评：</p>
+<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>test.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./test.sh
+</code></pre></div>
+<p>测评通过的示意图如下：</p>
+<p><img alt="" src="../part3.assets/test-pass.png" /></p>
+<p>测评未通过，请根据提示修改：</p>
+<p><img alt="" src="../part3.assets/test-fail.png" /></p>
+<h2 id="3-ext2">3. 任务二：实现青春版EXT2文件系统<a class="headerlink" href="#3-ext2" title="Permanent link">&para;</a></h2>
 <p>在实验原理部分，我们已经宏观上知道文件系统所需要做的三件事：</p>
 <ol>
 <li>设计好磁盘的布局分布（layout）</li>
@@ -1426,20 +2095,19 @@
 </ol>
 <p>通过任务一的同学们已经对本次实验的相关内容有了初步的认识和了解。</p>
 <p>实验的总体结构同学可以参考是实验原理部分的实验总体结构小节。</p>
-<h3 id="21">2.1 实现内容<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<h3 id="31">3.1 实现内容<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
 <p>在任务二，需要同学们在我们提供的实验框架下实现一个完整的EXT2文件系统，这个文件系统需要满足以下一些条件：</p>
 <p>（1）支持 <strong>挂载</strong>、<strong>卸载</strong>、<strong>重新挂载</strong>、 <strong>查看目录和文件</strong>、<strong>创建文件</strong>、<strong>创建目录</strong> 六个最基本的功能。</p>
-<p>（2）该文件系统的 <strong>逻辑块大小</strong> 应该为1024B，也就是两个磁盘的IO单位（512B）。<img alt="" src="../part3.assets/%E9%80%BB%E8%BE%91%E5%9D%97.png" /></p>
+<p>（2）该文件系统的 <strong>逻辑块大小</strong> 应该为1024B，也就是两个磁盘的IO单位（512B）。</p>
 <p>（3）该文件系统的磁盘布局应该按顺序依次包括（如下图）：超级块、索引节点位图、数据块位图、索引节点区、数据块区。五个区域 <strong>缺一不可</strong>。但具体的每个区域占多少个逻辑块，同学可以自行设计。</p>
 <p><img alt="" src="../part3.assets/%E4%BB%BB%E5%8A%A12%E5%B8%83%E5%B1%80.png" /></p>
 <p>（4）出于测评脚本考虑，本次实验 <strong>统一规定</strong> 不实现"."和".."两个特殊目录。此外，本次实验一个inode只对应到一个文件，无需考虑软链接和硬链接的实现（也可选做）；只用实现直接索引，无需考虑间接索引（也可选做）。</p>
-<h3 id="22">2.2 实现步骤<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
-<p>为了降低同学的上手成本，我们为提供同学们提供了一个实现了完整功能的文件系统样例，<code>simplefs</code>，供同学参考学习其部分实现。<strong>值得注意的是</strong>，本次任务二要实现的文件系统从磁盘布局上就和simplefs不一样，因此在有关文件系统接口的实现上也会不同。评测脚本会检查同学的磁盘布局分布，<code>simplefs</code>无法通过测评。</p>
-<h4 id="221">2.2.1 磁盘布局设计<a class="headerlink" href="#221" title="Permanent link">&para;</a></h4>
-<p>首先，在 <strong>逻辑块大小</strong> 上，本次实验逻辑块大小为1024B，后续的布局设计和接口实现均要使用到此大小。阅读学习<code>simplefs</code>代码的同学，需要注意到<code>simplefs</code>直接将一个磁盘IO块（512B）作为了一个逻辑块，也就是其逻辑块为512B，和本次实验不同，如下图：</p>
-<p><img alt="" src="../part3.assets/%E9%80%BB%E8%BE%91%E5%9D%97%E5%A4%A7%E5%B0%8F%E5%8C%BA%E5%88%AB.png" /></p>
+<h3 id="32">3.2 实现步骤<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>为了降低同学的上手成本，我们为提供同学们提供了一个实现了完整功能的文件系统样例，<code>simplefs</code>，供同学参考学习其部分实现。<strong>值得注意的是</strong>，本次任务二要实现的文件系统从磁盘布局上就和simplefs不一样，因此在有关文件系统接口的实现上也会不同。评测脚本会检查同学的磁盘布局分布，<code>simplefs</code>无法通过所有测评， <strong>若布局监测未通过，则扣除一半分数</strong> 。</p>
+<h4 id="321">3.2.1 磁盘布局设计<a class="headerlink" href="#321" title="Permanent link">&para;</a></h4>
+<p>首先，在 <strong>逻辑块大小</strong> 上，本次实验逻辑块大小为1024B，后续的布局设计和接口实现均要使用到此大小。阅读学习<code>simplefs</code>代码的同学，需要注意到<code>simplefs</code>直接将一个磁盘IO块（512B）作为了一个逻辑块，也就是其逻辑块为512B，而本次实验要实现的青春版EXT2文件系统将两个IO块作为一个逻辑块（1024B）。<strong>后续布局检查会基于1024B逻辑块进行检查，因此同学们需要注意</strong>。</p>
 <p>前面提到，本次实验 <strong>磁盘布局</strong> 应该包括：超级块、索引节点位图、数据块位图、索引节点区、数据块区五个区域。阅读和学习<code>simplefs</code>代码的同学，也需要注意到<code>simplefs</code>的磁盘布局上和本次实验的差别，如下图：</p>
-<p><img alt="" src="../part3.assets/%E5%B8%83%E5%B1%80%E7%9A%84%E5%8C%BA%E5%88%AB.png" /></p>
+<p><img alt="fs-diff" src="../part3.assets/fs-diff.svg" /></p>
 <div class="admonition note">
 <p class="admonition-title">补充</p>
 <p><strong>simplefs</strong> 采用固定分配的方式来维护文件，因此无需数据块位图，一个文件固定分配1个逻辑块当索引节点，16个逻辑块当数据块，索引节点和数据块一起放置，简单便于索引，但利用率不高。<strong>本次实验</strong> 将一个文件的索引节点和数据进行了分离，形成索引节点区和数据块区，灵活为每个文件按需分配数据块，但也需要数据块位图来记录数据块分配情况。</p>
@@ -1477,21 +2145,24 @@
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-<h4 id="222">2.2.2 磁盘交互的封装<a class="headerlink" href="#222" title="Permanent link">&para;</a></h4>
+<h4 id="322">3.2.2 磁盘交互的封装<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
 <p>本次实验的驱动接口（见实验原理）为我们提供了读写模拟磁盘的方法，<code>ddriver_read</code>和<code>ddriver_write</code>，利用这两个接口能够实现往模拟磁盘读取或写入一个IO块大小的数据。同时提供了<code>ddriver_seek</code>来移动要读取或写入的起始位置，也就是磁盘头。</p>
-<p>但上述接口每次读写的数据量固定为一个磁盘IO块的大小（512B），并且移动磁盘头的位置必须和512B保持对齐。为了能够更加灵活往磁盘任何一个位置<code>offset</code>读写任意大小<code>size</code>的数据，例如从磁盘开始位置处读出或写入<code>struct super_block_d</code>超级块结构体。同学可以利用提供原始驱动接口<code>ddriver_read</code>和<code>ddriver_write</code>，完成一层封装，实现你的<code>your_read</code>和<code>your_write</code>方法。</p>
+<p>但上述接口每次读写的数据量固定为一个磁盘IO块的大小（512B），并且移动磁盘头的位置必须和512B保持对齐。为了能够更加灵活往磁盘任何一个位置<code>offset</code>读写任意大小<code>size</code>的数据，例如从磁盘开始位置处读出或写入<code>struct super_block_d</code>超级块结构体。同学可以利用提供原始驱动接口<code>ddriver_read</code>和<code>ddriver_write</code>，完成一层封装，大概思路是先把数据所在的磁盘块都读出来，然后再从这一部分读出的数据中读写相应的数据，若是写，则要把读入修改的部分再写回磁盘。下面简要介绍实现<code>your_read</code>方法。</p>
 <div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">your_read</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">out_content</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">your_write</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">in_content</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
 </code></pre></div>
-<p>下面的图示给出了<code>your_read</code>和<code>your_write</code>的一个实现思路：</p>
-<p><img alt="" src="../part3.assets/read%E6%8E%A5%E5%8F%A3%E5%B0%81%E8%A3%85.png" /></p>
+<!-- 下面的图示给出了`your_read`和`your_write`的一个实现思路： -->
+
+<p><img alt="read-offset" src="../part3.assets/read-offset.svg" /></p>
 <p><code>your_read</code>根据传入的offset和size，确定要读取的数据段和512B对齐的下界down和上界up。利用<code>ddriver_seek</code>移动把磁盘头到down位置，然后用<code>ddriver_read</code>读取一个磁盘块，再移动磁盘头读取下一个磁盘块，最后将从down到up的磁盘块都读取到内存中。然后拷贝所需要的部分，从bias处开始，大小为size，进行返回。</p>
-<p><img alt="" src="../part3.assets/write%E6%8E%A5%E5%8F%A3%E5%B0%81%E8%A3%85.png" /></p>
-<p><code>your_write</code>的封装实现类似，同学可以根据上述的图示来参考实现。</p>
-<h4 id="223">2.2.3 文件系统接口的实现<a class="headerlink" href="#223" title="Permanent link">&para;</a></h4>
+<!-- ![](./part3.assets/write接口封装.png) -->
+
+<p><code>your_write</code>的封装实现类似，区别在于需要读盘后回盘，大家可以参考SimpleFS进行代码实现，这里不再赘述。</p>
+<!-- 同学可以根据上述的图示来参考实现。 -->
+
+<h4 id="323">3.2.3 文件系统接口的实现<a class="headerlink" href="#323" title="Permanent link">&para;</a></h4>
 <p>在实验原理部分，我们为同学们介绍了ext2文件系统中常用的几种数据结构，超级块<code>super_block</code>，索引节点<code>inode</code>，目录项<code>dentry</code>以及它们的两种类型（in-Mem类型和to-Disk类型）。同学们在实现下述文件系统接口的时候，根据自己的需求来添加相关字段，或者如有需要设计新的数据结构。</p>
 <p>下面给出本次实验需要完成的接口的实现参考，同学可以对照着来帮助理解<code>simplefs</code>的代码，以及参考着完成自己的文件系统实现。</p>
-<h5 id="2231">2.2.3.1 挂载与卸载<a class="headerlink" href="#2231" title="Permanent link">&para;</a></h5>
+<h5 id="3231">3.2.3.1 挂载与卸载<a class="headerlink" href="#3231" title="Permanent link">&para;</a></h5>
 <p>在实验原理，我们已经知道超级块常包括幻数，磁盘布局信息，根目录索引等字段。</p>
 <p><strong>（1）挂载函数</strong></p>
 <p>文件系统的 <strong>挂载函数</strong>，其核心是为文件系统构建和填充一个超级块<code>struct super_block</code>（in-Mem类型）数据结构来供文件系统后续的使用。如果是 <strong>第一次挂载</strong>，超级块的构建需要完全重新进行。如果之前已经挂载过，这 <strong>非第一次挂载</strong>，超级块的构建只需要从磁盘中读取之前存储的<code>struct super_block_d</code>（to-Disk类型），然后用来填充和构建<code>struct super_block</code>（in-Mem类型）即可。</p>
@@ -1511,8 +2182,8 @@
 <p><strong>（2）卸载函数</strong></p>
 <p>本次实验要求同学实现重新挂载的功能，这意味着在卸载文件系统的时候，要实现将相关数据结构刷回磁盘的操作。</p>
 <p>文件系统的 <strong>卸载函数</strong>，主要是根据磁盘布局设计，将文件系统有关的 <strong>数据结构写回</strong> 到磁盘指定的位置，以供文件系统下次挂载时能够再次读取和使用。本次实验，在文件系统卸载时，要考虑将几类结构写回磁盘：（1）超级块<code>struct super_block_d</code>结构；（2）两种位图，索引节点位图和数据块位图；（3）所有的文件数据及其管理结构，包括文件数据data，文件的目录项<code>struct dentry_d</code>结构和文件的索引节点<code>struct inode_d</code>结构。最后，在本次实验中，卸载函数还需要关闭在挂载时打开的磁盘。</p>
-<p>卸载函数实现的大致示意如下图所示：</p>
-<p><img alt="" src="../part3.assets/umount%E7%A4%BA%E6%84%8F%E5%9B%BE.png" /></p>
+<p>卸载原理示意如下：</p>
+<p><img alt="umount" src="../part3.assets/umount.svg" /></p>
 <div class="admonition note">
 <p class="admonition-title">注意</p>
 <p>这里的文件既包括目录文件（dir），又包括普通文件（file）。之前提到，父目录的数据块会保存所有子文件的<code>struct dentry_d</code>结构。刷回目录文件（dir）的数据内容也就是指把所有子文件的<code>struct dentry_d</code>结构刷回到目录文件的指定数据块中。</p>
@@ -1526,7 +2197,7 @@
 <div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="nf">destroy</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="p">);</span>
 </code></pre></div>
 <p>同学创建的卸载函数需要和上述函数声明保持一致，本次实验同学们无需关注卸载函数的传入参数，照着声明即可。</p>
-<h5 id="2232">2.2.3.2 创建文件和目录<a class="headerlink" href="#2232" title="Permanent link">&para;</a></h5>
+<h5 id="3232">3.2.3.2 创建文件和目录<a class="headerlink" href="#3232" title="Permanent link">&para;</a></h5>
 <p>在实验原理和前面的讨论，我们知道，在文件系统中，一个文件应该包括 <strong>索引节点</strong> <code>inode</code>，<strong>目录项</strong> <code>dentry</code>（位于父目录的数据块中），以及 <strong>文件的数据</strong> data。创建一个文件应该要实现前两个部分的创建和维护，而文件数据为空。<strong>目录项</strong> <code>dentry</code>体现层级关系，索引节点<code>inode</code>用于文件自身索引。</p>
 <p>本次实验要求同学们实现创建普通文件和创建目录文件，依次对应<code>mknod</code>和<code>mkdir</code>两个钩子函数，都会根据传入的一个路径来创建对应的文件。</p>
 <p>普通文件和目录文件都属于文件，两者创建的实现大体上是一致的，其核心主要都包括：（1）<strong>路径解析</strong>（lookup），得到父目录的<code>dentry</code>；（2）创建新的 <strong>目录项结构</strong> <code>dentry</code>结构维护到上述得到的父目录中；（3）分配新的 <strong>索引节点</strong> <code>inode</code>。不同之处在于两者创建的文件类型是不一样的。</p>
@@ -1574,11 +2245,14 @@
 <div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">mkdir</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="kt">mode_t</span><span class="w"> </span><span class="n">mode</span><span class="p">)</span>
 </code></pre></div>
 <p><code>path</code>和<code>mode</code>的解释同上<code>mknod</code>。</p>
-<h5 id="2233">2.2.3.3 显示文件和目录<a class="headerlink" href="#2233" title="Permanent link">&para;</a></h5>
+<h5 id="3233">3.2.3.3 显示文件和目录<a class="headerlink" href="#3233" title="Permanent link">&para;</a></h5>
 <p><strong>（1）获取文件属性</strong></p>
 <p>在显示一个文件的时候，需要查看文件的属性，如文件大小、文件类型等信息。文件的属性在Linux中通过一个<code>stat</code>的结构体来维护。</p>
-<p>获取文件属性的函数的核心就是要实现填充好对应的<code>stat</code>结构体，并向上层返回。获取文件属性的函数对应<code>getattr</code>钩子。大致的流程示意图如下所示：</p>
-<p><img alt="" src="../part3.assets/getattr%E7%A4%BA%E6%84%8F%E5%9B%BE.png" /></p>
+<p>获取文件属性的函数的核心就是要实现填充好对应的<code>stat</code>结构体，并向上层返回。获取文件属性的函数对应<code>getattr</code>钩子。</p>
+<!-- TODO: 这里直接写点代码就行了 -->
+
+<!-- ![](./part3.assets/getattr示意图.png) -->
+
 <p><strong>路径解析的逻辑</strong> 在创建文件一小节已经介绍过，得到传入路径对应的<code>dentry</code>结构，就可以根据<code>dentry</code>及其索引的<code>inode</code>结构的字段来填充<code>stat</code>结构体的字段。</p>
 <p><code>stat</code>结构体通常需要填充如下一些常用字段，同学们需要完成这些字段的填充：</p>
 <table>
@@ -1645,23 +2319,84 @@
 </code></pre></div>
 <p>其中，<code>path</code>是要读取属性的文件路径;<code>stat</code>是要填充返回的文件属性结构体。</p>
 <p><strong>（2）读取目录</strong></p>
-<p>查看一个目录下有哪些文件的时候，需要用到读取目录的钩子函数。</p>
-<p>读取目录的函数主要是将 <strong>子文件的文件名</strong> 填充到 <strong>指定的缓冲区</strong> 即可。具体说来，<strong>读取目录的函数</strong> 会传入一个 <strong>子文件的偏移</strong>  <code>offset</code>，一个装载 <strong>结果的缓冲区</strong> <code>buf</code>，还有一个上层根据自己需求编写的 <strong>自定义填充函数</strong> <code>filler</code>。读取目录函数负责的是根据 <strong>子文件偏移</strong><code>offset</code>获取到对应的 <strong>子文件文件名</strong> 。然后 <strong>直接调用</strong> 传入的装填函数<code>filler</code>将这个子文件文件名装填到结果缓冲区<code>buf</code>。上层的<code>filler</code>决定怎么填充这个结果，和文件系统实现无关，<code>readdir</code>只需要知道有这么个装填函数<code>filler</code>，直接调用即可。示意图如下：</p>
-<p><img alt="" src="../part3.assets/readdir%E7%A4%BA%E6%84%8F%E5%9B%BE.png" /></p>
-<p>其中，调用<code>filler</code>的时候需要的<code>filler</code>钩子函数的原型如下：</p>
+<!-- 查看一个目录下有哪些文件的时候，需要用到读取目录的钩子函数。 -->
+
+<!-- 读取目录的函数主要是将 **子文件的文件名** 填充到 **指定的缓冲区** 即可。具体说来，**读取目录的函数** 会传入一个 **子文件的偏移**  `offset`，一个装载 **结果的缓冲区** `buf`，还有一个上层根据自己需求编写的 **自定义填充函数** `filler`。读取目录函数负责的是根据 **子文件偏移**`offset`获取到对应的 **子文件文件名** 。然后 **直接调用** 传入的装填函数`filler`将这个子文件文件名装填到结果缓冲区`buf`。上层的`filler`决定怎么填充这个结果，和文件系统实现无关，`readdir`只需要知道有这么个装填函数`filler`，直接调用即可。 -->
+
+<!-- TODO: 复用前面的代码 -->
+<p>当 <strong>在FUSE文件系统</strong> 下调用<code>ls</code>时，就会触发<code>readdir</code>钩子， <strong>readdir</strong> 在<code>ls</code>的过程中每次 <strong>仅会返回一个目录项</strong> ，其中<code>offset</code>参数记录着当前应该返回的目录项：
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * @brief </span>
+<span class="cm"> * </span>
+<span class="cm"> * @param path </span>
+<span class="cm"> * @param buf </span>
+<span class="cm"> * @param filler 参数讲解:</span>
+<span class="cm"> * </span>
+<span class="cm"> * typedef int (*fuse_fill_dir_t) (void *buf, const char *name,</span>
+<span class="cm"> *              const struct stat *stbuf, off_t off)</span>
+<span class="cm"> * buf: name会被复制到buf中</span>
+<span class="cm"> * name: dentry名字</span>
+<span class="cm"> * stbuf: 文件状态，可忽略</span>
+<span class="cm"> * off: 下一次offset从哪里开始，这里可以理解为第几个dentry</span>
+<span class="cm"> * </span>
+<span class="cm"> * @param offset </span>
+<span class="cm"> * @param fi </span>
+<span class="cm"> * @return int </span>
+<span class="cm"> */</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">sfs_readdir</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">fuse_fill_dir_t</span><span class="w"> </span><span class="n">filler</span><span class="p">,</span><span class="w"> </span><span class="kt">off_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span>
+<span class="w">                </span><span class="k">struct</span><span class="w"> </span><span class="nc">fuse_file_info</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fi</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">boolean</span><span class="w"> </span><span class="n">is_find</span><span class="p">,</span><span class="w"> </span><span class="n">is_root</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">     </span><span class="n">cur_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sfs_dentry</span><span class="o">*</span><span class="w"> </span><span class="n">dentry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sfs_lookup</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">is_find</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">is_root</span><span class="p">);</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sfs_dentry</span><span class="o">*</span><span class="w"> </span><span class="n">sub_dentry</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">sfs_inode</span><span class="o">*</span><span class="w"> </span><span class="n">inode</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_find</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">inode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dentry</span><span class="o">-&gt;</span><span class="n">inode</span><span class="p">;</span>
+<span class="w">        </span><span class="n">sub_dentry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sfs_get_dentry</span><span class="p">(</span><span class="n">inode</span><span class="p">,</span><span class="w"> </span><span class="n">cur_dir</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sub_dentry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">filler</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">sub_dentry</span><span class="o">-&gt;</span><span class="n">fname</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">offset</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">SFS_ERROR_NONE</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">-</span><span class="n">SFS_ERROR_NOTFOUND</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+其中最重要的 <strong>filler</strong> 函数， <strong>filler</strong> 函数原型如下：</p>
+<p><code>typedef int (*fuse_fill_dir_t) (void *buf, const char *name, const struct stat *stbuf, off_t off)</code>
+对各个参数做如下解释：</p>
+<ul>
+<li>
+<p><code>buf</code>：name会被复制到buf中；</p>
+</li>
+<li>
+<p><code>name</code>：dentry名字；</p>
+</li>
+<li>
+<p><code>stbuf</code>：文件状态，可忽略；</p>
+</li>
+<li>
+<p><code>off</code>： 下一次offset从哪里开始，这里可以理解为第几个dentry；</p>
+</li>
+</ul>
+<p>因此，在上述代码中，我们调用<code>filler(buf, fname, NULL, ++offset)</code>表示将<code>fname</code>放入<code>buf</code>中，并使目录项偏移加一，代表下一次访问下一个目录项。</p>
+<!-- ![](./part3.assets/readdir示意图.png) -->
+
+<!-- 其中，调用`filler`的时候需要的`filler`钩子函数的原型如下：
+
 <div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">filler</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">stat</span><span class="w"> </span><span class="o">*</span><span class="n">stbuf</span><span class="p">,</span><span class="w"> </span><span class="kt">off_t</span><span class="w"> </span><span class="n">off</span><span class="p">);</span>
 </code></pre></div>
-<p><code>buf</code>是要装填结果<code>name</code>的缓冲区;<code>name</code>是获取到的子文件的文件名;<code>stbuf</code>无需关注，设置为<code>NULL</code>即可;<code>off</code>是 <strong>下一个子文件</strong> 的偏移（用于下次调用readdir的<code>offset</code>）。</p>
+
+`buf`是要装填结果`name`的缓冲区;`name`是获取到的子文件的文件名;`stbuf`无需关注，设置为`NULL`即可;`off`是 **下一个子文件** 的偏移（用于下次调用readdir的`offset`）。 -->
+
 <p>读取目录对应的钩子函数是<code>.readdir</code>，同学们实现好读取目录的函数后，需要将该函数添加到<code>.readdir</code>钩子上。</p>
 <p><code>.readdir</code>的函数原型如下，实现的读取目录函数要和以下声明保持一致：</p>
 <div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">readdir</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">fuse_fill_dir_t</span><span class="w"> </span><span class="n">filler</span><span class="p">,</span><span class="w"> </span><span class="kt">off_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">fuse_file_info</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">fi</span><span class="p">);</span>
 </code></pre></div>
 <p>其中，<code>path</code>是要读取的目录的路径;<code>buf</code>是传入的装填返回结果的缓冲区;<code>filler</code>是传入的上层自定义的装填函数;<code>offset</code>是本次要要开始读取的子文件的偏移，<code>fi</code>无需关注。</p>
-<h3 id="23">2.3 测试<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
-<ul>
-<li>手工测试<code>touch</code>、<code>ls</code>、 <code>mkdir</code>、<code>fusermount -u</code>等命令的正确性；</li>
-<li>通过<code>./tests/test.sh</code>脚本的基本功能测试。</li>
-</ul>
+<h3 id="33">3.3 测试<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<h4 id="331">3.3.1 手动测试<a class="headerlink" href="#331" title="Permanent link">&para;</a></h4>
+<h4 id="332">3.3.2 测评程序<a class="headerlink" href="#332" title="Permanent link">&para;</a></h4>
 
 
 

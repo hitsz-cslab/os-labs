@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../part1/">
+      
+      
+        <link rel="next" href="../part3/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -284,6 +288,26 @@
           
   
   Lab4：页表
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../part0.md" class="md-tabs__link">
+          
+  
+  Lab5：基于FUSE的青春版EXT2文件系统
 
         </a>
       </li>
@@ -1233,6 +1257,338 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lab5：基于FUSE的青春版EXT2文件系统
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Lab5：基于FUSE的青春版EXT2文件系统
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part0.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    环境搭建
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    实验原理
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-ext2" class="md-nav__link">
+    1.  EXT2文件系统
+  </a>
+  
+    <nav class="md-nav" aria-label="1. EXT2文件系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1  文件系统
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-ext2" class="md-nav__link">
+    1.2  EXT2文件系统
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 EXT2文件系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121" class="md-nav__link">
+    1.2.1  磁盘布局
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122" class="md-nav__link">
+    1.2.2  超级块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123" class="md-nav__link">
+    1.2.3  文件的表示
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124" class="md-nav__link">
+    1.2.4 目录项的表示
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#125-in-memto-disk" class="md-nav__link">
+    1.2.5 in-Mem与to-Disk结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2.  虚拟磁盘的使用
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 虚拟磁盘的使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 驱动接口查阅
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 磁盘管理工具
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-fuse" class="md-nav__link">
+    3.  FUSE的使用
+  </a>
+  
+    <nav class="md-nav" aria-label="3. FUSE的使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-fuse" class="md-nav__link">
+    3.1  FUSE的简单示例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-fuse" class="md-nav__link">
+    3.2 FUSE文件系统的挂载与卸载
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 FUSE文件系统的挂载与卸载">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321" class="md-nav__link">
+    3.2.1 挂载
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2 卸载
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4. 实验总体结构
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    实验实现
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    提交文档
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1426,11 +1782,11 @@
 <h1 id="_1">实验原理<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <h2 id="1-ext2">1.  EXT2文件系统<a class="headerlink" href="#1-ext2" title="Permanent link">&para;</a></h2>
 <h3 id="11">1.1  文件系统<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
-<p><img alt="朴素思想" src="../part2.assets/%E6%9C%B4%E7%B4%A0%E6%80%9D%E6%83%B3.png" /></p>
+<p><img alt="naive" src="../part2.assets/naive-file-system.svg" /></p>
 <p>为什么需要文件系统？</p>
 <p>假设我们有一个磁盘设备disk，并想将文件file1和file2存储在磁盘中。</p>
 <p>一种很朴素的思想就是把file1和file2的数据依次放在磁盘中，直接大功告成。它把全部磁盘disk都用来存数据，都是数据区。这种办法简单直接，但是它无法很好的适应增删等需求，难以管理和维护空闲区域。很显然，仅仅有数据区是不够的。</p>
-<p><img alt="文件系统思想" src="../part2.assets/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.png" /></p>
+<p><img alt="filesystem" src="../part2.assets/file-system.svg" /></p>
 <p>为了更好管理磁盘，我们需要对磁盘引入一套管理程序，这就是文件系统。</p>
 <ul>
 <li><strong>硬件层面</strong>：此时的磁盘，除了放数据内容以外，还要应该要有对应的区域来存放管理内容。文件系统思想则将 <strong>整个磁盘进行布局设计</strong> ，将磁盘划分为管理区和数据区。</li>
@@ -1453,7 +1809,7 @@
 <p><strong>EXT2</strong> 是GNU/Linux系统中标准的文件系统，其特点是 <strong>存取文件的性能较好</strong> ，对于中小型的文件更显示其优势。本实验以 <strong>EXT2</strong> 为模板，实现一个青春版文件系统。</p>
 <h4 id="121">1.2.1  磁盘布局<a class="headerlink" href="#121" title="Permanent link">&para;</a></h4>
 <p>EXT2文件系统将盘块分成两大类：保存元数据的 <strong>元数据盘块</strong>（前面提到的管理区），以及存放文件内容数据的 <strong>数据盘块</strong> （前面提到的数据区）。本实验中，为了降低实验难度，简化后的EXT2文件系统的基本布局如下所示：</p>
-<p><img alt="ext2布局" src="../part2.assets/ext2%E5%B8%83%E5%B1%80.png" /></p>
+<p><img alt="ext2-disk-layout" src="../part2.assets/disk-layout.svg" /></p>
 <p>系统主要包含以下五个部分：</p>
 <ul>
 <li><strong>超级块</strong> ：包含整个文件系统和磁盘布局的总体信息。</li>
@@ -1512,10 +1868,10 @@
 </div>
 <h4 id="123">1.2.3  文件的表示<a class="headerlink" href="#123" title="Permanent link">&para;</a></h4>
 <p>通过1.1 文件系统的介绍，不能仅仅将文件的数据存在磁盘就万事大吉了，还需要一些管理信息。文件的管理信息就是文件的 <strong>元数据</strong> ，也就是 <strong>索引节点（inode）</strong> 中的数据。</p>
-<p>在文件系统中，任何一个文件都是由 <strong>索引节点（inode）</strong> 和 <strong>数据（data）</strong> 构成。索引节点（inode）的数据存放在索引节点区，数据（data）存放在数据块区，并通过索引节点（inode）来索引数据块。</p>
-<p>文件夹（目录）也属于这里的文件范畴，目录也是一种文件。没有特殊说明，本小节的文件包括普通文件（file）和目录文件（dir）。</p>
-<p>简单的示意图，如下图所示：</p>
-<p><img alt="文件组织形式" src="../part2.assets/%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E5%BD%A2%E5%BC%8F.png" /></p>
+<p>在EXT2文件系统中，任何一个文件都是由 <strong>索引节点（inode）</strong> 和 <strong>数据（data）</strong> 构成。索引节点（inode）的数据存放在索引节点区，数据（data）存放在数据块区，并通过索引节点（inode）来索引数据块。</p>
+<p>文件夹（目录）也属于文件范畴，即，目录是一种特殊的文件。如果没有特殊说明，本小节的“文件”包括普通文件（FILE）和目录文件（DIR）。</p>
+<!-- 一个典型并简化的EXT2的文件结构如下图所示：![文件组织形式](part2.assets/文件组织形式.png) -->
+
 <p><strong>（1）索引节点（inode）通常存放：</strong></p>
 <ul>
 <li><strong>inode编号</strong>。是第几个inode，用于标识一个inode。</li>
@@ -1551,15 +1907,13 @@
 <p class="admonition-title">笔记</p>
 <p>目录也是一种特殊的文件，其数据块内容是所有子目录项结构。</p>
 </div>
-<p>以一个普通文件为例，下面的图展示了一个文件的元数据和数据如何分离，并如何如何通过元数据来索引数据。</p>
+<p>一个典型并简化的EXT2的文件结构如下图所示。该图展示了一个文件的元数据和数据在磁盘上的布局情况，并展示了如何如何通过索引节点通过<code>block_pointer</code>索引数据块。</p>
 <p><img alt="image-20211024102812913" src="../part2.assets/image-20211024102812913.png" /></p>
 <h4 id="124">1.2.4 目录项的表示<a class="headerlink" href="#124" title="Permanent link">&para;</a></h4>
-<p>上面讲述的索引节点（inode）和数据（data）表示，只是给出了一个文件 <strong>自身</strong> 的组织形式。但是，目录文件（dir）及其子文件之间的关系如何表示呢？例如，dir0是dir的子目录，file又是dir0的子文件。仅仅靠上一小节的索引节点（inode）结构无法表示 <strong>文件的层级关系</strong> 。</p>
-<p>为此，类似于每个文件都有一个索引节点（inode），我们额外为每一个文件都维护一个 <strong>很精小的</strong>（比索引节点inode还小） 的标识的结构，这个标识可以找到文件的索引节点（inode）。如下图所示：</p>
-<p><img alt="目录项" src="../part2.assets/%E7%9B%AE%E5%BD%95%E9%A1%B9.png" /></p>
-<p>每个文件都有了一个标识。目录文件只需要把所有子文件的标识，都存放在自己的数据块里。通过读取目录文件的数据块，逐个读取出标识，就能够知道这个目录下有哪些子文件了。这个标识就是 <strong>目录项（dentry）</strong>。每一个文件都会有一个目录项（dentry）。例如，体现<code>dir</code>目录下有<code>file1</code>、<code>dir0</code>、<code>file2</code>的一个图示结构，如下所示：</p>
-<p><img alt="目录项" src="../part2.assets/dentry%E7%A4%BA%E4%BE%8B.png" /></p>
-<p>一个目录项要尽可能精简，只需要包含文件最基本的信息，通常会包括：</p>
+<p>上面讲述的索引节点（inode）和数据（data）表示，只是给出了一个文件 <strong>自身</strong> 的组织形式。但是，目录文件（dir）及其子文件之间的关系如何表示呢？例如，dir0是dir的子目录，file又是dir0的子文件。仅仅靠上一小节的索引节点（inode）结构无法表示 <strong>文件的层级关系</strong> 。UNIX/Linux设计者很精明地将这种层级结构通过 <strong>文件/文件名解耦</strong> 的方式实现。</p>
+<p>具体而言，我们为 <strong>目录文件</strong> 维护一种特殊的数据：目录项（dentry）。目录项指向了文件对应的索引节点（inode），并保存了该文件的文件名。通过目录项，我们就可以很直观地构建起整个文件树。如下图所示：</p>
+<p><img alt="hierarchy" src="../part2.assets/hierarchy.svg" /></p>
+<p>那么，目录项该维护怎样的数据结构呢？一个目录项要尽可能精简，只需要包含文件最基本的信息，通常会包括：</p>
 <ul>
 <li><strong>inode编号</strong>。用来找到对应文件的索引节点（inode），进而找到其数据。</li>
 <li><strong>文件名称</strong>。文件的名字，一个文件的最基本的标识。</li>
@@ -1578,9 +1932,13 @@
 <span class="w">    </span><span class="kt">int</span><span class="w">     </span><span class="n">ftype</span><span class="p">;</span><span class="w">                </span>
 <span class="p">};</span><span class="w">  </span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">为什么不把文件名放在inode中？</p>
+<p>在UNIX/Linux系统中存在一种特殊的文件结构，硬链接（Hard Link）。这种结构允许一个文件对应多个文件名。因此，文件名与文件本身是解耦的，文件名可以有多个，但是文件本身只有一个。在实现过程中，通过dentry的方式，就可以很好的支持硬链接。</p>
+</div>
 <h4 id="125-in-memto-disk">1.2.5 in-Mem与to-Disk结构<a class="headerlink" href="#125-in-memto-disk" title="Permanent link">&para;</a></h4>
-<p>当文件系统挂载起来后，运行于内存中。当文件系统卸载后，所有信息 <strong>刷回</strong> 磁盘中。下一次挂载重新挂载文件系统的时候，会 <strong>读取</strong> 之前刷回磁盘的内容，<strong>重新构建</strong> 文件系统的有关数据结构，例如：super_block（超级块）、inode（索引节点）、dentry（目录项）、inode位图等。简单的图示如下：</p>
-<p><img alt="虚拟磁盘" src="../part2.assets/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%80%E8%87%B4%E6%80%A7.png" /></p>
+<p>当文件系统挂载后，为了避免频繁与磁盘交互，会将关键字段保存在内存中。当文件系统卸载后，这些信息会 <strong>刷回</strong> 磁盘中。下一次挂载重新挂载文件系统的时候，会 <strong>读取</strong> 之前刷回磁盘的内容，<strong>重新构建</strong> 文件系统的有关数据结构，例如：super_block（超级块）、inode（索引节点）、dentry（目录项）、inode位图等。简单的图示如下：</p>
+<p><img alt="mem-disk" src="../part2.assets/mem-disk.svg" /></p>
 <p>可以看到，文件系统的有关数据结构既会在文件系统挂载运行时 <strong>动态</strong> 维护于 <strong>内存</strong> 中，也会在文件系统卸载不运行时 <strong>静态</strong> 存储在 <strong>磁盘</strong> 中，供下一次读取。这就带来了位于内存（in-Mem）和刷回磁盘（to-Disk）的两种类型数据结构。那么问题就来了，这两种结构会完全一致吗。</p>
 <p>细心的同学可以注意到前面给出的结构体示例代码，我们都加了<code>_d</code>的后缀，比如超级块，我们用的<code>struct super_block_d</code>。这就表示刷回磁盘（to-Disk）类型结构。</p>
 <p>我们先以<code>dentry</code>这个结构，简单看看to-Disk的结构和in-Mem的结构的差异：</p>
@@ -1589,7 +1947,6 @@
 <p>通常来说，to-Disk的结构，是指要在磁盘中静态存储的结构，也就是要写回磁盘的结构，包含一些 <strong>静态的</strong>、<strong>最基本的</strong>、<strong>必须要写回磁盘</strong> 的字段。而in-Mem的结构，是动态维护着，更加灵活的结构，只要是 <strong>方便文件系统进行管理</strong> 的所需要的 <strong>字段</strong>，都可以动态的在文件系统运行时添加到in-Mem的结构中进行维护。to-Disk结构的字段通常可以理解是in-Mem字段的子集。</p>
 <p>对于超级块（super_block）、索引节点（inode）、目录项（dentry）这些数据结构，均是如此。</p>
 <h2 id="2">2.  虚拟磁盘的使用<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
-<p><img alt="虚拟磁盘" src="../part2.assets/%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98.png" /></p>
 <p>本次实验在用户态下模拟了一个 <strong>容量为4MB的磁盘</strong> ，并实现了对这个虚拟磁盘进行操作的 <strong>DDRIVER驱动</strong> 。 <strong>虚拟磁盘</strong> 是通过一个普通的数据文件来充当，这个数据文件的路径位于 <code>~/disk</code> 。我们封装了一层DDRIVER驱动，其原理是单次读取、写入这个数据文件时会按照固定的大小 <code>512B</code> 进行读取和写入，也就是 <strong>IO大小为512B</strong> ，从而来模拟达到磁盘操作。</p>
 <table>
 <thead>
@@ -1664,7 +2021,7 @@
 </div>
 <p>TODO：录一个视频</p>
 <h2 id="3-fuse">3.  FUSE的使用<a class="headerlink" href="#3-fuse" title="Permanent link">&para;</a></h2>
-<p><img alt="FUSE文件系统" src="../part2.assets/FUSE%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.png" /></p>
+<p><img alt="FUSE文件系统" src="../part2.assets/fuse.svg" /></p>
 <p>一般的文件系统的实现位于内核，用户态的文件请求（如read请求）到达内核文件系统，就会调用对应的接口（如read接口实现）实现完成本次文件请求，并将结果返回。传统的、基于Linux的文件系统开发都是以内核模块的方式进行，这使得开发调试变得异常繁琐。</p>
 <p>由于内核文件系统开发的困难，FUSE（Filesystem in User SpacE）架构由此登上了台面。FUSE包括内核部分和用户态部分，FUSE内核部分没有负责实现对应的接口，它会额外到注册到 <strong>FUSE的用户态部分</strong> （如图中NEWFS）寻找对应的接口实现完成本次文件请求，最后将结果沿路返回。我们则是 <strong>在图中红色的部分完成各种接口的实现</strong> 供FUSE内核调用。它将 <strong>文件系统的实现从内核态搬到了用户态</strong> ，也就是我们可以 <strong>在用户态实现一个文件系统</strong> 。</p>
 <p>VFS，全称Virtual File System，Linux虚拟文件系统，是所有内核文件系统的统一接口。</p>
@@ -1732,20 +2089,23 @@ Hello-FUSE
 </code></pre></div>
 <h3 id="32-fuse">3.2 FUSE文件系统的挂载与卸载<a class="headerlink" href="#32-fuse" title="Permanent link">&para;</a></h3>
 <h4 id="321">3.2.1 挂载<a class="headerlink" href="#321" title="Permanent link">&para;</a></h4>
-<p>FUSE文件系统的挂载 <strong>无需使用mount系统调用</strong> ，**直接运行生成的二进制程序**即可完成挂载操作。</p>
+<p>FUSE文件系统的挂载 <strong>无需使用mount系统调用</strong> ，<strong>直接运行生成的二进制程序</strong> 即可完成挂载操作。</p>
 <p>通常情况下，fuse文件系统只需要运行二进制程序的时候，指定挂载设备，以及可选挂载选项（非必须）即可。</p>
 <div class="highlight"><pre><span></span><code>./&lt;你实现的fuse文件系统名称&gt;<span class="w"> </span>&lt;可选选项&gt;<span class="w"> </span>&lt;指定挂载点&gt;<span class="w"> </span>
 </code></pre></div>
 <p>如上述FUSE简单示例中的挂载命令：</p>
 <div class="highlight"><pre><span></span><code>./hello<span class="w"> </span>/tmp/fuse
 </code></pre></div>
+<p>在任务一，VSCode配置的挂载命令（F5）展开就是：</p>
+<div class="highlight"><pre><span></span><code>./build/demo<span class="w"> </span>-f<span class="w"> </span>-d<span class="w"> </span>-s<span class="w"> </span>./tests/mnt/
+</code></pre></div>
 <p>在任务二实现的fuse文件系统样板中，额外添加了指定挂载设备选项：</p>
 <div class="highlight"><pre><span></span><code>./&lt;你实现的fuse文件系统名称&gt;<span class="w"> </span>--device<span class="o">=</span>&lt;指定挂载设备&gt;<span class="w"> </span>&lt;可选选项&gt;<span class="w"> </span>&lt;指定挂载点&gt;<span class="w"> </span>
 </code></pre></div>
-<p>在任务二中，在<a href="../part3-1/index.html#4">环境搭建</a>的运行部分，VSCode配置的挂载命令（F5）展开就是：</p>
-<div class="highlight"><pre><span></span><code>./build/newfs<span class="w"> </span>--device<span class="o">=</span>/home/test_03/ddriver<span class="w"> </span>-f<span class="w"> </span>-d<span class="w"> </span>-s<span class="w"> </span>./tests/mnt/
+<p>在任务二中，在<a href="../part3/#14">环境搭建</a>的运行部分，VSCode配置的挂载命令（F5）展开就是：</p>
+<div class="highlight"><pre><span></span><code>./build/newfs<span class="w"> </span>--device<span class="o">=</span>/home/guests/teststu_8/ddriver<span class="w"> </span>-f<span class="w"> </span>-d<span class="w"> </span>-s<span class="w"> </span>./tests/mnt/
 </code></pre></div>
-<p>也就是指定虚拟磁盘为 <code>/home/test_03/ddriver</code>，指定挂载点为<code>./test/mnt/</code>，挂载我们实现的newfs文件系统。其中 <code>-f</code> 选项表示强制执行操作，<code>-d</code> 选项表示输出调试信息，<code>-s</code> 选项表示输出摘要信息。</p>
+<p>也就是指定虚拟磁盘为 <code>/home/guests/teststu_8/ddriver</code>，指定挂载点为<code>./test/mnt/</code>，挂载我们实现的newfs文件系统。其中 <code>-f</code> 选项表示强制执行操作，<code>-d</code> 选项表示输出调试信息，<code>-s</code> 选项表示输出摘要信息。</p>
 <h4 id="322">3.2.2 卸载<a class="headerlink" href="#322" title="Permanent link">&para;</a></h4>
 <p>FUSE文件系统的卸载只需要在另一个命令行 输入如下命令，就可以完成FUSE文件系统的卸载：</p>
 <div class="highlight"><pre><span></span><code>fusermount<span class="w"> </span>-u<span class="w"> </span>&lt;FUSE文件系统挂载点&gt;
@@ -1754,8 +2114,8 @@ Hello-FUSE
 <div class="highlight"><pre><span></span><code>fusermount<span class="w"> </span>-u<span class="w"> </span>./tests/mnt/
 </code></pre></div>
 <h2 id="4">4. 实验总体结构<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
-<p><img alt="总体架构" src="../part2.assets/%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84.png" /></p>
 <p>根据前三部分的实验原理介绍，实验需要根据EXT2文件系统的磁盘布局对模拟磁盘 <strong>进行磁盘布局设计</strong> ，也就是文件系统来决定每个逻辑块存什么内容。文件系统还通过调用模拟驱动提供的接口来 <strong>和模拟磁盘进行读写交互</strong> ，一次读写512B。最后文件系统还需要维护相关数据结构和函数，最终 <strong>实现文件系统的各种接口</strong> 供上层文件请求调用。</p>
+<p><img alt="goal" src="../part2.assets/goal.svg" /></p>
 
 
 
