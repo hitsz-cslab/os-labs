@@ -6,6 +6,14 @@
 
 ## 1.任务零：环境搭建
 
+为了给同学们演示如何下载、编译、运行simplefs文件系统，我们录制了两个演示视频：“HITSZ FUSE文件系统实验（本地版）”和“HITSZ FUSE文件系统（远程计算节点版）”。
+
+如果视频不太清晰，建议到bilibili上观看。
+
+FUSE文件系统实验（本地版）：https://www.bilibili.com/video/BV1Af4y1K7FX/
+
+HITSZ FUSE文件系统（远程计算节点版）：https://www.bilibili.com/video/BV1TR4y1b7M3/
+
 ### 1.1 实验包结构介绍
 
 本次实验充分考虑到 **上手成本** ，因此我们编写了简单的环境配置脚本，帮助大家一键配置开发环境。实验包代码获取途径：
@@ -263,9 +271,9 @@ fusermount -u <挂载点>
 
 ![](./part3.assets/卸载示例.png)
 
-#### 2.3.2 测评脚本
+#### 2.3.2 测评程序
 
-任务一提供了测评脚本，同学完成实验后，进入`./demo/tests`目录，输入如下命令通过本节任务的测评：
+任务一提供了测评程序，同学完成实验后，进入`./demo/tests`目录，输入如下命令通过本节任务的测评：
 
 ```shell
 chmod +x test.sh && ./test.sh
@@ -295,7 +303,7 @@ chmod +x test.sh && ./test.sh
 
 在任务二，需要同学们在我们提供的实验框架下实现一个完整的EXT2文件系统，这个文件系统需要满足以下一些条件：
 
-（1）支持 **挂载**、**卸载**、**重新挂载**、 **查看目录和文件**、**创建文件**、**创建目录** 六个最基本的功能。
+（1）支持 **挂载与卸载**、 **查看目录和文件**、**创建文件和目录** 。能完成挂载和卸载，并支持`ls`，`touch`、`mkdir`命令。
 
 （2）该文件系统的 **逻辑块大小** 应该为1024B，也就是两个磁盘的IO单位（512B）。
 
@@ -303,7 +311,9 @@ chmod +x test.sh && ./test.sh
 
 ![](./part3.assets/任务2布局.png)
 
-（4）出于测评脚本考虑，本次实验 **统一规定** 不实现"."和".."两个特殊目录。此外，本次实验一个inode只对应到一个文件，无需考虑软链接和硬链接的实现（也可选做）；只用实现直接索引，无需考虑间接索引（也可选做）。
+（4）实现 **按需分配** 文件数据块，利用好数据块位图，当文件需要新的数据块来写内容的时候才分配，而不是采用预先分配。
+
+（5）出于测评脚本考虑，本次实验 **统一规定** 不实现"."和".."两个特殊目录。此外，本次实验一个inode只对应到一个文件，无需考虑软链接和硬链接的实现（也可选做）；只用实现直接索引，无需考虑间接索引（也可选做）。
 
 ### 3.2 实现步骤
 
@@ -697,6 +707,95 @@ int readdir(const char * path, void * buf, fuse_fill_dir_t filler, off_t offset,
 
 #### 3.3.1 手动测试
 
+同学们完成任务二后，可以自行运行和挂载完成的文件系统来测试实现的功能的正确性。
 
+可以选择先通过如下命令将磁盘清空：
+
+```shell
+ddriver -r
+```
+
+检查`tests`目录下有无`mnt`目录，没有需要自己`mkdir mnt`创建一个，并保证这个目录是 **空** 的，否则`F5`无法挂载成功。
+
+挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./#13)配置好任务二的编译环境）：
+
+![](./part3.assets/f5运行成功任务二.png)
+
+挂载好后，在新的一个命令行，对`tests`目录下的`mnt`目录进行`ls`、`touch`、`mkdir`操作，均能符合预期功能，如下图所示。卸载文件系统后，重新挂载文件系统，`ls`也能查看到上次的文件。
+
+![](./part3.assets/手动测试task2.png)
+
+同任务一，同学们使用完文件系统后，及时通过`fusermount`命令来卸载文件系统，不要直接使用`ctrl + c`和VSCode终止的方式，避免影响下一次挂载。
 
 #### 3.3.2 测评程序
+
+我们为同学们提供了任务二的测评程序，位于`tests`目录下`test.sh`。同学们在`test`目录下，使用如下命令来运行测评程序：
+
+```shell
+chmod +x test.sh && ./test.sh
+```
+
+测试方式：输入`N`，选择基础功能测试。
+
+下图为通过所有的测试用例：
+
+![](./part3.assets/task2-pass.png)
+
+测评脚本等价于运行了如下的序列的测试命令，同学可以参考如下序列检查自己的问题。
+
+正确的序列如下（**基础分30分**）：
+
+- **F5挂载文件系统（1分）**
+
+- **mkdir测试（4分）**
+
+```shell
+mkdir ./tests/mnt/dir0
+mkdir ./tests/mnt/dir0/dir0
+mkdir ./tests/mnt/dir0/dir0/dir0
+mkdir ./tests/mnt/dir1
+```
+
+ - **touch测试（5分）**
+
+```shell
+touch ./tests/mnt/file0
+touch ./tests/mnt/dir0/file0
+touch ./tests/mnt/dir0/dir0/file0
+touch ./tests/mnt/dir0/dir0/dir0/file0
+touch ./tests/mnt/dir1/file0
+```
+
+ - **ls测试（4分）**
+
+```shell
+mkdir ./tests/mnt/dir0
+touch ./tests/mnt/file0
+mkdir ./tests/mnt/dir0/dir1
+mkdir ./tests/mnt/dir0/dir1/dir2
+touch ./tests/mnt/dir0/dir1/dir2/file4
+touch ./tests/mnt/dir0/dir1/dir2/file5
+touch ./tests/mnt/dir0/dir1/dir2/file6
+touch ./tests/mnt/dir0/dir1/file3
+touch ./tests/mnt/dir0/file1
+--------------
+ls ./tests/mnt
+ls ./tests/mnt/dir0
+ls ./tests/mnt/dir0/dir1
+ls ./tests/mnt/dir0/dir1/dir2
+```
+
+ - **remount测试（16分）**
+
+```console
+fusermount -u ./tests/mnt
+ddriver -r
+# F5再次挂载文件系统
+mkdir ./tests/mnt/hello
+ls ./tests/mnt
+fusermount -u ./tests/mnt
+python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json
+```
+
+以上命令均测试成功（**ls输出正常**），则测试通过。
+
