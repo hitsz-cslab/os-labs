@@ -139,7 +139,7 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 -   **Step 9** . 到`newfs/src/newfs.c`目录，打断点（可选，如果需要调试可打）。
 -   **Step 10** . 按下`F5`进行运行和挂载文件系统。
 
-`F5`是方便同学直接在VSCode挂载文件系统，同学也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](./part2/#32-fuse)的`F5`命令展开。
+`F5`是方便同学直接在VSCode挂载文件系统，同学也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)的`F5`命令展开。
 
 打下断点，调试运行如下图：
 
@@ -149,7 +149,7 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 
 ![f5运行成功](./part3.assets/f5运行成功.png)
 
-文件系统的卸载（参考实验原理的[FUSE文件系统的挂载与卸载](./part2/#32-fuse)），需要同学们在命令行手动输入命令来实现：
+文件系统的卸载（参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)），需要同学们在命令行手动输入命令来实现：
 
 ```console
 teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$ fusermount -u ./tests/mnt
@@ -251,7 +251,7 @@ static int demo_getattr(const char* path, struct stat *stbuf)
 chmod +x start.sh && ./start.sh
 ```
 
-然后挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./part3#13)配置好任务一的编译环境）：
+然后挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./#13)配置好任务一的编译环境）：
 
 ![f5运行成功](./part3.assets/f5运行成功.png)
 
@@ -259,7 +259,7 @@ chmod +x start.sh && ./start.sh
 
 ![](./part3.assets/task1效果.png)
 
-最后一定要记得输入`fusermount`命令来卸载文件系统（参考实验原理的[FUSE文件系统的挂载与卸载](./part2/#32-fuse)），**不要** 直接在VSCode终止或者按`ctrl + c`：
+最后一定要记得输入`fusermount`命令来卸载文件系统（参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)），**不要** 直接在VSCode终止或者按`ctrl + c`：
 
 ```
 fusermount -u <挂载点>
