@@ -87,7 +87,7 @@ EXT2文件系统将盘块分成两大类：保存元数据的 **元数据盘块*
 struct super_block_d 
 {
     /* 幻数 */
-    uint32	magic_number; 	// 幻数
+    uint32_t	magic_number; 	// 幻数
     
     /* 逻辑块信息 */
     int	blks_size; 			// 逻辑块大小
@@ -123,7 +123,7 @@ struct super_block_d
 
 #### 1.2.3  文件的表示
 
-通过1.1 文件系统的介绍，不能仅仅将文件的数据存在磁盘就万事大吉了，还需要一些管理信息。文件的管理信息就是文件的 **元数据** ，也就是 **索引节点（inode）** 中的数据。
+通过[1.1 文件系统](./#11)的介绍，不能仅仅将文件的数据存在磁盘就万事大吉了，还需要一些管理信息。文件的管理信息就是文件的 **元数据** ，也就是 **索引节点（inode）** 中的数据。
 
 在EXT2文件系统中，任何一个文件都是由 **索引节点（inode）** 和 **数据（data）** 构成。索引节点（inode）的数据存放在索引节点区，数据（data）存放在数据块区，并通过索引节点（inode）来索引数据块。
 
@@ -159,10 +159,19 @@ struct inode_d
 
 通过索引节点（inode）索引到数据块后，就可以存放和读取文件的数据。
 
+其中的`FILE_TYPE`可能包括如下值：
+
+```c
+typedef enum file_type {
+    FILE,           // 普通文件
+    DIR             // 目录文件
+} FILE_TYPE;
+```
+
 **（2）数据（data）通常存放：**
 
 - **普通文件（file）的话**，直接存放文件的内容即可。例如，file.txt的内容为aaa，那么file.txt的数据块直接填aaa即可。
-- **目录文件（dir）的话**，存放所有的子目录项（dentry）。（什么是目录项dentry？参见下一小节1.2.4目录项的表示介绍）。例如，目录dir下有子目录dir0和子文件file.txt，那么目录dir的数据块填的是子目录dir0的dentry结构和子文件file.txt的dentry结构。
+- **目录文件（dir）的话**，存放所有的子目录项（dentry）。（什么是目录项dentry？参见下一小节[1.2.4目录项的表示](./#124)介绍）。例如，目录dir下有子目录dir0和子文件file.txt，那么目录dir的数据块填的是子目录dir0的dentry结构和子文件file.txt的dentry结构。
 
 !!! note "笔记"
     目录也是一种特殊的文件，其数据块内容是所有子目录项结构。
@@ -197,7 +206,7 @@ struct dentry_d
     char	file_name[MAX_FILE_NAME]; 
     
     /* 文件类型 */
-    int		ftype;                
+    FILE_TYPE		ftype;                
 };  
 ```
 
@@ -249,13 +258,13 @@ DDRIVER驱动封装实现了open，close，seek，read，write，ioctl的方法�
 | int ddriver_ioctl(int fd, unsigned long cmd, void *ret) | 根据传入命令cmd获取虚拟磁盘信息。cmd为IOC_REQ_DEVICE_SIZE，void *ret处返回虚拟磁盘总大小。cmd为IOC_REQ_DEVICE_IO_SZ，void *ret参数处返回虚拟磁盘的IO大小。 |
 
 !!! note "补充"
-    这部分的相关代码位于`user-land-filesystem/driver/user_ddriver`下，有兴趣的同学可以简单阅读。实验没有涉及 `user-land-filesystem/driver/kernel_ddriver` 部分。最终模拟驱动编译为了静态链接库，是为了无法直接通过Debug调试进入到上述接口实现的代码中， 出自模拟真实驱动所做的考虑，了解即可。
+    这部分的相关代码位于`user-land-filesystem/driver/user_ddriver/ddriver.c`，有兴趣的同学可以简单阅读。实验没有涉及 `user-land-filesystem/driver/kernel_ddriver` 部分。最终模拟驱动编译为了静态链接库，是为了无法直接通过Debug调试进入到上述接口实现的代码中， 出自模拟真实驱动所做的考虑，了解即可。
 
 ### 2.2 磁盘管理工具
 
 我们编写了一个简单的shell脚本来帮助大家来管理充当虚拟磁盘的数据文件。在安装好实验环境后，同学们在命令行输入 `ddriver` 就可以看到帮助信息。
 
-本次实验，同学们只需要关注以下两条命令即可。
+本次实验，同学们只需要关注以下两条命令即可（可以在任意目录下运行）。
 
 - `ddriver -r`。将虚拟磁盘清空，也就是将用来模拟磁盘的数据文件置空，重新再来。
 - `ddriver -d`。将模拟磁盘的数据文件导出到当前目录下，命名为disk_dump，方便同学们直接查看。
@@ -275,7 +284,7 @@ DDRIVER驱动封装实现了open，close，seek，read，write，ioctl的方法�
 
 一般的文件系统的实现位于内核，用户态的文件请求（如read请求）到达内核文件系统，就会调用对应的接口（如read接口实现）实现完成本次文件请求，并将结果返回。传统的、基于Linux的文件系统开发都是以内核模块的方式进行，这使得开发调试变得异常繁琐。
 
-由于内核文件系统开发的困难，FUSE（Filesystem in User SpacE）架构由此登上了台面。FUSE包括内核部分和用户态部分，FUSE内核部分没有负责实现对应的接口，它会额外到注册到 **FUSE的用户态部分** （如图中NEWFS）寻找对应的接口实现完成本次文件请求，最后将结果沿路返回。我们则是 **在图中红色的部分完成各种接口的实现** 供FUSE内核调用。它将 **文件系统的实现从内核态搬到了用户态** ，也就是我们可以 **在用户态实现一个文件系统** 。
+由于内核文件系统开发的困难，FUSE（Filesystem in User SpacE）架构由此登上了台面。FUSE包括内核部分和用户态部分，FUSE内核部分没有负责实现对应的接口，它会额外到注册到 **FUSE的用户态部分** （如图中Young EXT2）寻找对应的接口实现完成本次文件请求，最后将结果沿路返回。我们则是 **在图中红色的部分完成各种接口的实现** 供FUSE内核调用。它将 **文件系统的实现从内核态搬到了用户态** ，也就是我们可以 **在用户态实现一个文件系统** 。
 
 VFS，全称Virtual File System，Linux虚拟文件系统，是所有内核文件系统的统一接口。
 
@@ -391,10 +400,10 @@ FUSE文件系统的挂载 **无需使用mount系统调用** ，**直接运行生
 在任务二中，在[环境搭建](../part3/#14)的运行部分，VSCode配置的挂载命令（F5）展开就是：
 
 ```shell
-./build/newfs --device=/home/guests/teststu_8/ddriver -f -d -s ./tests/mnt/
+./build/newfs --device=/home/students/<学号>/ddriver -f -d -s ./tests/mnt/
 ```
 
-也就是指定虚拟磁盘为 `/home/guests/teststu_8/ddriver`，指定挂载点为`./test/mnt/`，挂载我们实现的newfs文件系统。其中 `-f` 选项表示强制执行操作，`-d` 选项表示输出调试信息，`-s` 选项表示输出摘要信息。
+也就是指定虚拟磁盘为 `/home/students/<学号>/ddriver`（这是远程平台的路径，本地请换成`~/ddriver`对应的绝对路径），指定挂载点为`./test/mnt/`，挂载我们实现的newfs文件系统。其中 `-f` 选项表示强制执行操作，`-d` 选项表示输出调试信息，`-s` 选项表示输出摘要信息。
 
 #### 3.2.2 卸载
 
