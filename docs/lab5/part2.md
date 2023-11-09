@@ -267,7 +267,7 @@ DDRIVER驱动封装实现了open，close，seek，read，write，ioctl的方法�
 !!! note "补充"
     这部分的相关代码位于`user-land-filesystem/driver/user_ddriver/ddriver.sh`下，有兴趣的同学可以自行进行阅读。
 
-TODO：录一个视频
+我们为有需要的同学录制了一个Hex Editor查看虚拟磁盘的演示视频：https://www.bilibili.com/video/BV1CN411g7KG
 
 ## 3.  FUSE的使用
 
