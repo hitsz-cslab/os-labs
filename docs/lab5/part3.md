@@ -511,7 +511,7 @@ struct dentry {
 
 申请一个数据块的流程示意图如下，通过逐个位查找数据块位图，找到第一个空闲数据块下表并返回。
 
-![bitmap](./part3.assets/bitmap.svg)
+![bitmap](./part3.assets/bitmap.png)
 
 **（3）分配新的索引节点inode**
 
