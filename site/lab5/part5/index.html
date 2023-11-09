@@ -16,7 +16,7 @@
     
     
       
-        <title>实验提示 - 操作系统2023秋 | 哈工大（深圳）</title>
+        <title>常见问题 - 操作系统2023秋 | 哈工大（深圳）</title>
       
     
     
@@ -95,7 +95,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              实验提示
+              常见问题
             
           </span>
         </div>
@@ -284,24 +284,6 @@
           
   
   Lab4：页表
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../part0.md" class="md-tabs__link">
-          
-  
-  Lab5：基于FUSE的青春版EXT2文件系统
 
         </a>
       </li>
@@ -1251,147 +1233,6 @@
   
 
     
-      
-      
-  
-  
-  
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
-        
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Lab5：基于FUSE的青春版EXT2文件系统
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
-            <span class="md-nav__icon md-icon"></span>
-            Lab5：基于FUSE的青春版EXT2文件系统
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../part0.md" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    环境搭建
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../part1/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    实验概述
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../part2/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    实验原理
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../part3/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    实验实现
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../part4/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    提交文档
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1420,35 +1261,28 @@
       
         <li class="md-nav__item">
   <a href="#1" class="md-nav__link">
-    1. 如何调试？
+    1. 如何新开一个命令行
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#2" class="md-nav__link">
-    2. 挂载失败？
+    2. 挂载点没连接上
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#3" class="md-nav__link">
-    3. 挂载点不空？
+    3. 挂载点不空
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-ext2" class="md-nav__link">
-    4. 如何解读EXT2文件系统布局？
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
-    5. 实验评测中的位图检查原理
+  <a href="#4" class="md-nav__link">
+    4.挂载点不存在
   </a>
   
 </li>
@@ -1468,40 +1302,26 @@
                   
 
 
-<h1 id="_1">实验提示<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="1">1. 如何调试？<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
-<p>按下F5后，文件系统运行为前台模式，那么如何输入命令呢？事实上，可以ctrl + shift +｀呼出另一个终端，然后在另一个终端操作。</p>
+<h1 id="_1">常见问题<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 如何新开一个命令行<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>按下<code>F5</code>后，文件系统运行为 <strong>前台模式</strong> 。想要输入命令，如执行<code>ls</code>，则需要新开一个命令行。可以通过<code>ctrl + shift +｀</code>呼出一个新的命令行，然后在命令行操作。</p>
 <p><img alt="image-20211024170839872" src="../part3.assets/image-20211024170839872.png" /></p>
 <p>另外，如下图所示，可以按这个 <strong>拆分键</strong> ，就可以同时显示两个终端了。</p>
 <p><img alt="image-20211024170743344" src="../part3.assets/image-20211024170743344.png" /></p>
-<h2 id="2">2. 挂载失败？<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
-<p>提示"fuse: bad mount point" 如下图所示：</p>
+<h2 id="2">2. 挂载点没连接上<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>提示"fuse: bad mount point ... Transports end point is not connected" 如下图所示：</p>
 <p><img alt="image-20211024171103128" src="../part3.assets/image-20211024171103128.png" /></p>
-<p>这种情况就是不正常的卸载文件系统，我们显式地调用 <strong>卸载文件系统</strong> 即可：</p>
-<div class="highlight"><pre><span></span><code>teststu_8@OSLabExecNode0:~/pyq/user-land-filesystem/fs/newfs$<span class="w"> </span>fusermount<span class="w"> </span>-u<span class="w"> </span>./tests/mnt
-teststu_8@OSLabExecNode0:~/pyq/user-land-filesystem/fs/newfs$<span class="w"> </span>
+<p>这种情况就是不正常的卸载文件系统，同学直接<code>ctrl + c</code>或者在VSCode直接关掉程序，导致上次的挂载点仍被占用。我们需要完成 <strong>文件系统的卸载</strong> ，释放上次占用的挂载点：</p>
+<div class="highlight"><pre><span></span><code>fusermount<span class="w"> </span>-u<span class="w"> </span>./tests/mnt
 </code></pre></div>
-<h2 id="3">3. 挂载点不空？<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h2 id="3">3. 挂载点不空<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <p>提示"mountpoint is not empty" 如下图所示：</p>
 <p><img alt="image-20211024171348041" src="../part3.assets/image-20211024171348041.png" /></p>
-<p>这种情况就是在测试的时候，不小心给<code>mnt</code>文件夹下创建了一个文件，导致错误发生，把 <strong>文件删除</strong> 就行。</p>
-<h2 id="4-ext2">4. 如何解读EXT2文件系统布局？<a class="headerlink" href="#4-ext2" title="Permanent link">&para;</a></h2>
-<p>可以查看<code>dump</code>文件系统镜像，对镜像进行解读：</p>
-<p><img alt="image-20221115113807498" src="../part5.assets/image-20221115113807498.png" /></p>
-<p>利用 <code>ddriver -d</code> 生成ddriver镜像命令查看镜像。</p>
-<p>以simplefs镜像为例：</p>
-<div class="highlight"><pre><span></span><code><span class="go">~/user-land-filesystem/fs/simplefs$ ddriver -d</span>
-<span class="go">[sudo] password for test_19:</span>
-<span class="go">目标设备 /home/students/test_19/ddriver</span>
-<span class="go">8192+0 records in</span>
-<span class="go">8192+0 records out</span>
-<span class="go">4194304 bytes (4.2 MB, 4.0 MiB) copied, 0.0632482 s, 66.3 MB/s</span>
-<span class="go">文件已导出至/home/students/test_19/user-land-filesystem/fs/simplefs/ddriver_dump，请安装HexEditor插件查看其内容</span>
-</code></pre></div>
-<p>在VSCode上安装HexEditor插件，即可查看<code>ddriver_dump</code>镜像的内容。</p>
-<h2 id="5">5. 实验评测中的位图检查原理<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
-<p>为避免大家照搬Simple File System代码，实验评测脚本<code>./tests/checkbm/check_bm.py</code>会根据大家填写的fs.layout文件，确定ddriver磁盘布局，检查super、inode_map、data_map各项内容，如果检查失败，check_bm.py会返回相应的错误，大家依错自行查改即可。</p>
-<p>具体检查原理可以查看：<a href="https://gitee.com/ftutorials/user-land-filesystem/blob/main/fs/template/tests/checkbm/README.md">https://gitee.com/ftutorials/user-land-filesystem/blob/main/fs/template/tests/checkbm/README.md</a></p>
+<p>这种情况就是在测试的时候，不小心给<code>mnt</code>文件夹下创建了一个文件，导致<code>mnt</code>目录不是空的，把<code>mnt</code>下的 <strong>文件删除</strong> 即可，保证<code>mnt</code>目录在挂载时是空的 。</p>
+<h2 id="4">4.挂载点不存在<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>提示"fuse: bad mount point ... No such file or directory" 如下图所示：</p>
+<p><img alt="" src="../part5.assets/%E6%B2%A1%E6%9C%89%E6%8C%82%E8%BD%BD%E7%82%B9.png" /></p>
+<p>这种情况是，文件系统挂载的挂载点，如<code>./tests/mnt</code>不存在。需要同学提前创建好一个空的文件夹<code>./tests/mnt</code>。</p>
 
 
 

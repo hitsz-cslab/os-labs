@@ -297,24 +297,6 @@
   
 
       
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../lab5/part0.md" class="md-tabs__link">
-          
-  
-  Lab5：基于FUSE的青春版EXT2文件系统
-
-        </a>
-      </li>
-    
-  
-
-      
     </ul>
   </div>
 </nav>
@@ -1381,147 +1363,6 @@
   
 
     
-      
-      
-  
-  
-  
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
-        
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Lab5：基于FUSE的青春版EXT2文件系统
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
-            <span class="md-nav__icon md-icon"></span>
-            Lab5：基于FUSE的青春版EXT2文件系统
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab5/part0.md" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    环境搭建
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab5/part1/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    实验概述
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab5/part2/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    实验原理
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab5/part3/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    实验实现
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab5/part4/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    提交文档
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1697,15 +1538,29 @@
 <p><strong>Step 1.</strong> 首先，保存实验一的代码，请参考实验实用工具的<a href="../../tools/#331">3.3.1 使用命令行完成操作</a>或者<a href="../../tools/#332-vs-code">3.3.2 使用VSCode内建的图形化界面完成操作</a>这两小节，完成commit操作。或者， <strong>如果你希望直接放弃掉上一次commit后的所有更改</strong> ，那么你也可以使用-f选项强制切换分支，例如<code>git checkout -f syscall</code>。</p>
 <p><strong>Step 2.</strong> 切换的方法可以参考实验 -&gt; 实验实用工具 -&gt; <a href="../../tools/#31">3.1同步上游仓库 ~ 3.3.3 合并冲突更改</a>。</p>
 </div>
-<p>同学们也可以参考下面的图片进行分支切换：</p>
-<!-- ![checkout](part1.assets/prepare.png) -->
-<p><img alt="checkout" src="../part1.assets/prepare.png" /></p>
-<p>如图所示，</p>
+<p>同学们也可以按照如下步骤进行分支切换：</p>
 <ol>
-<li>通过<code>git remote -v</code>可以看到此时关联的所有远程仓库，然后从中找出对应的链接是我们的官方仓库(<code>https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git</code>或者<code>git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git</code>)的远程仓库名字（上图中是<code>public</code>，同学们可能是<code>upstream</code>之类的别的名字）</li>
-<li>通过<code>git fetch 官方远程仓库名字</code>获取远程仓库的所有分支及标签</li>
-<li>通过<code>git checkout syscall</code>切换到<code>syscall</code>分支</li>
-<li>通过<code>git pull 官方远程仓库名字 syscall</code>以获取<code>syscall</code>分支的最新版本。</li>
+<li>
+<p>如下图，通过<code>git remote -v</code>可以看到此时关联的所有远程仓库，然后从中找出对应的链接是我们的官方仓库(<code>https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git</code>或者<code>git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git</code>)的远程仓库名字（图中是<code>public</code>，同学们可能是<code>upstream</code>之类的别的名字）
+<img alt="" src="../part1.assets/git_remote.png" /></p>
+</li>
+<li>
+<p>如下图，通过<code>git fetch 官方远程仓库名字</code>获取远程仓库的所有分支及标签
+<img alt="" src="../part1.assets/git_fetch.png" /></p>
+</li>
+<li>
+<p>如下图，通过<code>git branch</code>查看目前本地是否已经存在<code>syscall</code>分支：</p>
+<ul>
+<li>若已存在<code>syscall</code>分支，需要先输入<code>git branch -D syscall</code>删掉该本地分支（这是为了避免后续merge带来不必要的麻烦，如果你已经在该分支做了一些改动，请 <strong>手动备份你改动的代码至别处</strong> ），再输入<code>git checkout --track 官方远程仓库名字/syscall</code>切换至<code>syscall</code>分支；</li>
+<li>若不存在<code>syscall</code>分支，则直接输入<code>git checkout --track 官方远程仓库名字/syscall</code>切换至<code>syscall</code>分支；
+<img alt="" src="../part1.assets/git_branch.png" />
+<img alt="" src="../part1.assets/git_checkout.png" /></li>
+</ul>
+</li>
+<li>
+<p>通过<code>git pull 官方远程仓库名字 syscall</code>以获取<code>syscall</code>分支的最新版本。
+<img alt="" src="../part1.assets/git_pull.png" /></p>
+</li>
 </ol>
 <p>我们建议同学们在切换分支之后进行<code>make clean</code>将上一个分支的<code>fs.img</code>删除，不然会出现无法启动qemu的问题（会显示<code>fs.img</code>被其他的进程占用）。</p>
 <p>本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用<code>exittest</code>, <code>waittest</code>和<code>yieldtest</code>测试程序。具体来说，本实验有三部分：</p>

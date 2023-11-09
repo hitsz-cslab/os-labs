@@ -49,17 +49,23 @@
 
     **Step 2.** 切换的方法可以参考实验 -> 实验实用工具 -> [3.1同步上游仓库 ~ 3.3.3 合并冲突更改](../tools.md#31)。
 
-同学们也可以参考下面的图片进行分支切换：
+同学们也可以按照如下步骤进行分支切换：
 
-<!-- ![checkout](part1.assets/prepare.png) -->
-![checkout](part1.assets/prepare.png)
+1. 如下图，通过`git remote -v`可以看到此时关联的所有远程仓库，然后从中找出对应的链接是我们的官方仓库(`https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git`或者`git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git`)的远程仓库名字（图中是`public`，同学们可能是`upstream`之类的别的名字）
+![](part1.assets/git_remote.png)
 
-如图所示，
+2. 如下图，通过`git fetch 官方远程仓库名字`获取远程仓库的所有分支及标签
+![](part1.assets/git_fetch.png)
 
-1. 通过`git remote -v`可以看到此时关联的所有远程仓库，然后从中找出对应的链接是我们的官方仓库(`https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git`或者`git@gitee.com:greenhandzpx/xv6-oslab23-hitsz.git`)的远程仓库名字（上图中是`public`，同学们可能是`upstream`之类的别的名字）
-2. 通过`git fetch 官方远程仓库名字`获取远程仓库的所有分支及标签
-3. 通过`git checkout syscall`切换到`syscall`分支
+3. 如下图，通过`git branch`查看目前本地是否已经存在`syscall`分支：
+    - 若已存在`syscall`分支，需要先输入`git branch -D syscall`删掉该本地分支（这是为了避免后续merge带来不必要的麻烦，如果你已经在该分支做了一些改动，请 **手动备份你改动的代码至别处** ），再输入`git checkout --track 官方远程仓库名字/syscall`切换至`syscall`分支；
+    - 若不存在`syscall`分支，则直接输入`git checkout --track 官方远程仓库名字/syscall`切换至`syscall`分支；
+![](part1.assets/git_branch.png)
+![](part1.assets/git_checkout.png)
+
 4. 通过`git pull 官方远程仓库名字 syscall`以获取`syscall`分支的最新版本。
+![](part1.assets/git_pull.png)
+
 
 我们建议同学们在切换分支之后进行`make clean`将上一个分支的`fs.img`删除，不然会出现无法启动qemu的问题（会显示`fs.img`被其他的进程占用）。
 
