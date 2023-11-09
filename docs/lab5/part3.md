@@ -1,8 +1,8 @@
 #  实验实现
 
 !!! tip "代码量相关"
-    1. 实验一：3、4行
-    2. 实验二：多多参考SFS，你会发现要改的并不多，最快的同学1、2个小时就能够完成
+    1. 实验一：非常简单的demo。总代码量：100+行。实际编码：约10行。
+        2. 实验二：较完善的文件系统。总代码量：1k+行。实际编码：若多参考SFS，要改的并不多，预估100-200行。也可自己重新完整实现。
 
 ## 1.任务零：环境搭建
 
@@ -258,9 +258,9 @@ chmod +x start.sh && ./start.sh
 
 然后挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./#13)配置好任务一的编译环境）：
 
-![f5运行成功](./part3.assets/f5运行成功.png)
+![f5运行成功](./part3.assets/f5运行成功2.png)
 
-然后在 **开启一个命令行** ，输入`ls`命令查看`tests`目录下的`mnt`文件夹，查看结果是否为`pass_task1.txt`，如果是，则 **手动测试通过** 。如下图：
+通过`ctrl + shift + ~`打开上述页面，然后在 **开启一个命令行** ，输入`ls`命令查看`tests`目录下的`mnt`文件夹，查看结果是否为`pass_task1.txt`，如果是，则 **手动测试通过** 。如下图：
 
 ![](./part3.assets/task1效果.png)
 
@@ -331,20 +331,21 @@ chmod +x test.sh && ./test.sh
 !!! note "补充"
     **simplefs** 采用固定分配的方式来维护文件，因此无需数据块位图，一个文件固定分配1个逻辑块当索引节点，16个逻辑块当数据块，索引节点和数据块一起放置，简单便于索引，但利用率不高。**本次实验** 将一个文件的索引节点和数据进行了分离，形成索引节点区和数据块区，灵活为每个文件按需分配数据块，但也需要数据块位图来记录数据块分配情况。
 
-**本次实验的磁盘布局设计** 要求同学根据自己对文件系统的设计，确定上述每个区域分别需要多少个逻辑块。主要是通过假设估算和自己确定大小的方式来进行设计，最终只需要让文件系统根据磁盘布局正常工作即可。下面给出一个简单的设计例子：
+**本次实验的磁盘布局设计** 要求同学根据自己对文件系统的设计，确定上述每个区域分别需要多少个逻辑块。主要是通过假设估算和自己确定大小的方式来进行设计，最终只需要让文件系统根据磁盘布局正常工作即可。
 
-磁盘容量为4MB，逻辑块大小为1024B，那么逻辑块数应该是4MB / 1024B = 4096。我们采用直接索引，假设每个文件最多直接索引8个逻辑块来填写文件数据，也就是每个文件数据上限是8 * 1024B = 8KB。假设一个文件的索引节点，采用一个逻辑块存储（见下面说明）。那么维护一个文件所需要的存储容量是8KB + 1KB = 9KB。那么4MB磁盘，最多可以存放的文件数是4MB / 9KB = 455。
+!!! note "一个设计的简单例子"
 
-!!! note "补充"
-    `struct inode_d`的大小一般是比1024B小很多的，一个逻辑块放一个`struct inode_d`会显得有点奢侈，这里是简单起见，同学可以确定`struct inode_d`的大小后，自行决定一个逻辑块放多少个索引节点`struct inode_d`。
+    磁盘容量为4MB，逻辑块大小为1024B，那么逻辑块数应该是4MB / 1024B = 4096。我们采用直接索引，假设每个文件最多直接索引8个逻辑块来填写文件数据，也就是每个文件数据上限是8 * 1024B = 8KB。假设一个文件的索引节点，采用一个逻辑块存储（见下面说明）。那么维护一个文件所需要的存储容量是8KB + 1KB = 9KB。那么4MB磁盘，最多可以存放的文件数是4MB / 9KB = 455。
+    
+    - 超级块，1个逻辑块。超级块区需要保存刷回磁盘的`struct super_block_d`，一般这个结构体的大小会小于1024B，我们用一个逻辑块作为超级块存储`struct super_block_d`即可。
+    - 索引节点位图，1个逻辑块。上述文件系统最多支持455个文件维护，一个逻辑块（1024B）的位图可以管理1024 * 8 = 8192个索引节点，完全足够。
+    - 数据块位图，1个逻辑块。上述文件系统总共逻辑块数才4096，一个逻辑块（1024B）的位图可以管理8092个逻辑块，足够。
+    - 索引节点区，455个逻辑块。上述文件系统假设一个逻辑块放一个索引节点`struct inode_d`，455个文件需要有455索引节点，也就是455个逻辑块。
+    - 数据块区，3638个逻辑块。剩下的都作为数据块，还剩4096 - 1 - 1 - 1 - 455 = 3638个逻辑块。
+    
+    注：`struct inode_d`的大小一般是比1024B小很多的，一个逻辑块放一个`struct inode_d`会显得有点奢侈，这里是简单起见，同学可以确定`struct inode_d`的大小后，自行决定一个逻辑块放多少个索引节点`struct inode_d`。
 
-- 超级块，1个逻辑块。超级块区需要保存刷回磁盘的`struct super_block_d`，一般这个结构体的大小会小于1024B，我们用一个逻辑块作为超级块存储`struct super_block_d`即可。
-- 索引节点位图，1个逻辑块。上述文件系统最多支持455个文件维护，一个逻辑块（1024B）的位图可以管理1024 * 8 = 8192个索引节点，完全足够。
-- 数据块位图，1个逻辑块。上述文件系统总共逻辑块数才4096，一个逻辑块（1024B）的位图可以管理8092个逻辑块，足够。
-- 索引节点区，455个逻辑块。上述文件系统假设一个逻辑块放一个索引节点`struct inode_d`，455个文件需要有455索引节点，也就是455个逻辑块。
-- 数据块区，3638个逻辑块。剩下的都作为数据块，还剩4096 - 1 - 1 - 1 - 455 = 3638个逻辑块。
-
-设计好有关布局后，**如何在文件系统中体现和实现呢** ？仔细阅读实验原理的同学会记得，是超级块。这些布局信息会被维护在超级块`struct super_block_d`（to-Disk型）和`struct super_block`（to-Disk型）中，在文件系统 **第一次挂载** 在磁盘上的时候，文件系统会按照上述的思路计算出布局信息的各个字段，将它填写到超级块结构中进行维护。大致代码的思路如下所示：
+  设计好有关布局后，**如何在文件系统中体现和实现呢** ？仔细阅读实验原理的同学会记得，是超级块。这些布局信息会被维护在超级块`struct super_block_d`（to-Disk型）和`struct super_block`（to-Disk型）中，在文件系统 **第一次挂载** 在磁盘上的时候，文件系统会按照上述的思路计算出布局信息的各个字段，将它填写到超级块结构中进行维护。大致代码的思路如下所示：
 
 ```c
 int mount(struct options opt){
@@ -516,36 +517,24 @@ struct dentry {
 
 **（3）分配新的索引节点inode**
 
-<!-- TODO: 解释一下绑定 -->
+这部分的逻辑在`simplefs`中对应`sfs_alloc_inode`函数（参见上述mknod/mkdir主要流程示意图）。
 
-这部分的逻辑在`simplefs`中对应`sfs_alloc_inode`函数（参见上述mknod/mkdir主要流程示意图）
+新创建的文件还需要为其 **分配一个索引节点** `inode`：通过逐个位遍历索引节点位图（参考上述数据块位图的遍历），找到一个空闲的索引节点编号，然后创建一个新的索引节点`inode`，绑定该编号，并填写`inode`一些字段（后续在写回的时候写回到该编号对应的索引节点位置即可）。
 
-在[实验原理-目录项的表示](../part2#124)的介绍中，我们知道`dentry`能够索引到对应的`inode`，`dentry`需要和`inode`进行绑定。
-
-新创建的文件还需要分配一个索引节点`inode`。通过逐个位遍历索引节点位图，找到一个空闲的索引节点编号。创建一个新的索引节点`inode`，绑定该编号。在实验原理我们知道，目录项`dentry`能索引到对应的索引节点`inode`。我们创建好新的索引节点`inode`后，要和传入的对应目录项`dentry`进行绑定。参考代码如下：
+在[实验原理-目录项的表示](../part2#124)的介绍中，我们知道`dentry`能够索引到对应的`inode`，也就是说`dentry`会和一个`inode`进行绑定。我们创建好新的索引节点`inode`后，要和**传入的对应目录项** `dentry`进行 **绑定** 。参考代码如下：
 
 ```c
-/**
- * @brief 为一个inode分配dentry，采用头插法
- * 
- * @param inode 
- * @param dentry 
- * @return int 
- */
-int sfs_alloc_dentry(struct sfs_inode* inode, struct sfs_dentry* dentry) {
-    if (inode->dentrys == NULL) {
-        inode->dentrys = dentry;
-    }
-    else {
-        dentry->brother = inode->dentrys;
-        inode->dentrys = dentry;
-    }
-    inode->dir_cnt++;
-    return inode->dir_cnt;
+struct sfs_inode* sfs_alloc_inode(struct sfs_dentry * dentry) {
+	/* 遍历索引节点位图 分配inode */
+    ...
+     
+    /* dentry绑定该inode */
+    dentry->inode = inode;
+    dentry->ino   = inode->ino;
+    ...
+    
 }
 ```
-
-<!-- ![](./part3.assets/分配inode示意图.png) -->
 
 通过以上三大步，同学们就可以完成 **创建文件** 函数的编写，包括 **创建普通文件** 和 **创建目录文件** 。创建普通文件对应的钩子函数是`.mknod`，创建目录文件对应的钩子函数是`.mkdir`。同学们实现好创建普通文件和创建目录文件的钩子函数后，需要将自己的两个函数分别添加到`.mknod`和`.mkdir`钩子上。
 
@@ -555,7 +544,9 @@ int sfs_alloc_dentry(struct sfs_inode* inode, struct sfs_dentry* dentry) {
 int mknod(const char* path, mode_t mode, dev_t dev)
 ```
 
-本次实验，同学们只需要关心`path`和`mode`两个参数。`path`是要创建文件相对于文件系统的根目录`/`的绝对路径。`mode`可以用来判断要文件请求发来的要创建文件的类型（目录文件还是普通文件）。
+- `path`是要创建文件相对于文件系统的根目录`/`的绝对路径。
+- `mode`可以用来判断要文件请求发来的要创建文件的类型（目录文件还是普通文件）。
+- 本次实验，不需要关心`dev`参数。
 
 `.mkdir`的函数原型如下，实现的创建目录文件函数要和以下声明保持一致：
 
@@ -563,7 +554,8 @@ int mknod(const char* path, mode_t mode, dev_t dev)
 int mkdir(const char* path, mode_t mode)
 ```
 
-`path`和`mode`的解释同上`mknod`。
+- `path`是要创建文件相对于文件系统的根目录`/`的绝对路径。
+- `mode`可以用来判断要文件请求发来的要创建文件的类型（目录文件还是普通文件）。
 
 ##### 3.2.3.3 显示文件和目录
 
@@ -573,11 +565,18 @@ int mkdir(const char* path, mode_t mode)
 
 获取文件属性的函数的核心就是要实现填充好对应的`stat`结构体，并向上层返回。获取文件属性的函数对应`getattr`钩子。
 
-<!-- TODO: 这里直接写点代码就行了 -->
+首先进行**路径解析的逻辑** （在创建文件一小节已经介绍过）得到传入路径对应的`dentry`结构，然后就可以根据`dentry`及其索引的`inode`结构的字段来 **填充`stat`结构体** 的字段。一个示例代码如下：
 
-<!-- ![](./part3.assets/getattr示意图.png) -->
-
-**路径解析的逻辑** 在创建文件一小节已经介绍过，得到传入路径对应的`dentry`结构，就可以根据`dentry`及其索引的`inode`结构的字段来填充`stat`结构体的字段。
+```c
+int sfs_getattr(const char* path, struct stat * sfs_stat) {
+    /* 路径解析 */
+    struct sfs_dentry* dentry = sfs_lookup(path, &is_find, &is_root);
+    
+    /* 结构体填充 */
+    sfs_stat->st_mode = ...
+    sfs_stat->st_size = ...
+}
+```
 
 `stat`结构体通常需要填充如下一些常用字段，同学们需要完成这些字段的填充：
 
@@ -609,78 +608,43 @@ int mkdir(const char* path, mode_t mode)
 int getattr(const char* path, struct stat * stat);
 ```
 
-其中，`path`是要读取属性的文件路径;`stat`是要填充返回的文件属性结构体。
+- `path`是要读取属性的文件路径。
+- `stat`是要填充返回的文件属性结构体。
 
 **（2）读取目录**
 
-<!-- 查看一个目录下有哪些文件的时候，需要用到读取目录的钩子函数。 -->
+想要查看一个目录下有哪些文件的时候，需要用到读取目录的钩子函数。读取目录的函数主要是将 **子文件的文件名** 填充到 **指定的缓冲区** 即可。
 
-<!-- 读取目录的函数主要是将 **子文件的文件名** 填充到 **指定的缓冲区** 即可。具体说来，**读取目录的函数** 会传入一个 **子文件的偏移**  `offset`，一个装载 **结果的缓冲区** `buf`，还有一个上层根据自己需求编写的 **自定义填充函数** `filler`。读取目录函数负责的是根据 **子文件偏移**`offset`获取到对应的 **子文件文件名** 。然后 **直接调用** 传入的装填函数`filler`将这个子文件文件名装填到结果缓冲区`buf`。上层的`filler`决定怎么填充这个结果，和文件系统实现无关，`readdir`只需要知道有这么个装填函数`filler`，直接调用即可。 -->
+读取目录函数主要负责的是：**解析** 父目录路径，并根据子文件偏移`offset`获取到对应的 **子文件文件名** 。
 
-<!-- TODO: 复用前面的代码 -->
-当 **在FUSE文件系统** 下调用`ls`时，就会触发`readdir`钩子， **readdir** 在`ls`的过程中每次 **仅会返回一个目录项** ，其中`offset`参数记录着当前应该返回的目录项：
+拿到结果（子文件文件名）之后如何返回给上层呢？读取目录函数 **直接调用** 上层传入的装填函数`filler`即可！上层实现并传入的装填函数`filler`决定怎么填充这个结果到缓冲区中，和文件系统的读取目录函数无关，`readdir`只需要知道有这么个装填函数`filler`，直接调用即可。 一个参考如下：
+
 ```c
-/**
- * @brief 
- * 
- * @param path 
- * @param buf 
- * @param filler 参数讲解:
- * 
- * typedef int (*fuse_fill_dir_t) (void *buf, const char *name,
- *				const struct stat *stbuf, off_t off)
- * buf: name会被复制到buf中
- * name: dentry名字
- * stbuf: 文件状态，可忽略
- * off: 下一次offset从哪里开始，这里可以理解为第几个dentry
- * 
- * @param offset 
- * @param fi 
- * @return int 
- */
 int sfs_readdir(const char * path, void * buf, fuse_fill_dir_t filler, off_t offset,
 			    struct fuse_file_info * fi) {
-    boolean	is_find, is_root;
-	int		cur_dir = offset;
-
+	/* 解析父目录路径 */
 	struct sfs_dentry* dentry = sfs_lookup(path, &is_find, &is_root);
-	struct sfs_dentry* sub_dentry;
-	struct sfs_inode* inode;
+
 	if (is_find) {
-		inode = dentry->inode;
-		sub_dentry = sfs_get_dentry(inode, cur_dir);
+		/* 根据offset获取到对应的子文件名 */
+		sub_dentry = sfs_get_dentry(dentry->inode, offset);
 		if (sub_dentry) {
+            /* 直接调用filler来装填结果 */
 			filler(buf, sub_dentry->fname, NULL, ++offset);
 		}
-		return SFS_ERROR_NONE;
 	}
-	return -SFS_ERROR_NOTFOUND;
 }
 ```
-其中最重要的 **filler** 函数， **filler** 函数原型如下：
-
-`typedef int (*fuse_fill_dir_t) (void *buf, const char *name, const struct stat *stbuf, off_t off)`
-对各个参数做如下解释：
-
--  `buf`：name会被复制到buf中；
-
--  `name`：dentry名字；
-
--  `stbuf`：文件状态，可忽略；
-
--  `off`： 下一次offset从哪里开始，这里可以理解为第几个dentry；
-
-因此，在上述代码中，我们调用`filler(buf, fname, NULL, ++offset)`表示将`fname`放入`buf`中，并使目录项偏移加一，代表下一次访问下一个目录项。
-
-<!-- ![](./part3.assets/readdir示意图.png) -->
-
-<!-- 其中，调用`filler`的时候需要的`filler`钩子函数的原型如下：
+其中，调用`filler`的时候需要的`filler`钩子函数的原型如下：
 
 ```c
 int filler(void *buf, const char *name, const struct stat *stbuf, off_t off);
 ```
 
-`buf`是要装填结果`name`的缓冲区;`name`是获取到的子文件的文件名;`stbuf`无需关注，设置为`NULL`即可;`off`是 **下一个子文件** 的偏移（用于下次调用readdir的`offset`）。 -->
+- `buf`是要装填结果`name`的缓冲区。
+- `name`是获取到的子文件的文件名。
+- `stbuf`无需关注，设置为`NULL`即可。
+- `off`是 **下一个子文件** 的偏移（第几个dentry，用于下次调用readdir的`offset`）。
 
 读取目录对应的钩子函数是`.readdir`，同学们实现好读取目录的函数后，需要将该函数添加到`.readdir`钩子上。
 
@@ -690,7 +654,10 @@ int filler(void *buf, const char *name, const struct stat *stbuf, off_t off);
 int readdir(const char * path, void * buf, fuse_fill_dir_t filler, off_t offset, struct fuse_file_info * fi);
 ```
 
-其中，`path`是要读取的目录的路径;`buf`是传入的装填返回结果的缓冲区;`filler`是传入的上层自定义的装填函数;`offset`是本次要要开始读取的子文件的偏移，`fi`无需关注。
+- `path`是要读取的目录的路径。
+- `buf`是传入的装填返回结果的缓冲区。
+- `filler`是传入的上层自定义的装填函数。
+- `offset`是本次要要开始读取的子文件的偏移，`fi`无需关注。
 
 ### 3.3 测试
 
