@@ -683,7 +683,16 @@ ddriver -r
 
 #### 3.3.2 测评程序
 
-我们为同学们提供了任务二的测评程序，位于`tests`目录下`test.sh`。同学们在`test`目录下，使用如下命令来运行测评程序：
+我们为同学们提供了任务二的测评程序，位于`tests`目录下`test.sh`。
+
+在开始运行测评程序之前，需要同学们先 **填写好`include`目录下的`fs.layout`文件** ，供测评程序使用。`fs.layout`文件用于描述你的磁盘布局情况，其中()内的数值代表占多少个块，`BSIZE`代表逻辑块的大小：
+
+```
+| BSIZE = 1024 B |
+| Super(1) | Inode Map(1) | DATA Map(1) | INODE(1) | DATA(*) |
+```
+
+然后在`test`目录下，使用如下命令来运行测评程序：
 
 ```shell
 chmod +x test.sh && ./test.sh
