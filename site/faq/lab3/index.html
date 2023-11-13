@@ -12,11 +12,11 @@
         <link rel="prev" href="../lab2/">
       
       
-        <link rel="next" href="../../lab1/part1/">
+        <link rel="next" href="../lab4/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.79e020e9.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d451bc0e.min.css">
       
       
 
@@ -781,10 +781,37 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#5-panic-sched-locks" class="md-nav__link">
+    5. 问题：panic: sched locks
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab4问题
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1642,6 +1669,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#5-panic-sched-locks" class="md-nav__link">
+    5. 问题：panic: sched locks
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1674,9 +1708,9 @@
 <img alt="" src="../lab3.assets/scause.png" /></p>
 <h3 id="sepc">sepc<a class="headerlink" href="#sepc" title="Permanent link">&para;</a></h3>
 <ul>
-<li>如果<code>sepc</code>为0x8000xxxx，则说明是内核态的指令地址，需要从<code>kernel/kernel.asm</code>反汇编代码中去查看对应的指令，如下图所示：
+<li>如果<code>sepc</code>为0x000000008000xxxx，则说明是内核态的指令地址，需要从<code>kernel/kernel.asm</code>反汇编代码中去查看对应的指令，如下图所示：
 <img alt="" src="../lab3.assets/kernel_asm.png" /></li>
-<li>如果<code>sepc</code>是类似0x000xxxx这种格式，那说明是用户态的指令地址，需要从<code>user</code>目录下对应的用户程序的反汇编代码(<code>xxx.asm</code>)中去查找</li>
+<li>如果<code>sepc</code>是类似0x00000000000xxxx这种格式，那说明是用户态的指令地址，需要从<code>user</code>目录下对应的用户程序的反汇编代码(<code>xxx.asm</code>)中去查找</li>
 </ul>
 <h3 id="stval">stval<a class="headerlink" href="#stval" title="Permanent link">&para;</a></h3>
 <p>指对哪个地址发生了不合法的操作，上图示例中是对0x50这个地址发生了不合法的读操作</p>
@@ -1684,6 +1718,13 @@
 <p>panic的位置可以通过vscode查到：在<code>spinlock.c: acquire()</code>中</p>
 <p><img alt="" src="../lab3.assets/acquire-panic.png" /></p>
 <p>在该函数当中报错是因为holding函数会检查当前的CPU是否持有想要的锁，如果是的话，就会产生panic。由于xv6没有实现可重入锁，所以如果将该panic注释掉会死锁，也就是自己拿着锁但是又想获取该锁。所以同学们需要检查自己的代码当中是否对同一个锁获取了两次。</p>
+<h2 id="5-panic-sched-locks">5. 问题：panic: sched locks<a class="headerlink" href="#5-panic-sched-locks" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="../lab3.assets/sched-panic.jpg" /></p>
+<p>这个报错一般是持有自旋锁的情况下发生了进程切换：</p>
+<ol>
+<li>检查push_off后面有没有对应的pop_off </li>
+<li>检查有没有持有锁忘记释放了</li>
+</ol>
 
 
 
@@ -1725,11 +1766,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.6eac0284.min.js"></script>
+      <script src="../../assets/javascripts/bundle.726fbb30.min.js"></script>
       
         <script src="../../js/baidu-tongji.js"></script>
       
