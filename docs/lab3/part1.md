@@ -165,9 +165,9 @@ test2 OK
      3. 不允许随意修改锁的命名，本任务涉及到的锁必须以`bcache`开头来命名。
 
 
-4)   理想状态下，`bcachetest`中数据块缓存相关的所有锁`fetch-and-add`的总和应该为0，但本实验中总和`tot`不超过500即可；  
-5)   请修改`bget()`和`brelse()`，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等bcache.lock；  
-6)   同样要求`usertests`中的用例全部通过，最后的输出如下（具体数据有所出入）：  
+-  理想状态下，`bcachetest`中数据块缓存相关的所有锁`fetch-and-add`的总和应该为0，但本实验中总和`tot`不超过500即可；  
+-   请修改`bget()`和`brelse()`，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等bcache.lock；  
+-   同样要求`usertests`中的用例全部通过，最后的输出如下（具体数据有所出入）：  
 
 <div align="center"> <img src="../part1.assets/image-20211019205449169.png" width = 70%/> </div>
 
