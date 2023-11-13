@@ -64,6 +64,7 @@ nav:
         - Lab1问题: faq/lab1.md
         - Lab2问题: faq/lab2.md
         - Lab3问题: faq/lab3.md
+        - Lab4问题: faq/lab4.md
   - Lab1：XV6与Unix实用程序: 
     - 实验概述: lab1/part1.md
     - 实验原理: lab1/part2.md
