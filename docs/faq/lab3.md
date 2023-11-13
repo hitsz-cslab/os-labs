@@ -32,9 +32,9 @@
 
 ### sepc
 
-- 如果`sepc`为0x8000xxxx，则说明是内核态的指令地址，需要从`kernel/kernel.asm`反汇编代码中去查看对应的指令，如下图所示：
+- 如果`sepc`为0x000000008000xxxx，则说明是内核态的指令地址，需要从`kernel/kernel.asm`反汇编代码中去查看对应的指令，如下图所示：
 ![](lab3.assets/kernel_asm.png)
-- 如果`sepc`是类似0x000xxxx这种格式，那说明是用户态的指令地址，需要从`user`目录下对应的用户程序的反汇编代码(`xxx.asm`)中去查找
+- 如果`sepc`是类似0x00000000000xxxx这种格式，那说明是用户态的指令地址，需要从`user`目录下对应的用户程序的反汇编代码(`xxx.asm`)中去查找
 
 ### stval
 
@@ -47,3 +47,12 @@ panic的位置可以通过vscode查到：在`spinlock.c: acquire()`中
 ![](lab3.assets/acquire-panic.png)
 
 在该函数当中报错是因为holding函数会检查当前的CPU是否持有想要的锁，如果是的话，就会产生panic。由于xv6没有实现可重入锁，所以如果将该panic注释掉会死锁，也就是自己拿着锁但是又想获取该锁。所以同学们需要检查自己的代码当中是否对同一个锁获取了两次。
+
+## 5. 问题：panic: sched locks
+
+![](lab3.assets/sched-panic.jpg)
+
+这个报错一般是持有自旋锁的情况下发生了进程切换：
+
+1. 检查push_off后面有没有对应的pop_off 
+2. 检查有没有持有锁忘记释放了

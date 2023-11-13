@@ -130,7 +130,7 @@
 !!! note   "为什么要保留初始内核页表？"
     保留原有的`kvminit()`以及`kernel/vm.c`中的`kernel_pagetable`，因为有些时候CPU可能并未执行用户进程。
 
-**Step 4** ：修改`allocproc`函数。`allocproc()`会在系统启动时被第一个进程和`fork`调用。在`allocproc`函数里调用Step 2 创建的函数设置内核页表，并且调用`kvmmap`函数将Step 3 设置的内核栈映射到页表`k_pagetable`里。
+**Step 4** ：修改`allocproc`函数。`allocproc()`会在系统启动时被第一个进程和`fork`调用。在`allocproc`函数里调用Step 2 创建的函数设置内核页表，并且参考借鉴`kvmmap`函数将Step 3 设置的内核栈映射到页表`k_pagetable`里。
 
 !!! tip   "`allocproc`函数功能说明"
     在进程表中查找空闲`PCB`，如果找到，初始化在内核中运行所需的状态，并保持`p->lock`返回。如果没有空闲`PCB`，或者内存分配失败，则返回0。
