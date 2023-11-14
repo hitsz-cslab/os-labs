@@ -169,6 +169,9 @@ test2 OK
 -   请修改`bget()`和`brelse()`，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等bcache.lock；  
 -   同样要求`usertests`中的用例全部通过，最后的输出如下（具体数据有所出入）：  
 
+!!! tip "关于bcache实验的测试说明"
+     **在运行`make qemu`测试`bcachetest`和`usertests`之前，建议先运行`make clean`删除`fs.img`** ，以防之前错误的代码把磁盘写坏了，后面即使是改成正确的代码也没法执行。
+
 <div align="center"> <img src="../part1.assets/image-20211019205449169.png" width = 70%/> </div>
 
 ### 3.3 测试
