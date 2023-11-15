@@ -272,7 +272,7 @@ fusermount -u <挂载点>
 
 #### 2.3.2 测评程序
 
-任务一提供了测评程序，同学们完成实验后，进入`./demo/tests`目录，输入如下命令通过本节任务的测评：
+任务一提供了测评程序，同学们完成实验后，进入`./demo/tests`目录（请在此目录`tests`下运行测评程序！），输入如下命令通过本节任务的测评：
 
 ```shell
 chmod +x test.sh && ./test.sh
@@ -692,7 +692,7 @@ ddriver -r
 | Super(1) | Inode Map(1) | DATA Map(1) | INODE(1) | DATA(*) |
 ```
 
-然后在`test`目录下，使用如下命令来运行测评程序：
+然后在`test`目录下（请在此目录`tests`下运行测评程序！），使用如下命令来运行测评程序：
 
 ```shell
 chmod +x test.sh && ./test.sh
@@ -754,7 +754,7 @@ ls ./tests/mnt/dir0/dir1/dir2
 fusermount -u ./tests/mnt
 ddriver -r
 # F5(或Fn+F5)再次挂载文件系统
-mkdir ./tests/mnt/hello
+touch ./tests/mnt/hello
 ls ./tests/mnt
 fusermount -u ./tests/mnt
 python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json
