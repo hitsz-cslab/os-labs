@@ -1298,7 +1298,7 @@
         
           <li class="md-nav__item">
   <a href="#21" class="md-nav__link">
-    2.1 流程
+    2.1 （一种可参考的）流程
   </a>
   
 </li>
@@ -1325,7 +1325,7 @@
         
           <li class="md-nav__item">
   <a href="#31" class="md-nav__link">
-    3.1 流程
+    3.1 （一种可参考的）流程
   </a>
   
 </li>
@@ -1680,7 +1680,7 @@
         
           <li class="md-nav__item">
   <a href="#21" class="md-nav__link">
-    2.1 流程
+    2.1 （一种可参考的）流程
   </a>
   
 </li>
@@ -1707,7 +1707,7 @@
         
           <li class="md-nav__item">
   <a href="#31" class="md-nav__link">
-    3.1 流程
+    3.1 （一种可参考的）流程
   </a>
   
 </li>
@@ -1851,7 +1851,11 @@
 </ul>
 <h2 id="2">2  任务二 独立内核页表<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>我们需要 <strong>将共享内核页表改成独立内核页表</strong> ，使得每个进程拥有自己独立的内核页表。</p>
-<h3 id="21">2.1 流程<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<h3 id="21">2.1 （一种可参考的）流程<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">实验说明</p>
+<p>以下给同学提供了一种可参考的实验解决方案，但它并不是唯一的解决方案。如果你有更好的方法也是可以的，只要能够通过实验测评即可。</p>
+</div>
 <p><strong>Step 1</strong> ：修改<code>kernel/proc.h</code>中的 <code>struct proc</code>， 增加两个新成员：<code>pagetable_t k_pagetable;</code>和<code>uint64 kstack_pa;</code>，分别用于给每个进程中设置一个内核独立页表和内核栈的物理地址。</p>
 <p><strong>Step 2</strong> ：仿照<code>kvminit()</code> 函数重新写一个创建内核页表的函数。</p>
 <ul>
@@ -1910,7 +1914,11 @@
 <p class="admonition-title">具体要求</p>
 <p>我们需要 <strong>在独立内核页表加上用户页表的映射，同时替换 <code>copyin()/copyinstr()</code> 为 <code>copyin_new()/copyinstr_new()</code></strong> ，使得内核能够不必花费大量时间，用软件模拟的方法一步一步遍历页表，而是直接利用硬件。</p>
 </div>
-<h3 id="31">3.1 流程<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<h3 id="31">3.1 （一种可参考的）流程<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">实验说明</p>
+<p>以下给同学提供了一种可参考的实验解决方案，但它并不是唯一的解决方案。如果你有更好的方法也是可以的，只要能够通过实验测评即可。</p>
+</div>
 <p><strong>Step 1</strong> ：写一个<code>sync_pagetable</code>函数把进程的用户页表映射到内核页表中，同时在defs.h中声明。</p>
 <ul>
 <li>
