@@ -2105,7 +2105,7 @@
 <p>这个文件系统小demo的实现要求如下：</p>
 <ul>
 <li>只需要实现<code>ls</code>命令，并且<code>ls</code>时只会在根目录显示某个的预设的普通文件名<code>&lt;filename&gt;</code>即可。</li>
-<li>文件系统demo的一个逻辑块是两个IO块大小（和任务二一致），假设逻辑块500为根目录的数据块，这个数据块只有一个<code>dentry</code>，也就是名为<code>&lt;filename&gt;</code>的dentry。</li>
+<li>文件系统demo的 <strong>一个逻辑块是两个IO块大小</strong> （和任务二一致），假设逻辑块500为根目录的数据块，这个数据块只有一个<code>dentry</code>，也就是名为<code>&lt;filename&gt;</code>的dentry。</li>
 <li>出于简单示例，除了上述的块，磁盘其他块都是空的，无需做其他复杂考虑。</li>
 </ul>
 <p>如下图所示：</p>
@@ -2135,7 +2135,10 @@
 <ul>
 <li><strong>step 2</strong>，完成遍历目录逻辑，从第500个逻辑块读取一个<code>demo_dentry</code>，将<code>demo_dentry</code>的文件名填充到filename。下面给出一个参考的<code>/* TODO */</code>指引，同学们也无需严格按照这个指引。</li>
 </ul>
-<p>注意：此处任务一同学 <strong>暂时不用关注</strong> 传入的<code>path</code>，<code>buf</code>，<code>filler</code>，<code>offset</code>等参数，也先 <strong>不要使用</strong> 到这些参数。</p>
+<div class="admonition tip">
+<p class="admonition-title">注意</p>
+<p>此处任务一同学 <strong>暂时不用关注</strong> <code>demo_readdir</code>传入的<code>path</code>，<code>buf</code>，<code>filler</code>，<code>offset</code>等参数，也先 <strong>不要使用</strong> 到这些参数。</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="cm">/* 遍历目录 */</span>
 <span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">demo_readdir</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">fuse_fill_dir_t</span><span class="w"> </span><span class="n">filler</span><span class="p">,</span><span class="w"> </span><span class="kt">off_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">fuse_file_info</span><span class="o">*</span><span class="w"> </span><span class="n">fi</span><span class="p">)</span>
 <span class="p">{</span>
@@ -2184,7 +2187,7 @@
 </code></pre></div>
 <p><img alt="" src="../part3.assets/%E5%8D%B8%E8%BD%BD%E7%A4%BA%E4%BE%8B.png" /></p>
 <h4 id="232">2.3.2 测评程序<a class="headerlink" href="#232" title="Permanent link">&para;</a></h4>
-<p>任务一提供了测评程序，同学们完成实验后，进入<code>./demo/tests</code>目录（请在此目录<code>tests</code>下运行测评程序！），输入如下命令通过本节任务的测评：</p>
+<p>任务一提供了测评程序，同学们完成实验后，进入<code>./demo/tests</code>目录（ <strong>请在此目录<code>tests</code>下运行测评程序！</strong> ），输入如下命令通过本节任务的测评：</p>
 <div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>test.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./test.sh
 </code></pre></div>
 <p>测评通过的示意图如下：</p>
@@ -2506,7 +2509,7 @@
 <div class="highlight"><pre><span></span><code>| BSIZE = 1024 B |
 | Super(1) | Inode Map(1) | DATA Map(1) | INODE(1) | DATA(*) |
 </code></pre></div>
-<p>然后在<code>test</code>目录下（请在此目录<code>tests</code>下运行测评程序！），使用如下命令来运行测评程序：</p>
+<p>然后在<code>test</code>目录下（ <strong>请在此目录<code>tests</code>下运行测评程序！</strong> ），使用如下命令来运行测评程序：</p>
 <div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>test.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./test.sh
 </code></pre></div>
 <p>测试方式：输入<code>N</code>，选择基础功能测试。</p>
