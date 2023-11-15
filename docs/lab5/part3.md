@@ -141,9 +141,9 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 ![image-20211024145654250](./part3.assets/image-20211024145654250.png)
 
 -   **Step 9** . 到`newfs/src/newfs.c`目录，打断点（可选，如果需要调试可打）。
--   **Step 10** . 按下`F5`进行运行和挂载文件系统。
+-   **Step 10** . 按下`F5`(或`Fn+F5`)进行运行和挂载文件系统。
 
-`F5`是方便同学们直接在VSCode挂载文件系统，同学们也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)的`F5`命令展开。
+`F5`(或`Fn+F5`)是方便同学们直接在VSCode挂载文件系统，同学们也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)的`F5`(或`Fn+F5`)命令展开。
 
 打下断点，调试运行如下图：
 
@@ -254,7 +254,7 @@ static int demo_getattr(const char* path, struct stat *stbuf)
 chmod +x start.sh && ./start.sh
 ```
 
-然后挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./#13)配置好任务一的编译环境）：
+然后挂载文件系统，VSCode按`F5`（或`Fn+F5`）（前提是已经按照[环境搭建-项目编译](./#13)配置好任务一的编译环境）：
 
 ![f5运行成功](./part3.assets/f5运行成功2.png)
 
@@ -671,7 +671,7 @@ ddriver -r
 
 检查`tests`目录下有无`mnt`目录，没有需要自己`mkdir mnt`创建一个，并保证这个目录是 **空** 的，否则`F5`无法挂载成功。
 
-挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./#13)配置好任务二的编译环境）：
+挂载文件系统，VSCode按`F5`（或`Fn+F5`）（前提是已经按照[环境搭建-项目编译](./#13)配置好任务二的编译环境）：
 
 ![](./part3.assets/f5运行成功任务二.png)
 
@@ -708,7 +708,7 @@ chmod +x test.sh && ./test.sh
 
 正确的序列如下（**基础分30分**）：
 
-- **F5挂载文件系统（1分）**
+- **`F5`（或`Fn+F5`）挂载文件系统（1分）**
 
 - **mkdir测试（4分）**
 
@@ -753,7 +753,7 @@ ls ./tests/mnt/dir0/dir1/dir2
 ```console
 fusermount -u ./tests/mnt
 ddriver -r
-# F5再次挂载文件系统
+# F5(或Fn+F5)再次挂载文件系统
 mkdir ./tests/mnt/hello
 ls ./tests/mnt
 fusermount -u ./tests/mnt
