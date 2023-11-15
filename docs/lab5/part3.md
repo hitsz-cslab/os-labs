@@ -174,12 +174,12 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$
 这个文件系统小demo的实现要求如下：
 
 - 只需要实现`ls`命令，并且`ls`时只会在根目录显示某个的预设的普通文件名`<filename>`即可。
-- 文件系统demo的一个逻辑块是两个IO块大小（和任务二一致），假设第500个逻辑块为根目录的数据块，这个数据块只有一个`dentry`，也就是名为`<filename>`的dentry。
+- 文件系统demo的一个逻辑块是两个IO块大小（和任务二一致），假设逻辑块500为根目录的数据块，这个数据块只有一个`dentry`，也就是名为`<filename>`的dentry。
 - 出于简单示例，除了上述的块，磁盘其他块都是空的，无需做其他复杂考虑。
 
 如下图所示：
 
-![task1](./part3.assets/task1.svg)
+![task1](./part3.assets/task1.png)
 
 假设`<filename>`为`pass_task1.txt`，挂载文件系统后，`ls`效果将会如下：
 
