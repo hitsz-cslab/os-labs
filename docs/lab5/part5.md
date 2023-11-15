@@ -37,3 +37,8 @@ fusermount -u ./tests/mnt
 ![](part5.assets/没有挂载点.png)
 
 这种情况是，文件系统挂载的挂载点，如`./tests/mnt`不存在。需要同学们提前创建好一个空的文件夹`./tests/mnt`。
+
+## 5.挂载点忙碌
+
+同学们在执行任务一的测评脚本时，如果遇到`fusermount: failed to umount xxx : Device or resource busy`的问题，请使用`git pull`命令更新实验包的任务一测评程序即可。
+
