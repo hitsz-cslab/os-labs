@@ -53,7 +53,9 @@ user-land-filesystem/
 
 ### 1.2 配置开发环境
 
-运行`./setenv.sh`后，即可按照指导一步一步来建立环境：
+- **Step 1**，运行`./setenv.sh`
+
+自动部署任务一和任务二的 **实验环境** ，并生成 **任务二的项目** ：
 
 ```console
 teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh 
@@ -64,9 +66,9 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 ...
 ```
 
-其中，工作目录名称即开发该文件系统的 **文件夹名称** 。可以看到，它在`fs`目录下新建了一个`newfs`目录作为工作目录。
+其中，工作目录名称即 **任务二** 的文件系统的 **文件夹名称** 。可以看到，它在`fs`目录下新建了一个`newfs`目录作为工作目录。
 
-接着，项目名称即真正的文件系统名称，可以是文件系统的简写，例如：nfs（代表newfs），这里要注意项目名不能有 **特殊符号、空格** 等。
+接着，项目名称即 **任务二** 的 **文件系统名称**，可以是文件系统的简写，例如：nfs（代表newfs），这里要注意项目名不能有 **特殊符号、空格** 等。
 
 项目建立完成之后的结构`newfs`如下所示：
 
@@ -105,7 +107,13 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
     └── test.sh
 ```
 
+- **Step 2**，任意路径下，运行`source ~/.bashrc`
 
+该步是为了使得环境配置在 **当前的命令行** 生效。
+
+如果在命令行，输入`ddriver`，显示如下界面，则表示环境配置成功。
+
+![](./part3.assets/ddriver.png)
 
 ### 1.3 项目编译
 
