@@ -207,15 +207,19 @@ static int demo_mount(){
 
 - **step 2**，完成遍历目录逻辑，从第500个逻辑块读取一个`demo_dentry`，将`demo_dentry`的文件名填充到filename。下面给出一个参考的`/* TODO */`指引，同学们也无需严格按照这个指引。
 
+  注意：此处任务一同学 **暂时不用关注** 传入的`path`，`buf`，`filler`，`offset`等参数，也先 **不要使用** 到这些参数。
+
 ```c
 /* 遍历目录 */
 static int demo_readdir(const char* path, void* buf, fuse_fill_dir_t filler, off_t offset, struct fuse_file_info* fi)
 {
+    // 此处任务一同学无需关注demo_readdir的传入参数，也不要使用到上述参数
+    
     char filename[128]; // 待填充的
 
     /* 根据超级块的信息，从第500逻辑块读取一个dentry，ls将只固定显示这个文件名 */
 
-    /* TODO: 计算offset，并根据offset调用ddriver_seek移动磁盘头到offset处 */
+    /* TODO: 计算磁盘偏移off，并根据磁盘偏移off调用ddriver_seek移动磁盘头到磁盘偏移off处 */
 
     /* TODO: 调用ddriver_read读出一个磁盘块到内存，512B */
 
