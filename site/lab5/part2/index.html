@@ -1897,7 +1897,8 @@
 &#39;演示1.pptx&#39;  &#39;演示2.docx&#39;  &#39;pynq_z2_v2.6.0.zip&#39;  &#39;Deadpool.txt&#39;
 </code></pre></div>
 <h3 id="12-ext2">1.2  EXT2文件系统<a class="headerlink" href="#12-ext2" title="Permanent link">&para;</a></h3>
-<p><strong>EXT2</strong> 是GNU/Linux系统中标准的文件系统，其特点是 <strong>存取文件的性能较好</strong> ，对于中小型的文件更显示其优势。本实验以 <strong>EXT2</strong> 为模板，实现一个青春版文件系统。</p>
+<p><strong>EXT2</strong> 是GNU/Linux系统中标准的文件系统，其特点是 <strong>存取文件的性能较好</strong> ，对于中小型的文件更显示其优势（因为EXT2不考虑日志）。后续的EXT3和EXT4文件系统就是在EXT2文件系统的基础上发展而来。有兴趣深入了解ext2文件系统的同学，可以参考<a href="https://www.nongnu.org/ext2-doc/ext2.html">EXT2文件系统</a>。</p>
+<p>本实验以 <strong>EXT2</strong> 为模板，实现一个 <strong>EXT2的青春版文件系统</strong>。</p>
 <h4 id="121">1.2.1  磁盘布局<a class="headerlink" href="#121" title="Permanent link">&para;</a></h4>
 <p>EXT2文件系统将盘块分成两大类：保存元数据的 <strong>元数据盘块</strong>（前面提到的管理区），以及存放文件内容数据的 <strong>数据盘块</strong> （前面提到的数据区）。本实验中，为了降低实验难度，简化后的EXT2文件系统的基本布局如下所示：</p>
 <p><img alt="ext2-disk-layout" src="../part2.assets/disk-layout.svg" /></p>
