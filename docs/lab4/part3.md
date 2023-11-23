@@ -58,7 +58,7 @@
   
 - 可以使用 `kernel/riscv.h` 中尾部的宏定义 ，比如：
   
-```c
+```c linenums="1" title="kernel/riscv.h"
   #define PGSIZE 4096 // bytes per page
   #define PGSHIFT 12  // bits of offset within a page
  
@@ -76,7 +76,7 @@
 
 - `kernel/vm.c`中的函数 `freewalk()` 能帮助你理解遍历页表的过程。  
 
-```c
+```c  linenums="1"  title="kernel/vm.c"
 // Recursively free page-table pages.
 // All leaf mappings must already have been removed.
  void
@@ -195,7 +195,7 @@
 
 ![用户共享页表](part3.assets/用户共享页表.png)
 
-**Step 2** ：用函数 `copyin_new()` （在 `kernel/vmcopyin.c`中定义）代替 `copyin()` （在 `kernel/vm.c`中定义）。即删除`copyin()`原来的实现方案，直接在`copyin()`里调用函数 `copyin_new()` 。确保程序 **能运行** 之后再用 `copyinstr_new()` 以代替 `copyinstr()`。
+**Step 2** ：用函数 `copyin_new()` （在 `kernel/vmcopyin.c`中定义）代替 `copyin()` （在 `kernel/vm.c`中定义）。即删除`copyin()`原来的实现方案，直接在`copyin()`里调用函数 `copyin_new()` 。在做完所有修改，确保程序 **能运行** `copyin_new()` 之后再用 `copyinstr_new()` 以代替 `copyinstr()`。
 
 **Step 3** ：在独立内核页表加上用户页表的映射，以保证刚刚替换地新函数能够使用。注意独立内核页表的用户页表的映射的标志位的选择。标志位User一旦被设置，内核就不能访问该虚拟地址了。
 
