@@ -3,51 +3,61 @@ copyright: 'Copyright &copy; 2023 - 2024 哈尔滨工业大学（深圳）'
 repo_name: 'HITSZ-OS-Course'
 
 theme:
-    language: 'zh'
+    language: 'zh' # 配置语言
     name: material
     highlightjs: true
     hljs_languages:
         - yaml
         - rust
     features:
-        - navigation.tabs
+        - navigation.tabs # 横向导航
+        - navigation.top # 返回顶部的按钮，在上滑时出现
+        - navigation.tabs.sticky # 导航选项卡将锁定在标题下方，并在向下滚动时始终保持可见
+        - navigation.tracking # 在url中使用标题定位锚点
     icon:
       logo: fontawesome/brands/linux
       repo: fontawesome/brands/git-alt        
 
 markdown_extensions:
-  - admonition
-  - codehilite:
+  - admonition # 提示块
+  - codehilite: # 代码高亮，显示行号
       guess_lang: false
-      linenums: false
-  - toc:
-      permalink: true
-  - footnotes
-  - meta
-  - def_list
-  - pymdownx.betterem:
+      linenums: true
+  - toc: # 锚点
+      permalink: true # 固定标题位置为当前位置
+  - footnotes # 脚注
+  - meta  # 支持markdown文件上方自定义标题标签等
+  - pymdownx.betterem: # 对加粗和斜体更好的检测
       smart_enable: all
-  - pymdownx.caret
-  - pymdownx.critic
-  - pymdownx.details
-  - pymdownx.emoji:
+  - pymdownx.caret # 下划线上标
+  - pymdownx.critic # 增加删除修改高亮注释，可修饰行内或段落
+  - pymdownx.details  # 提示块可折叠
+  - pymdownx.emoji: # 表情
       emoji_index: !!python/name:pymdownx.emoji.twemoji
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
-  - pymdownx.inlinehilite
-  - pymdownx.magiclink
-  - pymdownx.mark
-  - pymdownx.smartsymbols
-  - pymdownx.superfences
-  - pymdownx.tasklist:
+  - pymdownx.inlinehilite # 行内代码高亮
+  - pymdownx.magiclink # 自动识别超链接
+  - pymdownx.mark # 文本高亮
+  - pymdownx.smartsymbols # 符号转换
+  - pymdownx.superfences # 代码块高亮
+  - def_list # 列表
+  - pymdownx.tasklist: # 复选框checklist
       custom_checkbox: true
   - pymdownx.tabbed
-  - pymdownx.tilde
-  - admonition
+  - pymdownx.tilde # 删除线下标
+  - attr_list
+  - md_in_html  
   - mdx_math:
       enable_dollar_delimiter: True
     
 extra_javascript:
     - 'js/baidu-tongji.js'
+
+extra:
+    social:
+        -   icon: fontawesome/solid/paper-plane
+            link: mailto:<xiawen@hit.edu.cn>
+            name: xiawen@hit.edu.cn
 
 nav:
   - 实验概述: 
