@@ -285,7 +285,7 @@ kvminit()
 
 如[3.1小节 内核页表](#31)所示，在kvminit()函数中，除了内核栈之外，其他部件都映射完成。内核栈的页表映射是在`kernel/proc.c`的 `procinit()`中实现：
 
-```c
+```c linenums="1"
 /*in kernel/proc.c procinit()*/
 for(p = proc; p < &proc[NPROC]; p++) {
     ...
@@ -314,7 +314,7 @@ for(p = proc; p < &proc[NPROC]; p++) {
 
 内核地址0xC000000，为PLIC寄存器地址，你可以在 `kernel/memlayout.h + kernel/vm.c` 中 `kvminit()` 进行查阅。仔细阅读 `kvminit()` ，你会发现其对如下地址范围进行了映射：
 
-```c
+```c  linenums="1"
   // CLINT
   kvmmap(CLINT, CLINT, 0x10000, PTE_R | PTE_W);
 
