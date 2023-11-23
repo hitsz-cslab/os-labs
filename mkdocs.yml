@@ -49,6 +49,9 @@ markdown_extensions:
   - md_in_html  
   - mdx_math:
       enable_dollar_delimiter: True
+
+extra_css:
+  - stylesheets/extra.css
     
 extra_javascript:
     - 'js/baidu-tongji.js'
