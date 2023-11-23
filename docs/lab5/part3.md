@@ -1,8 +1,8 @@
 #  实验实现
 
 !!! tip "代码量相关"
-    1. 任务一：非常简单的demo。总代码量：100+行。实际编码：约10行。
-    1. 任务二：较完善的文件系统。总代码量：1k+行。实际编码：若多参考SFS，要改的并不多，预估200+行。也可自己重新完整实现。
+       1. 任务一：非常简单的demo。总代码量：100+行。实际编码：约10行。
+       2. 任务二：较完善的文件系统。总代码量：1k+行。实际编码：若多参考SFS，要改的并不多，预估200+行。也可自己重新完整实现。
 
 ## 1.任务零：环境搭建
 
@@ -53,7 +53,9 @@ user-land-filesystem/
 
 ### 1.2 配置开发环境
 
-运行`./setenv.sh`后，即可按照指导一步一步来建立环境：
+- **Step 1**，运行`./setenv.sh`
+
+自动部署任务一和任务二的 **实验环境** ，并生成 **任务二的项目** ：
 
 ```console
 teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh 
@@ -64,9 +66,9 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 ...
 ```
 
-其中，工作目录名称即开发该文件系统的 **文件夹名称** 。可以看到，它在`fs`目录下新建了一个`newfs`目录作为工作目录。
+其中，工作目录名称即 **任务二** 的文件系统的 **文件夹名称** 。可以看到，它在`fs`目录下新建了一个`newfs`目录作为工作目录。
 
-接着，项目名称即真正的文件系统名称，可以是文件系统的简写，例如：nfs（代表newfs），这里要注意项目名不能有 **特殊符号、空格** 等。
+接着，项目名称即 **任务二** 的 **文件系统名称**，可以是文件系统的简写，例如：nfs（代表newfs），这里要注意项目名不能有 **特殊符号、空格** 等。
 
 项目建立完成之后的结构`newfs`如下所示：
 
@@ -105,7 +107,13 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
     └── test.sh
 ```
 
+- **Step 2**，任意路径下，运行`source ~/.bashrc`
 
+该步是为了使得环境配置在 **当前的命令行** 生效。
+
+如果在命令行，输入`ddriver`，显示如下界面，则表示环境配置成功。
+
+![](./part3.assets/ddriver.png)
 
 ### 1.3 项目编译
 
@@ -141,9 +149,9 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 ![image-20211024145654250](./part3.assets/image-20211024145654250.png)
 
 -   **Step 9** . 到`newfs/src/newfs.c`目录，打断点（可选，如果需要调试可打）。
--   **Step 10** . 按下`F5`进行运行和挂载文件系统。
+-   **Step 10** . 按下`F5`(或`Fn+F5`)进行运行和挂载文件系统。
 
-`F5`是方便同学们直接在VSCode挂载文件系统，同学们也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)的`F5`命令展开。
+`F5`(或`Fn+F5`)是方便同学们直接在VSCode挂载文件系统，同学们也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)的`F5`(或`Fn+F5`)命令展开。
 
 打下断点，调试运行如下图：
 
@@ -174,12 +182,12 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$
 这个文件系统小demo的实现要求如下：
 
 - 只需要实现`ls`命令，并且`ls`时只会在根目录显示某个的预设的普通文件名`<filename>`即可。
-- 文件系统demo的一个逻辑块是两个IO块大小（和任务二一致），假设第500个逻辑块为根目录的数据块，这个数据块只有一个`dentry`，也就是名为`<filename>`的dentry。
+- 文件系统demo的 **一个逻辑块是两个IO块大小** （和任务二一致），假设逻辑块500为根目录的数据块，这个数据块只有一个`dentry`，也就是名为`<filename>`的dentry。
 - 出于简单示例，除了上述的块，磁盘其他块都是空的，无需做其他复杂考虑。
 
 如下图所示：
 
-![task1](./part3.assets/task1.svg)
+![task1](./part3.assets/task1.png)
 
 假设`<filename>`为`pass_task1.txt`，挂载文件系统后，`ls`效果将会如下：
 
@@ -207,15 +215,20 @@ static int demo_mount(){
 
 - **step 2**，完成遍历目录逻辑，从第500个逻辑块读取一个`demo_dentry`，将`demo_dentry`的文件名填充到filename。下面给出一个参考的`/* TODO */`指引，同学们也无需严格按照这个指引。
 
+!!! tip "注意"
+    此处任务一同学 **暂时不用关注** `demo_readdir`传入的`path`，`buf`，`filler`，`offset`等参数，也先 **不要使用** 到这些参数。
+
 ```c
 /* 遍历目录 */
 static int demo_readdir(const char* path, void* buf, fuse_fill_dir_t filler, off_t offset, struct fuse_file_info* fi)
 {
+    // 此处任务一同学无需关注demo_readdir的传入参数，也不要使用到上述参数
+    
     char filename[128]; // 待填充的
 
     /* 根据超级块的信息，从第500逻辑块读取一个dentry，ls将只固定显示这个文件名 */
 
-    /* TODO: 计算offset，并根据offset调用ddriver_seek移动磁盘头到offset处 */
+    /* TODO: 计算磁盘偏移off，并根据磁盘偏移off调用ddriver_seek移动磁盘头到磁盘偏移off处 */
 
     /* TODO: 调用ddriver_read读出一个磁盘块到内存，512B */
 
@@ -254,7 +267,7 @@ static int demo_getattr(const char* path, struct stat *stbuf)
 chmod +x start.sh && ./start.sh
 ```
 
-然后挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./#13)配置好任务一的编译环境）：
+然后挂载文件系统，VSCode按`F5`（或`Fn+F5`）（前提是已经按照[环境搭建-项目编译](./#13)配置好任务一的编译环境）：
 
 ![f5运行成功](./part3.assets/f5运行成功2.png)
 
@@ -272,7 +285,7 @@ fusermount -u <挂载点>
 
 #### 2.3.2 测评程序
 
-任务一提供了测评程序，同学们完成实验后，进入`./demo/tests`目录，输入如下命令通过本节任务的测评：
+任务一提供了测评程序，同学们完成实验后，进入`./demo/tests`目录（ **请在此目录`tests`下运行测评程序！** ），输入如下命令通过本节任务的测评：
 
 ```shell
 chmod +x test.sh && ./test.sh
@@ -339,7 +352,7 @@ chmod +x test.sh && ./test.sh
     - 索引节点位图，1个逻辑块。上述文件系统最多支持585个文件维护，一个逻辑块（1024B）的位图可以管理1024 * 8 = 8192个索引节点，完全足够。
     - 数据块位图，1个逻辑块。上述文件系统总共逻辑块数才4096，一个逻辑块（1024B）的位图可以管理8192个逻辑块，足够。
     - 索引节点区，585个逻辑块。上述文件系统假设一个逻辑块放一个索引节点`struct inode_d`，585个文件需要有585索引节点，也就是585个逻辑块。
-    - 数据块区，3638个逻辑块。剩下的都作为数据块，还剩4096 - 1 - 1 - 1 - 585 = 3508个逻辑块。
+    - 数据块区，3508个逻辑块。剩下的都作为数据块，还剩4096 - 1 - 1 - 1 - 585 = 3508个逻辑块。
     
     注：`struct inode_d`的大小一般是比1024B小很多的，一个逻辑块放一个`struct inode_d`会显得有点奢侈，这里是简单起见，同学们可以确定`struct inode_d`的大小后，自行决定一个逻辑块放多少个索引节点`struct inode_d`。
 
@@ -671,7 +684,7 @@ ddriver -r
 
 检查`tests`目录下有无`mnt`目录，没有需要自己`mkdir mnt`创建一个，并保证这个目录是 **空** 的，否则`F5`无法挂载成功。
 
-挂载文件系统，VSCode按`F5`（前提是已经按照[环境搭建-项目编译](./#13)配置好任务二的编译环境）：
+挂载文件系统，VSCode按`F5`（或`Fn+F5`）（前提是已经按照[环境搭建-项目编译](./#13)配置好任务二的编译环境）：
 
 ![](./part3.assets/f5运行成功任务二.png)
 
@@ -692,7 +705,7 @@ ddriver -r
 | Super(1) | Inode Map(1) | DATA Map(1) | INODE(1) | DATA(*) |
 ```
 
-然后在`test`目录下，使用如下命令来运行测评程序：
+然后在`test`目录下（ **请在此目录`tests`下运行测评程序！** ），使用如下命令来运行测评程序：
 
 ```shell
 chmod +x test.sh && ./test.sh
@@ -708,7 +721,7 @@ chmod +x test.sh && ./test.sh
 
 正确的序列如下（**基础分30分**）：
 
-- **F5挂载文件系统（1分）**
+- **`F5`（或`Fn+F5`）挂载文件系统（1分）**
 
 - **mkdir测试（4分）**
 
@@ -753,8 +766,8 @@ ls ./tests/mnt/dir0/dir1/dir2
 ```console
 fusermount -u ./tests/mnt
 ddriver -r
-# F5再次挂载文件系统
-mkdir ./tests/mnt/hello
+# F5(或Fn+F5)再次挂载文件系统
+touch ./tests/mnt/hello
 ls ./tests/mnt
 fusermount -u ./tests/mnt
 python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json

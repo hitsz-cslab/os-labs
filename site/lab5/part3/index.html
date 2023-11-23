@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.d451bc0e.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.79e020e9.min.css">
       
       
 
@@ -1999,7 +1999,10 @@
 </ul>
 <p>用于配置FUSE文件系统开发环境。</p>
 <h3 id="12">1.2 配置开发环境<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
-<p>运行<code>./setenv.sh</code>后，即可按照指导一步一步来建立环境：</p>
+<ul>
+<li><strong>Step 1</strong>，运行<code>./setenv.sh</code></li>
+</ul>
+<p>自动部署任务一和任务二的 <strong>实验环境</strong> ，并生成 <strong>任务二的项目</strong> ：</p>
 <div class="highlight"><pre><span></span><code><span class="gp">teststu_8@OSLabExecNode0:~/user-land-filesystem$ </span>./setenv.sh<span class="w"> </span>
 <span class="go">请输入工作目录名称 ([工作]目录将被至于./fs目录下): newfs</span>
 <span class="go">...</span>
@@ -2007,8 +2010,8 @@
 <span class="go">请输入项目名称: newfs</span>
 <span class="go">...</span>
 </code></pre></div>
-<p>其中，工作目录名称即开发该文件系统的 <strong>文件夹名称</strong> 。可以看到，它在<code>fs</code>目录下新建了一个<code>newfs</code>目录作为工作目录。</p>
-<p>接着，项目名称即真正的文件系统名称，可以是文件系统的简写，例如：nfs（代表newfs），这里要注意项目名不能有 <strong>特殊符号、空格</strong> 等。</p>
+<p>其中，工作目录名称即 <strong>任务二</strong> 的文件系统的 <strong>文件夹名称</strong> 。可以看到，它在<code>fs</code>目录下新建了一个<code>newfs</code>目录作为工作目录。</p>
+<p>接着，项目名称即 <strong>任务二</strong> 的 <strong>文件系统名称</strong>，可以是文件系统的简写，例如：nfs（代表newfs），这里要注意项目名不能有 <strong>特殊符号、空格</strong> 等。</p>
 <p>项目建立完成之后的结构<code>newfs</code>如下所示：</p>
 <div class="highlight"><pre><span></span><code>./fs/newfs/
 ├──<span class="w"> </span>.vscode
@@ -2043,6 +2046,12 @@
 <span class="w">    </span>├──<span class="w"> </span>main.sh
 <span class="w">    </span>└──<span class="w"> </span>test.sh
 </code></pre></div>
+<ul>
+<li><strong>Step 2</strong>，任意路径下，运行<code>source ~/.bashrc</code></li>
+</ul>
+<p>该步是为了使得环境配置在 <strong>当前的命令行</strong> 生效。</p>
+<p>如果在命令行，输入<code>ddriver</code>，显示如下界面，则表示环境配置成功。</p>
+<p><img alt="" src="../part3.assets/ddriver.png" /></p>
 <h3 id="13">1.3 项目编译<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
 <p>本次实验任务一和任务二，均需要按照下面步骤 <strong>分别</strong> 完成项目编译。如需编译任务一，<strong>请在<code>./fs/demo</code>文件夹下打开VSCode软件</strong>。如需编译任务二，<strong>请在<code>./fs/newfs</code>文件夹下打开VSCode软件</strong>。</p>
 <p>项目编译的过程：</p>
@@ -2073,9 +2082,9 @@
 <p><img alt="image-20211024145654250" src="../part3.assets/image-20211024145654250.png" /></p>
 <ul>
 <li><strong>Step 9</strong> . 到<code>newfs/src/newfs.c</code>目录，打断点（可选，如果需要调试可打）。</li>
-<li><strong>Step 10</strong> . 按下<code>F5</code>进行运行和挂载文件系统。</li>
+<li><strong>Step 10</strong> . 按下<code>F5</code>(或<code>Fn+F5</code>)进行运行和挂载文件系统。</li>
 </ul>
-<p><code>F5</code>是方便同学们直接在VSCode挂载文件系统，同学们也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的<a href="../part2#32-fuse">FUSE文件系统的挂载与卸载</a>的<code>F5</code>命令展开。</p>
+<p><code>F5</code>(或<code>Fn+F5</code>)是方便同学们直接在VSCode挂载文件系统，同学们也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的<a href="../part2#32-fuse">FUSE文件系统的挂载与卸载</a>的<code>F5</code>(或<code>Fn+F5</code>)命令展开。</p>
 <p>打下断点，调试运行如下图：</p>
 <p><img alt="image-20211024151032944" src="../part3.assets/image-20211024151032944.png" /></p>
 <p>没有打断点，直接运行和挂载文件系统，文件系统挂载成功如下图所示：</p>
@@ -2096,11 +2105,11 @@
 <p>这个文件系统小demo的实现要求如下：</p>
 <ul>
 <li>只需要实现<code>ls</code>命令，并且<code>ls</code>时只会在根目录显示某个的预设的普通文件名<code>&lt;filename&gt;</code>即可。</li>
-<li>文件系统demo的一个逻辑块是两个IO块大小（和任务二一致），假设第500个逻辑块为根目录的数据块，这个数据块只有一个<code>dentry</code>，也就是名为<code>&lt;filename&gt;</code>的dentry。</li>
+<li>文件系统demo的 <strong>一个逻辑块是两个IO块大小</strong> （和任务二一致），假设逻辑块500为根目录的数据块，这个数据块只有一个<code>dentry</code>，也就是名为<code>&lt;filename&gt;</code>的dentry。</li>
 <li>出于简单示例，除了上述的块，磁盘其他块都是空的，无需做其他复杂考虑。</li>
 </ul>
 <p>如下图所示：</p>
-<p><img alt="task1" src="../part3.assets/task1.svg" /></p>
+<p><img alt="task1" src="../part3.assets/task1.png" /></p>
 <p>假设<code>&lt;filename&gt;</code>为<code>pass_task1.txt</code>，挂载文件系统后，<code>ls</code>效果将会如下：</p>
 <p><img alt="" src="../part3.assets/task1%E6%95%88%E6%9E%9C.png" /></p>
 <h3 id="22">2.2 实现步骤<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
@@ -2126,14 +2135,20 @@
 <ul>
 <li><strong>step 2</strong>，完成遍历目录逻辑，从第500个逻辑块读取一个<code>demo_dentry</code>，将<code>demo_dentry</code>的文件名填充到filename。下面给出一个参考的<code>/* TODO */</code>指引，同学们也无需严格按照这个指引。</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">注意</p>
+<p>此处任务一同学 <strong>暂时不用关注</strong> <code>demo_readdir</code>传入的<code>path</code>，<code>buf</code>，<code>filler</code>，<code>offset</code>等参数，也先 <strong>不要使用</strong> 到这些参数。</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="cm">/* 遍历目录 */</span>
 <span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">demo_readdir</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">fuse_fill_dir_t</span><span class="w"> </span><span class="n">filler</span><span class="p">,</span><span class="w"> </span><span class="kt">off_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">fuse_file_info</span><span class="o">*</span><span class="w"> </span><span class="n">fi</span><span class="p">)</span>
 <span class="p">{</span>
+<span class="w">    </span><span class="c1">// 此处任务一同学无需关注demo_readdir的传入参数，也不要使用到上述参数</span>
+
 <span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">filename</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span><span class="w"> </span><span class="c1">// 待填充的</span>
 
 <span class="w">    </span><span class="cm">/* 根据超级块的信息，从第500逻辑块读取一个dentry，ls将只固定显示这个文件名 */</span>
 
-<span class="w">    </span><span class="cm">/* TODO: 计算offset，并根据offset调用ddriver_seek移动磁盘头到offset处 */</span>
+<span class="w">    </span><span class="cm">/* TODO: 计算磁盘偏移off，并根据磁盘偏移off调用ddriver_seek移动磁盘头到磁盘偏移off处 */</span>
 
 <span class="w">    </span><span class="cm">/* TODO: 调用ddriver_read读出一个磁盘块到内存，512B */</span>
 
@@ -2163,7 +2178,7 @@
 <p>先运行在<code>tests</code>目录下运行：</p>
 <div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>start.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./start.sh
 </code></pre></div>
-<p>然后挂载文件系统，VSCode按<code>F5</code>（前提是已经按照<a href="./#13">环境搭建-项目编译</a>配置好任务一的编译环境）：</p>
+<p>然后挂载文件系统，VSCode按<code>F5</code>（或<code>Fn+F5</code>）（前提是已经按照<a href="./#13">环境搭建-项目编译</a>配置好任务一的编译环境）：</p>
 <p><img alt="f5运行成功" src="../part3.assets/f5%E8%BF%90%E8%A1%8C%E6%88%90%E5%8A%9F2.png" /></p>
 <p>通过<code>ctrl + shift + ~</code>打开上述页面，然后在 <strong>开启一个命令行</strong> ，输入<code>ls</code>命令查看<code>tests</code>目录下的<code>mnt</code>文件夹，查看结果是否为<code>pass_task1.txt</code>，如果是，则 <strong>手动测试通过</strong> 。如下图：</p>
 <p><img alt="" src="../part3.assets/task1%E6%95%88%E6%9E%9C.png" /></p>
@@ -2172,7 +2187,7 @@
 </code></pre></div>
 <p><img alt="" src="../part3.assets/%E5%8D%B8%E8%BD%BD%E7%A4%BA%E4%BE%8B.png" /></p>
 <h4 id="232">2.3.2 测评程序<a class="headerlink" href="#232" title="Permanent link">&para;</a></h4>
-<p>任务一提供了测评程序，同学们完成实验后，进入<code>./demo/tests</code>目录，输入如下命令通过本节任务的测评：</p>
+<p>任务一提供了测评程序，同学们完成实验后，进入<code>./demo/tests</code>目录（ <strong>请在此目录<code>tests</code>下运行测评程序！</strong> ），输入如下命令通过本节任务的测评：</p>
 <div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>test.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./test.sh
 </code></pre></div>
 <p>测评通过的示意图如下：</p>
@@ -2215,7 +2230,7 @@
 <li>索引节点位图，1个逻辑块。上述文件系统最多支持585个文件维护，一个逻辑块（1024B）的位图可以管理1024 * 8 = 8192个索引节点，完全足够。</li>
 <li>数据块位图，1个逻辑块。上述文件系统总共逻辑块数才4096，一个逻辑块（1024B）的位图可以管理8192个逻辑块，足够。</li>
 <li>索引节点区，585个逻辑块。上述文件系统假设一个逻辑块放一个索引节点<code>struct inode_d</code>，585个文件需要有585索引节点，也就是585个逻辑块。</li>
-<li>数据块区，3638个逻辑块。剩下的都作为数据块，还剩4096 - 1 - 1 - 1 - 585 = 3508个逻辑块。</li>
+<li>数据块区，3508个逻辑块。剩下的都作为数据块，还剩4096 - 1 - 1 - 1 - 585 = 3508个逻辑块。</li>
 </ul>
 <p>注：<code>struct inode_d</code>的大小一般是比1024B小很多的，一个逻辑块放一个<code>struct inode_d</code>会显得有点奢侈，这里是简单起见，同学们可以确定<code>struct inode_d</code>的大小后，自行决定一个逻辑块放多少个索引节点<code>struct inode_d</code>。</p>
 </div>
@@ -2483,7 +2498,7 @@
 <div class="highlight"><pre><span></span><code>ddriver<span class="w"> </span>-r
 </code></pre></div>
 <p>检查<code>tests</code>目录下有无<code>mnt</code>目录，没有需要自己<code>mkdir mnt</code>创建一个，并保证这个目录是 <strong>空</strong> 的，否则<code>F5</code>无法挂载成功。</p>
-<p>挂载文件系统，VSCode按<code>F5</code>（前提是已经按照<a href="./#13">环境搭建-项目编译</a>配置好任务二的编译环境）：</p>
+<p>挂载文件系统，VSCode按<code>F5</code>（或<code>Fn+F5</code>）（前提是已经按照<a href="./#13">环境搭建-项目编译</a>配置好任务二的编译环境）：</p>
 <p><img alt="" src="../part3.assets/f5%E8%BF%90%E8%A1%8C%E6%88%90%E5%8A%9F%E4%BB%BB%E5%8A%A1%E4%BA%8C.png" /></p>
 <p>挂载好后，在新的一个命令行，对<code>tests</code>目录下的<code>mnt</code>目录进行<code>ls</code>、<code>touch</code>、<code>mkdir</code>操作，均能符合预期功能，如下图所示。卸载文件系统后，重新挂载文件系统，<code>ls</code>也能查看到上次的文件。</p>
 <p><img alt="" src="../part3.assets/%E6%89%8B%E5%8A%A8%E6%B5%8B%E8%AF%95task2.png" /></p>
@@ -2494,7 +2509,7 @@
 <div class="highlight"><pre><span></span><code>| BSIZE = 1024 B |
 | Super(1) | Inode Map(1) | DATA Map(1) | INODE(1) | DATA(*) |
 </code></pre></div>
-<p>然后在<code>test</code>目录下，使用如下命令来运行测评程序：</p>
+<p>然后在<code>test</code>目录下（ <strong>请在此目录<code>tests</code>下运行测评程序！</strong> ），使用如下命令来运行测评程序：</p>
 <div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>test.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./test.sh
 </code></pre></div>
 <p>测试方式：输入<code>N</code>，选择基础功能测试。</p>
@@ -2504,7 +2519,7 @@
 <p>正确的序列如下（<strong>基础分30分</strong>）：</p>
 <ul>
 <li>
-<p><strong>F5挂载文件系统（1分）</strong></p>
+<p><strong><code>F5</code>（或<code>Fn+F5</code>）挂载文件系统（1分）</strong></p>
 </li>
 <li>
 <p><strong>mkdir测试（4分）</strong></p>
@@ -2547,8 +2562,8 @@ ls<span class="w"> </span>./tests/mnt/dir0/dir1/dir2
 </ul>
 <div class="highlight"><pre><span></span><code><span class="go">fusermount -u ./tests/mnt</span>
 <span class="go">ddriver -r</span>
-<span class="gp"># </span>F5再次挂载文件系统
-<span class="go">mkdir ./tests/mnt/hello</span>
+<span class="gp"># </span>F5<span class="o">(</span>或Fn+F5<span class="o">)</span>再次挂载文件系统
+<span class="go">touch ./tests/mnt/hello</span>
 <span class="go">ls ./tests/mnt</span>
 <span class="go">fusermount -u ./tests/mnt</span>
 <span class="go">python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json</span>
@@ -2595,10 +2610,11 @@ ls<span class="w"> </span>./tests/mnt/dir0/dir1/dir2
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+    
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.726fbb30.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6eac0284.min.js"></script>
       
         <script src="../../js/baidu-tongji.js"></script>
       

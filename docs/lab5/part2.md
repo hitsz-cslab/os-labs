@@ -387,7 +387,7 @@ FUSE文件系统的挂载 **无需使用mount系统调用** ，**直接运行生
 ./hello /tmp/fuse
 ```
 
-在任务一，VSCode配置的挂载命令（F5）展开就是：
+在任务一，VSCode配置的挂载命令（`F5`，或`Fn+F5`）展开就是：
 
 ```shell
 ./build/demo -f -d -s ./tests/mnt/
@@ -399,7 +399,7 @@ FUSE文件系统的挂载 **无需使用mount系统调用** ，**直接运行生
 ./<你实现的fuse文件系统名称> --device=<指定挂载设备> <可选选项> <指定挂载点> 
 ```
 
-在任务二中，在[环境搭建](../part3/#14)的运行部分，VSCode配置的挂载命令（F5）展开就是：
+在任务二中，在[环境搭建](../part3/#14)的运行部分，VSCode配置的挂载命令（`F5`，或`Fn+F5`）展开就是：
 
 ```shell
 ./build/newfs --device=/home/students/<学号>/ddriver -f -d -s ./tests/mnt/
