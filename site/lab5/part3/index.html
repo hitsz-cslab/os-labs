@@ -2176,7 +2176,9 @@
 <span class="p">}</span>
 </code></pre></div>
 <h3 id="23">2.3 测试<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
-<p>测评脚本位于<code>./demo/tests/test.sh</code>。</p>
+<p>测试有手动测试和测评程序两种。</p>
+<p>手动测试每次要运行start.sh，会给你一个固定的文件名，帮助你自己手动<code>F5</code>（或<code>Fn + F5</code>）挂载文件系统，检查和调试自己的代码。</p>
+<p>测评程序会随机生成文件名来做测试，以防有“投机取巧”的方式。测评程序位于<code>./demo/tests/test.sh</code>。</p>
 <h4 id="231">2.3.1 手动测试<a class="headerlink" href="#231" title="Permanent link">&para;</a></h4>
 <p>我们给同学们提供了一个手动测试和调试用的固定文件名<code>pass_task1.txt</code>，同学们按照如下方式可以验证自己实现逻辑是否正确。</p>
 <p>先运行在<code>tests</code>目录下运行：</p>
@@ -2496,6 +2498,7 @@
 <li><code>offset</code>是本次要要开始读取的子文件的偏移，<code>fi</code>无需关注。</li>
 </ul>
 <h3 id="33">3.3 测试<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<p>和任务一类似，手动测试是自己手动挂载文件系统并调试。测评程序是实现了一组测试序列的脚本。</p>
 <h4 id="331">3.3.1 手动测试<a class="headerlink" href="#331" title="Permanent link">&para;</a></h4>
 <p>同学们完成任务二后，可以自行运行和挂载完成的文件系统来测试实现的功能的正确性。</p>
 <p>可以选择先通过如下命令将磁盘清空：</p>
