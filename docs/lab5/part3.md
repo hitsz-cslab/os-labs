@@ -255,7 +255,11 @@ static int demo_getattr(const char* path, struct stat *stbuf)
 
 ### 2.3 测试
 
-测评脚本位于`./demo/tests/test.sh`。
+测试有手动测试和测评程序两种。
+
+手动测试每次要运行start.sh，会给你一个固定的文件名，帮助你自己手动`F5`（或`Fn + F5`）挂载文件系统，检查和调试自己的代码。
+
+测评程序会随机生成文件名来做测试，以防有“投机取巧”的方式。测评程序位于`./demo/tests/test.sh`。
 
 #### 2.3.1 手动测试
 
@@ -671,6 +675,8 @@ int readdir(const char * path, void * buf, fuse_fill_dir_t filler, off_t offset,
 - `offset`是本次要要开始读取的子文件的偏移，`fi`无需关注。
 
 ### 3.3 测试
+
+和任务一类似，手动测试是自己手动挂载文件系统并调试。测评程序是实现了一组测试序列的脚本。
 
 #### 3.3.1 手动测试
 
