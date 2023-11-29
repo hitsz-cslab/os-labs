@@ -365,7 +365,7 @@ chmod +x test.sh && ./test.sh
   设计好有关布局后，**如何在文件系统中体现和实现呢** ？仔细阅读实验原理的同学会记得，是超级块。这些布局信息会被维护在超级块`struct super_block_d`（to-Disk型）和`struct super_block`（in-Mem型）中，在文件系统 **第一次挂载** 在磁盘上的时候，文件系统会按照上述的思路计算出布局信息的各个字段，将它填写到超级块结构中进行维护。大致代码的思路如下所示：
 
 ```c
-int mount(struct options opt){
+int your_mount(struct options opt){
     ...
     if( /* 第一次挂载 */ ){
         
