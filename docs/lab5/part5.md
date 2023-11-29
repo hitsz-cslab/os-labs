@@ -42,3 +42,20 @@ fusermount -u ./tests/mnt
 
 同学们在执行任务一的测评脚本时，如果遇到`fusermount: failed to umount xxx : Device or resource busy`的问题，请使用`git pull`命令更新实验包的任务一测评程序即可。
 
+## 6.S_IFxxx标红
+
+![](part5.assets/red.png)
+
+这个问题包括任务一和任务二，上图以`simplefs`为例展示。
+
+这个标红不会影响同学们项目的编译（`F5`或`Fn + F5`），可以选择直接无视。如果你项目编译失败，不是因为这个问题。
+
+当然如果看着不习惯，想取消掉标红，可以在这个文件的 **第一行** （注意是第一行），添加以下这个宏定义。
+
+```c
+#define _XOPEN_SOURCE 700
+```
+
+[一个帖子](https://cloud.tencent.com/developer/ask/sof/107977855?from=16139)给出的参考解释：
+
+![](part5.assets/red_why.png)
