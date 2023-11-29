@@ -1459,6 +1459,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#6s_ifxxx" class="md-nav__link">
+    6.S_IFxxx标红
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1622,6 +1629,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#6s_ifxxx" class="md-nav__link">
+    6.S_IFxxx标红
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1659,6 +1673,15 @@
 <p>这种情况是，文件系统挂载的挂载点，如<code>./tests/mnt</code>不存在。需要同学们提前创建好一个空的文件夹<code>./tests/mnt</code>。</p>
 <h2 id="5">5.挂载点忙碌<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
 <p>同学们在执行任务一的测评脚本时，如果遇到<code>fusermount: failed to umount xxx : Device or resource busy</code>的问题，请使用<code>git pull</code>命令更新实验包的任务一测评程序即可。</p>
+<h2 id="6s_ifxxx">6.S_IFxxx标红<a class="headerlink" href="#6s_ifxxx" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="../part5.assets/red.png" /></p>
+<p>这个问题包括任务一和任务二，上图以<code>simplefs</code>为例展示。</p>
+<p>这个标红不会影响同学们项目的编译（<code>F5</code>或<code>Fn + F5</code>），可以选择直接无视。如果你项目编译失败，不是因为这个问题。</p>
+<p>当然如果看着不习惯，想取消掉标红，可以在这个文件的 <strong>第一行</strong> （注意是第一行），添加以下这个宏定义。</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#define _XOPEN_SOURCE 700</span>
+</code></pre></div>
+<p><a href="https://cloud.tencent.com/developer/ask/sof/107977855?from=16139">一个帖子</a>给出的参考解释：</p>
+<p><img alt="" src="../part5.assets/red_why.png" /></p>
 
 
 

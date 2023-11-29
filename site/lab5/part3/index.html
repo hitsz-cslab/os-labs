@@ -2242,7 +2242,7 @@
 <p>注：<code>struct inode_d</code>的大小一般是比1024B小很多的，一个逻辑块放一个<code>struct inode_d</code>会显得有点奢侈，这里是简单起见，同学们可以确定<code>struct inode_d</code>的大小后，自行决定一个逻辑块放多少个索引节点<code>struct inode_d</code>。</p>
 </div>
 <p>设计好有关布局后，<strong>如何在文件系统中体现和实现呢</strong> ？仔细阅读实验原理的同学会记得，是超级块。这些布局信息会被维护在超级块<code>struct super_block_d</code>（to-Disk型）和<code>struct super_block</code>（in-Mem型）中，在文件系统 <strong>第一次挂载</strong> 在磁盘上的时候，文件系统会按照上述的思路计算出布局信息的各个字段，将它填写到超级块结构中进行维护。大致代码的思路如下所示：</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">mount</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">options</span><span class="w"> </span><span class="n">opt</span><span class="p">){</span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">your_mount</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">options</span><span class="w"> </span><span class="n">opt</span><span class="p">){</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="cm">/* 第一次挂载 */</span><span class="w"> </span><span class="p">){</span>
 
