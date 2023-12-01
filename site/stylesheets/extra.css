@@ -3,10 +3,11 @@
     color: black;
 }
 .md-typeset h1 {
-    font-weight: bold;
+    font-weight: 700;
     color: black;
 }
 .md-typeset h2 {
+    font-weight: 400;
     color: black;
 }
 .md-typeset h3 {
