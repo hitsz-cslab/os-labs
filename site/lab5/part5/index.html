@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.3">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.d451bc0e.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.79e020e9.min.css">
       
       
 
@@ -1466,6 +1466,40 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#7f5" class="md-nav__link">
+    7.F5编译失败
+  </a>
+  
+    <nav class="md-nav" aria-label="7.F5编译失败">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-spawn" class="md-nav__link">
+    7.1 spawn ... 但出现错误
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-error-please-flags" class="md-nav__link">
+    7.2 #error Please ... flags
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-debug" class="md-nav__link">
+    8.其他问题 &amp; debug
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1636,6 +1670,40 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#7f5" class="md-nav__link">
+    7.F5编译失败
+  </a>
+  
+    <nav class="md-nav" aria-label="7.F5编译失败">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-spawn" class="md-nav__link">
+    7.1 spawn ... 但出现错误
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-error-please-flags" class="md-nav__link">
+    7.2 #error Please ... flags
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-debug" class="md-nav__link">
+    8.其他问题 &amp; debug
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1682,6 +1750,33 @@
 </code></pre></div>
 <p><a href="https://cloud.tencent.com/developer/ask/sof/107977855?from=16139">一个帖子</a>给出的参考解释：</p>
 <p><img alt="" src="../part5.assets/red_why.png" /></p>
+<h2 id="7f5">7.F5编译失败<a class="headerlink" href="#7f5" title="Permanent link">&para;</a></h2>
+<h3 id="71-spawn">7.1 spawn ... 但出现错误<a class="headerlink" href="#71-spawn" title="Permanent link">&para;</a></h3>
+<p>终端界面出现spawn /bin/bash ENOENT生成已完成，但出现错误的错误提示，如下图所示：</p>
+<p><img alt="" src="../part5.assets/spawn.png" /></p>
+<p>这个原因是同学们的项目还没通过<code>ctrl + shift + p</code>进行项目编译环境的配置（见指导书<a href="../part3#13">项目编译</a>）。编译环境配置完成后，会生成一个<code>build</code>目录的，这个时候再按<code>F5</code>编译即可。</p>
+<h3 id="72-error-please-flags">7.2 #error Please ... flags<a class="headerlink" href="#72-error-please-flags" title="Permanent link">&para;</a></h3>
+<p>问题界面出现#error Please add -D_FILE_OFFSET_BITS=64 to your compile flags!，如下图所示：</p>
+<p><img alt="" src="../part5.assets/flags.png" /></p>
+<p>请检查<code>VSCode</code>打开的目录，是不是正确的。不要直接打开<code>user-land-filesystem</code>目录或其他目录。</p>
+<p>如果想做任务一，请用<code>VSCode</code>打开<code>demo</code>文件夹。如果想做任务二，请用<code>VSCode</code>打开<code>newfs</code>（你自己的fs）文件夹。如果想调试<code>simplefs</code>，请用<code>VSCode</code>打开<code>simplefs</code>文件夹。</p>
+<p>打开正确的目录后按照指导书<a href="../part3#13">项目编译</a>进行即可。</p>
+<h2 id="8-debug">8.其他问题 &amp; debug<a class="headerlink" href="#8-debug" title="Permanent link">&para;</a></h2>
+<p>很大概率是自身代码实现的问题。</p>
+<p>请灵活<code>F5</code>挂载文件系统，通过使用包括但不限于如下的debug手段：</p>
+<ul>
+<li><code>printf</code>大法</li>
+</ul>
+<p>例如每个函数都打印其函数名，<code>printf("### %s ###\n", __func__);</code>，看看最终在哪个函数出的问题。打印可能导致错误的变量，数据位图大小或偏移等，看看是否符合自己的预期。</p>
+<ul>
+<li><code>VSCode</code>设置断点</li>
+</ul>
+<p>单步调试，在左侧窗口看看各个变量的值是否合理，或者找到crash的地方等等。</p>
+<p><img alt="" src="../part5.assets/debug.png" /></p>
+<ul>
+<li>注释掉部分代码</li>
+</ul>
+<p>通过注释掉部分代码，来重新运行文件系统，看文件系统是否会发生crash，来定位到最终发生问题的地方。可以采用二分的思想来不断缩小注释的区间来定位。</p>
 
 
 
@@ -1695,10 +1790,10 @@
         </div>
         
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
-            
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-            回到页面顶部
-          </button>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
         
       </main>
       
@@ -1741,10 +1836,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+    
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.top", "navigation.tabs.sticky", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.726fbb30.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6eac0284.min.js"></script>
       
         <script src="../../js/baidu-tongji.js"></script>
       
