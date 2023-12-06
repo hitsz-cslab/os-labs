@@ -1535,8 +1535,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-debug" class="md-nav__link">
-    9.其他问题 &amp; debug
+  <a href="#9operation-not-permitted" class="md-nav__link">
+    9.Operation not permitted
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-debug" class="md-nav__link">
+    10.其他问题 &amp; debug
   </a>
   
 </li>
@@ -1780,8 +1787,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-debug" class="md-nav__link">
-    9.其他问题 &amp; debug
+  <a href="#9operation-not-permitted" class="md-nav__link">
+    9.Operation not permitted
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-debug" class="md-nav__link">
+    10.其他问题 &amp; debug
   </a>
   
 </li>
@@ -1869,13 +1883,34 @@
 <p><img alt="" src="../part5.assets/data.png" /></p>
 <p>这个是文件对应的内容，没写到对应的数据块中。</p>
 <p>以根目录的内容为例，根目录对应的数据块应该是第一个数据块（假设是逻辑块500），那么逻辑块500应该要出现根目录的子内容，即所有文件的<code>dentry_d</code>结构体。</p>
-<h2 id="9-debug">9.其他问题 &amp; debug<a class="headerlink" href="#9-debug" title="Permanent link">&para;</a></h2>
+<h2 id="9operation-not-permitted">9.Operation not permitted<a class="headerlink" href="#9operation-not-permitted" title="Permanent link">&para;</a></h2>
+<p>文件系统挂载成功了，但执行操作，例如<code>mkdir</code>时，显示<code>Operation not permitted</code>，如下图的命令行处所示：</p>
+<p><img alt="" src="../part5.assets/not-permitted.png" /></p>
+<p>一个可能的原因是，在一些钩子函数处，例如在<code>getattr</code>处（如上图代码处所示）， 处理异常流使用了<code>-1</code>。在<code>Linux</code>错误号中，<code>-1</code>就表示<code>Operation not permitted</code>。</p>
+<p>处理的办法是在处理异常流的时候正确的使用<code>Linux</code>错误号，下面以<code>simplefs</code>使用到的错误号定义简单做讲解。</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/* 上述示例 */</span>
+<span class="n">EPERM</span><span class="w"> </span><span class="cm">/* 值为1, Operation not permitted */</span>
+
+<span class="cm">/* 下面是simplefs的错误号定义 */</span>
+<span class="cp">#define SFS_ERROR_NONE          0</span>
+<span class="cp">#define SFS_ERROR_ACCESS        EACCES </span><span class="cm">/* 值为13, Permission denied */</span>
+<span class="cp">#define SFS_ERROR_SEEK          ESPIPE </span><span class="cm">/* 值为29, Illegal seek */</span><span class="cp">    </span>
+<span class="cp">#define SFS_ERROR_ISDIR         EISDIR </span><span class="cm">/* 值为21, Is a directory */</span>
+<span class="cp">#define SFS_ERROR_NOSPACE       ENOSPC </span><span class="cm">/* 值为13, No space left on device */</span>
+<span class="cp">#define SFS_ERROR_EXISTS        EEXIST </span><span class="cm">/* 值为17, File exists */</span>
+<span class="cp">#define SFS_ERROR_NOTFOUND      ENOENT </span><span class="cm">/* 值为2, No such file or directory */</span>
+<span class="cp">#define SFS_ERROR_UNSUPPORTED   ENXIO </span><span class="cm">/* 值为6, No such device or address */</span>
+<span class="cp">#define SFS_ERROR_IO            EIO   </span><span class="cm">/* 值为5, I/O Error */</span>
+<span class="cp">#define SFS_ERROR_INVAL         EINVAL </span><span class="cm">/* 值为22, Invalid argument */</span>
+</code></pre></div>
+<p>同学们可以参考<code>simplefs</code>的错误号使用，正确的使用相关错误号。</p>
+<h2 id="10-debug">10.其他问题 &amp; debug<a class="headerlink" href="#10-debug" title="Permanent link">&para;</a></h2>
 <p>很大概率是自身代码实现的问题。</p>
 <p>请灵活<code>F5</code>挂载文件系统，通过使用包括但不限于如下的debug手段：</p>
 <ul>
 <li><code>printf</code>大法</li>
 </ul>
-<p>例如每个函数都打印其函数名，<code>printf("### %s ###\n", __func__);</code>，看看最终在哪个函数出的问题。打印可能导致错误的变量，数据位图大小或偏移等，看看是否符合自己的预期。</p>
+<p>例如每个函数都打印其函数名，<code>printf("### %s ###\n", __func__);</code>，看看最终在哪个函数出的问题。打印可能导致错误的变量，数据位图大小或偏移等，看看是否符合自己的预期。多打印几条不同的<code>printf</code>语句，看最后打印在了哪一条，从而来定位问题出现在哪个区间等等。</p>
 <ul>
 <li><code>VSCode</code>设置断点</li>
 </ul>
