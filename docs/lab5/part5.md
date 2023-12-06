@@ -134,7 +134,36 @@ fusermount -u ./tests/mnt
 
 以根目录的内容为例，根目录对应的数据块应该是第一个数据块（假设是逻辑块500），那么逻辑块500应该要出现根目录的子内容，即所有文件的`dentry_d`结构体。
 
-## 9.其他问题 & debug
+## 9.Operation not permitted
+
+文件系统挂载成功了，但执行操作，例如`mkdir`时，显示`Operation not permitted`，如下图的命令行处所示：
+
+![](part5.assets/not-permitted.png)
+
+一个可能的原因是，在一些钩子函数处，例如在`getattr`处（如上图代码处所示）， 处理异常流使用了`-1`。在`Linux`错误号中，`-1`就表示`Operation not permitted`。
+
+处理的办法是在处理异常流的时候正确的使用`Linux`错误号，下面以`simplefs`使用到的错误号定义简单做讲解。
+
+```c
+/* 上述示例 */
+EPERM /* 值为1, Operation not permitted */
+
+/* 下面是simplefs的错误号定义 */
+#define SFS_ERROR_NONE          0
+#define SFS_ERROR_ACCESS        EACCES /* 值为13, Permission denied */
+#define SFS_ERROR_SEEK          ESPIPE /* 值为29, Illegal seek */    
+#define SFS_ERROR_ISDIR         EISDIR /* 值为21, Is a directory */
+#define SFS_ERROR_NOSPACE       ENOSPC /* 值为13, No space left on device */
+#define SFS_ERROR_EXISTS        EEXIST /* 值为17, File exists */
+#define SFS_ERROR_NOTFOUND      ENOENT /* 值为2, No such file or directory */
+#define SFS_ERROR_UNSUPPORTED   ENXIO /* 值为6, No such device or address */
+#define SFS_ERROR_IO            EIO   /* 值为5, I/O Error */
+#define SFS_ERROR_INVAL         EINVAL /* 值为22, Invalid argument */
+```
+
+同学们可以参考`simplefs`的错误号使用，正确的使用相关错误号。
+
+## 10.其他问题 & debug
 
 很大概率是自身代码实现的问题。
 
@@ -142,7 +171,7 @@ fusermount -u ./tests/mnt
 
 - `printf`大法
 
-例如每个函数都打印其函数名，`printf("### %s ###\n", __func__);`，看看最终在哪个函数出的问题。打印可能导致错误的变量，数据位图大小或偏移等，看看是否符合自己的预期。
+例如每个函数都打印其函数名，`printf("### %s ###\n", __func__);`，看看最终在哪个函数出的问题。打印可能导致错误的变量，数据位图大小或偏移等，看看是否符合自己的预期。多打印几条不同的`printf`语句，看最后打印在了哪一条，从而来定位问题出现在哪个区间等等。
 
 - `VSCode`设置断点
 
