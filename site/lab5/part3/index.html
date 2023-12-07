@@ -2575,13 +2575,30 @@ ls<span class="w"> </span>./tests/mnt/dir0/dir1/dir2
 <ul>
 <li><strong>remount测试（16分）</strong></li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="go">fusermount -u ./tests/mnt</span>
-<span class="go">ddriver -r</span>
-<span class="gp"># </span>F5<span class="o">(</span>或Fn+F5<span class="o">)</span>再次挂载文件系统
-<span class="go">touch ./tests/mnt/hello</span>
-<span class="go">ls ./tests/mnt</span>
-<span class="go">fusermount -u ./tests/mnt</span>
-<span class="go">python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># 卸载文件系统 1分</span>
+fusermount<span class="w"> </span>-u<span class="w"> </span>./tests/mnt
+
+<span class="c1"># remount结果显示正确 3分</span>
+ddriver<span class="w"> </span>-r
+F5<span class="o">(</span>或Fn+F5<span class="o">)</span>挂载文件系统
+mkdir<span class="w"> </span>./tests/mnt/dir0
+mkdir<span class="w"> </span>./tests/mnt/dir0/dir1
+mkdir<span class="w"> </span>./tests/mnt/dir0/dir1/dir2
+touch<span class="w"> </span>./tests/mnt/dir0/dir1/dir2/file4
+touch<span class="w"> </span>./tests/mnt/dir0/dir1/dir2/file5
+touch<span class="w"> </span>./tests/mnt/dir0/dir1/dir2/file6
+fusermount<span class="w"> </span>-u<span class="w"> </span>./tests/mnt
+F5<span class="o">(</span>或Fn+F5<span class="o">)</span>挂载文件系统
+--------------
+ls<span class="w"> </span>./tests/mnt/dir0/dir1/dir2
+
+<span class="c1"># 布局检查通过</span>
+ddriver<span class="w"> </span>-r
+F5<span class="o">(</span>或Fn+F5<span class="o">)</span>挂载文件系统
+touch<span class="w"> </span>./tests/mnt/hello
+ls<span class="w"> </span>./tests/mnt
+fusermount<span class="w"> </span>-u<span class="w"> </span>./tests/mnt
+python3<span class="w"> </span>./tests/checkbm/checkbm.py<span class="w"> </span>-l<span class="w"> </span>./include/fs.layout<span class="w"> </span>-r<span class="w"> </span>./tests/checkbm/golden.json
 </code></pre></div>
 <p>以上命令均测试成功（<strong>ls输出正常</strong>），则测试通过。</p>
 
