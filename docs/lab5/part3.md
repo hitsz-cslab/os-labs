@@ -775,10 +775,27 @@ ls ./tests/mnt/dir0/dir1/dir2
 
  - **remount测试（16分）**
 
-```console
+```shell
+# 卸载文件系统 1分
 fusermount -u ./tests/mnt
+
+# remount结果显示正确 3分
 ddriver -r
-# F5(或Fn+F5)再次挂载文件系统
+F5(或Fn+F5)挂载文件系统
+mkdir ./tests/mnt/dir0
+mkdir ./tests/mnt/dir0/dir1
+mkdir ./tests/mnt/dir0/dir1/dir2
+touch ./tests/mnt/dir0/dir1/dir2/file4
+touch ./tests/mnt/dir0/dir1/dir2/file5
+touch ./tests/mnt/dir0/dir1/dir2/file6
+fusermount -u ./tests/mnt
+F5(或Fn+F5)挂载文件系统
+--------------
+ls ./tests/mnt/dir0/dir1/dir2
+
+# 布局检查通过
+ddriver -r
+F5(或Fn+F5)挂载文件系统
 touch ./tests/mnt/hello
 ls ./tests/mnt
 fusermount -u ./tests/mnt
