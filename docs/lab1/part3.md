@@ -75,7 +75,10 @@ Step1. 新建user/sleep.c文件，编写如下代码，理解代码和注释；
 
 <div align="center"> <img src="../part3.assets/image-20210913110416368.png" /> </div>
 
-Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在UPROGS上增加一行`$U/_sleep`：
+Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在`UPROGS`上增加一行`$U/_sleep`：
+
+!!! info   "UPROGS的含义"
+    `UPROGS`变量(User Programs)列出了所有需要编译、链接并打包到文件系统镜像中的用户程序。每一项都对应一个最终的可执行文件。例如，`$U/_cat`(`$U`是user目录的路径)表示cat命令的可执行文件，这个文件会被编译并生成，然后放入文件系统镜像`fs.img`中，以便在系统启动时可以访问和运行。
 
 <div align="center"> <img src="../part3.assets/image-20220926104856325.png" /> </div>
 
@@ -124,9 +127,9 @@ e)    测试时需要创建新的文件和文件夹，可使用`make clean`清�
 
 一、阅读sleep.c，回答下列问题
 
-1) 当用户在xv6的shell中，输入了命令`sleep hello world\n`，请问argc的值是多少，argv数组大小是多少。  
+1) 当用户在xv6的shell中，输入了命令`sleep hello world\n`，请问argc的值是多少？argv数组大小是多少？  
    
-2) 请描述main函数参数argv中的指针指向了哪些字符串，他们的含义是什么。
+2) 请描述main函数参数argv中的指针指向了哪些字符串，它们的含义是什么？
    
 3) 哪些代码调用了系统调用为程序sleep提供了服务？
    
