@@ -1901,7 +1901,11 @@ $<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </s
 <p>Step1. 新建user/sleep.c文件，编写如下代码，理解代码和注释；</p>
 <div align="center"> <img src="../part3.assets/image-20210913110416368.png" /> </div>
 
-<p>Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在UPROGS上增加一行<code>$U/_sleep</code>：</p>
+<p>Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在<code>UPROGS</code>上增加一行<code>$U/_sleep</code>：</p>
+<div class="admonition info">
+<p class="admonition-title">UPROGS的含义</p>
+<p><code>UPROGS</code>变量(User Programs)列出了所有需要编译、链接并打包到文件系统镜像中的用户程序。每一项都对应一个最终的可执行文件。例如，<code>$U/_cat</code>(<code>$U</code>是user目录的路径)表示cat命令的可执行文件，这个文件会被编译并生成，然后放入文件系统镜像<code>fs.img</code>中，以便在系统启动时可以访问和运行。</p>
+</div>
 <div align="center"> <img src="../part3.assets/image-20220926104856325.png" /> </div>
 
 <p>Step3. 编译xv6并运行sleep。</p>
@@ -1933,8 +1937,8 @@ $<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </s
 </ul>
 <h4 id="33">3.3 回答问题<a class="headerlink" href="#33" title="Permanent link">&para;</a></h4>
 <p>一、阅读sleep.c，回答下列问题</p>
-<p>1) 当用户在xv6的shell中，输入了命令<code>sleep hello world\n</code>，请问argc的值是多少，argv数组大小是多少。  </p>
-<p>2) 请描述main函数参数argv中的指针指向了哪些字符串，他们的含义是什么。</p>
+<p>1) 当用户在xv6的shell中，输入了命令<code>sleep hello world\n</code>，请问argc的值是多少？argv数组大小是多少？  </p>
+<p>2) 请描述main函数参数argv中的指针指向了哪些字符串，它们的含义是什么？</p>
 <p>3) 哪些代码调用了系统调用为程序sleep提供了服务？</p>
 <p>二、了解管道模型，回答下列问题</p>
 <p>1) 简要说明你是怎么创建管道的，又是怎么使用管道传输数据的。  </p>

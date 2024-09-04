@@ -932,18 +932,27 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
+  <a href="#4io" class="md-nav__link">
     <span class="md-ellipsis">
-      4.管道
+      4.文件描述符和IO操作
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5xv6" class="md-nav__link">
+  <a href="#5" class="md-nav__link">
     <span class="md-ellipsis">
-      5.我们需要注意的：xv6入门指南的入门指南
+      5.管道
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6xv6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.我们需要注意的：xv6入门指南的入门指南
     </span>
   </a>
   
@@ -1754,18 +1763,27 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
+  <a href="#4io" class="md-nav__link">
     <span class="md-ellipsis">
-      4.管道
+      4.文件描述符和IO操作
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5xv6" class="md-nav__link">
+  <a href="#5" class="md-nav__link">
     <span class="md-ellipsis">
-      5.我们需要注意的：xv6入门指南的入门指南
+      5.管道
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6xv6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.我们需要注意的：xv6入门指南的入门指南
     </span>
   </a>
   
@@ -1815,9 +1833,9 @@
 <h2 id="2">2. 用户程序<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <h3 id="21">2.1 用户程序的使用<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
 <p>我们一般通过 <strong>命令行</strong> （shell）来使用没有图形化界面的操作系统（如Linux）。当我们向shell输入命令时，shell会解释命令并执行对应的 <strong>用户程序</strong> 。实际上，输入命令中的第一个字符串用于指示我们希望执行的用户程序，而后续的字符则为我们希望传递给用户程序的参数。例如在Linux的shell中输入如下命令：</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cp<span class="w"> </span>file_a<span class="w"> </span>file_b
+<p><div class="highlight"><pre><span></span><code>$<span class="w"> </span>cp<span class="w"> </span>file_a<span class="w"> </span>file_b
 </code></pre></div>
-<p>其中"cp"表示我们希望执行目录/usr/bin下的用户程序cp，该程序用于复制文件。而"file_a"和"file_b"将作为参数传递给程序cp，用以告知复制的源文件和目的文件。需要注意的是，第一个字符串实际上代表可执行文件所在的位置，即该命令和命令"/usr/bin/cp file_a file_b"是完全等价的。因为目录"/usr/bin"在 <strong>环境变量</strong> PATH中，所以我们可以简写为"cp"，交由操作系统通过环境变量寻找可执行文件。</p>
+其中，"cp"表示我们希望执行的用户程序，用于复制文件。"file_a"和"file_b"是传递给cp程序的参数，指定了源文件和目标文件。实际上，第一个字符串"cp"指的是可执行文件的位置。因为/usr/bin目录包含在 <strong>环境变量</strong> PATH中，所以我们可以直接使用简写"cp"，操作系统会通过PATH变量自动找到/usr/bin/cp并执行它。也就是说，该命令与<code>/usr/bin/cp file_a file_b</code>是完全等价的。（这也就是为什么安装java、python等编程语言时需要设置环境变量）</p>
 <h3 id="22">2.2 用户程序的实现<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
 <p>用户程序相当于用户使用操作系统的桥梁，用户通过命令行执行用户程序，用户程序则使用系统提供的一系列服务完成我们想要的功能。这里”系统提供的服务“即所谓的 <strong>系统调用</strong> （syscall）。本次实验就需要利用xv6提供的系统调用实现一些实用的用户程序。</p>
 <p>用户程序在执行前通常需要接收一些参数，如上文提及的“file_a”和“file_b”。正常情况下，C语言中main函数的定义为：</p>
@@ -1825,8 +1843,9 @@
 </code></pre></div>
 <p>其中argc就表示参数的数量，argv则为存储参数所在地址的数组。在命令行中输入的参数将作为 <strong>字符串</strong> 存储于用户栈，而argv存储的字符串指针则分别指向这些参数。</p>
 <p>例如在执行命令“cp file_a file_b”时，程序cp的main函数接收到的参数为：argc=3，argv=["cp", "file_a", "file_b"，null]。</p>
-<p>argv的最后一个元素必须为空指针（即数值0），用以标志参数的结束。argv的第一个元素则为需要执行的程序。</p>
+<p><strong>argv的最后一个元素必须为空指针</strong> （即数值0），用以标志参数的结束。argv的第一个元素则为需要执行的程序。</p>
 <h2 id="3-xv6">3. xv6的系统调用接口<a class="headerlink" href="#3-xv6" title="Permanent link">&para;</a></h2>
+<p>系统调用（System Call）是程序向操作系统请求服务的方式。当你编写C语言程序时，某些操作（比如文件操作、网络通信、内存分配）需要访问硬件资源或与操作系统交互。因为直接访问硬件的权限被操作系统控制，程序不能直接操作硬件。这时候，程序就需要通过系统调用向操作系统发出请求，由操作系统来完成这些操作。</p>
 <p>系统调用被封装为函数以向用户提供接口，用户程序可以通过函数调用的方式请求操作系统的服务，常见的系统调用接口定义如下：（系统调用接口头文件user/user.h）</p>
 <table>
 <thead>
@@ -1918,79 +1937,86 @@
 </tr>
 </tbody>
 </table>
-<p>图表摘自《xv6 book》P11，具体信息可以参阅。</p>
-<h2 id="4">4.管道<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>图表摘自《xv6 book》P11，具体信息可以参阅。在本次实验中，你需要用到上面列举的部分系统调用。在Linux中，你也可以使用类似<code>man read.2</code>命令查看Linux上read系统调用的说明（<code>.2</code>表示man手册的第2章，用于描述系统调用）。</p>
+<h2 id="4io">4.文件描述符和IO操作<a class="headerlink" href="#4io" title="Permanent link">&para;</a></h2>
+<p>这一部分是对下一节介绍管道做铺垫，有助于理解管道和完成pingpong实验任务。</p>
+<p>文件描述符是一个小整数，表示由内核管理的对象，进程可以从该对象读取数据或向其写入数据。进程可以通过打开文件、目录或设备，创建管道，或者复制一个已有的描述符来获取文件描述符。为了简便起见，我们通常将文件描述符指向的对象称为“文件”；文件描述符接口将文件、管道和设备的差异抽象为字节流，因此它们看起来都是字节流。我们将输入和输出简称为I/O。</p>
+<p>在xv6操作系统中，文件描述符是内核用来管理每个进程的打开文件的机制。每个进程都有一个独立的 <strong>文件描述符表</strong> ，内核使用文件描述符作为这个表的索引。这个文件描述符表记录了当前进程打开的文件或I/O资源。因为文件描述符是从零开始编号的，所以每个进程都有一个从0开始的“私有”文件描述符空间，这些编号不会与其他进程的文件描述符冲突。</p>
+<p>按照惯例，进程从文件描述符0（标准输入）读取数据，将输出写入文件描述符1（标准输出），并将错误信息写入文件描述符2（标准错误）。待会我们将看到，shell利用这种惯例来实现I/O重定向和管道操作。shell会确保始终打开三个文件描述符（参见user/sh.c的main函数），默认情况下，这些文件描述符指向控制台。。</p>
+<p>read和write系统调用从由文件描述符命名的打开文件中读取字节或向其写入字节。调用<code>read(fd, buf, n)</code>时，最多从文件描述符fd中读取n字节，将它们复制到buf中，并返回读取的字节数。每个指向文件的文件描述符都有一个与之关联的偏移量。read从当前文件偏移量处读取数据，然后将该偏移量向前移动读取的字节数：后续的读取操作将返回紧跟在第一次读取返回的字节之后的字节。当没有更多字节可读时，read返回零，以表示文件的结束。</p>
+<p>调用<code>write(fd, buf, n)</code>时，将buf中的n字节写入文件描述符fd，并返回写入的字节数。只有在发生错误时，写入的字节数才会少于n字节。与read类似，write在当前文件偏移量处写入数据，然后将该偏移量向前移动写入的字节数：每次写入从上一次写入结束的地方继续。</p>
+<p>以下程序片段（它构成了程序cat的核心）将数据从标准输入复制到标准输出。如果发生错误，它会将消息写入标准错误。
+<div class="highlight"><pre><span></span><code><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">512</span><span class="p">];</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;read error</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"> </span><span class="cm">/*向文件描述符2（标准错误输出）打印错误信息&quot;*/</span>
+<span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;write error</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>需要注意的是，cat并不知道它是从文件、控制台还是管道中读取数据。同样，cat也不知道它是在向控制台、文件或其他什么地方打印数据。文件描述符的使用以及文件描述符0代表输入、文件描述符1代表输出的惯例，使得cat的实现变得非常简单。</p>
+<p>close系统调用释放文件描述符，使其可以被未来的open、pipe或dup系统调用重新使用（见下文）。新分配的文件描述符总是当前进程中编号最小的未使用描述符。</p>
+<p>文件描述符和fork的交互使得实现I/O重定向变得非常容易（请好好理解这一段，因为这涉及pingpong实验的原理）。<strong>fork会复制父进程的文件描述符表及其内存，因此子进程启动时具有与父进程完全相同的已打开文件</strong> 。当调用 exec 来运行新程序时，exec 会替换子进程的程序代码和数据（内存），但不会改变文件描述符表。也就是说，已经打开的文件仍然保持打开状态。这种机制允许 shell 通过 fork 创建一个子进程，然后在子进程中根据需要修改文件描述符（比如将输入或输出重定向到文件或管道），再调用 exec 来运行新程序，最终实现 I/O 重定向。下面是shell在执行命令cat &lt; input.txt时的简化代码示例：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cat&quot;</span><span class="p">;</span><span class="w">                 </span><span class="cm">/* 设置要执行的命令为&quot;wc&quot; */</span>
+<span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">                     </span><span class="cm">/* 参数数组以NULL结尾，表示没有更多参数 */</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fork</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">                    </span><span class="cm">/* 关闭标准输入 */</span>
+<span class="w">    </span><span class="n">open</span><span class="p">(</span><span class="s">&quot;input.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDONLY</span><span class="p">);</span><span class="w"> </span><span class="cm">/* O_RDONLY 是 read only 只读的意思 */</span>
+<span class="w">    </span><span class="n">exec</span><span class="p">(</span><span class="s">&quot;cat&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w">           </span><span class="cm">/* 执行 &quot;cat&quot; 命令 */</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>当子进程关闭文件描述符0（标准输入）后，紧接着的open系统调用打开新的input.txt文件返回的文件描述符一定是0，这是因为文件描述符 0 已经被关闭，而操作系统总是分配当前最小的可用文件描述符，因此，input.txt 会被分配到文件描述符 0。随后，cat程序以文件描述符 0 指向input.txt的方式执行，也就是说，cat 程序的标准输入将会是 input.txt 文件的内容。父进程的文件描述符不会受到这些操作的影响，因为这些改变只发生在子进程中，父进程的文件描述符保持不变。</p>
+<p>xv6 shell中实现I/O重定向的代码正是以这种方式工作的（见user/sh.c:78）。在代码执行到这一行时，shell已经fork了子进程（见user/sh.c:155），并且runcmd将会调用exec来加载新程序。</p>
+<p>dup系统调用复制一个现有的文件描述符，返回一个引用自同一个底层I/O对象的新文件描述符。两个文件描述符共享一个偏移量，就像fork复制的文件描述符一样。</p>
+<div class="highlight"><pre><span></span><code><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dup</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="cm">/*使用dup函数复制文件描述符1，即标准输出。返回的文件描述符存储在fd变量中*/</span>
+<span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello &quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+</code></pre></div>
+<p>当这段代码运行时，它会在终端上显示“hello world”。</p>
+<h2 id="5">5.管道<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
 <div class="admonition 管道机制简介">
 <p class="admonition-title">管道机制简介</p>
 <p>管道是一种父子进程间或子子进程间的进程间通信机制，它由xv6操作系统提供，并可通过直接编程或在shell程序下轻松把不同进程的输入和输出连接起来。</p>
 <p>直接编程方式：xv6提供了pipe系统调用接口，我们可以在本节实验中直接使用。</p>
 <p>shell命令方式：“|”是管道符号，即两个命令之间的一道竖杠。我们可以通过管道符号组合的命令，实现不同进程（父子进程间或子子进程间）的通信，从而在不改变应用程序代码的情况下，让操作系统具有进程间信息交互和功能组合的能力。详见<a href="../../Linux/#82">管道</a></p>
 </div>
-<p>管道（pipe）是一种最基本的进程间通信机制。管道分为 <strong>读出端</strong> 和 <strong>写入端</strong> 两个部分，进程可以向写端写入数据，也可以从读端读出数据。通过pipe系统调用，内核会为用户进程创建管道，同时返回两个文件描述符，用以描述管道的读写端，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
-<span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pipe</span><span class="p">(</span><span class="n">p</span><span class="p">);</span><span class="w"> </span><span class="cm">/*正常创建后，p[1]为管道写入端，p[0]为管道读出端*/</span><span class="w"> </span>
-</code></pre></div>
-<p>通过文件描述符，程序可以按读写文件的形式读写管道，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">w_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">write</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">r_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
-</code></pre></div>
-<div class="admonition 文件描述符">
-<p class="admonition-title">文件描述符</p>
-<p>Unix/Linux中一切皆文件，包括标准输入设备（键盘）和标准输出设备（显示器）在内的所有计算机硬件都是文件。同样地，xv6也会给每个文件分配一个整数的ID，也就是文件描述符（File Descriptor），它代表了一个内核管理的对象，进程可对这个对象进行读写操作。文件描述符都是从0开始计数，按照约定，其中0是标准输入，1是标准输出，2是标准错误输出。shell程序中始终打开了这三个文件描述符，作为控制台的默认文件描述符。</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>文件描述符</th>
-<th>文件名</th>
-<th>类型</th>
-<th>硬件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>stdin</td>
-<td>标准输入文件</td>
-<td>键盘</td>
-</tr>
-<tr>
-<td>1</td>
-<td>stdout</td>
-<td>标准输出文件</td>
-<td>显示器</td>
-</tr>
-<tr>
-<td>2</td>
-<td>stderr</td>
-<td>标准错误输出文件</td>
-<td>显示器</td>
-</tr>
-</tbody>
-</table>
-<p>管道实际上是内核开辟的一段长度有限的缓冲区，管道的读写就是对缓冲区的读写。需要注意的是，管道的读取是阻塞的：如果管道的写入端一直未写入数据，那么调用read时进程会一直等待，直至管道内有数据可读时才会完成读取并返回读取的长度。同样，管道的写入也是阻塞的：如果管道被写满，那么调用write时进程也会陷入等待，直至数据被读出端读出。当然，读写管道不会永远地阻塞，如果读管道时发现 <strong>所有</strong> 写入端已经关闭，那么读函数将不会等待，而是直接返回。写管道时也具备类似的性质。</p>
-<p>进程通常只持有某个管道的读出端或者写入端，因此使用的时候需要将另一端关闭，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="cm">/* 子进程读管道，父进程写管道 */</span>
-<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fork</span><span class="p">();</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<p>管道（pipe）是操作系统提供的一个小型缓冲区，它通过两个文件描述符与进程进行交互，一个用于读取数据，另一个用于写入数据。当你往管道的一端写入数据时，数据可以从管道的另一端被读取。管道为进程之间提供了一种通信方式。</p>
+<p>下面是一个示例，它通过管道将wc（word count）程序的标准输入连接到管道的读取端，这样wc程序可以通过read系统调用从管道中读取数据。最终，程序会在终端上输出“hello world”的字数统计信息。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w">        </span><span class="cm">/* 存储管道的两个文件描述符 */</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;wc&quot;</span><span class="p">;</span><span class="w">  </span><span class="cm">/* 设置要执行的命令为&quot;wc&quot; */</span>
+<span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">     </span><span class="cm">/* 参数数组以NULL结尾，表示没有更多参数 */</span>
+<span class="n">pipe</span><span class="p">(</span><span class="n">p</span><span class="p">);</span><span class="w">         </span><span class="cm">/* 创建管道，p[0]是管道的读端，p[1]是管道的写端 */</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fork</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
 <span class="w">    </span><span class="cm">/* 子进程 */</span>
-<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"> </span><span class="c1">// 关闭写端</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">    </span><span class="n">read</span><span class="p">(...);</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"> </span><span class="c1">// 读取完成，关闭读端</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">    </span><span class="cm">/* 关闭标准输入（文件描述符0） */</span>
+<span class="w">    </span><span class="n">dup</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w">   </span><span class="cm">/* 复制管道的读端p[0]，让文件描述符0指向管道的读端 */</span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"> </span><span class="cm">/* 关闭不再需要的管道读端 */</span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"> </span><span class="cm">/* 关闭不再需要的管道写端 */</span>
+<span class="w">    </span><span class="n">exec</span><span class="p">(</span><span class="s">&quot;/bin/wc&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 执行&quot;wc&quot;程序 */</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="cm">/* 父进程 */</span>
-<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"> </span><span class="c1">// 关闭读端</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">    </span><span class="n">write</span><span class="p">(...);</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"> </span><span class="c1">// 写入完成，关闭写端</span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w">                      </span><span class="cm">/* 关闭管道的读端 */</span>
+<span class="w">    </span><span class="n">write</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;hello world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 向管道写入&quot;hello world\n&quot; */</span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w">                      </span><span class="cm">/* 关闭管道的写端，表示写入完成 */</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>管道详细信息可以参阅《xv6 book》P15~P17。</p>
-<h2 id="5xv6">5.我们需要注意的：xv6入门指南的入门指南<a class="headerlink" href="#5xv6" title="Permanent link">&para;</a></h2>
+<p>程序中，pipe系统调用创建了一个新的管道，并将读端和写端的文件描述符保存在数组<code>p</code>中。fork之后，父进程和子进程都拥有对同一个管道的访问权。</p>
+<p>子进程通过<code>close</code>和<code>dup</code>操作，使文件描述符0（标准输入）指向管道的读端，然后子进程关闭不再需要的文件描述符，接着调用<code>exec</code>去运行wc程序。当wc程序从默认的文件描述符 0 读取数据时，它实际上是在从管道读取数据。</p>
+<p>父进程关闭管道的读端，然后向管道的写端写入数据，最后关闭写端，表示写入完成。。</p>
+<p>如果管道中没有数据可读，read操作会等待，直到有数据被写入，或者直到所有指向管道写端的文件描述符都被关闭。如果所有写端的文件描述符都被关闭，read操作会返回0，表示读到文件的末尾。</p>
+<p>正因为read会等待新数据，这也是为什么在这个例子中，子进程在执行wc之前必须先关闭管道的写端。否则，如果wc程序还持有管道的写端文件描述符，它永远不会检测到文件结束信号，程序就会一直等待新数据而不会结束。（这也是编写pingpong程序时常见的一个问题。）</p>
+<h2 id="6xv6">6.我们需要注意的：xv6入门指南的入门指南<a class="headerlink" href="#6xv6" title="Permanent link">&para;</a></h2>
 <p>前四个部分的叙述非常抽象，我们在这一部分将其 <strong>融会贯通</strong> 起来，看看其间的关系。</p>
 <p>xv6是一个操作系统，但是在这一章我们 <strong>不打算修改</strong> 操作系统，而是编写应用程序，去 <strong>使用</strong> 操作系统。我们编写的最简单的应用程序如下：</p>
 <div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
