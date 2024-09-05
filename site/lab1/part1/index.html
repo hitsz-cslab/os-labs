@@ -1777,7 +1777,7 @@
 </ul>
 </li>
 </ol>
-<p>也可以观看B站上的<a href="https://www.bilibili.com/video/BV19k4y1C7kA?p=1">MIT 6.S081/Fall 2020课程视频</a>，通过学习这门课程可以让你对xv6操作系统有一个全面的认识。</p>
+<p>也可以观看B站上的<a href="https://www.bilibili.com/video/BV19k4y1C7kA?p=1">MIT 6.S081/Fall 2020课程视频</a>，通过学习这门课程可以让你对xv6操作系统有一个全面的认识。如果你觉得视频太长且全是英文，这里有视频的<a href="https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081">中文版逐字翻译</a></p>
 </div>
 <h2 id="1">1.  实验目的<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1788,7 +1788,7 @@
 <h2 id="2">2.  实验学时<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>本实验为4学时。</p>
 <h2 id="3">3.  实验内容及要求<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
-<p><strong>与xv6原有的实验不一样的是，本次实验需要实现3个Unix实用程序和xv6启动流程实验</strong> 。这里展示的是程序功能和实验测试的最终效果，更多详细的介绍可在后续章节中阅读。</p>
+<p><strong>与xv6原有的实验不一样的是，本次实验需要实现3个Unix实用程序和xv6启动流程实验</strong> 。这里展示的是程序功能和实验测试的最终效果，更多详细的介绍可在后续章节中阅读。为了降低难度，在<a href="../part3/">实验步骤</a>中给出了每个实验的提示。</p>
 <h3 id="31-sleep">3.1 sleep<a class="headerlink" href="#31-sleep" title="Permanent link">&para;</a></h3>
 <p>了解xv6上用户程序sleep的实现。sleep程序会等待用户指定的时间。请将代码写在user/sleep.c文件中。运行效果应该如下：</p>
 <p><img alt="image-20201017230825652" src="../part1.assets/image-20201017230825652.png" /></p>
@@ -1796,17 +1796,22 @@
 <p>在xv6-oslab23-hitsz中，执行下面指令<code>./grade-lab-util sleep</code>，测试程序</p>
 <p><img alt="image-20230913171327769" src="../part1.assets/image-20230913171327769.png" /></p>
 <h3 id="32-pingpong">3.2 pingpong<a class="headerlink" href="#32-pingpong" title="Permanent link">&para;</a></h3>
-<p>在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印<code>&lt;pid&gt;: received ping</code> ，其中<code>&lt;pid&gt;</code>是子进程的进程ID。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印<code>&lt;pid&gt;: received pong</code>，其中<code>&lt;pid&gt;</code>是父进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：</p>
-<p><img alt="image-20201017230846238" src="../part1.assets/image-20201017230846238.png" /></p>
-<p>在xv6-oslab23-hitsz中，执行下面指令<code>./grade-lab-util pingpong</code>，测试程序</p>
-<p><img alt="image-20230913171417978" src="../part1.assets/image-20230913171417978.png" /></p>
+<p>在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印<code>&lt;pid&gt;: received ping from pid &lt;father pid&gt;</code> ，其中<code>&lt;pid&gt;</code>是子进程的进程ID, <code>&lt;another pid&gt;</code>是父进程的pid。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印<code>&lt;pid&gt;: received pong from pid &lt;child pid&gt;</code>，其中<code>&lt;pid&gt;</code>是父进程的进程ID, <code>&lt;child pid&gt;</code>是子进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：</p>
+<p><img alt="image-2024-09-05_16-16-29" src="../part1.assets/Snipaste_2024-09-05_16-16-29.png" /></p>
+<p>在xv6-oslab24-hitsz中，执行下面指令<code>./grade-lab-util pingpong</code>，测试程序</p>
+<p><img alt="image-2024-09-05_16" src="../part1.assets/image-pingpong-testresult.png" /></p>
 <h3 id="33-find">3.3 find<a class="headerlink" href="#33-find" title="Permanent link">&para;</a></h3>
-<p>在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 <strong>命令格式为“find path file_name”</strong> 。请将代码写在user/find.c文件中。当文件系统包含文件b和a/b时，输出效果应该如下：</p>
-<p><img alt="image-20210914091100817" src="../part1.assets/image-20210914091100817.png" /></p>
+<p>在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 <strong>命令格式为“find &lt;path&gt; &lt;file_name&gt;”</strong> (注：这与Linux中的find命令格式略有不同，Linux中的对应格式为<code>find &lt;path&gt; -name &lt;file_name&gt;</code>)。请将代码写在user/find.c文件中。</p>
+<p>在根目录新建 <strong>文件b</strong> 时，当cwd(Current Working Directory)为根目录时，在根目录下查询b的输出效果应该如下：</p>
+<p><img alt="image-2024-09-05_find_test1" src="../part1.assets/image-find-test1.png" /></p>
+<p>在根目录新建 <strong>目录b</strong> 时，当cwd(Current Working Directory)为根目录时，在根目录下查询b的输出效果应该如下：</p>
+<p><img alt="image-2024-09-05_find_test2" src="../part1.assets/image-find-test2.png" /></p>
+<p>另外，你还应当实现 <strong>递归查询</strong> ，当要查询的文件<code>target</code>在根目录的某个子文件夹中时，你也应该将结果显示出来</p>
+<p><img alt="image-2024-09-05_find_test3" src="../part1.assets/image-find-test3.png" /></p>
 <p>在xv6-oslab23-hitsz中，执行下面指令<code>./grade-lab-util find</code>，测试程序</p>
-<p><img alt="image-20230913171456245" src="../part1.assets/image-20230913171456245.png" /></p>
+<p><img alt="image-2024-09-05_find_test2" src="../part1.assets/image-20230913171456245.png" /></p>
 <p>如果上述3个程序都能正常运行，可以用如下指令测试：</p>
-<p><img alt="image-20230913171631689" src="../part1.assets/image-20230913171631689.png" /></p>
+<p><img alt="image-2024-09-05_find_tests" src="../part1.assets/image-20230913171631689.png" /></p>
 <h3 id="34-xv6">3.4 xv6启动流程实验<a class="headerlink" href="#34-xv6" title="Permanent link">&para;</a></h3>
 <p>在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab23-hitsz中，执行下面指令<code>make qemu</code>，运⾏的效果应该如下：</p>
 <p><img alt="image-20230913172857112" src="../part1.assets/image-20230913172857112.png" /></p>
