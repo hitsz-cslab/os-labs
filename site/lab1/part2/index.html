@@ -2003,9 +2003,9 @@
 </code></pre></div></p>
 <p>需要注意的是，cat并不知道它是从文件、控制台还是管道中读取数据。同样，cat也不知道它是在向控制台、文件或其他什么地方打印数据。文件描述符的使用以及文件描述符0代表输入、文件描述符1代表输出的惯例，使得cat的实现变得非常简单。</p>
 <p>close系统调用释放文件描述符，使其可以被未来的open、pipe或dup系统调用重新使用（见下文）。新分配的文件描述符总是当前进程中编号最小的未使用描述符。</p>
-<p>文件描述符和fork的交互使得实现I/O重定向变得非常容易（请好好理解这一段，因为这涉及pingpong实验的原理）。<strong>fork会复制父进程的文件描述符表及其内存，因此子进程启动时具有与父进程完全相同的已打开文件</strong> 。当调用 exec 来运行新程序时，exec 会替换子进程的程序代码和数据（内存），但不会改变文件描述符表。也就是说，已经打开的文件仍然保持打开状态。这种机制允许 shell 通过 fork 创建一个子进程，然后在子进程中根据需要修改文件描述符（比如将输入或输出重定向到文件或管道），再调用 exec 来运行新程序，最终实现 I/O 重定向。下面是shell在执行命令cat &lt; input.txt时的简化代码示例：</p>
+<p>文件描述符和fork的交互使得实现I/O重定向变得非常容易（请好好理解这一段，因为这涉及pingpong实验的原理）。<strong>fork会复制父进程的文件描述符表以及内存空间，因此子进程启动时具有与父进程完全相同的已打开文件</strong> 。当调用 exec 来运行新程序时，exec 会替换子进程的程序代码和数据（内存），但不会改变文件描述符表。也就是说，已经打开的文件仍然保持打开状态。这种机制允许 shell 通过 fork 创建一个子进程，然后在子进程中根据需要修改文件描述符（比如将输入或输出重定向到文件或管道），再调用 exec 来运行新程序，最终实现 I/O 重定向。下面是shell在执行命令cat &lt; input.txt时的简化代码示例：</p>
 <div class="highlight"><pre><span></span><code><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-<span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cat&quot;</span><span class="p">;</span><span class="w">                 </span><span class="cm">/* 设置要执行的命令为&quot;wc&quot; */</span>
+<span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cat&quot;</span><span class="p">;</span><span class="w">                 </span><span class="cm">/* 设置要执行的命令为&quot;cat&quot; */</span>
 <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">                     </span><span class="cm">/* 参数数组以NULL结尾，表示没有更多参数 */</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fork</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">                    </span><span class="cm">/* 关闭标准输入 */</span>
@@ -2016,7 +2016,7 @@
 <p>当子进程关闭文件描述符0（标准输入）后，紧接着的open系统调用打开新的input.txt文件返回的文件描述符一定是0，这是因为文件描述符 0 已经被关闭，而操作系统总是分配当前最小的可用文件描述符，因此，input.txt 会被分配到文件描述符 0。随后，cat程序以文件描述符 0 指向input.txt的方式执行，也就是说，cat 程序的标准输入将会是 input.txt 文件的内容。父进程的文件描述符不会受到这些操作的影响，因为这些改变只发生在子进程中，父进程的文件描述符保持不变。</p>
 <p>xv6 shell中实现I/O重定向的代码正是以这种方式工作的（见user/sh.c:78）。在代码执行到这一行时，shell已经fork了子进程（见user/sh.c:155），并且runcmd将会调用exec来加载新程序。</p>
 <p>dup系统调用(duplicate)复制一个现有的文件描述符，返回一个引用自同一个底层I/O对象的新文件描述符。两个文件描述符共享一个偏移量，就像fork复制的文件描述符一样。</p>
-<div class="highlight"><pre><span></span><code><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dup</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="cm">/*使用dup函数复制文件描述符1，即标准输出。返回的文件描述符存储在fd变量中*/</span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dup</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="cm">/*使用dup函数复制文件描述符1，即标准输出。返回的文件描述符存储在fd变量中*/</span>
 <span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello &quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
 <span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
 </code></pre></div>
@@ -2053,7 +2053,7 @@
 <p>程序中，pipe系统调用创建了一个新的管道，并将读端和写端的文件描述符保存在数组<code>p</code>中。fork之后，父进程和子进程都拥有对同一个管道的访问权。</p>
 <p>子进程通过<code>close</code>和<code>dup</code>操作，使文件描述符0（标准输入）指向管道的读端，然后子进程关闭不再需要的文件描述符，接着调用<code>exec</code>去运行wc程序。当wc程序从默认的文件描述符 0 读取数据时，它实际上是在从管道读取数据。</p>
 <p>父进程关闭管道的读端，然后向管道的写端写入数据，最后关闭写端，表示写入完成。</p>
-<p>如果管道中没有数据可读，read操作会等待，直到有数据被写入，或者直到所有指向管道写端的文件描述符都被关闭。如果所有写端的文件描述符都被关闭，read操作会返回0，表示读到文件的末尾。</p>
+<p>如果管道中没有数据可读，read操作会阻塞等待，直到有数据被写入，或者直到所有指向管道写端的文件描述符都被关闭。如果所有写端的文件描述符都被关闭，read操作会返回0，表示读到文件的末尾。</p>
 <p>正因为read会等待新数据，这也是为什么在这个例子中，子进程在执行wc之前必须先关闭管道的写端。否则，如果wc程序还持有管道的写端文件描述符，它永远不会检测到文件结束信号，程序就会一直等待新数据而不会结束。（这也是编写pingpong程序时常见的一个问题）</p>
 <h2 id="6">6.文件系统简单介绍<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <p>阅读这一部分会对你做find实验有所帮助。</p>
