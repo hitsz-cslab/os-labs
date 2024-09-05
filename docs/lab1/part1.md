@@ -32,7 +32,7 @@
     	- 视频链接: https://www.bilibili.com/video/BV1Te4y1i77z?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2
     	- 课程PPT: [点这里下载](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/xv6原理简析3-启动过程.pdf)
     
-    也可以观看B站上的[MIT 6.S081/Fall 2020课程视频](https://www.bilibili.com/video/BV19k4y1C7kA?p=1)，通过学习这门课程可以让你对xv6操作系统有一个全面的认识。
+    也可以观看B站上的[MIT 6.S081/Fall 2020课程视频](https://www.bilibili.com/video/BV19k4y1C7kA?p=1)，通过学习这门课程可以让你对xv6操作系统有一个全面的认识。如果你觉得视频太长且全是英文，这里有视频的[中文版逐字翻译](https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081)
 
 ## 1.  实验目的
 
@@ -64,26 +64,36 @@
 
 在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印`<pid>: received ping` ，其中`<pid>`是子进程的进程ID。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印`<pid>: received pong`，其中`<pid>`是父进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：
 
-![image-20201017230846238](part1.assets/image-20201017230846238.png)
+![image-2024-09-05_16-16-29](part1.assets/Snipaste_2024-09-05_16-16-29.png)
 
-在xv6-oslab23-hitsz中，执行下面指令`./grade-lab-util pingpong`，测试程序
+在xv6-oslab24-hitsz中，执行下面指令`./grade-lab-util pingpong`，测试程序
 
-![image-20230913171417978](part1.assets/image-20230913171417978.png)
+![image-2024-09-05_16](part1.assets/image-pingpong-testresult.png)
 
 
 ### 3.3 find
 
-在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 **命令格式为“find path file_name”** 。请将代码写在user/find.c文件中。当文件系统包含文件b和a/b时，输出效果应该如下：
+在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 **命令格式为“find <path\> <file_name\>”** (注：这与Linux中的find命令格式略有不同，Linux中的对应格式为`find <path> -name <file_name>`)。请将代码写在user/find.c文件中。
 
-![image-20210914091100817](part1.assets/image-20210914091100817.png)
+在根目录新建 **文件b** 时，当cwd(Current Working Directory)为根目录时，在根目录下查询b的输出效果应该如下：
+
+![image-2024-09-05_find_test1](part1.assets/image-find-test1.png)
+
+在根目录新建 **目录b** 时，当cwd(Current Working Directory)为根目录时，在根目录下查询b的输出效果应该如下：
+
+![image-2024-09-05_find_test2](part1.assets/image-find-test2.png)
+
+另外，你还应当实现 **递归查询** ，当要查询的文件`target`在根目录的某个子文件夹中时，你也应该将结果显示出来
+
+![image-2024-09-05_find_test3](part1.assets/image-find-test3.png)
 
 在xv6-oslab23-hitsz中，执行下面指令`./grade-lab-util find`，测试程序
 
-![image-20230913171456245](part1.assets/image-20230913171456245.png)
+![image-2024-09-05_find_test2](part1.assets/image-20230913171456245.png)
 
 如果上述3个程序都能正常运行，可以用如下指令测试：
 
-![image-20230913171631689](part1.assets/image-20230913171631689.png)
+![image-2024-09-05_find_tests](part1.assets/image-20230913171631689.png)
 
 ### 3.4 xv6启动流程实验
 

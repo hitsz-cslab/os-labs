@@ -1860,12 +1860,13 @@
 <p>xv6运行环境详见<a href="../../env/">实验平台及环境配置</a>。</p>
 <h4 id="12-xv6">1.2  xv6源码<a class="headerlink" href="#12-xv6" title="Permanent link">&para;</a></h4>
 <p>请clone最新代码到本地进行实验：   </p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/ftutorials/xv6-oslab23-hitsz.git
 </code></pre></div>
-<p>每个实验项目都在不同的分支上完成，请 <strong>注意切换分支</strong> ，例如，实验一需切换到util分支后进行开发。</p>
+<p>每个实验项目都在不同的分支上完成，请 <strong>注意切换分支</strong> ，例如，实验一需切换到util分支后进行开发：</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>branch<span class="w"> </span>-a
 $<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>util
 </code></pre></div>
+<p><code>git branch</code>表示列出当前仓库中的所有 本地分支。加上<code>-a</code>这个选项后，会显示所有分支，包括本地分支和远程分支。</p>
 <div align="center"> <img src="../part3.assets/image-20210913105916234.png" /> </div>
 
 <p>另外，由于我们的<a href="https://gitee.com/greenhandzpx/xv6-oslab23-hitsz">官方仓库</a> <strong>随时可能更新</strong>，所以做实验前需要先拉取最新的代码：先切到对应的分支（util），然后：</p>
@@ -1884,11 +1885,11 @@ $<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </s
 <p>先按<code>ctrl+a</code>组合键，接着完全松开, 再按<code>x</code></p>
 </div>
 <h3 id="2">2.  准备工作<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
-<p>本次实验需要编写<a href="../part1/#3">实验内容</a>中介绍的3个Unix实用程序。初次接触操作系统实验的你可能会感到不知所措，因此不妨先体验一下这些程序的运行效果。实际上，Linux中具备本次实验要实现的一些程序，例如sleep、find、xargs。你可以先尝试在Linux中使用这些命令，充分体会功能后再开始编程。当然，Linux中命令的功能较为复杂，我们仅要求实现简化版。</p>
+<p>本次实验需要编写<a href="../part1/#3">实验内容</a>中介绍的3个Unix实用程序。初次接触操作系统实验的你可能会感到不知所措，因此不妨先体验一下这些程序的运行效果。实际上，Linux中具备本次实验要实现的一些程序，例如sleep、find。你可以先尝试在Linux中使用这些命令，充分体会功能后再开始编程。当然，Linux中命令的功能较为复杂，我们仅要求实现简化版。</p>
 <p>实验开始之前，我们 <strong>强烈建议</strong> 你先完成以下工作：</p>
 <div class="admonition tip">
 <ol>
-<li>熟悉常见命令的使用，如 <code>echo</code>、<code>xargs</code>、<code>find</code>。</li>
+<li>熟悉常见命令的使用，如 <code>echo</code>、<code>find</code>。</li>
 <li>了解目录的使用。了解 <code>.</code>、<code>..</code>、<code>/</code>分别表示什么，熟悉常见的目录操作命令，如<code>mkdir</code>、<code>cd</code>。</li>
 <li>了解重定向的使用，重定向即命令中的<code>&lt;</code>和<code>&gt;</code>，用于修改右侧命令的标准输入/输出。例如<code>echo Hello world &gt; file_a</code>会将字符串<code>Hello world</code>输出至文件<code>file_a</code>，而不是打印在终端。</li>
 <li>了解管道的使用。管道即命令中的<code>|</code>，用于将左侧命令的标准输出传递给右侧命令的标准输入。</li>
@@ -1913,12 +1914,14 @@ $<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </s
 
 <p>Step4.回答3.3中的<a href="#33">相关问题</a>。</p>
 <h4 id="32">3.2  实验提示<a class="headerlink" href="#32" title="Permanent link">&para;</a></h4>
-<p>在做完上述实验后，请同学们根据以下提示，编写pingpong和find两个用户程序。</p>
+<p>在做完sleep实验后，相信你已经明白如何在xv6中添加一个用户程序了。请同学们根据以下提示，再添加pingpong和find两个用户程序。</p>
+<p>需要注意的是，xv6中用户程序开发无法使用C语言中的标准库（例如<code>stdio.h</code>等），因为xv6是一个极简的操作系统，无法完整提供标准库所需的功能。你能使用的库函数主要在<code>user/ulib.c</code>中</p>
 <h5 id="321-pingpong">3.2.1   pingpong<a class="headerlink" href="#321-pingpong" title="Permanent link">&para;</a></h5>
-<p>a)   使用<code>pipe()</code>创建管道，详见<a href="../part2/">实验原理</a>；</p>
+<p>请在<code>user/pingpong.c</code>中实现<a href="../part1/#32-pingpong">pingpong程序</a>。建议你在做之前着重理解实验原理中<a href="../part2/#3-xv6">文件描述符和IO操作</a>和<a href="../part2/#5">管道</a>这两节。</p>
+<p>a)   使用<code>pipe()</code>创建管道；请思考，需要用到几个管道呢？</p>
 <p>b)   使用<code>fork()</code>创建子进程，注意根据返回值，判断父子进程；</p>
-<p>c)    利用<code>read()</code>, <code>write()</code>函数对管道进行读写。</p>
-<p>d)   请在<code>user/pingpong.c</code>中实现。</p>
+<p>c)   利用<code>read()</code>, <code>write()</code>系统调用对管道进行读写。你可能还需要用到<code>close()</code>、<code>getpid()</code>等等<a href="../part2/#3-xv6">系统调用</a>。</p>
+<p>d)   如果你需要在数字和字符串之间进行转换，<code>user/ulib.c</code>提供了<code>atoi</code>和<code>itoa</code>函数（a for ASCII, i for Integer)。</p>
 <p>e)   修改<code>Makefile</code>，将程序添加到<code>UPROGS</code>。</p>
 <h5 id="322-find">3.2.2  find<a class="headerlink" href="#322-find" title="Permanent link">&para;</a></h5>
 <p>a)    可查看<code>user/ls.c</code>以了解如何读取目录；</p>
