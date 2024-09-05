@@ -537,6 +537,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gdb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GDB调试指南
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1793,7 +1814,7 @@
 <p>了解xv6上用户程序sleep的实现。sleep程序会等待用户指定的时间。请将代码写在user/sleep.c文件中。运行效果应该如下：</p>
 <p><img alt="image-20201017230825652" src="../part1.assets/image-20201017230825652.png" /></p>
 <p>输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义)，然后输出"(nothing happens for a little while)"。</p>
-<p>在xv6-oslab23-hitsz中，执行下面指令<code>./grade-lab-util sleep</code>，测试程序</p>
+<p>在xv6-oslab24-hitsz中，执行下面指令<code>./grade-lab-util sleep</code>，测试程序</p>
 <p><img alt="image-20230913171327769" src="../part1.assets/image-20230913171327769.png" /></p>
 <h3 id="32-pingpong">3.2 pingpong<a class="headerlink" href="#32-pingpong" title="Permanent link">&para;</a></h3>
 <p>在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印<code>&lt;pid&gt;: received ping from pid &lt;father pid&gt;</code> ，其中<code>&lt;pid&gt;</code>是子进程的进程ID, <code>&lt;another pid&gt;</code>是父进程的pid。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印<code>&lt;pid&gt;: received pong from pid &lt;child pid&gt;</code>，其中<code>&lt;pid&gt;</code>是父进程的进程ID, <code>&lt;child pid&gt;</code>是子进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：</p>
@@ -1808,12 +1829,12 @@
 <p><img alt="image-2024-09-05_find_test2" src="../part1.assets/image-find-test2.png" /></p>
 <p>另外，你还应当实现 <strong>递归查询</strong> ，当要查询的文件<code>target</code>在根目录的某个子文件夹中时，你也应该将结果显示出来</p>
 <p><img alt="image-2024-09-05_find_test3" src="../part1.assets/image-find-test3.png" /></p>
-<p>在xv6-oslab23-hitsz中，执行下面指令<code>./grade-lab-util find</code>，测试程序</p>
+<p>在xv6-oslab24-hitsz中，执行下面指令<code>./grade-lab-util find</code>，测试程序</p>
 <p><img alt="image-2024-09-05_find_test2" src="../part1.assets/image-20230913171456245.png" /></p>
 <p>如果上述3个程序都能正常运行，可以用如下指令测试：</p>
 <p><img alt="image-2024-09-05_find_tests" src="../part1.assets/image-20230913171631689.png" /></p>
 <h3 id="34-xv6">3.4 xv6启动流程实验<a class="headerlink" href="#34-xv6" title="Permanent link">&para;</a></h3>
-<p>在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab23-hitsz中，执行下面指令<code>make qemu</code>，运⾏的效果应该如下：</p>
+<p>在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab24-hitsz中，执行下面指令<code>make qemu</code>，运⾏的效果应该如下：</p>
 <p><img alt="image-20230913172857112" src="../part1.assets/image-20230913172857112.png" /></p>
 <p>上图红色框框内的信息是你要打印的内容，格式为：<code>[你的学号] 该函数的作用</code>，总共是5条打印信息。前4条是在内核态下打印，上图中已经给出了具体的文件名以及打印语句所在的代码行数。最后1条要在用户态下执行<code>sh</code>进程之前打印。</p>
 <p>建议你在实验前观看由我校录制的XV6讲解视频<a href="https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&amp;vd_source=225a99017e082147ac525beeddd6e3e2">HITSZ操作系统课程组讲解XV6（⼀）启动过程</a>视频，这会帮助你更好的理解xv6的启动流程。</p>
