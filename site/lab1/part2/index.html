@@ -950,18 +950,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7" class="md-nav__link">
+  <a href="#6" class="md-nav__link">
     <span class="md-ellipsis">
-      7.文件系统简单介绍
+      6.文件系统简单介绍
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6xv6" class="md-nav__link">
+  <a href="#7xv6" class="md-nav__link">
     <span class="md-ellipsis">
-      6.我们需要注意的：xv6入门指南的入门指南
+      7.我们需要注意的：xv6入门指南的入门指南
     </span>
   </a>
   
@@ -1790,18 +1790,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7" class="md-nav__link">
+  <a href="#6" class="md-nav__link">
     <span class="md-ellipsis">
-      7.文件系统简单介绍
+      6.文件系统简单介绍
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6xv6" class="md-nav__link">
+  <a href="#7xv6" class="md-nav__link">
     <span class="md-ellipsis">
-      6.我们需要注意的：xv6入门指南的入门指南
+      7.我们需要注意的：xv6入门指南的入门指南
     </span>
   </a>
   
@@ -2034,7 +2034,7 @@
 <p>父进程关闭管道的读端，然后向管道的写端写入数据，最后关闭写端，表示写入完成。</p>
 <p>如果管道中没有数据可读，read操作会等待，直到有数据被写入，或者直到所有指向管道写端的文件描述符都被关闭。如果所有写端的文件描述符都被关闭，read操作会返回0，表示读到文件的末尾。</p>
 <p>正因为read会等待新数据，这也是为什么在这个例子中，子进程在执行wc之前必须先关闭管道的写端。否则，如果wc程序还持有管道的写端文件描述符，它永远不会检测到文件结束信号，程序就会一直等待新数据而不会结束。（这也是编写pingpong程序时常见的一个问题）</p>
-<h2 id="7">7.文件系统简单介绍<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<h2 id="6">6.文件系统简单介绍<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <p>阅读这一部分会对你做find实验有所帮助。</p>
 <ul>
 <li>
@@ -2079,7 +2079,7 @@
 <li><code>name</code>：这个条目对应的文件或子目录的 名称，即我们平常看到的文件名或目录名。<code>DIRSIZ</code> 是一个预定义的常量，表示文件名的最大长度。</li>
 </ul>
 <p>在 xv6 中，目录是一个特殊的文件，其内容是多个目录项（即 <code>struct dirent</code>）。这些目录项就像一个个条目，按顺序存储在目录文件中。<strong>目录文件的内容本质上就是按顺序存放的 <code>struct dirent</code> 数据结构</strong>。(在<code>ls.c</code>代码实现中，这点很关键)</p>
-<h2 id="6xv6">6.我们需要注意的：xv6入门指南的入门指南<a class="headerlink" href="#6xv6" title="Permanent link">&para;</a></h2>
+<h2 id="7xv6">7.我们需要注意的：xv6入门指南的入门指南<a class="headerlink" href="#7xv6" title="Permanent link">&para;</a></h2>
 <p>前四个部分的叙述非常抽象，我们在这一部分将其 <strong>融会贯通</strong> 起来，看看其间的关系。</p>
 <p>xv6是一个操作系统，但是在这一章我们 <strong>不打算修改</strong> 操作系统，而是编写应用程序，去 <strong>使用</strong> 操作系统。我们编写的最简单的应用程序如下：</p>
 <div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
