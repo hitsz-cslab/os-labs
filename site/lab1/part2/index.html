@@ -1853,17 +1853,17 @@
 <p>XV6是由麻省理工学院(MIT)开发的一个教学目的的操作系统，它是在x86处理器上用ANSI标准C重新实现的Unix第六版(即v6)，课程编号为6.828。2019年被移植到RISC-V之上，并设置了6.S081。</p>
 <p>XV6的主要特征：</p>
 <ul>
-<li>开源，精简，代码仅两万行左右；</li>
+<li>开源，精简，代码仅一万行左右；</li>
 <li>功能完善，可全面理解操作系统的原理及实现；</li>
-<li>基于RISC-V、X86等架构，有利于深入理解体系结构；</li>
+<li>基于RISC-V架构，有利于深入理解体系结构；</li>
 <li>类Unix系统，可延伸学习其他常见操作系统，例如Linux、MacOS等。</li>
 </ul>
 <p>1) 官方网站：<a href="https://pdos.csail.mit.edu/6.828/2020/index.html">https://pdos.csail.mit.edu/6.828/2020/index.html</a></p>
 <p>2) xv6 book：<a href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf</a></p>
 <div align="center"> <img src="../part2.assets/image-20201017231152704.png" /> </div>
 
-<p>这份官方文档，是阅读xv6源码过程中最好的参考资料，在完成所有xv6相关实验的过程中，若对源码有任何的疑问，可随时查看这份文档进行学习。</p>
-<p>1) 6.S081所有实验项目（针对每个实验，都有详细的指导和提示）：</p>
+<p>这份官方文档，是阅读xv6源码过程中最好的参考资料，在完成所有xv6相关实验的过程中，若对源码有任何的疑问，可随时查看这份<a href="https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf">文档</a>进行学习。</p>
+<p>1) 6.S081所有实验项目如下，针对每个实验，都有详细的指导和提示（注：我们的实验是基于xv6改，一些题目进行了调整，实验指导无法完全照搬）：</p>
 <p><img alt="image-20210913143744152" src="../part2.assets/image-20210913143744152.png" /></p>
 <h3 id="12-xv6">1.2 XV6总统架构简介<a class="headerlink" href="#12-xv6" title="Permanent link">&para;</a></h3>
 <p>与大多数Unix操作系统一样，XV6采用宏内核结构，它包含操作系统一些最基本的要素，包括系统调用、进程调度、内存管理、中断处理和文件系统等。XV6区分内核态和用户态，代表应用程序的用户态进程运行在CPU的用户态（又称非特权模式，用户模式），无法直接访问系统硬件和操作系统中的系统数据，而操作系统运行在CPU的核心态（又称特权模式，内核模式），可以访问系统硬件和核心数据。</p>
