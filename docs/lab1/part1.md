@@ -62,7 +62,13 @@
 
 ### 3.2 pingpong
 
-在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。父进程将”ping”写入管道，子进程从管道将其读出并打印`<pid>: received ping from pid <father pid>` ，其中`<pid>`是子进程的进程ID, `<another pid>`是父进程的pid。子进程从父进程收到字符串后，将”pong“写入另一个管道，然后由父进程从该管道读取并打印`<pid>: received pong from pid <child pid>`，其中`<pid>`是父进程的进程ID, `<child pid>`是子进程的进程ID。请将代码写在user/pingpong.c文件中。运行效果应该如下：
+在xv6上实现pingpong程序，即两个进程在管道两侧来回通信。你需要使用两个管道(可以命名为`c2f`和`f2c`)，其中`c2f`用于子进程向父进程传输数据，`f2c`用于父进程向子进程传输数据。（思考一下能不能用一个管道实现呢？）
+
+父进程向管道中写入数据，子进程从管道将其读出并打印`<pid>: received ping from pid <father pid>` ，其中`<pid>`是子进程的进程ID, `<father pid>`是父进程的进程ID。
+
+子进程从父进程收到数据后，通过写入另一个管道向父进程传输数据，然后由父进程从该管道读取并打印`<pid>: received pong from pid <child pid>`，其中`<pid>`是父进程的进程ID, `<child pid>`是子进程的进程ID。
+
+请将代码写在user/pingpong.c文件中。运行效果应该如下：
 
 ![image-2024-09-05_16-16-29](part1.assets/Snipaste_2024-09-05_16-16-29.png)
 
@@ -70,10 +76,9 @@
 
 ![image-2024-09-05_16](part1.assets/image-pingpong-testresult.png)
 
-
 ### 3.3 find
 
-在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有文件，输出文件的相对路径。该程序的 **命令格式为“find <path\> <file_name\>”** (注：这与Linux中的find命令格式略有不同，Linux中的对应格式为`find <path> -name <file_name>`)。请将代码写在user/find.c文件中。
+在xv6上实现用户程序find，即在目录树中查找名称与字符串匹配的所有 **文件或目录**，输出文件的相对路径。该程序的 **命令格式为“find <path\> <name\>”** (注：这与Linux中的find命令格式略有不同，Linux中的对应格式为`find <path> -name <name>`)。请将代码写在user/find.c文件中。
 
 在根目录新建 **文件b** 时，当cwd(Current Working Directory)为根目录时，在根目录下查询b的输出效果应该如下：
 
