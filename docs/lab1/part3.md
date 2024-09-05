@@ -117,11 +117,6 @@ d) 不要递归进入`.`和`..`；
 
 e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理文件系统，并使用`make qemu`再编译运行。
 
-**提示：**
-
-- 关于以上2个Unix实用程序的实现亦可参考MIT官方的实验指导完成实验[Lab: Xv6 and Unix utilities](https://pdos.csail.mit.edu/6.828/2020/labs/util.html)
-
-- 系统调用接口的示例可查阅《xv6 book》chapter 1的内容， **尤其是1.2、1.3节的内容** 。
 
 #### 3.3 回答问题
 
