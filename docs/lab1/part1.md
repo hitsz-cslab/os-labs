@@ -56,7 +56,7 @@
 
 输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义)，然后输出"(nothing happens for a little while)"。
 
-在xv6-oslab23-hitsz中，执行下面指令`./grade-lab-util sleep`，测试程序
+在xv6-oslab24-hitsz中，执行下面指令`./grade-lab-util sleep`，测试程序
 
 ![image-20230913171327769](part1.assets/image-20230913171327769.png)
 
@@ -92,7 +92,7 @@
 
 ![image-2024-09-05_find_test3](part1.assets/image-find-test3.png)
 
-在xv6-oslab23-hitsz中，执行下面指令`./grade-lab-util find`，测试程序
+在xv6-oslab24-hitsz中，执行下面指令`./grade-lab-util find`，测试程序
 
 ![image-2024-09-05_find_test2](part1.assets/image-20230913171456245.png)
 
@@ -102,7 +102,7 @@
 
 ### 3.4 xv6启动流程实验
 
-在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab23-hitsz中，执行下面指令`make qemu`，运⾏的效果应该如下：
+在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab24-hitsz中，执行下面指令`make qemu`，运⾏的效果应该如下：
 
 ![image-20230913172857112](part1.assets/image-20230913172857112.png)
 
