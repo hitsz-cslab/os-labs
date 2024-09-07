@@ -54,7 +54,7 @@
 
 ![image-20201017230825652](part1.assets/image-20201017230825652.png)
 
-输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义)，然后输出"(nothing happens for a little while)"。
+输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义，一个tick大概100ms)，然后输出"(nothing happens for a little while)"。
 
 在xv6-oslab24-hitsz中，执行下面指令`./grade-lab-util sleep`，测试程序
 

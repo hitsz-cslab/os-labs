@@ -61,6 +61,11 @@ wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
 !!! note "小实验"
     `help help` 会发生什么？
 
+
+#### 退出 gdb
+
+按下 `ctrl+d` 或 输入 `q` 来退出 gdb
+
 #### 单步调试
 
 - `step` 一次运行一行代码。当有函数调用时，它将步进到被调用的对象函数。
@@ -136,8 +141,8 @@ gdb 命令历史保存在 .gdb_history 文件中。
 6. 在 xv6 命令行输入 `ls` 运行 ls 程序
 7. 在 gdb 中调试 ls 程序 
 
-!!! tip "注意"
-    由于 gdb 是在指令内存地址打断点，因此 ls 程序的 main 函数地址可能与 sh 程序的某些指令重复，导致 gdb 可能在 sh 程序中暂停，但错误的显示成了 ls 程序的 debug 信息。说明这个断点不是我们想要的 ls 程序的断点，这时可以使用 `c` 命令来继续执行到真正 ls 程序的断点）
+!!! tip "在调试 ls 前先看这里"
+    由于 gdb 是在指令内存地址打断点，而 ls 程序的 main 函数地址可能与 sh 程序的某些指令重复，导致 gdb 可能在 sh 程序中暂停，但错误的显示成了 ls 程序的 debug 信息。说明这个断点不是我们想要的 ls 程序的断点，这时可以使用 `c` 命令来继续执行到真正 ls 程序的断点
 
 
 
