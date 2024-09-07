@@ -2198,8 +2198,10 @@ git<span class="w"> </span>checkout<span class="w"> </span>branch-name<span clas
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>status<span class="w">  </span><span class="c1"># 会显示哪些文件被修改了，被修改的文件是否加入了暂存区等信息</span>
 </code></pre></div>
 <p>写完代码之后,</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.<span class="w">    </span><span class="c1"># 将当前文件夹及其子文件夹下所有被修改或添加的文件加入到暂存区。如果想单独加入某些文件，可以将 . 替换为具体的文件名</span>
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;commit message&quot;</span><span class="w">  </span><span class="c1"># 将暂存区的修改进行提交，记得在作业中提交commit.patch文件哦</span>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>repository_directory<span class="w"> </span><span class="c1"># 进入到仓库所在文件夹</span>
+git<span class="w"> </span>add<span class="w"> </span>.<span class="w">    </span><span class="c1"># 将当前文件夹及其子文件夹下所有被修改或添加的文件加入到暂存区。如果想单独加入某些文件，可以将 . 替换为具体的文件名</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;commit message&quot;</span><span class="w">  </span><span class="c1"># 将暂存区的修改进行提交</span>
+make<span class="w"> </span>diff<span class="w">   </span><span class="c1"># 生成commit.patch，记得和实验报告一起提交哦</span>
 </code></pre></div>
 <p>如果遇到问题，请询问老师或助教。</p>
 <h2 id="_2">附录<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>

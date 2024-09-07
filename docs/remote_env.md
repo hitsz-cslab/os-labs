@@ -152,8 +152,10 @@ git status  # 会显示哪些文件被修改了，被修改的文件是否加入
 写完代码之后,
 
 ```bash
+cd repository_directory # 进入到仓库所在文件夹
 git add .    # 将当前文件夹及其子文件夹下所有被修改或添加的文件加入到暂存区。如果想单独加入某些文件，可以将 . 替换为具体的文件名
-git commit -m "commit message"  # 将暂存区的修改进行提交，记得在作业中提交commit.patch文件哦
+git commit -m "commit message"  # 将暂存区的修改进行提交
+make diff   # 生成commit.patch，记得和实验报告一起提交哦
 ```
 
 如果遇到问题，请询问老师或助教。
