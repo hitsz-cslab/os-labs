@@ -64,7 +64,7 @@ wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
 
 #### 退出 gdb
 
-按下 `ctrl+d` 或 输入 `q` 来退出 gdb
+输入 `q` （最好这样，会保存在 .gdb_history 中） 或 按下 `ctrl+d` 来退出 gdb
 
 #### 单步调试
 
@@ -121,6 +121,10 @@ wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
 #### 历史与脚本
 
 gdb 命令历史保存在 .gdb_history 文件中。
+
+!!! tip "注意事项"
+    1. 需要退出 gdb 才能将调试指令刷新到 .gdb_history 文件中
+    2. 最好使用 `q` 指令退出 gdb，这样上次调试过程所有指令就是两次 q 指令之间的所有指令，不要用 `ctrl+d` 退出
 
 如果想恢复上次调试的位置，可以
 

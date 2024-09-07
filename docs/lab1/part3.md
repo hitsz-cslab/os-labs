@@ -224,7 +224,7 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
 
         ![](./part3.assets/gdb-schedule-swtch.png)
 
-7. swtch 函数接受两个参数，将 `ra` 寄存器和被调用者保存寄存器（`sp`、各种`s`寄存器）保存在第一个`context`中，然后从第二个`context`中加载这些寄存器，最后调用 `ret` 指令跳转到 `ra` 寄存器的地址，在进程初次加载运行时会跳转到 forkret 函数。
+7. swtch 函数接受两个参数，将 `ra` 寄存器和被调用者保存寄存器（`sp`、各种`s`寄存器）保存在当前 cpu 结构体的`context`中，然后从待执行进程的控制块的`context`中加载这些寄存器，最后调用 `ret` 指令跳转到 `ra` 寄存器的地址，在进程初次加载运行时会跳转到 forkret 函数。
 
 8. forkret 函数末尾会调用 usertrapret 函数。usertrapret 函数负责从内核态返回到用户态执行用户程序，usertrapret 函数最终会跳转到 userret (kernel/trampoline.S) 汇编函数，最终调用 `sret` 指令返回到用户态执行用户程序，开始执行 xv6 第一个用户态程序也就是 initcode。
 
