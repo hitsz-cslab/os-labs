@@ -1777,16 +1777,21 @@
 <p>远程实验平台已经将XV6实验环境部署在实验中心的服务器上，我们把所有依赖的配置都已经事先搭建完毕。无论你的电脑性能如何，无论你是在宿舍、实验室还是自习室，只要你还能连上校园网，你就能完成你的实验。具体详见<a href="../remote_env/">远程实验环境使用指南</a>。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>虽然我们已经做了一些方案保证远程环境的可靠性，但在某些特殊情况下，也不能确保不出故障，为安全起见，建议同学们将代码及时上传到git仓库或者下载到本地保存。</p>
 </div>
-<h2 id="2">2.  自行部署的实验环境<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>虽然我们已经做了一些方案保证远程环境的可靠性，但在某些特殊情况下，也不能确保不出故障，为安全起见，建议同学们将代码及时上传到git仓库或者下载到本地保存。</p>
+<h2 id="2">2. 自行部署的实验环境<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>我们在远程实验平台上已经部署好的实验环境，你只需要按照实验要求编写相应的代码就行。但实际上，你无法知道项目里的所有细节，难以掌握整个项目的架构。因此，我们希望同学们能够自己动手搭建实验环境，这样你得到的收获才是最大的: )</p>
 </div>
+<p>我们在远程实验平台上已经部署好的实验环境，你只需要按照实验要求编写相应的代码就行。但实际上，你无法知道项目里的所有细节，难以掌握整个项目的架构。因此，我们希望同学们能够自己动手搭建实验环境，这样你得到的收获才是最大的: )</p>
 <div class="admonition tip">
 <p class="admonition-title">用于部署实验平台的实验工具</p>
 <p>对于本课程的实验平台搭建，我们需要用到几个工具：</p>
+<ul>
+<li>WSL2</li>
+</ul>
+<p>如果你的电脑安装的是Windows 10或Windows 11，推荐使用WSL2（Windows Subsystem for Linux 2）来搭建Linux环境。WSL2不仅能够在Windows系统中高效运行Linux内核，而且相比于WSL1具有更好的性能和完全的Linux系统调用兼容性。WSL2支持运行主流的Linux发行版（如Ubuntu、Debian等），并能够直接访问Windows的文件系统，可以通过Windows自带的文件资源管理器，像操作Windows的文件那样操作WSL上的文件，并且可以在WSL和Windows之间直接进行文件拖拽。通过WSL2可以避免使用虚拟机，占用的系统资源更少，操作也更加便捷。</p>
+<p>如何安装WSL并使用WSL进行开放？请参阅官方文档<a href="https://learn.microsoft.com/zh-cn/windows/wsl/">WSL文档</a></p>
 <ul>
 <li>VirtualBox虚拟机</li>
 </ul>
@@ -1810,83 +1815,77 @@ QEMU主循环里也需要有寄存器文件，用于维护寄存器的状态。�
 </div>
 <div class="admonition warning">
 <p class="admonition-title">注意事项</p>
-<p>请确保你已经安装有ubuntu、Centos或Debian等其他Linux系统，下面的安装步骤以Ubuntu系统为例，如果是其他Linux操作系统，其具体安装步骤请参考:<a href="https://pdos.csail.mit.edu/6.S081/2020/tools.html">https://pdos.csail.mit.edu/6.S081/2020/tools.html</a></p>
 </div>
+<p>请确保你已经安装有ubuntu、Centos或Debian等其他Linux系统，下面的安装步骤以Ubuntu系统为例，如果是其他Linux操作系统，其具体安装步骤请参考:<a href="https://pdos.csail.mit.edu/6.S081/2020/tools.html">https://pdos.csail.mit.edu/6.S081/2020/tools.html</a></p>
 <h3 id="21-xv6">2.1 XV6环境配置<a class="headerlink" href="#21-xv6" title="Permanent link">&para;</a></h3>
 <h4 id="211">2.1.1 安装依赖包<a class="headerlink" href="#211" title="Permanent link">&para;</a></h4>
-<div class="admonition warning">
-<p class="admonition-title">注意事项</p>
-<p>第一个字符“#”或"$"不需要输入，只需要输入“#”或"$"后的字符串。</p>
-</div>
 <p>安装XV6需要用到的依赖包</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>git<span class="w"> </span>build-essential<span class="w"> </span>gdb-multiarch<span class="w"> </span>qemu-system-misc<span class="w"> </span>gcc-riscv64-linux-gnu<span class="w"> </span>binutils-riscv64-linux-gnu<span class="w"> </span>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>git<span class="w"> </span>build-essential<span class="w"> </span>gdb-multiarch<span class="w"> </span>qemu-system-misc<span class="w"> </span>gcc-riscv64-linux-gnu<span class="w"> </span>binutils-riscv64-linux-gnu
 </code></pre></div>
 <h4 id="212-risc-v-gnu">2.1.2 安装RISC-V GNU编译器工具链<a class="headerlink" href="#212-risc-v-gnu" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/riscv/riscv-gnu-toolchain
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--recursive<span class="w"> </span>https://github.com/riscv/riscv-gnu-toolchain
 </code></pre></div>
 <p>如果下载太慢，可以直接用已经下载好的包。</p>
 <blockquote>
 <p>下载地址： <a href="https://mirrors.osa.moe/misc/">https://mirrors.osa.moe/misc/</a>， 选择riscv-gnu-toolchain.tar.gz。下载完成后，需要将riscv-gnu-toolchain.tar.gz上传至Linux系统中，上传方法详见MobaXterm(SSH工具)这一节中的<a href="../tools/#12-sftp">文件传输SFTP服务</a>。上传到Linux系统中，需要对RISC-V GNU编译器工具链进行解压，解压命令如下：</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>tar<span class="w"> </span>zxvf<span class="w"> </span>riscv-gnu-toolchain.tar.gz
+<div class="highlight"><pre><span></span><code>tar<span class="w"> </span>zxvf<span class="w"> </span>riscv-gnu-toolchain.tar.gz
 </code></pre></div>
 </blockquote>
-<p>接下来，下载编译工具链所需的依赖包：
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>autotools-dev<span class="w"> </span>curl<span class="w"> </span>libmpc-dev<span class="w"> </span>libmpfr-dev<span class="w"> </span>libgmp-dev<span class="w"> </span>gawk<span class="w"> </span>build-essential<span class="w"> </span>bison<span class="w"> </span>flex<span class="w"> </span>texinfo<span class="w"> </span>gperf<span class="w"> </span>libtool<span class="w"> </span>patchutils<span class="w"> </span>bc<span class="w"> </span>zlib1g-dev<span class="w"> </span>libexpat-dev
-</code></pre></div></p>
+<p>接下来，下载编译工具链所需的依赖包：</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>autoconf<span class="w"> </span>automake<span class="w"> </span>autotools-dev<span class="w"> </span>curl<span class="w"> </span>libmpc-dev<span class="w"> </span>libmpfr-dev<span class="w"> </span>libgmp-dev<span class="w"> </span>gawk<span class="w"> </span>build-essential<span class="w"> </span>bison<span class="w"> </span>flex<span class="w"> </span>texinfo<span class="w"> </span>gperf<span class="w"> </span>libtool<span class="w"> </span>patchutils<span class="w"> </span>bc<span class="w"> </span>zlib1g-dev<span class="w"> </span>libexpat-dev
+</code></pre></div>
 <p>安装RISC-V GNU编译器工具链</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>riscv-gnu-toolchain
-<span class="gp">$ </span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/usr/local
-<span class="gp">$ </span>sudo<span class="w"> </span>make
-<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>..
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>riscv-gnu-toolchain
+./configure<span class="w"> </span>--prefix<span class="o">=</span>/usr/local
+sudo<span class="w"> </span>make
+<span class="nb">cd</span><span class="w"> </span>..
 
-<span class="gp">$ </span>rm<span class="w"> </span>riscv-gnu-toolchain.tar.gz
-<span class="go">rm: remove regular file &#39;riscv-gnu-toolchain.tar.gz&#39;? y</span>
-<span class="gp">$ </span>
+rm<span class="w"> </span>riscv-gnu-toolchain.tar.gz
+<span class="c1"># 输出: rm: remove regular file &#39;riscv-gnu-toolchain.tar.gz&#39;? y (输入y)</span>
 </code></pre></div>
 <h4 id="213-qemu">2.1.3 安装QEMU<a class="headerlink" href="#213-qemu" title="Permanent link">&para;</a></h4>
 <p>下载QEMU</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>wget<span class="w"> </span>https://download.qemu.org/qemu-5.1.0.tar.xz
-<span class="gp">$ </span>tar<span class="w"> </span>xf<span class="w"> </span>qemu-5.1.0.tar.xz
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>https://download.qemu.org/qemu-5.1.0.tar.xz
+tar<span class="w"> </span>xf<span class="w"> </span>qemu-5.1.0.tar.xz
 </code></pre></div>
 <p>安装</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>qemu-5.1.0
-<span class="gp">$ </span>./configure<span class="w"> </span>--disable-kvm<span class="w"> </span>--disable-werror<span class="w"> </span>--prefix<span class="o">=</span>/usr/local<span class="w"> </span>--target-list<span class="o">=</span><span class="s2">&quot;riscv64-softmmu&quot;</span>
-<span class="gp">$ </span>make
-<span class="gp">$ </span>make<span class="w"> </span>install
-<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>..
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>qemu-5.1.0
+./configure<span class="w"> </span>--disable-kvm<span class="w"> </span>--disable-werror<span class="w"> </span>--prefix<span class="o">=</span>/usr/local<span class="w"> </span>--target-list<span class="o">=</span><span class="s2">&quot;riscv64-softmmu&quot;</span>
+make
+make<span class="w"> </span>install
+<span class="nb">cd</span><span class="w"> </span>..
 
-<span class="gp">$ </span>rm<span class="w"> </span>qemu-5.1.0.tar.xz
-<span class="go">rm: remove regular file &#39;qemu-5.1.0.tar.xz&#39;? y</span>
-<span class="gp">$ </span>
+rm<span class="w"> </span>qemu-5.1.0.tar.xz
+<span class="c1"># 输出: rm: remove regular file &#39;qemu-5.1.0.tar.xz&#39;? y (输入y)</span>
 </code></pre></div>
 <p>检查安装是否成功</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>riscv64-unknown-elf-gcc<span class="w"> </span>--version
-<span class="go">riscv64-unknown-elf-gcc (GCC) 10.2.0</span>
-<span class="go">...</span>
+<div class="highlight"><pre><span></span><code>riscv64-unknown-elf-gcc<span class="w"> </span>--version
+<span class="c1"># 输出: riscv64-unknown-elf-gcc (GCC) 10.2.0</span>
+...
 
-<span class="gp">$ </span>qemu-system-riscv64<span class="w"> </span>--version
-<span class="go">QEMU emulator version 5.1.0</span>
+qemu-system-riscv64<span class="w"> </span>--version
+<span class="c1"># 输出: QEMU emulator version 5.1.0</span>
 </code></pre></div>
 <h3 id="22-xv6">2.2 运行XV6<a class="headerlink" href="#22-xv6" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
-<span class="go">Cloning into &#39;xv6-oslab23-hitsz&#39;...</span>
-<span class="go">...</span>
-<span class="gp"># </span>如果是初次运行git，设置你自己的gitee用户信息
-<span class="gp">$ </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;you@example.com&quot;</span>
-<span class="gp">$ </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Your Name&quot;</span>
-<span class="go">...</span>
-<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>xv6-oslab23-hitsz
-<span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>util
-<span class="gp">$ </span>make<span class="w"> </span>qemu
-<span class="gp"># </span>...<span class="w"> </span>lots<span class="w"> </span>of<span class="w"> </span>output<span class="w"> </span>...
-<span class="go">init: starting sh</span>
-<span class="gp">$</span>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
+<span class="c1"># 输出: Cloning into &#39;xv6-oslab23-hitsz&#39;...</span>
+<span class="c1"># ...</span>
+<span class="c1"># 如果是初次运行git，设置你自己的gitee用户信息</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;you@example.com&quot;</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Your Name&quot;</span>
+<span class="c1"># ...</span>
+<span class="nb">cd</span><span class="w"> </span>xv6-oslab23-hitsz
+git<span class="w"> </span>checkout<span class="w"> </span>util
+make<span class="w"> </span>qemu
+<span class="c1"># ... lots of output ...</span>
+<span class="c1"># init: starting sh</span>
+<span class="c1"># $</span>
 </code></pre></div>
-当可以看到“init: starting sh”的字样表示xv6已经正常启动，此时在“$”提示符后可输入xv6支持的shell命令。</p>
+<p>当可以看到“init: starting sh”的字样表示xv6已经正常启动，此时在“$”提示符后可输入xv6支持的shell命令。</p>
 <div class="admonition tip">
 <p class="admonition-title">QEMU退出方法</p>
-<p>先按“Ctrl+a”组合键，接着全部松开，再按下“x”键</p>
 </div>
+<p>先按“Ctrl+a”组合键，接着全部松开，再按下“x”键</p>
 <p>至此，XV6已经能够正常运行了: )</p>
 
 
