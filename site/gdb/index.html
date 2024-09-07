@@ -642,6 +642,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#gdb_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      退出 gdb
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       单步调试
@@ -1849,6 +1858,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#gdb_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      退出 gdb
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       单步调试
@@ -2058,6 +2076,8 @@
 <p class="admonition-title">小实验</p>
 <p><code>help help</code> 会发生什么？</p>
 </div>
+<h4 id="gdb_1">退出 gdb<a class="headerlink" href="#gdb_1" title="Permanent link">&para;</a></h4>
+<p>输入 <code>q</code> （最好这样，会保存在 .gdb_history 中） 或 按下 <code>ctrl+d</code> 来退出 gdb</p>
 <h4 id="_2">单步调试<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>step</code> 一次运行一行代码。当有函数调用时，它将步进到被调用的对象函数。</li>
@@ -2106,6 +2126,13 @@
 <p>可以在 gdb 按下 <code>ctrl+c</code> 暂停当前程序的执行</p>
 <h4 id="_11">历史与脚本<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
 <p>gdb 命令历史保存在 .gdb_history 文件中。</p>
+<div class="admonition tip">
+<p class="admonition-title">注意事项</p>
+<ol>
+<li>需要退出 gdb 才能将调试指令刷新到 .gdb_history 文件中</li>
+<li>最好使用 <code>q</code> 指令退出 gdb，这样上次调试过程所有指令就是两次 q 指令之间的所有指令，不要用 <code>ctrl+d</code> 退出</li>
+</ol>
+</div>
 <p>如果想恢复上次调试的位置，可以</p>
 <ol>
 <li>从 .gdb_history 文件中获取上次调试的所有指令</li>
@@ -2125,8 +2152,8 @@
 <li>在 gdb 中调试 ls 程序 </li>
 </ol>
 <div class="admonition tip">
-<p class="admonition-title">注意</p>
-<p>由于 gdb 是在指令内存地址打断点，因此 ls 程序的 main 函数地址可能与 sh 程序的某些指令重复，导致 gdb 可能在 sh 程序中暂停，但错误的显示成了 ls 程序的 debug 信息。说明这个断点不是我们想要的 ls 程序的断点，这时可以使用 <code>c</code> 命令来继续执行到真正 ls 程序的断点）</p>
+<p class="admonition-title">在调试 ls 前先看这里</p>
+<p>由于 gdb 是在指令内存地址打断点，而 ls 程序的 main 函数地址可能与 sh 程序的某些指令重复，导致 gdb 可能在 sh 程序中暂停，但错误的显示成了 ls 程序的 debug 信息。说明这个断点不是我们想要的 ls 程序的断点，这时可以使用 <code>c</code> 命令来继续执行到真正 ls 程序的断点</p>
 </div>
 <h2 id="4-gdb-dashboard">4. gdb-dashboard 介绍<a class="headerlink" href="#4-gdb-dashboard" title="Permanent link">&para;</a></h2>
 <h3 id="dashboard-tui">dashboard tui 介绍<a class="headerlink" href="#dashboard-tui" title="Permanent link">&para;</a></h3>
