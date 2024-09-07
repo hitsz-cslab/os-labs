@@ -54,7 +54,7 @@
 
 ![image-20201017230825652](part1.assets/image-20201017230825652.png)
 
-输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义)，然后输出"(nothing happens for a little while)"。
+输入命令后，命令行会 ”暂停“ 一段时间 (10个ticks，ticks由内核定义，一个tick大概100ms)，然后输出"(nothing happens for a little while)"。
 
 在xv6-oslab24-hitsz中，执行下面指令`./grade-lab-util sleep`，测试程序
 
@@ -102,13 +102,18 @@
 
 ### 3.4 xv6启动流程实验
 
-在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab24-hitsz中，执行下面指令`make qemu`，运⾏的效果应该如下：
+1. 在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab24-hitsz中，执行下面指令`make qemu`，运⾏的效果应该如下：
 
-![image-20230913172857112](part1.assets/image-20230913172857112.png)
+    ![image-20230913172857112](part1.assets/image-20230913172857112.png)
 
-上图红色框框内的信息是你要打印的内容，格式为：`[你的学号] 该函数的作用`，总共是5条打印信息。前4条是在内核态下打印，上图中已经给出了具体的文件名以及打印语句所在的代码行数。最后1条要在用户态下执行`sh`进程之前打印。
+    上图红色框框内的信息是你要打印的内容，格式为：`[你的学号] 该函数的作用`，总共是5条打印信息。前4条是在内核态下打印，上图中已经给出了具体的文件名以及打印语句所在的代码行数。最后1条要在用户态下执行`sh`进程之前打印。
 
-建议你在实验前观看由我校录制的XV6讲解视频[HITSZ操作系统课程组讲解XV6（⼀）启动过程](https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)视频，这会帮助你更好的理解xv6的启动流程。
+2. 学会使用 gdb 以及 gdb-dashboard 调试 xv6 启动流程，在调试过程中需要在两处地方使用 `p myproc()->name` 打印出当前 proc 结构体的 name，分别打印出初始进程 initcode 和 init 程序的名字（打印的历史输出会保存在 gdb-dashboard 的 history 区域），最后要给出一个 gdb 命令脚本文件，命名为 commands.gdb，要求在 gdb 调试中使用 `source commands.gdb` 执行脚本后，会在 gdb-dashboard 的 history 区域中显示如下内容。
+
+    ![gdb-initcode-init](./part1.assets/gdb-initcode-init.png)
+
+!!! tip 
+    建议你在实验前观看由我校录制的XV6讲解视频[HITSZ操作系统课程组讲解XV6（⼀）启动过程](https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)视频，这会帮助你更好的理解xv6的启动流程。
 
 
 

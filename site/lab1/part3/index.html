@@ -2059,7 +2059,7 @@ git<span class="w"> </span>checkout<span class="w"> </span>util
 </div>
 </li>
 <li>
-<p>swtch 函数接受两个参数，将 <code>ra</code> 寄存器和被调用者保存寄存器（<code>sp</code>、各种<code>s</code>寄存器）保存在第一个<code>context</code>中，然后从第二个<code>context</code>中加载这些寄存器，最后调用 <code>ret</code> 指令跳转到 <code>ra</code> 寄存器的地址，在进程初次加载运行时会跳转到 forkret 函数。</p>
+<p>swtch 函数接受两个参数，将 <code>ra</code> 寄存器和被调用者保存寄存器（<code>sp</code>、各种<code>s</code>寄存器）保存在当前 cpu 结构体的<code>context</code>中，然后从待执行进程的控制块的<code>context</code>中加载这些寄存器，最后调用 <code>ret</code> 指令跳转到 <code>ra</code> 寄存器的地址，在进程初次加载运行时会跳转到 forkret 函数。</p>
 </li>
 <li>
 <p>forkret 函数末尾会调用 usertrapret 函数。usertrapret 函数负责从内核态返回到用户态执行用户程序，usertrapret 函数最终会跳转到 userret (kernel/trampoline.S) 汇编函数，最终调用 <code>sret</code> 指令返回到用户态执行用户程序，开始执行 xv6 第一个用户态程序也就是 initcode。</p>
