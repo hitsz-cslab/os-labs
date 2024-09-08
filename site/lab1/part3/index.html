@@ -1982,11 +1982,12 @@ git<span class="w"> </span>checkout<span class="w"> </span>util
 </ul>
 <p>更深入了解请访问 <a href="https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter2/1rv-privilege.html#riscv-priv-arch">https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter2/1rv-privilege.html#riscv-priv-arch</a></p>
 </div>
-<p>启动流程步骤如下:</p>
+<p>接下来我们将会演示使用 gdb 以及 gdb-dashboard 调试 xv6 的启动流程，请同学们跟着实验步骤亲自动手调试并结合 xv6 代码进行思考。</p>
+<p>调试启动流程步骤如下:</p>
 <p>按照<a href="../../gdb/">GDB 调试指南</a>启动 qemu 并进行调试：</p>
 <ol>
 <li>
-<p>qemu 将执行位于 0x1000 地址处的一小段汇编指令，最终跳转到 0x8000_0000 位置，开始运行 xv6 的首个函数：_entry (kernel/entry.S)</p>
+<p>qemu 将执行位于 0x1000 地址处的一小段汇编指令，最终跳转到 0x8000_0000 位置，开始运行 xv6 的首个函数：<code>_entry</code> (kernel/entry.S)</p>
 <div class="admonition note">
 <p class="admonition-title">调试技巧</p>
 <p>可以使用 <code>si</code> 单步调试汇编指令。请同学们试试 <code>help si</code> 会输出什么？<code>si</code> 指令的全称是什么？</p>
@@ -1994,7 +1995,7 @@ git<span class="w"> </span>checkout<span class="w"> </span>util
 <p><img alt="0x1000" src="../part3.assets/gdb-0x1000.png" /></p>
 </li>
 <li>
-<p>_entry 函数设置当前 CPU 的栈寄存器(sp)，拥有栈后就可以调用函数了，最后会进入 start 函数。</p>
+<p><code>_entry</code> 函数设置当前 CPU 的栈寄存器(<code>sp</code>)，拥有栈后就可以调用函数了，最后会进入 <code>start</code> 函数。</p>
 <div class="admonition info">
 <p class="admonition-title">RISC-V 伪指令</p>
 <p>RISC-V 伪指令是为了方便编程而设计的，它们不是处理器直接支持的原生指令，编译器或汇编器会将其转化为一个或多个真实的机器指令。</p>
@@ -2005,12 +2006,12 @@ git<span class="w"> </span>checkout<span class="w"> </span>util
 <p><img alt="entry" src="../part3.assets/gdb-entry.png" /></p>
 </li>
 <li>
-<p>start 函数进行了如下操作：</p>
+<p><code>start</code> 函数进行了如下操作：</p>
 <ul>
 <li>初始化机器态特权寄存器</li>
 <li>启用时钟中断</li>
-<li>把当前 CPU 的 id 放入 tp 寄存器</li>
-<li>将 main 函数地址写入特权级寄存器 <code>mepc</code>，在 start 函数末尾 <code>mret</code> 指令会跳转到 <code>mepc</code> 寄存器所存的地址，也就是 main 函数，同时完成机器态特权级到内核态特权级的切换</li>
+<li>把当前 CPU 的 id 放入 <code>tp</code> 寄存器</li>
+<li>将 <code>main</code> 函数地址写入特权级寄存器 <code>mepc</code>，在 <code>start</code> 函数末尾 <code>mret</code> 指令会跳转到 <code>mepc</code> 寄存器所存的地址，也就是 <code>main</code> 函数，同时完成机器态特权级到内核态特权级的切换</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">调试技巧</p>
@@ -2024,9 +2025,17 @@ git<span class="w"> </span>checkout<span class="w"> </span>util
 <p><img alt="start" src="../part3.assets/gdb-start.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">试试看</p>
-<p>找到 start 函数末尾行号为 58， 使用 <code>u 58</code> 命令跳转到第 58 行。</p>
+<ol>
+<li>
+<p>使用 <code>b start.c:58</code> 指令在 start.c 文件的第 58 行打断点，然后使用 <code>c</code> 命令继续程序执行，程序会在断点位置停下。</p>
+</li>
+<li>
 <p>在 start 函数末尾分别打印 main 函数地址与 <code>mepc</code> 寄存器的值，发现他们相同。</p>
+</li>
+<li>
 <p>使用 <code>si</code> 指令，发现会跳转到 main 函数。</p>
+</li>
+</ol>
 <p><img alt="" src="../part3.assets/gdb-end-of-start.png" /></p>
 </div>
 <div class="admonition note">
@@ -2045,35 +2054,68 @@ git<span class="w"> </span>checkout<span class="w"> </span>util
 </div>
 </li>
 <li>
-<p>main 函数初始化了各种外设的驱动、内存模块、进程模块、文件系统。</p>
+<p><code>main</code> 函数初始化了各种外设的驱动、内存模块、进程模块、文件系统。</p>
 </li>
 <li>
-<p>在 main 函数调用的 userinit 里面，xv6 在内核初始化了第一个用户程序 initcode，只有不到 100 字节。这个程序运行时只占用一个内存页（数据来自 initcode），这个页兼具代码段、数据段、栈的功能。</p>
+<p>在 <code>main</code> 函数调用的 <code>userinit</code> 里面，xv6 在内核初始化了第一个用户程序 initcode，只有不到 100 字节。这个程序运行时只占用一个内存页（数据来自 initcode），这个页兼具代码段、数据段、栈的功能。</p>
 </li>
 <li>
-<p>从 main 函数进入 scheduler 函数（调度器）之后，scheduler 通过 swtch (kernel/swtch.S) 汇编函数调度到初始进程 initcode。</p>
-<div class="admonition note">
+<p>从 <code>main</code> 函数进入 <code>scheduler</code> 函数（调度器）之后，<code>scheduler</code> 通过 <code>swtch</code> (kernel/swtch.S) 汇编函数调度到初始进程 initcode。</p>
+<div class="admonition warning">
 <p class="admonition-title">调试技巧</p>
-<p>由于 swtch 函数是汇编语言函数，因此 <code>s</code> 无法直接进入，需要使用 <code>si</code> 直到步入跳转指令才能进入该函数调用。</p>
+<p>由于 <code>swtch</code> 函数是汇编语言函数，因此 <code>s</code> 无法直接进入，需要使用 <code>si</code> 直到步入跳转指令才能进入该函数调用。</p>
+<p><strong>之后遇到汇编函数时都需要使用 <code>si</code> 进行跳转</strong>。</p>
 <p><img alt="" src="../part3.assets/gdb-schedule-swtch.png" /></p>
 </div>
 </li>
 <li>
-<p>swtch 函数接受两个参数，将 <code>ra</code> 寄存器和被调用者保存寄存器（<code>sp</code>、各种<code>s</code>寄存器）保存在当前 cpu 结构体的<code>context</code>中，然后从待执行进程的控制块的<code>context</code>中加载这些寄存器，最后调用 <code>ret</code> 指令跳转到 <code>ra</code> 寄存器的地址，在进程初次加载运行时会跳转到 forkret 函数。</p>
+<p><code>swtch</code> 函数接受两个<code>context</code>结构体地址，首先将 <code>ra</code> 寄存器和被调用者保存寄存器（<code>sp</code>、各种<code>s</code>寄存器）保存在当前 cpu 结构体的<code>context</code>中，然后从待执行进程的控制块的<code>context</code>中加载这些寄存器，最后调用 <code>ret</code> 指令跳转到 <code>ra</code> 寄存器的地址，在进程初次创建（除了 initcode 进程是在 <code>userinit</code> 中创建的，其余进程创建都是通过 <code>fork</code> 系统调用）并加载运行时会跳转到 <code>forkret</code> 函数。</p>
 </li>
 <li>
-<p>forkret 函数末尾会调用 usertrapret 函数。usertrapret 函数负责从内核态返回到用户态执行用户程序，usertrapret 函数最终会跳转到 userret (kernel/trampoline.S) 汇编函数，最终调用 <code>sret</code> 指令返回到用户态执行用户程序，开始执行 xv6 第一个用户态程序也就是 initcode。</p>
+<p><code>forkret</code> 函数末尾会调用 <code>usertrapret</code> 函数。<code>usertrapret</code> 函数负责从内核态返回到用户态执行用户程序，<code>usertrapret</code> 函数最终会跳转到 <code>userret</code> (kernel/trampoline.S) 汇编函数，最终调用 <code>sret</code> 指令返回到用户态执行用户程序，开始执行 xv6 第一个用户态程序也就是 initcode（源代码位于 user/initcode.S，但被硬编码在 kernel/proc.c 文件中的 initcode 数组中）。</p>
 <div class="admonition info">
 <p class="admonition-title">RISC-V <code>sret</code> 指令</p>
 <p><code>sret</code> 指令执行过程简述：</p>
 <ul>
 <li>切换特权级：<code>sret</code>会将当前特权级从 S-mode 降低到 U-mode，即从内核态切换到用户态特权级。</li>
-<li>跳转到用户态返回地址：处理器会从<code>sepc</code>寄存器中读取程序在陷入之前的地址，这个地址就是用户模式代码要返回的地方，并跳转到此处执行用户态程序。</li>
+<li>跳转到用户态返回地址：处理器会从<code>sepc</code>寄存器中读取程序在陷入内核之前的地址，这个地址就是用户程序代码要返回的地方，并跳转到此处执行用户态程序。</li>
 </ul>
 </div>
 </li>
 <li>
-<p>initcode 用户程序只负责运行 <code>exec("/init")</code>，将当前进程映像替换为 init 程序。这样，xv6 已经可以正常运行用户程序了，只要用户进程存在就会被 CPU 调度运行</p>
+<p>initcode 用户程序只负责运行 <code>exec("/init")</code>，将当前进程映像替换为 init (user/init.c) 程序。这样，xv6 已经可以正常运行用户程序了，只要用户进程存在就会被 CPU 调度运行</p>
+<div class="admonition info">
+<p class="admonition-title">RISC-V 系统调用规范</p>
+<p>在 RISC-V 调用规范中，和函数调用的 ABI 情形类似，约定寄存器 <code>a0~a6</code> 保存系统调用的参数，<code>a0</code> 保存系统调用的返回值。与函数调用不同的地方在于，使用寄存器 <code>a7</code> 用来传递 syscall ID，并通过 <code>ecall</code> 指令触发系统调用。</p>
+<p><code>ecall</code> 指令会触发硬件异常处理机制，硬件会进行如下操作：</p>
+<ul>
+<li>将发生异常的指令 PC 存入 <code>sepc</code>， 并将 PC 设为 <code>stvec</code>。</li>
+<li>按 RISC-V 异常原因编码将异常原因写入 <code>scause</code>，并将故障地址或其他异常相关信息字写入 <code>stval</code>。</li>
+<li>将 <code>sstatus.SIE</code> 置零以屏蔽中断，并将 <code>SIE</code> 的旧值存放在 <code>SPIE</code> 中。</li>
+<li>将异常发生前的特权模式存放在 <code>sstatus.SPP</code>，并将当前特权模式设为 S。</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">initcode 在启动时干了什么</p>
+<p>initcode 进程的入口函数是 <code>start</code> 函数，start 函数执行 <code>exec("/init")</code> 系统调用。
+<div class="highlight"><pre><span></span><code># exec(init, argv)
+.globl start
+start:
+        la a0, init
+        la a1, argv
+        li a7, SYS_exec
+        ecall
+</code></pre></div>
+对应的汇编代码如下：
+<div class="highlight"><pre><span></span><code>0x0000000000000000  ? auipc    a0,0x0
+0x0000000000000004  ? addi     a0,a0,36
+0x0000000000000008  ? auipc    a1,0x0
+0x000000000000000c  ? addi     a1,a1,35
+0x0000000000000010  ? li       a7,7
+0x0000000000000014  ? ecall
+</code></pre></div></p>
+<p>在执行 <code>ecall</code> 指令后，会跳转到 TRAMPOLINE 地址，也就是 <code>uservec</code> (kernel/trampoline.S) 函数所在位置，<code>uservec</code> 函数在保存进程上下文后会跳转到 <code>usertrap</code> (kernel/trap.c) 函数，并根据 <code>scause</code> 寄存器判断异常原因进行相应处理。由于当前异常是系统调用，因此会分发给 <code>syscall</code> (kernel/syscall.c) 函数进行处理，在处理完成后，<code>usertrap</code> 函数末尾会调用 <code>usertrapret</code> 函数， 由于执行的是 <code>exec</code> 系统调用，因此 initcode 进程被替换为了 init 进程，最终会返回 init 进程继续执行。</p>
+</div>
 </li>
 <li>
 <p>init 程序被放在磁盘上，它就是所有进程的祖先（0 号进程）。</p>
@@ -2084,9 +2126,12 @@ git<span class="w"> </span>checkout<span class="w"> </span>util
 <li>它被启动后会输出一行“init: starting sh”</li>
 <li>sh 程序是控制台进程。它被启动后就会输出'$'</li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">调试 init 程序</p>
+<p>进入用户态 init 程序执行后，可以使用 <code>add-symbol-file user/_init</code> 命令将 init 程序的调试符号导入到 gdb 中，这样就可以看见汇编对应的源代码了。可以参考 <a href="../../gdb/">GDB调试指南调试用户态程序一节</a></p>
+</div>
 </li>
 </ol>
-<p>有兴趣的同学可以用GDB在<code>_entry</code>函数处打断点，调试跟踪xv6的启动（详见<a href="../../remote_env_gdb">VSCode图形化调试指南</a>）</p>
 <p>在理解xv6的启动流程后，就可以开始编写xv6启动流程实验了，详见<a href="../../lab1/part1/#34-xv6">实验内容及要求</a></p>
 <div align="center"> <img src="../part3.assets/image-20230914120057118.png" width = 60%/> </div>
 

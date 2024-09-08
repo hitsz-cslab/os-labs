@@ -1787,7 +1787,7 @@
 </div>
 <h2 id="0">0. 导读<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
 <p>本实验文档为哈尔滨工业大学（深圳）《操作系统》课程实验指导材料。页面左侧为指导书的各个小节目录，页面左上角可详细搜索，页面下方可切换上下小节。</p>
-<p>本学期的操作系统课程实验有6次实验课，5个实验项目。前4个实验项目分别各占4个学时，最后一个实验项目8个学时，总共24个学时。其中，前4个实验是从开源操作系统 <strong>xv6-oslab23-hitsz</strong> 的实验课程中选取，并根据我们学校的操作系统课程要求进行修改。最后一个来自我校学生自主设计的文件系统实验案例，该实验案例获得2022年全国大学生计算机系统能力大赛操作系统设计大赛OS功能挑战赛道二等奖。</p>
+<p>本学期的操作系统课程实验有6次实验课，5个实验项目。前4个实验项目分别各占4个学时，最后一个实验项目8个学时，总共24个学时。其中，前4个实验是从开源操作系统 <strong>xv6-oslab24-hitsz</strong> 的实验课程中选取，并根据我们学校的操作系统课程要求进行修改。最后一个来自我校学生自主设计的文件系统实验案例，该实验案例获得2022年全国大学生计算机系统能力大赛操作系统设计大赛OS功能挑战赛道二等奖。</p>
 <p><font color=red> <strong>由于我们已经对XV6的实验内容及要求进行了修改，请大家从下面的<a href="#3-xv6">“3. 获取XV6实验框架代码”</a>仓库下载代码，务必在这套代码上完成实验，使用其他xv6仓库代码的同学极有可能通不过实验考核！！！</strong> </font>  在实验开始之前，请同学们务必先按顺序阅读指导书，掌握实验平台的搭建/使用方法，掌握Linux系统下的一些基本命令/操作，熟练使用GDB调试工具。对于有兴趣有余力的同学，建议完成XV6的所有实验，若能完成会有意想不到的惊喜！</p>
 <p>为了帮助同学们理解xv6的概貌、代码结构以及调试方法，我校OS课题组、各级学长助教们合力为大家录制的<a href="#4">XV6讲解视频和调试视频</a>，推荐大家按需观看。</p>
 <p>如果同学们对本课程实验内容、实验安排、实验指导书或者代码框架等各方面有宝贵的意见或建议，请在<a href="https://piazza.com/harbin_institute_of_technology_shenzhen/fall2023/comp3001">piazza在线交流平台</a>（access code：comp3001）提出来或私信老师或助教。</p>
@@ -1800,7 +1800,7 @@
 </ul>
 <h2 id="2">2. 实验相关链接<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>实验代码</strong> 下载地址：<a href="https://gitee.com/greenhandzpx/xv6-oslab23-hitsz">https://gitee.com/greenhandzpx/xv6-oslab23-hitsz</a></li>
+<li><strong>实验代码</strong> 下载地址：<a href="https://gitee.com/ftutorials/xv6-oslab24-hitsz.git">https://gitee.com/ftutorials/xv6-oslab24-hitsz.git</a></li>
 <li><strong>实验工具</strong> 下载地址（校内网）：<a href="https://mirrors.osa.moe/misc/">https://mirrors.osa.moe/misc/</a></li>
 <li><strong>实验提交</strong> 地址（校内网）：<a href="http://10.249.12.98:8000/#/login">http://10.249.12.98:8000/#/login</a></li>
 <li><strong>远程实验环境</strong> （校内网），详见<a href="remote_env/">远程实验环境使用指南</a></li>
@@ -1813,9 +1813,9 @@
 <p class="admonition-title">注意事项</p>
 <p>第一个字符<code>$</code>不需要输入，只需要输入<code>$</code>后的字符串。</p>
 </div>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/ftutorials/xv6-oslab24-hitsz.git
 </code></pre></div>
-<p>获取框架代码，将克隆xv6-oslab23-hitsz到当前目录。如遇问题请联系老师或助教。</p>
+<p>获取框架代码，将克隆xv6-oslab24-hitsz到当前目录。如遇问题请联系老师或助教。</p>
 <h2 id="4">4. 视频链接<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <h3 id="41-xv6">4.1 xv6讲解视频链接<a class="headerlink" href="#41-xv6" title="Permanent link">&para;</a></h3>
 <ol>

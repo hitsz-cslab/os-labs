@@ -478,13 +478,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
+  <a href="#2-docker" class="md-nav__link">
     <span class="md-ellipsis">
-      2. 自行部署的实验环境
+      2. Docker
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. 自行部署的实验环境">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 自行部署的实验环境
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 自行部署的实验环境">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1691,13 +1700,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
+  <a href="#2-docker" class="md-nav__link">
     <span class="md-ellipsis">
-      2. 自行部署的实验环境
+      2. Docker
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. 自行部署的实验环境">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 自行部署的实验环境
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 自行部署的实验环境">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1779,7 +1797,9 @@
 <p class="admonition-title">Warning</p>
 <p>虽然我们已经做了一些方案保证远程环境的可靠性，但在某些特殊情况下，也不能确保不出故障，为安全起见，建议同学们将代码及时上传到git仓库或者下载到本地保存。</p>
 </div>
-<h2 id="2">2. 自行部署的实验环境<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h2 id="2-docker">2. Docker<a class="headerlink" href="#2-docker" title="Permanent link">&para;</a></h2>
+<p>我们在项目目录下配好了 Dockerfile，只需要 <code>su</code> 进入 root 用户，然后 <code>make build_docker</code> 构建 docker 镜像，最后 <code>make docker</code> 启动容器即可。</p>
+<h2 id="3">3. 自行部署的实验环境<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>我们在远程实验平台上已经部署好的实验环境，你只需要按照实验要求编写相应的代码就行。但实际上，你无法知道项目里的所有细节，难以掌握整个项目的架构。因此，我们希望同学们能够自己动手搭建实验环境，这样你得到的收获才是最大的: )</p>
@@ -1873,14 +1893,14 @@ QEMU主循环里也需要有寄存器文件，用于维护寄存器的状态。�
 <span class="go">QEMU emulator version 5.1.0</span>
 </code></pre></div>
 <h3 id="22-xv6">2.2 运行XV6<a class="headerlink" href="#22-xv6" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
-<span class="go">Cloning into &#39;xv6-oslab23-hitsz&#39;...</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitee.com/ftutorials/xv6-oslab24-hitsz.git
+<span class="go">Cloning into &#39;xv6-oslab24-hitsz&#39;...</span>
 <span class="go">...</span>
 <span class="gp"># </span>如果是初次运行git，设置你自己的gitee用户信息
 <span class="gp">$ </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;you@example.com&quot;</span>
 <span class="gp">$ </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Your Name&quot;</span>
 <span class="go">...</span>
-<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>xv6-oslab23-hitsz
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>xv6-oslab24-hitsz
 <span class="gp">$ </span>git<span class="w"> </span>checkout<span class="w"> </span>util
 <span class="gp">$ </span>make<span class="w"> </span>qemu
 <span class="gp"># </span>...<span class="w"> </span>lots<span class="w"> </span>of<span class="w"> </span>output<span class="w"> </span>...
