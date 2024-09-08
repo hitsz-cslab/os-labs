@@ -102,6 +102,11 @@
 
 ### 3.4 xv6启动流程实验
 
+!!! tip 
+    实验过程中可以结合观看由我校录制的XV6讲解视频[HITSZ操作系统课程组讲解XV6（⼀）启动过程](https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)视频，这会帮助你更好的理解xv6的启动流程。
+
+
+
 1. 在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab24-hitsz中，执行下面指令`make qemu`，运⾏的效果应该如下：
 
     ![image-20230913172857112](part1.assets/image-20230913172857112.png)
@@ -112,11 +117,14 @@
 
     ![gdb-initcode-init](./part1.assets/gdb-initcode-init.png)
 
-!!! tip 
-    建议你在实验前观看由我校录制的XV6讲解视频[HITSZ操作系统课程组讲解XV6（⼀）启动过程](https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)视频，这会帮助你更好的理解xv6的启动流程。
+    !!! tip
+        关于 gdb 命令脚本如何导出，请参考 [GDB调试指南中历史与脚本一节](../gdb.md)。
 
-
-
-
-
-
+        最终的 commands.gdb 文件应该类似这样
+        ```
+        ...
+        p myproc()->name # 应该先打印出 "initcode"
+        ...
+        p myproc()->name # 再打印出 "init"
+        da               # 使用命令刷新 dashboard 将输出显示在 history 区域
+        ```

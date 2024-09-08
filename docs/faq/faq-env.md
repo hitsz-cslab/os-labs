@@ -28,9 +28,7 @@ Patch文件：[pmp.patch](../code/pmp.patch)
 
 ### 2.1  VSCode连接远程实验平台时提示`ssh: connect to host 10.249.12.98 port 22: Connection timed out`？
 
-端口号写错了，请参考实验指导书要求来连接。
-
-https://hitsz-cslab.gitee.io/os-labs/remote_env/
+端口号写错了，请参考[实验指导书](../remote_env.md)要求来连接。
 
 远程实验平台IP地址： `10.249.12.98` ，端口号： `6666`
 

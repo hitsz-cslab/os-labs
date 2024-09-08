@@ -154,18 +154,20 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
 
     更深入了解请访问 https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter2/1rv-privilege.html#riscv-priv-arch
 
-启动流程步骤如下:
+接下来我们将会演示使用 gdb 以及 gdb-dashboard 调试 xv6 的启动流程，请同学们跟着实验步骤亲自动手调试并结合 xv6 代码进行思考。
+
+调试启动流程步骤如下:
 
 按照[GDB 调试指南](../gdb.md)启动 qemu 并进行调试：
 
-1. qemu 将执行位于 0x1000 地址处的一小段汇编指令，最终跳转到 0x8000_0000 位置，开始运行 xv6 的首个函数：\_entry (kernel/entry.S)
+1. qemu 将执行位于 0x1000 地址处的一小段汇编指令，最终跳转到 0x8000_0000 位置，开始运行 xv6 的首个函数：`_entry` (kernel/entry.S)
 
     !!! note "调试技巧"
         可以使用 `si` 单步调试汇编指令。请同学们试试 `help si` 会输出什么？`si` 指令的全称是什么？
 
     ![0x1000](./part3.assets/gdb-0x1000.png)
 
-2. \_entry 函数设置当前 CPU 的栈寄存器(sp)，拥有栈后就可以调用函数了，最后会进入 start 函数。
+2. `_entry` 函数设置当前 CPU 的栈寄存器(`sp`)，拥有栈后就可以调用函数了，最后会进入 `start` 函数。
 
     !!! info "RISC-V 伪指令"
         RISC-V 伪指令是为了方便编程而设计的，它们不是处理器直接支持的原生指令，编译器或汇编器会将其转化为一个或多个真实的机器指令。
@@ -176,12 +178,12 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
 
     ![entry](./part3.assets/gdb-entry.png)
 
-3. start 函数进行了如下操作：
+3. `start` 函数进行了如下操作：
 
     - 初始化机器态特权寄存器
     - 启用时钟中断
-    - 把当前 CPU 的 id 放入 tp 寄存器
-    - 将 main 函数地址写入特权级寄存器 `mepc`，在 start 函数末尾 `mret` 指令会跳转到 `mepc` 寄存器所存的地址，也就是 main 函数，同时完成机器态特权级到内核态特权级的切换
+    - 把当前 CPU 的 id 放入 `tp` 寄存器
+    - 将 `main` 函数地址写入特权级寄存器 `mepc`，在 `start` 函数末尾 `mret` 指令会跳转到 `mepc` 寄存器所存的地址，也就是 `main` 函数，同时完成机器态特权级到内核态特权级的切换
 
     !!! note "调试技巧"
         我们终于看见 C 语言代码了！
@@ -193,11 +195,11 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
     ![start](./part3.assets/gdb-start.png)
 
     !!! tip "试试看"
-        找到 start 函数末尾行号为 58， 使用 `u 58` 命令跳转到第 58 行。
+        1. 使用 `b start.c:58` 指令在 start.c 文件的第 58 行打断点，然后使用 `c` 命令继续程序执行，程序会在断点位置停下。
 
-        在 start 函数末尾分别打印 main 函数地址与 `mepc` 寄存器的值，发现他们相同。
+        2. 在 start 函数末尾分别打印 main 函数地址与 `mepc` 寄存器的值，发现他们相同。
 
-        使用 `si` 指令，发现会跳转到 main 函数。
+        3. 使用 `si` 指令，发现会跳转到 main 函数。
 
         ![](./part3.assets/gdb-end-of-start.png)
 
@@ -213,28 +215,65 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
         - `p/u expression`：打印值的无符号整型表示
         - `p/x expression`：打印值的十六进制表示
 
-4. main 函数初始化了各种外设的驱动、内存模块、进程模块、文件系统。
+4. `main` 函数初始化了各种外设的驱动、内存模块、进程模块、文件系统。
 
-5. 在 main 函数调用的 userinit 里面，xv6 在内核初始化了第一个用户程序 initcode，只有不到 100 字节。这个程序运行时只占用一个内存页（数据来自 initcode），这个页兼具代码段、数据段、栈的功能。
+5. 在 `main` 函数调用的 `userinit` 里面，xv6 在内核初始化了第一个用户程序 initcode，只有不到 100 字节。这个程序运行时只占用一个内存页（数据来自 initcode），这个页兼具代码段、数据段、栈的功能。
 
-6. 从 main 函数进入 scheduler 函数（调度器）之后，scheduler 通过 swtch (kernel/swtch.S) 汇编函数调度到初始进程 initcode。
+6. 从 `main` 函数进入 `scheduler` 函数（调度器）之后，`scheduler` 通过 `swtch` (kernel/swtch.S) 汇编函数调度到初始进程 initcode。
 
-    !!! note "调试技巧"
-        由于 swtch 函数是汇编语言函数，因此 `s` 无法直接进入，需要使用 `si` 直到步入跳转指令才能进入该函数调用。
+    !!! warning "调试技巧"
+        由于 `swtch` 函数是汇编语言函数，因此 `s` 无法直接进入，需要使用 `si` 直到步入跳转指令才能进入该函数调用。
+
+        **之后遇到汇编函数时都需要使用 `si` 进行跳转**。
 
         ![](./part3.assets/gdb-schedule-swtch.png)
 
-7. swtch 函数接受两个参数，将 `ra` 寄存器和被调用者保存寄存器（`sp`、各种`s`寄存器）保存在当前 cpu 结构体的`context`中，然后从待执行进程的控制块的`context`中加载这些寄存器，最后调用 `ret` 指令跳转到 `ra` 寄存器的地址，在进程初次加载运行时会跳转到 forkret 函数。
+7. `swtch` 函数接受两个`context`结构体地址，首先将 `ra` 寄存器和被调用者保存寄存器（`sp`、各种`s`寄存器）保存在当前 cpu 结构体的`context`中，然后从待执行进程的控制块的`context`中加载这些寄存器，最后调用 `ret` 指令跳转到 `ra` 寄存器的地址，在进程初次创建（除了 initcode 进程是在 `userinit` 中创建的，其余进程创建都是通过 `fork` 系统调用）并加载运行时会跳转到 `forkret` 函数。
 
-8. forkret 函数末尾会调用 usertrapret 函数。usertrapret 函数负责从内核态返回到用户态执行用户程序，usertrapret 函数最终会跳转到 userret (kernel/trampoline.S) 汇编函数，最终调用 `sret` 指令返回到用户态执行用户程序，开始执行 xv6 第一个用户态程序也就是 initcode。
+8. `forkret` 函数末尾会调用 `usertrapret` 函数。`usertrapret` 函数负责从内核态返回到用户态执行用户程序，`usertrapret` 函数最终会跳转到 `userret` (kernel/trampoline.S) 汇编函数，最终调用 `sret` 指令返回到用户态执行用户程序，开始执行 xv6 第一个用户态程序也就是 initcode（源代码位于 user/initcode.S，但被硬编码在 kernel/proc.c 文件中的 initcode 数组中）。
 
     !!! info "RISC-V `sret` 指令"
         `sret` 指令执行过程简述：
 
         - 切换特权级：`sret `会将当前特权级从 S-mode 降低到 U-mode，即从内核态切换到用户态特权级。
-        - 跳转到用户态返回地址：处理器会从`sepc`寄存器中读取程序在陷入之前的地址，这个地址就是用户模式代码要返回的地方，并跳转到此处执行用户态程序。
+        - 跳转到用户态返回地址：处理器会从`sepc`寄存器中读取程序在陷入内核之前的地址，这个地址就是用户程序代码要返回的地方，并跳转到此处执行用户态程序。
 
-9. initcode 用户程序只负责运行 `exec("/init")`，将当前进程映像替换为 init 程序。这样，xv6 已经可以正常运行用户程序了，只要用户进程存在就会被 CPU 调度运行
+9. initcode 用户程序只负责运行 `exec("/init")`，将当前进程映像替换为 init (user/init.c) 程序。这样，xv6 已经可以正常运行用户程序了，只要用户进程存在就会被 CPU 调度运行
+
+    !!! info "RISC-V 系统调用规范"
+        在 RISC-V 调用规范中，和函数调用的 ABI 情形类似，约定寄存器 `a0~a6` 保存系统调用的参数，`a0` 保存系统调用的返回值。与函数调用不同的地方在于，使用寄存器 `a7` 用来传递 syscall ID，并通过 `ecall` 指令触发系统调用。
+        
+        `ecall` 指令会触发硬件异常处理机制，硬件会进行如下操作：
+
+        - 将发生异常的指令 PC 存入 `sepc`， 并将 PC 设为 `stvec`。
+        - 按 RISC-V 异常原因编码将异常原因写入 `scause`，并将故障地址或其他异常相关信息字写入 `stval`。
+        - 将 `sstatus.SIE` 置零以屏蔽中断，并将 `SIE` 的旧值存放在 `SPIE` 中。
+        - 将异常发生前的特权模式存放在 `sstatus.SPP`，并将当前特权模式设为 S。
+
+
+    !!! note "initcode 在启动时干了什么"
+        initcode 进程的入口函数是 `start` 函数，start 函数执行 `exec("/init")` 系统调用。
+        ```
+        # exec(init, argv)
+        .globl start
+        start:
+                la a0, init
+                la a1, argv
+                li a7, SYS_exec
+                ecall
+        ```
+        对应的汇编代码如下：
+        ```
+
+        0x0000000000000000  ? auipc    a0,0x0
+        0x0000000000000004  ? addi     a0,a0,36
+        0x0000000000000008  ? auipc    a1,0x0
+        0x000000000000000c  ? addi     a1,a1,35
+        0x0000000000000010  ? li       a7,7
+        0x0000000000000014  ? ecall
+        ```
+
+        在执行 `ecall` 指令后，会跳转到 TRAMPOLINE 地址，也就是 `uservec` (kernel/trampoline.S) 函数所在位置，`uservec` 函数在保存进程上下文后会跳转到 `usertrap` (kernel/trap.c) 函数，并根据 `scause` 寄存器判断异常原因进行相应处理。由于当前异常是系统调用，因此会分发给 `syscall` (kernel/syscall.c) 函数进行处理，在处理完成后，`usertrap` 函数末尾会调用 `usertrapret` 函数， 由于执行的是 `exec` 系统调用，因此 initcode 进程被替换为了 init 进程，最终会返回 init 进程继续执行。
 
 10. init 程序被放在磁盘上，它就是所有进程的祖先（0 号进程）。
 
@@ -244,7 +283,8 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
     - 它被启动后会输出一行“init: starting sh”
     - sh 程序是控制台进程。它被启动后就会输出'$'
 
-有兴趣的同学可以用GDB在`_entry`函数处打断点，调试跟踪xv6的启动（详见[VSCode图形化调试指南](../../remote_env_gdb)）
+    !!! tip "调试 init 程序"
+        进入用户态 init 程序执行后，可以使用 `add-symbol-file user/_init` 命令将 init 程序的调试符号导入到 gdb 中，这样就可以看见汇编对应的源代码了。可以参考 [GDB调试指南调试用户态程序一节](../gdb.md)
 
 在理解xv6的启动流程后，就可以开始编写xv6启动流程实验了，详见[实验内容及要求](../../lab1/part1/#34-xv6)
 

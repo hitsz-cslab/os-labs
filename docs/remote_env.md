@@ -90,17 +90,17 @@ passwd
 
 <div align="center"> <img src="../remote_env.assets/passwd.png" /> </div>
 
-接下来，我们将存放xv6-oslab23-hitsz复制到自己的工作空间。
+接下来，我们将存放xv6-oslab24-hitsz复制到自己的工作空间。
 在终端中键入以下内容，并回车：
 
 ```bash
-git clone https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
+git clone https://gitee.com/ftutorials/xv6-oslab24-hitsz.git
 ```
 
 你应该会看到这样的输出：
 
 ```none
-Cloning into 'xv6-oslab23-hitsz'...
+Cloning into 'xv6-oslab24-hitsz'...
 done.
 ```
 
@@ -108,7 +108,7 @@ done.
 
 ![打开文件夹](remote_env.assets/open_folder.png)
 
-在弹出的菜单中，选择`xv6-oslab23-hitsz`，并按下“确认”：
+在弹出的菜单中，选择`xv6-oslab24-hitsz`，并按下“确认”：
 
 ![打开文件夹2](remote_env.assets/open_folder2.png)
 

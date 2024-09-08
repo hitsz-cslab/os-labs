@@ -9,7 +9,11 @@
 !!! warning
     虽然我们已经做了一些方案保证远程环境的可靠性，但在某些特殊情况下，也不能确保不出故障，为安全起见，建议同学们将代码及时上传到git仓库或者下载到本地保存。
 
-## 2. 自行部署的实验环境
+## 2. Docker
+
+我们在项目目录下配好了 Dockerfile，只需要 `su` 进入 root 用户，然后 `make build_docker` 构建 docker 镜像，最后 `make docker` 启动容器即可。
+
+## 3. 自行部署的实验环境
 
 !!! note
     我们在远程实验平台上已经部署好的实验环境，你只需要按照实验要求编写相应的代码就行。但实际上，你无法知道项目里的所有细节，难以掌握整个项目的架构。因此，我们希望同学们能够自己动手搭建实验环境，这样你得到的收获才是最大的: )
@@ -130,14 +134,14 @@ QEMU emulator version 5.1.0
 ### 2.2 运行XV6
 
 ```console
-$ git clone https://gitee.com/greenhandzpx/xv6-oslab23-hitsz.git
-Cloning into 'xv6-oslab23-hitsz'...
+$ git clone https://gitee.com/ftutorials/xv6-oslab24-hitsz.git
+Cloning into 'xv6-oslab24-hitsz'...
 ...
 # 如果是初次运行git，设置你自己的gitee用户信息
 $ git config --global user.email "you@example.com"
 $ git config --global user.name "Your Name"
 ...
-$ cd xv6-oslab23-hitsz
+$ cd xv6-oslab24-hitsz
 $ git checkout util
 $ make qemu
 # ... lots of output ...
