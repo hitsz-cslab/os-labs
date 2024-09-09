@@ -2029,7 +2029,15 @@
 <p>shell命令方式：“|”是管道符号，即两个命令之间的一道竖杠。我们可以通过管道符号组合的命令，实现不同进程（父子进程间或子子进程间）的通信，从而在不改变应用程序代码的情况下，让操作系统具有进程间信息交互和功能组合的能力。详见<a href="../../Linux/#82">管道</a></p>
 </div>
 <p>管道（pipe）是操作系统提供的一个小型缓冲区，它通过两个文件描述符与进程进行交互，一个用于读取数据，另一个用于写入数据。当你往管道的一端写入数据时，数据可以从管道的另一端被读取。管道为进程之间提供了一种通信方式。</p>
-<p>下面是一个示例，它通过管道将wc（word count）程序的标准输入连接到管道的读取端，这样wc程序可以通过read系统调用从管道中读取数据。最终，程序会在终端上输出“hello world”的字数统计信息。</p>
+<div class="admonition linux命令wc简单介绍">
+<p class="admonition-title">Linux命令wc简单介绍</p>
+<p>在Linux系统中(xv6中也有这个命令，详见<code>user/wc</code>)，wc（word count）命令用于统计输入文本的行数、单词数和字符数。它的常见使用方式如下：</p>
+<ul>
+<li>统计文件中的行数、单词数和字符数:<code>wc filename.txt</code>。输出的格式为<code>行数   单词数   字符数   文件名</code></li>
+<li>统计标准输入的内容:你可以直接在终端中输入内容并通过wc命令进行统计。例如<code>echo "hello world" | wc</code>，输出为<code>1  2  12</code>，表示 1 行，2 个单词，12 个字符（包括换行符）</li>
+</ul>
+</div>
+<p>下面是一个示例，它通过管道将wc（word count）程序的标准输入连接到管道的读取端，这样wc程序可以通过read系统调用从管道中读取数据。最终，程序会在终端上输出“hello world”的字数统计信息<code>1  2  12</code>。</p>
 <div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w">        </span><span class="cm">/* 存储管道的两个文件描述符 */</span>
 <span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
 <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;wc&quot;</span><span class="p">;</span><span class="w">  </span><span class="cm">/* 设置要执行的命令为&quot;wc&quot; */</span>
@@ -2040,7 +2048,7 @@
 <span class="w">    </span><span class="cm">/* 子进程 */</span>
 <span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">    </span><span class="cm">/* 关闭标准输入（文件描述符0） */</span>
 <span class="w">    </span><span class="n">dup</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w">   </span><span class="cm">/* 复制管道的读端p[0]，让文件描述符0指向管道的读端 */</span>
-<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"> </span><span class="cm">/* 关闭不再需要的管道读端 */</span>
+<span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"> </span><span class="cm">/* 关闭重复的管道读端 */</span>
 <span class="w">    </span><span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"> </span><span class="cm">/* 关闭不再需要的管道写端 */</span>
 <span class="w">    </span><span class="n">exec</span><span class="p">(</span><span class="s">&quot;/bin/wc&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 执行&quot;wc&quot;程序 */</span>
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
@@ -2054,7 +2062,7 @@
 <p>子进程通过<code>close</code>和<code>dup</code>操作，使文件描述符0（标准输入）指向管道的读端，然后子进程关闭不再需要的文件描述符，接着调用<code>exec</code>去运行wc程序。当wc程序从默认的文件描述符 0 读取数据时，它实际上是在从管道读取数据。</p>
 <p>父进程关闭管道的读端，然后向管道的写端写入数据，最后关闭写端，表示写入完成。</p>
 <p>如果管道中没有数据可读，read操作会阻塞等待，直到有数据被写入，或者直到所有指向管道写端的文件描述符都被关闭。如果所有写端的文件描述符都被关闭，read操作会返回0，表示读到文件的末尾。</p>
-<p>正因为read会等待新数据，这也是为什么在这个例子中，子进程在执行wc之前必须先关闭管道的写端。否则，如果wc程序还持有管道的写端文件描述符，它永远不会检测到文件结束信号，程序就会一直等待新数据而不会结束。（这也是编写pingpong程序时常见的一个问题）</p>
+<p>正因为read会等待新数据，这也是为什么在这个例子中，子进程在执行wc之前必须先关闭管道的写端。否则，如果<code>wc</code>程序还持有管道的写端文件描述符，它永远不会检测到文件结束信号，<code>wc</code>程序就会一直等待新数据而不会结束。（这也是编写pingpong程序时常见的一个问题）</p>
 <h2 id="6">6.文件系统简单介绍<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <p>阅读这一部分会对你做find实验有所帮助。</p>
 <ul>

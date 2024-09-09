@@ -1955,14 +1955,17 @@ git<span class="w"> </span>checkout<span class="w"> </span>util
 <ol>
 <li>当用户在xv6的shell中，输入了命令<code>sleep hello world\n</code>，请问argc的值是多少？argv数组大小是多少？</li>
 <li>请描述main函数参数argv中的指针指向了哪些字符串，它们的含义是什么？</li>
-<li>哪些代码调用了系统调用为程序sleep提供了服务？</li>
+<li>程序sleep使用了哪些系统调用？</li>
 </ol>
 <p>二、了解管道模型，回答下列问题</p>
 <ol>
-<li>简要说明你是怎么创建管道的，又是怎么使用管道传输数据的。</li>
-<li>fork之后，我们怎么用管道在父子进程传输数据？</li>
-<li>试解释，为什么要提前关闭管道中不使用的一端？（提示：结合管道的阻塞机制）</li>
+<li>简要说明在pingpong实验中，你是怎么创建管道的？结合fork系统调用说明你是怎么使用管道在父子进程之间传输数据的。</li>
+<li>试解释，为什么要提前关闭管道中不使用的一端？（提示：结合管道的阻塞机制）；</li>
+<li>再次阅读<a href="../part2/#5">实验原理-管道</a>这一节中给出的关于<code>wc</code>命令的示例程序，假设子进程没有关闭管道写端，运行该程序后，尝试描述会发生什么？为什么会有如下结果：</li>
 </ol>
+<div align="center"> <img src="../part3.assets/pipe-question.png" /> </div>
+<div align="center"> <img src="../part3.assets/pipe-question-result.png" /> </div>
+
 <h3 id="4-xv6">4. xv6 启动流程分析<a class="headerlink" href="#4-xv6" title="Permanent link">&para;</a></h3>
 <p>当我们输入<code>make qemu</code>后，就能启动 qemu，从控制台参数加载资源，将 xv6 整体加载到物理内存中。xv6 启动涉及 kernel 目录下的 entry.S、start.c 与 main.c 等少数几个文件，entry、start 两个函数运行在机器态（类似于 BIOS），main 运行在内核态（特权级），后面的用户程序运行在用户态。</p>
 <div class="admonition info">
