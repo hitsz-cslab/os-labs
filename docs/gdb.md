@@ -2,10 +2,16 @@
 
 ## 1. gdb-dashboard 安装
 
-由于原始 GDB 命令行过于简陋，为方便调试，我们需要下载 [`gdb-dashboard`](https://github.com/cyrus-and/gdb-dashboard) 插件。
+由于原始 GDB 命令行过于简陋，为方便调试，我们需要下载 [gdb-dashboard](https://github.com/cyrus-and/gdb-dashboard) 插件。
 
 ```
 wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
+```
+
+为启用语法高亮，我们还需要下载 [Pygments](http://pygments.org/)
+
+```
+pip install --no-cache-dir pygments
 ```
 
 ## 2. 命令行调试步骤

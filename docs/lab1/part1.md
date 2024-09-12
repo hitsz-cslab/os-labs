@@ -105,26 +105,18 @@
 !!! tip 
     实验过程中可以结合观看由我校录制的XV6讲解视频[HITSZ操作系统课程组讲解XV6（⼀）启动过程](https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)视频，这会帮助你更好的理解xv6的启动流程。
 
+学会使用 gdb 以及 gdb-dashboard 调试 xv6 启动流程，在调试过程中需要在两处地方使用 `p cpus[$tp]->proc->name`（`$tp` 是 tp 寄存器的值，xv6 使用它作为 cpu 的编号，这串式子其实相当于 `myproc()` 函数，但不知为何远程平台 gdb 不支持调用函数）打印出当前 proc 结构体的 name，分别打印出初始进程 initcode 和 init 程序的名字（打印的历史输出会保存在 gdb-dashboard 的 history 区域），最后要给出一个 gdb 命令脚本文件，命名为 commands.gdb，要求在 gdb 调试中使用 `source commands.gdb` 执行脚本后，会在 gdb-dashboard 的 history 区域中显示如下内容。
 
+![gdb-initcode-init](./part1.assets/gdb-initcode-init.png)
 
-1. 在xv6从执⾏entry.S之后到第⼀个shell程序启动过程中的每⼀个函数中输出该函数的作⽤以及你的学号。在xv6-oslab24-hitsz中，执行下面指令`make qemu`，运⾏的效果应该如下：
+!!! tip
+    关于 gdb 命令脚本如何导出，请参考 [GDB调试指南中历史与脚本一节](../gdb.md)。
 
-    ![image-20230913172857112](part1.assets/image-20230913172857112.png)
-
-    上图红色框框内的信息是你要打印的内容，格式为：`[你的学号] 该函数的作用`，总共是5条打印信息。前4条是在内核态下打印，上图中已经给出了具体的文件名以及打印语句所在的代码行数。最后1条要在用户态下执行`sh`进程之前打印。
-
-2. 学会使用 gdb 以及 gdb-dashboard 调试 xv6 启动流程，在调试过程中需要在两处地方使用 `p myproc()->name` 打印出当前 proc 结构体的 name，分别打印出初始进程 initcode 和 init 程序的名字（打印的历史输出会保存在 gdb-dashboard 的 history 区域），最后要给出一个 gdb 命令脚本文件，命名为 commands.gdb，要求在 gdb 调试中使用 `source commands.gdb` 执行脚本后，会在 gdb-dashboard 的 history 区域中显示如下内容。
-
-    ![gdb-initcode-init](./part1.assets/gdb-initcode-init.png)
-
-    !!! tip
-        关于 gdb 命令脚本如何导出，请参考 [GDB调试指南中历史与脚本一节](../gdb.md)。
-
-        最终的 commands.gdb 文件应该类似这样
-        ```
-        ...
-        p myproc()->name # 应该先打印出 "initcode"
-        ...
-        p myproc()->name # 再打印出 "init"
-        da               # 使用命令刷新 dashboard 将输出显示在 history 区域
-        ```
+    最终的 commands.gdb 文件应该类似这样
+    ```
+    ...
+    p cpus[$tp]->proc->name # 应该先打印出 "initcode"
+    ...
+    p cpus[$tp]->proc->name # 再打印出 "init"
+    da               # 使用命令刷新 dashboard 并将上一个输出显示在 history 区域
+    ```

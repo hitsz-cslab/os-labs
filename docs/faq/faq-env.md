@@ -125,7 +125,7 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 
 ------
 
-## 4 xv6运行报错
+## 4. xv6运行报错
 
 ### 4.1 远程平台make qemu报错`Is another process using the image [fs.img]`?
 
@@ -145,7 +145,7 @@ conf  fs.img  grade-lab-util  gradelib.py  gradelib.pyc  kernel  LICENSE  Makefi
 
 ------
 
-## 5 git常见问题
+## 5. git常见问题
 
 ### 5.1 无法推送怎么办？
 
@@ -214,3 +214,9 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](../../tools/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../../tools/#332-vs-code)节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。
+
+## 6. GDB 调试问题
+
+### 6.1 GDB 不能 stepi ecall 或 sret 指令
+
+因为 gdb 版本不对，应该使用 `riscv64-unknown-elf-gdb` 而不是 `gdb-multiarch` 或 `riscv64-unknown-linux-gnu-gdb`。elf 表示裸机上执行的程序，通常为操作系统，linux-gnu 表示运行在 linux 上的程序，是正常的用户软件。裸机程序 gdb 才能调试特权级汇编语句。

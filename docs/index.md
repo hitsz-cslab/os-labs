@@ -18,7 +18,7 @@
 
 &emsp;&emsp;为了帮助同学们理解xv6的概貌、代码结构以及调试方法，我校OS课题组、各级学长助教们合力为大家录制的[XV6讲解视频和调试视频](#4)，推荐大家按需观看。
 
-&emsp;&emsp;如果同学们对本课程实验内容、实验安排、实验指导书或者代码框架等各方面有宝贵的意见或建议，请在[piazza在线交流平台](https://piazza.com/harbin_institute_of_technology_shenzhen/fall2023/comp3001)（access code：comp3001）提出来或私信老师或助教。
+如果同学们对本课程实验内容、实验安排、实验指导书或者代码框架等各方面有宝贵的意见或建议，请在[piazza在线交流平台](https://piazza.com/harbin_institute_of_technology_shenzhen/fall2024/comp3001/home)（access code：comp3001）提出来或私信老师或助教。
 
 
 ## 1. 课程信息
