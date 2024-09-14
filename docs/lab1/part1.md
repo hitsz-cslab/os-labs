@@ -112,11 +112,11 @@
 !!! tip
     关于 gdb 命令脚本如何导出，请参考 [GDB调试指南中历史与脚本一节](../gdb.md)。
 
-    最终的 commands.gdb 文件应该类似这样
+    最终的 commands.gdb 文件（不限制长度，长度不算在分数内，但最短仅需6行，同学们可以尝试）应该类似这样：
     ```
     ...
     p cpus[$tp]->proc->name # 应该先打印出 "initcode"
     ...
     p cpus[$tp]->proc->name # 再打印出 "init"
-    da               # 使用命令刷新 dashboard 并将上一个输出显示在 history 区域
+    da                      # 使用命令刷新 dashboard 并将上一个输出显示在 history 区域
     ```
