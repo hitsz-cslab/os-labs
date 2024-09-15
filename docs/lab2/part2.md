@@ -66,7 +66,7 @@
 也就是说，调用`user/user.h`中的函数接口后，参数已经存储于寄存器了，这个时候我们就原封不动地继续调用`ecall`，操作系统就可以通过a0, a1, a2等寄存器来获取参数了。此外，函数的返回值一般存储于a0寄存器。
     
 !!! note "提示"
-    根据RISC-V标准规定，函数调用通过寄存器传递参数。在内核中可以通过argint、argaddr等函数获取系统调用的参数，分别对应整数和指针，它们都调用argraw来读取已保存的寄存器。比如，`kernel/sycall.c`中 `argraw`函数所描述的就是取出参数的过程。
+    根据RISC-V标准规定，函数调用通过寄存器传递参数。在xv6内核中可以通过`argint`(argument integer)、`argaddr`(argument address)等函数获取系统调用的参数，分别对应整数和指针，它们都调用`argraw`(argument raw)来读取已保存的寄存器。比如，`kernel/sycall.c`中 `argraw`函数所描述的就是取出参数的过程。
     
     ```c
     static uint64 argraw(int n) {
@@ -456,8 +456,9 @@ p->state = SLEEPING;
 1. 如何[获取用户态传入的参数](#13)  
 2. 在`proc.c: wait(int)`当中为了保证进程PCB的操作的互斥性，需要上锁`acquire(&p->lock)`，所以 **记得在返回之前解锁** ：`release(&p->lock)`
 
-
 ## 6. yield进程挂起的语义介绍
+
+接下来的几节内容对你完成任务3有所帮助。你可以在做到任务3时再来阅读。
 
 我们知道，每个进程的运行过程其实就是CPU在该进程的指令段逐条取指执行，那么当CPU跳转到另外一个进程的指令段进行取指执行时，便发生了进程的切换。
 
@@ -465,9 +466,180 @@ p->state = SLEEPING;
 
 ![yield](part2.assets/yield.png)
 
+## 7. 进程上下文切换与调度
 
+### 7.1 上下文切换
 
+在xv6操作系统中，CPU在以下两种情况时会在不同的进程之间进行切换(即多路复用Multiplexing)：
 
+1. 当一个进程因为某个系统调用阻塞了，比如它在执行read（读取数据）、wait（等待事件）或sleep（睡眠）时，CPU会让出给其他进程继续运行。这个过程是“自愿切换”，因为进程是主动等待某个事件。
+
+2. 操作系统会定期强制进行进程切换(Round Robin)，这是为了处理那些长时间运行且不主动阻塞的进程。也就是说，如果一个进程一直在计算而没有任何阻塞，xv6会强制暂停它，让其他进程有机会执行。这种切换叫做“非自愿切换”。
+
+通过这种方式，xv6能够给每个进程提供一种“假象”，让它们觉得自己拥有独立的CPU，而实际上它们是共享同一个或多个CPU。
+
+![switch](part2.assets/switch.png)
+
+xv6中进程的切换的完整过程如上图所示。具体分为如下步骤：
+
+1. 陷入到内核：当一个用户进程通过系统调用或中断，进入操作系统内核时，CPU会切换到该进程的内核线程(kernel thread)。这个“陷入”动作是从用户空间到内核空间的切换。
+
+2. 切换到调度器线程：调度器线程(scheduler thread)的作用是选择下一个要运行的进程。因为调度器不能使用任何用户进程的内核堆栈，所以xv6为每个CPU都设置了独立的调度器线程，以确保安全性和稳定性。
+
+3. 切换到新进程的内核线程：调度器决定了下一个要运行的进程后，操作系统会从调度器线程切换到新进程的内核线程。这个过程包括保存当前进程的CPU寄存器，恢复新进程之前保存的寄存器，切换堆栈指针和程序计数器。
+
+4. 从内核返回到用户进程：切换到新进程的内核线程后，操作系统会从内核返回用户空间，继续执行新进程的用户代码。
+
+下面介绍一下切换中涉及到的关键函数：`swtch`:
+
+```c
+void swtch(struct context*, struct context*);
+
+// Saved registers for kernel context switches.
+struct context {
+  uint64 ra;
+  uint64 sp;
+
+  // callee-saved
+  uint64 s0;
+  ......
+  uint64 s11;
+};
+```
+
+```asm
+.globl swtch
+swtch:
+  sd ra, 0(a0)    # 保存 ra (返回地址)
+  sd sp, 8(a0)    # 保存 sp (堆栈指针)
+  sd s0, 16(a0)   # 保存 s0-s11 (保存寄存器)
+  ......
+  sd s11, 104(a0)
+
+  ld ra, 0(a1)    # 加载 ra (返回地址)
+  ld sp, 8(a1)    # 加载 sp (堆栈指针)
+  ld s0, 16(a1)   # 加载 s0-s11 (保存寄存器)
+  ......
+  ld s11, 104(a1)
+  
+  ret
+```
+`swtch`函数的作用是为内核线程的切换保存和恢复寄存器，它是一个汇编函数，函数体在`swtch.S`中，a0传递的是当前线程的上下文结构体指针(`struct context *old`)，**当前线程的寄存器状态被存储在这个上下文结构体中**，确保我们以后能恢复这些状态。然后，函数从a1指针(`struct context *new`)指向的新线程的上下文结构体中加载寄存器状态。
+
+`swtch`函数只保存callee-saved寄存器，而caller-saved寄存器则由C编译器生成的代码负责保存。`swtch`函数知道每个寄存器在`struct context`结构体中的具体偏移量，因此能够直接操作这些寄存器的数据。值得注意的是，`swtch`并不会保存程序计数器（PC），即它不会直接保存当前代码执行到哪一行指令，而是通过保存ra寄存器来间接实现这个功能。ra寄存器保存的是函数返回的地址，也就是`swtch`函数是从哪里被调用的。当线程被恢复时，`swtch`会从新的上下文中恢复寄存器的状态，并返回到ra寄存器指向的地方，也就是原先线程中调用`swtch`的那个位置的下一行。
+
+!!! info "为什么要区分caller-saved registers和callee-saved registers"
+    不同类型的寄存器有不同的保存方式，可以避免不必要的堆栈操作，提高程序的执行效率。
+
+    - caller-saved寄存器(调用者保存的寄存器)：因为调用者只会在需要时保存这些寄存器，所以如果调用者不需要保留某些寄存器的值，它就不需要进行保存和恢复操作。这减少了不必要的堆栈开销，特别是在短小的函数调用中，这种设计可以提高性能。
+    - callee-saved寄存器(被调用者保存的寄存器)：被调用函数有责任在使用这些寄存器之前保存它们的值，所以调用者不需要关心这些寄存器的内容是否会被修改，简化了调用者的工作。
+
+在xv6内核中提供了`yield`函数(`kernel/proc.c:472`)。`yield`函数在将当前进程状态由`RUNNING`改为`RUNNABLE`后，调用了`shed`函数。`shed`函数调用`swtch`将当前上下文保存在`p->context`中，并切换到先前保存在`cpu->context`中的调度程序上下文(`kernel/proc.c:467`)，也就是说，现在进入了调度器线程。
+
+### 7.2 调度器线程的工作方式
+
+调度器线程是如何工作的呢？其源代码在`kernel/proc.c:scheduler`中：
+
+```c
+// 进程表(process table)，保存所有进程PCB的结构体数组
+struct proc proc[NPROC];
+
+// Per-CPU process scheduler.
+// Each CPU calls scheduler() after setting itself up.
+// Scheduler never returns.  It loops, doing:
+//  - choose a process to run.
+//  - swtch to start running that process.
+//  - eventually that process transfers control
+//    via swtch back to the scheduler.
+void scheduler(void) {
+  struct proc *p;
+  struct cpu *c = mycpu();
+
+  c->proc = 0;
+  for (;;) {
+    // Avoid deadlock by ensuring that devices can interrupt.
+    intr_on();
+
+    int found = 0;
+    for (p = proc; p < &proc[NPROC]; p++) {
+      acquire(&p->lock);
+      if (p->state == RUNNABLE) {
+        // Switch to chosen process.  It is the process's job
+        // to release its lock and then reacquire it
+        // before jumping back to us.
+        p->state = RUNNING;
+        c->proc = p;
+        swtch(&c->context, &p->context); //切换到p进程
+        // p进程yield或者时间片用完回到调度器线程继续执行下一行代码
+        // Process is done running for now.
+        // It should have changed its p->state before coming back.
+        c->proc = 0;
+
+        found = 1;
+      }
+      release(&p->lock);
+    }
+    if (found == 0) {
+      intr_on();
+      // wfi(Wait for Interrupt)是一个特定的低功耗汇编指令，使 CPU 进入节能状态，直到下一次中断发生
+      asm volatile("wfi");
+    }
+  }
+}
+```
+
+调度器的工作非常简单：
+
+1. 寻找可运行的进程：调度器会循环遍历进程表，找到那些状态为RUNNABLE的进程，这些进程是已经准备好执行的。
+2. 切换到进程：一旦找到一个RUNNABLE进程，调度器会将它标记为RUNNING，然后调用swtch切换到这个进程的上下文中去运行。
+3. 重复这个过程：当这个进程执行完，或者主动让出CPU时，调度器再次接管CPU，继续寻找下一个可运行的进程。
+
+在任务三中，你需要参考调度器线程的实现方式，找到下一个RUNNABLE的进程并打印其相关信息。
+
+### 7.3 `mycpu`和`myproc`
+
+操作系统经常需要访问当前正在运行的进程对应的 `proc` 结构体，这个 `proc` 结构体保存了进程的PCB。在单核处理器上，由于只有一个 CPU，这意味着无论什么时候，都只有一个进程在运行，因此操作系统可以简单地用一个全局变量来保存当前进程的指针。但在多核系统中，问题变得稍微复杂一些，因为每个 CPU 可能运行不同的进程，如果我们仍然使用一个全局变量来保存当前进程的指针，多个 CPU 会覆盖该变量，导致混乱。
+
+解决这个问题的方法是利用每个 CPU 都有自己独立的寄存器组。在 RISC-V 架构中，每个 CPU 都有一个专用的寄存器 tp，它用于保存该 CPU 的hartid（硬件线程 ID）。每个 CPU 都有一个唯一的 hartid，这使得我们能够通过 tp 寄存器来识别当前 CPU。
+
+在 xv6 中，`mycpu` 函数会利用 tp 寄存器的值，来找到当前 CPU 对应的 cpu 结构体。`struct cpu` 是一个数据结构，保存了当前 CPU 的一些重要信息：
+```c
+// Per-CPU state.
+struct cpu {
+  /* 当前正在该 CPU 上运行的进程的 proc 指针(如果在CPU运行到调度器线程中则为NULL) */
+  struct proc *proc;          // The process running on this cpu, or null.
+  /* 调度器线程的寄存器信息（调度器负责管理哪个进程运行）*/
+  struct context context;     // swtch() here to enter scheduler().
+  /* 嵌套的自旋锁计数，用于管理中断的禁用和启用，暂时可以不用理解 */
+  int noff;                   // Depth of push_off() nesting.
+  int intena;                 // Were interrupts enabled before push_off()?
+};
+
+struct cpu cpus[NCPU];
+
+// Return this CPU's cpu struct.
+// Interrupts must be disabled.
+struct cpu *mycpu(void) {
+  int id = r_tp(); // read tp寄存器
+  struct cpu *c = &cpus[id];
+  return c;
+}
+```
+
+`myproc`函数返回当前 CPU 上正在运行的进程的 proc 结构体指针。
+```c
+// Return the current struct proc *, or zero if none.
+struct proc *myproc(void) {
+  /* 禁用中断，防止在获取进程信息时发生中断或进程切换 */
+  push_off();
+  /* 从 cpu 结构体中获取当前运行进程的 proc 指针（c->proc）*/
+  struct cpu *c = mycpu();
+  struct proc *p = c->proc;
+  /* 重新启用中断 */
+  pop_off();
+  return p;
+}
+```
 
 ## 7. 参考资料
 
