@@ -61,7 +61,7 @@
     - 根据调度器的工作方式模拟一次调度，找到下一个`RUNNABLE`的进程，同样打印相关信息(参考[调度器线程的工作方式](../part2/#72))。在这个过程中记得注意锁的获取和释放。
     - 然后将当前进程挂起，XV6内核态已经帮我们实现了一个`yield`函数了。
 
-最后，运行`./grade-lab-syscall yield`测试。该脚本会启动qemu并且运行yieldtest测试进行输出匹配。建议你阅读一下`user\yieldtest.c`。
+最后，运行`./grade-lab-syscall yield`测试。该脚本会启动qemu并且运行yieldtest测试进行输出匹配。建议你阅读一下`user/yieldtest.c`。
 ## 4. 任务四：回答问题
 
 !!! question  "回答问题"

@@ -228,7 +228,7 @@ $ [INFO] proc 5 exit, parent pid 1, name init, state runble
 ```shell
 Save the context of the process to the memory region from address 0x??? to 0x???
 ```
-2. 需要打印调用yield的进程的pid和此时用户态的pc值，也就是陷入内核的那条指令地址，即`ecall`指令的地址，详情见[系统调用的接口](../part2/#12)中提到的系统调用步骤，按如下格式打印：
+2. 需要打印当前进程的pid和此进程在用户态的pc值，也就是陷入内核的那条指令地址，即`ecall`指令的地址，详情见[系统调用的接口](../part2/#12)中提到的系统调用步骤，按如下格式打印：
 ```shell
 Current running process pid is ??? and user pc is 0x???
 ```
