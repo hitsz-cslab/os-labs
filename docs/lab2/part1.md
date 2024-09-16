@@ -220,17 +220,29 @@ $ [INFO] proc 5 exit, parent pid 1, name init, state runble
 
 ### 3.4 任务三：实现yield系统调用
 
-在该任务中，你需要实现一个 *新的系统调用* `yield`，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程。当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码。另外我们的实验还有些额外要求。
+你需要实现一个新的系统调用 `yield`，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程。当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码。
 
-具体来说，当调用`yield`系统调用时：
+另外我们的实验还有些额外要求，当调用`yield`系统调用时：
 
-1. 需要打印此时用户态的pc值，也就是陷入内核的那条指令地址，即`ecall`指令的地址，详情见[系统调用的接口](../part2/#12)中提到的系统调用步骤，按如下格式打印：
+1. 需要打印进程的内核线程上下文被保存的地址范围，按如下格式打印：
 ```shell
-start to yield, user pc 0x???????
+Save the context of the process to the memory region from address 0x??? to 0x???
 ```
-   也就是在某个位置，添加上这样一句代码：
+2. 需要打印调用yield的进程的pid和此时用户态的pc值，也就是陷入内核的那条指令地址，即`ecall`指令的地址，详情见[系统调用的接口](../part2/#12)中提到的系统调用步骤，按如下格式打印：
+```shell
+Current running process pid is ??? and user pc is 0x???
+```
+3. 需要打印即将被调度到的进程的pid和此时用户态的pc值，按如下格式打印：
+```shell
+Next runnable process pid is ??? and user pc is 0x???
+
+
+```
+   也就是在某些位置，分别添加上这样几句代码：
 ```c
-printf("start to yield, user pc %p\n", pc);
+printf("Save the context of the process to the memory region from address %p to %p\n", ?, ?);
+printf("Current running process pid is %d and user pc is %p\n", ?, ?);
+printf("Next runnable process pid is %d and user pc is %p\n", ?, ?);
 ```
 2. 将当前进程让出CPU，从而调度到别的进程。
 
@@ -245,10 +257,10 @@ make qemu CPUS=1
 ```
 
 
-正确完成任务后 `yieldtest`的输出如下：
+正确完成任务后 `yieldtest`的输出如下(你的具体数字可能不同，但是能通过`./grade-lab-syscall yield`测试即可)：
 
-![](part1.assets/yield-ans.png)
-
+![](part1.assets/yieldtest_output.png)
+![](part1.assets/yieldtest_pass.png)
 ### 3.5 测试
 
 当完成上述的三个任务后，你需要在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
