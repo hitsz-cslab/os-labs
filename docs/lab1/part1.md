@@ -105,7 +105,9 @@
 !!! tip 
     实验过程中可以结合观看由我校录制的XV6讲解视频[HITSZ操作系统课程组讲解XV6（⼀）启动过程](https://www.bilibili.com/video/BV1mK411S7N9?share_source=copy_web&vd_source=225a99017e082147ac525beeddd6e3e2)视频，这会帮助你更好的理解xv6的启动流程。
 
-学会使用 gdb 以及 gdb-dashboard 调试 xv6 启动流程，在调试过程中需要在两处地方使用 `p cpus[$tp]->proc->name`（`$tp` 是 tp 寄存器的值，xv6 使用它作为 cpu 的编号，这串式子其实相当于 `myproc()` 函数，但不知为何远程平台 gdb 不支持调用函数）打印出当前 proc 结构体的 name，分别打印出初始进程 initcode 和 init 程序的名字（打印的历史输出会保存在 gdb-dashboard 的 history 区域），最后要给出一个 gdb 命令脚本文件，命名为 commands.gdb，要求在 gdb 调试中使用 `source commands.gdb` 执行脚本后，会在 gdb-dashboard 的 history 区域中显示如下内容。
+学会使用 gdb 以及 gdb-dashboard 调试 xv6 启动流程，在调试过程中需要在两处地方使用 `p cpus[$tp]->proc->name`（`$tp` 是 tp 寄存器的值，xv6 使用它作为 cpu 的编号，这串式子其实相当于 `myproc()` 函数，但不知为何远程平台 gdb 不支持调用函数）打印出当前 proc 结构体的 name，分别打印出初始进程 initcode 和 init 程序的名字（打印的历史输出会保存在 gdb-dashboard 的 history 区域）。
+
+最后需要给出一个 gdb 命令脚本文件（**记得 `git add` 和 `git commit` 这个文件**），命名为 commands.gdb，要求在 gdb 调试中使用 `source commands.gdb` 执行脚本后，会在 gdb-dashboard 的 history 区域中显示如下内容。
 
 ![gdb-initcode-init](./part1.assets/gdb-initcode-init.png)
 
