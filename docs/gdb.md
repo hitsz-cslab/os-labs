@@ -5,10 +5,11 @@
 由于原始 GDB 命令行过于简陋，为方便调试，我们需要下载 [gdb-dashboard](https://github.com/cyrus-and/gdb-dashboard) 插件。
 
 ```
-wget -P ~ https://gitee.com/ftutorials/gdb-dashboard/raw/master/.gdbinit
+mv ~/.gdbinit ~/.gdbinit.bak    # 将原有配置重命名
+wget -P ~ https://gitee.com/ftutorials/gdb-dashboard/raw/master/.gdbinit    # 将 .gdbinit 下载到家目录
 ```
 
-为启用语法高亮，我们还需要下载 [Pygments](http://pygments.org/)
+（可选）为启用语法高亮，我们还需要下载 [Pygments](http://pygments.org/)
 
 ```
 pip install --no-cache-dir pygments
@@ -29,7 +30,7 @@ pip install --no-cache-dir pygments
     !!! info "注意"
         为便于调试， `make qemu-gdb`时使用`CPUS=1`，以单核模式启动。
 
-2. 新开一个终端，在相同目录下输入
+2. 新开一个终端（如在远程平台，需要在同一个计算节点中），在相同目录下输入
 
     ```
     make gdb
