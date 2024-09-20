@@ -32,7 +32,7 @@
 
     &emsp;&emsp;如果你的电脑安装的是Windows 10或Windows 11，推荐使用WSL2（Windows Subsystem for Linux 2）来搭建Linux环境。WSL2不仅能够在Windows系统中高效运行Linux内核，而且相比于WSL1具有更好的性能和完全的Linux系统调用兼容性。WSL2支持运行主流的Linux发行版（如Ubuntu、Debian等），并能够直接访问Windows的文件系统，可以通过Windows自带的文件资源管理器，像操作Windows的文件那样操作WSL上的文件，并且可以在WSL和Windows之间直接进行文件拖拽。通过WSL2可以避免使用虚拟机，占用的系统资源更少，操作也更加便捷。
 
-    &emsp;&emsp;如何安装WSL并使用WSL进行开放？请参阅官方文档[WSL文档](https://learn.microsoft.com/zh-cn/windows/wsl/)。
+    &emsp;&emsp;如何安装WSL并使用WSL进行开发？请参阅官方文档[WSL文档](https://learn.microsoft.com/zh-cn/windows/wsl/)。
 
     - VirtualBox虚拟机
 
@@ -153,24 +153,7 @@ $
 
 &emsp;&emsp;当可以看到“`init: starting sh`”的字样表示xv6已经正常启动，此时在“`$`”提示符后可输入xv6支持的shell命令。
 
-!!! tip "请记住QEMU的退出方法"
-    先按“`Ctrl+a`”组合键，接着松开所有按键。再按下“`x`”键。
-
-    &emsp;&emsp;命令解释：
-    “`Ctrl+a`”组合键，用于激活QEMU的全局命令模式。松开所有按键。然后，按下x键，这样将直接终止QEMU进程，返回到你启动QEMU的Shell或命令行界面。
-
-    &emsp;&emsp;如果在退出QEMU时遇到任何问题（如QEMU进程无法终止），你可能需要使用kill命令来强制结束QEMU进程。
-    
-    &emsp;&emsp;如果是在远程实验平台，你需要重新开启一个Linux Terminal命令行终端界面，输入如下命令，把与自己有关的进程全kill：
-
-    ```shell
-    $ killall -u id
-    ```
-
-    &emsp;&emsp;`killall -u id`中的`id`应该替换为`你的学号`。
-
-    &emsp;&emsp;如果是在你自己安装的Linux环境，请你自行搜索如何安全地结束进程。
-
+&emsp;&emsp;请记住QEMU的退出方法：**同时按下Ctrl + a，全部松开，再按下x以退出QEMU**。
 
 &emsp;&emsp;至此，XV6已经能够正常运行了: )
 
@@ -207,11 +190,14 @@ $
 
 #### 3.3.2 启动xv6
 
+&emsp;&emsp;获取xv6-oslab24-hitsz实验包，详见[XV6实验框架代码](../#3-xv6)。
+
 &emsp;&emsp;我们在 xv6-oslab24-hitsz 目录下配好了 Dockerfile，只需要在 Linux 命令行中进入该目录：
 
-1. 使用 `su` 命令进入 root 用户。
-2. 使用 `make build_docker` 构建 docker 镜像（仅需构建一次）。
-3. 使用 `make docker` 启动容器进入 bash 终端。
-4. 使用 `make qemu` 命令启动 xv6。
+1. 切换到util分支。
+2. 使用 `su` 命令进入 root 用户。
+3. 使用 `make build_docker` 构建 docker 镜像（仅需构建一次）。
+4. 使用 `make docker` 启动容器进入 bash 终端。
+5. 使用 `make qemu` 命令启动 xv6。
 
 ![docker-run-qemu](./env.assets/docker-run-qemu.png)

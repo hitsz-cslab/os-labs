@@ -12,13 +12,11 @@
 ### 1.1 使用VSCode登录
 
 - 首先，确保你已经安装了Visual Studio Code（VSCode）。
-- 然后，你需要安装Remote - SSH扩展，这可以通过VSCode的扩展市场来完成。
+- 然后，你需要安装Remote - SSH扩展。
 - 配置SSH连接，通常需要服务器的IP地址、用户名和可能的SSH密钥。
 - 使用VSCode打开一个新的SSH终端，连接到远程服务器。
 
 使用VSCode登录远程实验平台具体步骤详见[远程实验环境使用指南](../remote_env/)。
-
-如果你使用的是自行搭建的本地实验环境，也可以使用VSCode进行登录，具体步骤详见[VSCode工具](../tools/#2-vscode)。
 
 ### 1.2 使用MobaXterm登录
 
