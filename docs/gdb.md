@@ -30,7 +30,7 @@ pip install --no-cache-dir pygments
     !!! info "注意"
         为便于调试， `make qemu-gdb`时使用`CPUS=1`，以单核模式启动。
 
-2. 新开一个终端（如在远程平台，需要在同一个计算节点中），在相同目录下输入
+2. 新开一个终端，在相同目录下输入
 
     ```
     make gdb
