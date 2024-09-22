@@ -4,21 +4,21 @@
 
 ### 1. 部署实验环境
 
-实验环境主要分为三部分：xv6运行环境、xv6源码、xv6的编译与运行。
+&emsp;&emsp;实验环境主要分为三部分：xv6运行环境、xv6源码、xv6的编译与运行。
 
 #### 1.1 xv6运行环境
 
-xv6运行环境详见[实验平台及环境配置](../../env/)。
+&emsp;&emsp;xv6运行环境详见[实验平台及环境配置](../../env/)。
 
 #### 1.2 xv6源码
 
-请clone最新代码到本地进行实验：
+&emsp;&emsp;请clone最新代码到本地进行实验：
 
 ```shell
 git clone https://gitee.com/ftutorials/xv6-oslab24-hitsz.git
 ```
 
-每个实验项目都在不同的分支上完成，请 **注意切换分支** ，例如，实验一需切换到util分支后进行开发：
+&emsp;&emsp;每个实验项目都在不同的分支上完成，请 **注意切换分支** ，例如，实验一需切换到util分支后进行开发：
 
 ```shell
 git branch -a
@@ -28,32 +28,32 @@ git checkout util
 `git branch`表示列出当前仓库中的所有 本地分支。加上`-a`这个选项后，会显示所有分支，包括本地分支和远程分支。
 <div align="center"> <img src="../part3.assets/image-20210913105916234.png" /> </div>
 
-另外，由于我们的[官方仓库](https://gitee.com/ftutorials/xv6-oslab24-hitsz.git) **随时可能更新**，所以做实验前需要先拉取最新的代码：先切到对应的分支（util），然后：
+&emsp;&emsp;另外，由于我们的[官方仓库](https://gitee.com/ftutorials/xv6-oslab24-hitsz.git) **随时可能更新**，所以做实验前需要先拉取最新的代码：先切到对应的分支（util），然后：
 
 ```shell
 git pull
 ```
 
-xv6的代码结构：
+&emsp;&emsp;xv6的代码结构：
 
 <div align="center"> <img src="../part3.assets/image-20201017231446472.png" /> </div>
 
 #### 1.3 编译并运行xv6
 
-Step1 在代码总目录xv6-oslab24-hitsz下输入`make qemu`， 编译并运行xv6;
+&emsp;&emsp;**Step1** 在代码总目录xv6-oslab24-hitsz下输入`make qemu`， 编译并运行xv6;
 
-Step2 当可以看到“init: starting sh”的字样表示xv6已经正常启动，此时在“$”提示符后可输入xv6支持的shell命令。
+&emsp;&emsp;**Step2** 当可以看到“init: starting sh”的字样表示xv6已经正常启动，此时在“$”提示符后可输入xv6支持的shell命令。
 
 <div align="center"> <img src="../part3.assets/image-20210913110108193.png" /> </div>
 
 !!! warning "qemu退出方法"
-    先按`ctrl+a`组合键，接着完全松开，再按`x`
+    先按`ctrl+a`组合键，接着完全松开，再按`x`。
 
 ### 2. 准备工作
 
-本次实验需要编写[实验内容](../part1/#3)中介绍的3个Unix实用程序。初次接触操作系统实验的你可能会感到不知所措，因此不妨先体验一下这些程序的运行效果。实际上，Linux中具备本次实验要实现的一些程序，例如sleep、find。你可以先尝试在Linux中使用这些命令，充分体会功能后再开始编程。当然，Linux中命令的功能较为复杂，我们仅要求实现简化版。
+&emsp;&emsp;本次实验需要编写[实验内容](../part1/#3)中介绍的3个Unix实用程序。初次接触操作系统实验的你可能会感到不知所措，因此不妨先体验一下这些程序的运行效果。实际上，Linux中具备本次实验要实现的一些程序，例如sleep、find。你可以先尝试在Linux中使用这些命令，充分体会功能后再开始编程。当然，Linux中命令的功能较为复杂，我们仅要求实现简化版。
 
-实验开始之前，我们 **强烈建议** 你先完成以下工作：
+&emsp;&emsp;实验开始之前，我们 **强烈建议** 你先完成以下工作：
 
 !!! tip ""
     1. 熟悉常见命令的使用，如 `echo`、`xargs`、`find`。
@@ -66,34 +66,34 @@ Step2 当可以看到“init: starting sh”的字样表示xv6已经正常启动
 
 #### 3.1 代码示例sleep
 
-为帮助同学们理解xv6用户程序的编写方法，我们提供了一个sleep用户程序示例，你需要理解其代码并成功将其运行：
+&emsp;&emsp;为帮助同学们理解xv6用户程序的编写方法，我们提供了一个sleep用户程序示例，你需要理解其代码并成功将其运行：
 
-Step1. 新建user/sleep.c文件，编写如下代码，理解代码和注释；
+&emsp;&emsp;**Step1** . 新建user/sleep.c文件，编写如下代码，理解代码和注释；
 
 <div align="center"> <img src="../part3.assets/image-20210913110416368.png" /> </div>
 
-Step2. 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在`UPROGS`上增加一行`$U/_sleep`：
+&emsp;&emsp;**Step2** . 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在`UPROGS`上增加一行`$U/_sleep`：
 
 !!! info "UPROGS的含义"
     `UPROGS`变量(User Programs)列出了所有需要编译、链接并打包到文件系统镜像中的用户程序。每一项都对应一个最终的可执行文件。例如，`$U/_cat`(`$U`是user目录的路径)表示cat命令的可执行文件，这个文件会被编译并生成，然后放入文件系统镜像`fs.img`中，以便在系统启动时可以访问和运行。
 
 <div align="center"> <img src="../part3.assets/image-20220926104856325.png" /> </div>
 
-Step3. 编译xv6并运行sleep。
+&emsp;&emsp;**Step3** . 编译xv6并运行sleep。
 
 <div align="center"> <img src="../part3.assets/image-20201018125249828.png"  width = 40%/> </div>
 
-Step4. 回答3.3中的[相关问题](#33)。
+&emsp;&emsp;**Step4.**  回答3.3中的[相关问题](#33)。
 
 #### 3.2 实验提示
 
-在做完sleep实验后，相信你已经明白如何在xv6中添加一个用户程序了。请同学们根据以下提示，再添加pingpong和find两个用户程序。
+&emsp;&emsp;在做完sleep实验后，相信你已经明白如何在xv6中添加一个用户程序了。请同学们根据以下提示，再添加pingpong和find两个用户程序。
 
-需要注意的是，xv6中用户程序开发无法使用C语言中的标准库（例如`stdio.h`等），因为xv6是一个极简的操作系统，无法完整提供标准库所需的功能。你能使用的库函数主要在`user/ulib.c`中
+&emsp;&emsp;需要注意的是，xv6中用户程序开发无法使用C语言中的标准库（例如`stdio.h`等），因为xv6是一个极简的操作系统，无法完整提供标准库所需的功能。你能使用的库函数主要在`user/ulib.c`中
 
 ##### 3.2.1 pingpong
 
-请在`user/pingpong.c`中实现[pingpong程序](../part1/#32-pingpong)。建议你在做之前着重理解实验原理中[文件描述符和IO操作](../part2/#3-xv6)和[管道](../part2/#5)这两节。
+&emsp;&emsp;请在`user/pingpong.c`中实现[pingpong程序](../part1/#32-pingpong)。建议你在做之前着重理解实验原理中[文件描述符和IO操作](../part2/#3-xv6)和[管道](../part2/#5)这两节。
 
 a) 使用`pipe()`创建管道；请思考，需要用到几个管道呢？
 
@@ -136,7 +136,7 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
 
 ### 4. xv6 启动流程分析
 
-当我们输入`make qemu`后，就能启动 qemu，从控制台参数加载资源，将 xv6 整体加载到物理内存中。xv6 启动涉及 kernel 目录下的 entry.S、start.c 与 main.c 等少数几个文件，entry、start 两个函数运行在机器态（类似于 BIOS），main 运行在内核态（特权级），后面的用户程序运行在用户态。
+&emsp;&emsp;当我们输入`make qemu`后，就能启动 qemu，从控制台参数加载资源，将 xv6 整体加载到物理内存中。xv6 启动涉及 kernel 目录下的 entry.S、start.c 与 main.c 等少数几个文件，entry、start 两个函数运行在机器态（类似于 BIOS），main 运行在内核态（特权级），后面的用户程序运行在用户态。
 
 !!! info "RISC-V 特权级机制"
     特权级机制的实现旨在增强计算机系统的安全性，特别是防止应用程序的错误导致操作系统乃至整个系统的不稳定。操作系统和应用程序的安全性需求不同，操作系统需要在受保护的环境中运行，以避免被应用程序破坏，而应用程序则运行在一个受限的环境中。
@@ -156,11 +156,11 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
 
     更深入了解请访问 https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter2/1rv-privilege.html#riscv-priv-arch
 
-接下来我们将会演示使用 gdb 以及 gdb-dashboard 调试 xv6 的启动流程，请同学们跟着实验步骤亲自动手调试并结合 xv6 代码进行思考。
+&emsp;&emsp;接下来我们将会演示使用 gdb 以及 gdb-dashboard 调试 xv6 的启动流程，请同学们跟着实验步骤亲自动手调试并结合 xv6 代码进行思考。
 
-调试启动流程步骤如下:
+&emsp;&emsp;调试启动流程步骤如下:
 
-按照[GDB 调试指南](../gdb.md)启动 qemu 并进行调试：
+&emsp;&emsp;按照[GDB 调试指南](../gdb.md)启动 qemu 并进行调试：
 
 1. qemu 将执行位于 0x1000 地址处的一小段汇编指令，最终跳转到 0x8000_0000 位置，开始运行 xv6 的首个函数：`_entry` (kernel/entry.S)
 

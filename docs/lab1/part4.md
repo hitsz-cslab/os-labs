@@ -2,19 +2,21 @@
 
 实验一提交<font color=red>  **实验报告** </font> 和 <font color=red> **实验代码(只提交commit.patch文件)** </font> 。
 
-## 1 实验报告会纳入评分（虽然不多） 
+## 1. 实验报告会纳入评分（虽然不多） 
 
 实验报告要求 **[回答实验中的问题](../part3/#33)，并写出实验设计思路和运行结果** 。
 
 实验报告也是证明实验是独立完成的重要依据，有分数追求的大佬（juanwang）们不要只放代码和指导书的截图。
 
-## 2 实验代码(只提交commit.patch文件)
+## 2. 实验代码（只提交commit.patch文件）
 
 不需要提交完整的代码包，只需要提交commit.patch文件即可，操作步骤如下：
 
-- 在完成实验之后，将当前分支上的所有更改进行提交（commit，具体方法参考[git使用教程](#3-git)）
-- 在仓库的目录下使用`make diff`命令导出更改文件（commit.patch）
-- 将 **生成的commit.patch文件** 与 **实验报告** 一起打包提交到作业提交平台即可
+- 编写好3个程序(sleep、pingpong、find)后，在xv6-oslab24-hitsz项目目录下，运行make grade，查看是否都能通过。
+- 做完xv6启动流程实验后，将gdb命令脚本命名为 **commands.gdb**，放在xv6-oslab24-hitsz项目包里，具体要求详见：[关于 gdb 命令脚本如何导出](../part1/#34-xv6)。
+- 在完成上述两个步骤之后，将当前分支上的所有更改进行提交（commit，具体方法参考[git使用教程](#3-git)）。
+- 在仓库的目录下使用`make diff`命令导出更改文件（commit.patch）。
+- 将 **生成的commit.patch文件** 与 **实验报告** 一起打包提交到作业提交平台即可。
 
 <div align="center"> <img src="../part4.assets/image-20230913181456026.png" /> </div>
 
@@ -22,17 +24,17 @@
 
 在实验过程中，大家注意保存好自己的代码，保存代码的两个方法：
 
-（1）把整个xv6-oslab24-hitsz目录打包，然后用scp或者mobaXterm工具的sftp拷贝出来，自行保存好整个工程文件，以备下次实验使用。
+（1）**强烈推荐** 将代码提交到自己的Github/Gitee等代码托管服务器上，具体操作详见[将代码发布至自己的远程仓库](../../tools/#32)。
 
-（2）**强烈推荐** 将代码提交到自己的Github/Gitee等代码托管服务器上，具体操作详见[将代码发布至自己的远程仓库](../../tools/#32)。
+（2）把整个xv6-oslab24-hitsz目录打包，然后用scp或者mobaXterm工具的sftp拷贝出来，自行保存好整个工程文件，以备下次实验使用。
 
 ------
 
-## 3 git使用教程
+## 3. git使用教程
 
-git作为开发者常用的开源分布式版本控制系统，在使用远程仓库进行开发时具有不可或缺的作用。
+&emsp;&emsp;git作为开发者常用的开源分布式版本控制系统，在使用远程仓库进行开发时具有不可或缺的作用。
 
-**这里有详细的Git分支教程**  ，可以帮助大家理解Git的分支究竟是怎么回事：“Learning Git Branching” ，https://learngitbranching.js.org/?locale=zh_CN
+&emsp;&emsp;**这里给大家推荐一个有趣的Git闯关游戏，解锁Git技能**  。通过一系列刺激的关卡挑战，可以帮助大家理解Git的分支究竟是怎么回事：“Learning Git Branching” ，https://learngitbranching.js.org/?locale=zh_CN
 
 - 如果你想要建立自己的远程仓库并且同步自己的代码、建立一整套完整的工作流，那么请直接阅读[将代码发布至自己的远程仓库](../../tools/#32)，那里非常详细地介绍了整个流程。
 
@@ -68,6 +70,7 @@ git commit -m "你的提交日志"
 make diff
 ```
 
+<!--
 !!! info  "注意"
     如果该命令执行出现报错：
     `fatal: ambiguous argument syscall-base': unknown revision or path not in the working tree.`
@@ -78,6 +81,7 @@ make diff
     这个 **远程仓库在本地标志** 指的是：
     ![git-tag](part4.assets/git-tag.png)
     上图中的 **红色方框** 内的就是远程仓库在本地的标志，但是要注意的是，我们有多个远程仓库的时候需要注意`fetch`的对象一定是跟 **黄色方框** 中的网址一样的（也就是我们的远程实验代码仓库，不是自己的远程仓库）！
+-->
     
 执行完该命令后会在项目目录下生成一个 **commit.patch** 文件，该文件记录了这次实验我们所做的所有更改，也就是本次实验你需要提交的 **代码部分**，将其拷贝到本地电脑，再跟实验报告一起打包上传至作业提交平台即可。
 
