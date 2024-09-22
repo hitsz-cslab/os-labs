@@ -194,7 +194,7 @@ $
 
 &emsp;&emsp;我们在 xv6-oslab24-hitsz 目录下配好了 Dockerfile，只需要在 Linux 命令行中进入该目录：
 
-1. 切换到util分支。
+1. 使用`git checkout util`切换到util分支。
 2. 使用 `su` 命令进入 root 用户。
 3. 使用 `make build_docker` 构建 docker 镜像（仅需构建一次）。
 4. 使用 `make docker` 启动容器进入 bash 终端。
