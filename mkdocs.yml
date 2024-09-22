@@ -69,9 +69,10 @@ nav:
     - 实验实用工具: tools.md
     - Linux开发环境基础知识: Linux.md
     - 远程实验平台使用指南: remote_env.md
-    - VSCode图形化调试指南(一): remote_env_gdb.md
-    - VSCode图形化调试指南(二)——系统调用: remote_env_gdb2.md    
-    - GDB调试指南: gdb.md    
+    - GDB调试指南: 
+        - GDB命令行调试指南: gdb.md 
+        - VSCode图形化调试指南(一): remote_env_gdb.md
+        - VSCode图形化调试指南(二)——系统调用: remote_env_gdb2.md     
   - 常见问题:
     - 2022/2023: 
         - 实验环境问题: faq/faq-env.md
