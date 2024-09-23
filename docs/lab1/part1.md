@@ -100,7 +100,7 @@
 
 ![image-2024-09-05_find_test2](part1.assets/Snipaste_2024-09-05_22-30-33.png)
 
-&emsp;&emsp;如果上述3个程序(sleep、pingpong、find)都能正常运行，可以用`make grade`指令测试：
+&emsp;&emsp;如果上述3个程序(sleep、pingpong、find)都能正常运行，可以到xv6-oslab24-hitsz项目目录，执行`make grade`指令测试：
 
 ![image-2024-09-05_find_tests](part1.assets/Snipaste_2024-09-05_22-32-46.png)
 

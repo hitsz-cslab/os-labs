@@ -1,9 +1,5 @@
 # Linux开发环境基础知识
 
-<table><tr><td bgcolor=#E6E6FA>
- 学习建议 ：《鸟哥的Linux私房菜（基础学习篇）》
-</td></tr></table>
-
 ## 1. 如何登陆Linux
 
 登录Linux系统通常有几种不同的方法：
