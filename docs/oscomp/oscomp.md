@@ -1,4 +1,4 @@
-# 2024年“全国大学生计算机系统能力大赛操作系统设计赛”火热报名中！
+# 2025年“全国大学生计算机系统能力大赛操作系统设计赛”火热报名中！
 
 ## 1. 操作系统设计赛简介
 
@@ -137,20 +137,30 @@
     - “ 嘉然今天吃OS ”获得<font color=red> **功能设计赛道三等奖** </font>；
     - “ RethinkFS ”获得<font color=red> **功能设计赛道三等奖** </font>。
 
+    第四届（2024）：
+    
+    - “ Phoenix ”队获得<font color=red> **内核实现赛道一等奖** </font>;
+    - “ MEMCOS ”队获得<font color=red> **功能设计赛道二等奖** </font>;
+    - “ MemoryWatchdog ”队获得<font color=red> **功能设计赛道二等奖** </font>;
+    - “ code+7 ”队获得<font color=red> **功能设计赛道二等奖** </font>;
+    - “ j2y::fans ”队获得<font color=red> **功能设计赛道二等奖** </font>;
+    - “ 叉子联合平行线 ”队获得<font color=red> **功能设计赛道二等奖** </font>。
+
     大赛获奖团队将获得丰厚奖金，其中一等奖团队获得30000元奖金，二等奖团队获10000元奖金，三等奖团队获得3000元奖金:)
 
-    - 内核实现赛道决赛作品开源：[点这里](https://os.educg.net/#/index?name=2022%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E5%A4%A7%E8%B5%9B%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E8%B5%9B-%E5%86%85%E6%A0%B8%E5%AE%9E%E7%8E%B0%E8%B5%9B&index=1&img=2)
-    - 功能设计赛道决赛作品开源：[点这里](https://os.educg.net/#/index?name=2022%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E8%83%BD%E5%8A%9B%E5%A4%A7%E8%B5%9B%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E8%B5%9B-%E5%8A%9F%E8%83%BD%E6%8C%91%E6%88%98%E8%B5%9B&index=1&img=0)    
+    - 内核实现赛道决赛作品开源：[点这里](https://os.educg.net/#/index?TYPE=OS_N)
+    - 功能设计赛道决赛作品开源：[点这里](https://os.educg.net/#/index?TYPE=OS_G)    
 
     获奖新闻报道：
     
     - 第一届：[获奖总数全国第一！哈工大（深圳）学子在全国大学生计算机系统能力大赛中收获四项大奖](https://www.hitsz.edu.cn/article/view/id-123535.html)
     - 第二届：[获奖数量全国居首！哈工大（深圳）学子在全国大学生操作系统设计总赛中表现优异](https://www.hitsz.edu.cn/article/view/id-135468.html)
     - 第三届：[一等奖+4！深圳校区学子在全国大学生操作系统设计赛中创历史最佳战绩](https://www.hitsz.edu.cn/article/view/id-142937.html)
+    - 第四届：[连续四年全国一等奖！哈工大深圳校区学子在全国大学生操作系统设计赛中再创佳绩](https://www.hitsz.edu.cn/article/view/id-151345.html)
     
     </font>
 
-### 5.1 获奖队伍介绍：UltraOS
+### 5.1 2021内核赛道-UltraOS
 !!! danger   "📢 第一届内核赛道一等奖：UltraOS"
     
     团队成员：李程浩，18级本科；宫浩辰，18级本科；任翔宇，18级本科
@@ -162,7 +172,7 @@
     ![img](oscomp.assets/30E64877881B93916ECF7357393_059C77BA_1CBB0.jpg)
     </font>
 
-### 5.2 获奖队伍介绍: HoitFS
+### 5.2 2021功能赛道-HoitFS
 !!! danger   "📢 第一届功能赛道一等奖：HoitFS"
     
     团队成员：潘延麒，18级本科；胡智胜，18级本科；张楠，18级本科
@@ -174,7 +184,7 @@
     ![img](oscomp.assets/D052DE40F53E4A5E2BB62E9208D_56BCF9D8_177A7.jpg)
     </font>
 
-### 5.3 获奖队伍介绍: FTL OS
+### 5.3 2022内核赛道-FTL OS
 !!! danger   "📢 第二届内核赛道一等奖：FTL OS"
     
     团队成员：叶自立，19级本科；樊博，20级本科；李羿廷，19级本科
@@ -192,7 +202,7 @@
     </center>
     </font>
 
-### 5.4 获奖队伍介绍: OopS
+### 5.4 2022内核赛道-OopS
 
 !!! danger   "📢 第二届内核赛道一等奖：OopS"
 
@@ -213,7 +223,7 @@
     </center>
     </font>
 
-### 5.5 获奖队伍介绍: LMY
+### 5.5 2022功能赛道-LMY
 
 !!! danger   "📢 第二届功能赛道一等奖：LMY"
 
@@ -236,7 +246,7 @@
     </center>
     </font>
 
-### 5.6 获奖队伍介绍: Titanix
+### 5.6 2023内核赛道-Titanix
 
 !!! danger   "📢 第三届内核赛道一等奖：Titanix"
 
@@ -255,7 +265,7 @@
     ![img](oscomp.assets/内核赛-2023-1.jpg)
     </font>
 
-### 5.7 获奖队伍介绍: BoesFS
+### 5.7 2023功能赛道-BoesFS
 
 !!! danger   "📢 第三届功能赛道一等奖：BoesFS"
 
@@ -274,7 +284,7 @@
     ![img](oscomp.assets/功能赛-2023-1.jpg)
     </font>
 
-### 5.8 获奖队伍介绍: COS
+### 5.8 2023功能赛道-COS
 
 !!! danger   "📢 第三届功能赛道一等奖：COS"
 
@@ -291,7 +301,7 @@
     ![img](oscomp.assets/功能赛-2023.jpg)
     </font>
 
-### 5.9 获奖队伍介绍: BugMaker
+### 5.9 2023功能赛道-BugMaker
 
 !!! danger   "📢 第三届功能赛道一等奖：BugMaker"
 
@@ -311,13 +321,30 @@
     
     </font>
 
+### 5.10 2024内核赛道-Phoenix
+
+!!! danger   "📢 第四届内核赛道一等奖：Phoenix"
+
+    团队成员：陈睿玮，21级本科；石全，21级本科；王华杰，21级本科
+    
+    “非常荣幸能够获得内核赛道的一等奖。在这场为期六个月的竞赛中，我们为Phoenix内核贡献了2.7w行代码，提交了591次commit，最终获得了一等奖，并在RISC-V赛道上取得了第一名的好成绩。这一成绩凝聚了我们团队无数的努力与坚持。
+
+    最初，我们受到了Linus Torvalds创建Linux的故事启发，觉得写内核是件非常“酷”的事情，因此决定挑战自己，参加内核赛道的竞赛。 我们从寒假便开始为比赛做准备，从零开始学习Rust语言和rCore Tutorial，再从零编写自己的操作系统内核，并在这个基础上不断扩展、优化和重构。对于我们这些零基础小白，这是一个巨大的挑战。然而，比赛提供了一个开源的平台，使我们能够接触到往届所有优秀作品的代码实现，这不仅降低了参赛的难度，也让我们在学习和模仿优秀作品的基础上快速成长。
+
+    在从零实现内核的过程中，我们对操作系统底层机制的理解更加深入，我们的编程能力也在实战中得到了极大的提升。 最后，衷心感谢夏文老师和仇洁婷老师在整个比赛过程中给予的支持与帮助。同时，也要特别感谢往届学长的宝贵经验传授，尤其是曾培鑫和满洋学长的无私指导，使我们在技术和思路上少走了很多弯路。”
+
+    作品开源：[点这里](https://gitlab.eduxiji.net/T202418123993075/oskernel2024-phoenix)
+    
+    ![img](oscomp.assets/内核赛-2024.jpg)
+    </font>
+
 ## 6. 报名方式
 
 !!! tip   "📢 如何报名？"
     我校OS比赛将预计在元旦节前后（具体时间待确定）开放报名。现在参加操作系统大赛，将获得退休选手的宝贵参赛经验，机会难得！感兴趣的同学欢迎入群：
     
     <center>
-    ![image-20221109163745962](oscomp.assets/OS比赛-2024招新群二维码.png)
+    ![image-20221109163745962](oscomp.assets/OS比赛-招新群聊二维码.png)
     </center>
     
     </font>

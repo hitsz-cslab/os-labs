@@ -10,9 +10,9 @@
 
 ## 0. 导读
 
-&emsp;&emsp;本实验文档为哈尔滨工业大学（深圳）《操作系统》课程实验指导材料。页面左侧为指导书的各个小节目录，页面左上角可详细搜索，页面下方可切换上下小节。
+&emsp;&emsp;本实验文档为哈尔滨工业大学（深圳）《操作系统》课程实验指导材料。页面顶端为实验的指导书，页面左侧为指导书的各个小节目录，右侧为小节内的索引，页面右上角可详细搜索。
 
-&emsp;&emsp;本学期《操作系统》课程共设置6次实验课，涵盖5个实验项目，总计24个学时。前四个实验项目均基于开源操作系统 **xv6-oslab24-hitsz** 进行，但已根据哈尔滨工业大学（深圳）的课程要求进行了针对性的修改和补充。每个实验项目均独立设置，各占4个学时。第五个实验分配8个学时，由我校学生自主设计的文件系统实验案例，该案例在2022年全国大学生计算机系统能力大赛操作系统设计大赛OS功能挑战赛道中获得二等奖。
+&emsp;&emsp;本学期《操作系统》课程共设置6次实验课，涵盖5个实验项目，总计24个学时。前四个实验项目均基于开源操作系统xv6进行，但已根据哈尔滨工业大学（深圳）的课程要求进行了针对性的修改和补充。每个实验项目均独立设置，各占4个学时。第五个实验分配8个学时，由我校学生自主设计的文件系统实验案例，该案例在2022年全国大学生计算机系统能力大赛操作系统设计大赛OS功能挑战赛道中获得二等奖。
 
 &emsp;&emsp;<font color=red> **由于我们已经对XV6的实验内容及要求进行了修改，请大家从下面的[“3. 获取XV6实验框架代码”](#3-xv6)仓库下载代码，务必在这套代码上完成实验，使用其他xv6仓库代码的同学极有可能通不过实验考核！！！** </font>  在实验开始之前，请同学们务必先按顺序阅读指导书，掌握实验平台的搭建/使用方法，掌握Linux系统下的一些基本命令/操作，熟练使用GDB调试工具。对于有兴趣有余力的同学，挑战并完成[2020版本的xv6实验](https://pdos.csail.mit.edu/6.828/2020/index.html)的所有任务，若能完成会有意想不到的惊喜！
 
@@ -34,7 +34,7 @@
 -  **实验工具** 下载地址（校内网）：https://mirrors.osa.moe/misc/
 -  **实验提交** 地址（校内网）：http://10.249.12.98:8000/#/login
 -  **远程实验环境** （校内网），详见[远程实验环境使用指南](remote_env/)
--  **piazza在线交流平台（access code：comp3001）** 欢迎同学们在piazza上提问，提问的内容第一时间会由助教或老师回答，当然也欢迎同学们来回答：https://piazza.com/harbin_institute_of_technology_shenzhen/fall2023/comp3001
+-  **piazza在线交流平台（access code：comp3001）** 欢迎同学们在piazza上提问，提问的内容第一时间会由助教或老师回答，当然也欢迎同学们来回答：https://piazza.com/harbin_institute_of_technology_shenzhen/fall2024/comp3001/
   
 ## 3. 获取XV6实验框架代码
 
@@ -74,13 +74,16 @@ $ git clone https://gitee.com/ftutorials/xv6-oslab24-hitsz.git
 
 ### 4.2 xv6调试演示视频链接
 
-1. 【1. VSCode调试xv6内核代码】 https://www.bilibili.com/video/BV1ZB4y1E7X5?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
+1. 【使用gdb调试xv6启动流程（1）】 https://www.bilibili.com/video/BV1zAt6e3EfU/?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
+   
+- 【使用gdb调试xv6启动流程（2）】 https://www.bilibili.com/video/BV1MrtUe7ELC/?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
+- 【1. VSCode调试xv6内核代码】 https://www.bilibili.com/video/BV1ZB4y1E7X5?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
 
-2. 【2. VSCode调试xv6用户代码】 https://www.bilibili.com/video/BV1i14y1Y7ZZ?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
+- 【2. VSCode调试xv6用户代码】 https://www.bilibili.com/video/BV1i14y1Y7ZZ?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
 
-3. 【3. VSCode调试系统调用过程（包含pagetable和汇编）】 https://www.bilibili.com/video/BV12P411J7xq?share_source=copy_webvd_source=a822dcda3537564ccdd0bb45aa0afe33
+- 【3. VSCode调试系统调用过程（包含pagetable和汇编）】 https://www.bilibili.com/video/BV12P411J7xq?share_source=copy_webvd_source=a822dcda3537564ccdd0bb45aa0afe33
 
-4. 【4. VSCode调试系统调用——从内核到用户，再从用户返回内核】 https://www.bilibili.com/video/BV1ug411m7ir?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33vd_source=a822dcda3537564ccdd0bb45aa0afe33
+- 【4. VSCode调试系统调用——从内核到用户，再从用户返回内核】 https://www.bilibili.com/video/BV1ug411m7ir?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33vd_source=a822dcda3537564ccdd0bb45aa0afe33
 
 
 ## 致谢
