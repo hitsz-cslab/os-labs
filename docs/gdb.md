@@ -23,7 +23,7 @@
 mv ~/.gdbinit ~/.gdbinit.bak    # 将原有配置重命名，避免覆盖
 wget -P ~ https://gitee.com/ftutorials/gdb-dashboard/raw/master/.gdbinit    # 将.gdbinit下载到家目录
 ```
-&emsp;&emsp;（可选）为启用语法高亮（汇编和C语言），我们还需要下载 [Pygments](http://pygments.org/)。注意：远程平台已经下好了 Pygments，无需进行这一步。
+&emsp;&emsp;（可选）为启用语法高亮（汇编和C语言），我们还需要下载 [Pygments](http://pygments.org/)。注意：远程实验平台已经下好了 Pygments，无需进行这一步。
 
 ```
 pip install --no-cache-dir pygments

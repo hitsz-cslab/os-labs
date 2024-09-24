@@ -72,6 +72,7 @@ $ sudo apt-get install git build-essential gdb-multiarch qemu-system-misc gcc-ri
 $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
 ```
 
+<!---
 &emsp;&emsp;如果下载速度太慢，你可以直接使用已经下载好的包。下载完成后，将riscv-gnu-toolchain.tar.gz上传至Linux系统中并解压：
 
 > 下载地址（校内网）： https://mirrors.osa.moe/misc/， 选择riscv-gnu-toolchain.tar.gz。下载完成后，需要将riscv-gnu-toolchain.tar.gz上传至Linux系统中，上传方法详见MobaXterm(SSH工具)这一节中的[文件传输SFTP服务](../tools/#12-sftp)。上传到Linux系统中，需要对RISC-V GNU编译器工具链进行解压，解压命令如下：
@@ -79,6 +80,8 @@ $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
 > ```shell
 > $ tar zxvf riscv-gnu-toolchain.tar.gz
 > ```
+
+--->
 
 &emsp;&emsp;接下来，下载编译工具链所需的依赖包：
 
@@ -93,11 +96,19 @@ $ cd riscv-gnu-toolchain
 $ ./configure --prefix=/usr/local
 $ sudo make
 $ cd ..
+```
+<!---
+```shell
+$ cd riscv-gnu-toolchain
+$ ./configure --prefix=/usr/local
+$ sudo make
+$ cd ..
  
 $ rm riscv-gnu-toolchain.tar.gz
 rm: remove regular file 'riscv-gnu-toolchain.tar.gz'? y
 $ 
 ```
+--->
 
 #### 2.1.3 安装QEMU
 
