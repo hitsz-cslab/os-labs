@@ -15,7 +15,7 @@
 在终端中，输入：
 
 ```bash
-echo "set auto-load safe-path /" >>  ~/.gdbinit
+grep -qxF 'set auto-load safe-path /' ~/.gdbinit || echo 'set auto-load safe-path /' >> ~/.gdbinit # 使gdb可以信任所有目录的.gdbinit
 ```
 
 这会关闭gdb的autoload信任机制——别担心，你们没有管理员权限，搞不坏远程环境的。

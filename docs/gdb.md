@@ -23,6 +23,12 @@
 mv ~/.gdbinit ~/.gdbinit.bak    # 将原有配置重命名，避免覆盖
 wget -P ~ https://gitee.com/ftutorials/gdb-dashboard/raw/master/.gdbinit    # 将.gdbinit下载到家目录
 ```
+
+接着我们需要让 gdb 信任所有目录下的 .gdbinit。下面这行命令的作用是使用 grep 命令检测 ~/.gdbinit 是否有"set auto-load safe-path /"这行配置，如果没有就在末尾追加这行配置。
+```
+grep -qxF 'set auto-load safe-path /' ~/.gdbinit || echo 'set auto-load safe-path /' >> ~/.gdbinit # 使gdb可以信任所有目录的.gdbinit
+```
+
 &emsp;&emsp;（可选）为启用语法高亮（汇编和C语言），我们还需要下载 [Pygments](http://pygments.org/)。注意：远程实验平台已经下好了 Pygments，无需进行这一步。
 
 ```
