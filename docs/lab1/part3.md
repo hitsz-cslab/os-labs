@@ -158,6 +158,9 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
 
 &emsp;&emsp;接下来我们将会演示使用 gdb 以及 gdb-dashboard 调试 xv6 的启动流程，请同学们跟着实验步骤亲自动手调试并结合 xv6 代码进行思考。
 
+!!! warning "太难了怎么办" 
+    强烈推荐观看由我校录制的这两个讲解视频[使用gdb调试xv6启动流程（1)](https://www.bilibili.com/video/BV1zAt6e3EfU/?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33)、[使用gdb调试xv6启动流程（2）](https://www.bilibili.com/video/BV1MrtUe7ELC/?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33)，这会帮助你更好的理解xv6的启动流程和学会使用GDB调试。
+
 &emsp;&emsp;调试启动流程步骤如下:
 
 &emsp;&emsp;按照[GDB 调试指南](../gdb.md)启动 qemu 并进行调试：
