@@ -86,7 +86,7 @@ $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
 &emsp;&emsp;接下来，下载编译工具链所需的依赖包：
 
 ```shell
-$ sudo apt-get install autoconf automake autotools-dev curl libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev
+$ sudo apt-get install autoconf automake autotools-dev curl python3 python3-pip libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev ninja-build git cmake libglib2.0-dev libslirp-dev
 ```
 
 &emsp;&emsp;安装RISC-V GNU编译器工具链
@@ -97,6 +97,9 @@ $ ./configure --prefix=/usr/local
 $ sudo make
 $ cd ..
 ```
+
+注：如果你想要将工具链安装到非标准目录（即不是/usr/local），可以在./configure命令中通过修改--prefix参数的值来实现。安装完成后，你可能需要更新你的环境变量（如PATH），以确保系统能够找到新安装的RISC-V工具链。这通常涉及到在你的shell配置文件中（如.bashrc）添加一行，如export PATH=/usr/local/bin:$PATH，然后重新加载配置文件或重新登录shell。
+
 <!---
 ```shell
 $ cd riscv-gnu-toolchain
