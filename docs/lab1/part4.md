@@ -14,11 +14,33 @@
 
 - 编写好3个程序(sleep、pingpong、find)后，在xv6-oslab24-hitsz项目目录下，运行make grade，查看是否都能通过。
 - 做完xv6启动流程实验后，将gdb命令脚本命名为 **commands.gdb**，放在xv6-oslab24-hitsz项目包里，具体要求详见：[关于 gdb 命令脚本如何导出](../part1/#34-xv6)。
-- 在完成上述两个步骤之后，将当前分支上的所有更改进行提交（commit，具体方法参考[git使用教程](#3-git)）。
-- 在仓库的目录下使用`make diff`命令导出更改文件（commit.patch）。
+- 在完成上述两个步骤之后，将当前分支上的所有更改进行提交（commit，具体方法参考[git使用教程](#3-git)，即执行`git add .`和`git commit -m "lab1 finished"`这两条指令）。
+- 在仓库的目录下使用`make diff`命令导出更改文件（commit.patch），该命令会 **比较你上一次`commit`的代码与实验初始代码** ，所以一定要记得`commit`。
 - 将 **生成的commit.patch文件** 与 **实验报告** 一起打包提交到作业提交平台即可。
 
 <div align="center"> <img src="../part4.assets/image-20230913181456026.png" /> </div>
+
+!!! warning "如何检验提交上去的commit.patch文件正确"
+    强烈建议你通过`make diff`生成`commit.patch`文件后，再按照下面这个步骤检测一下再提交`commit.patch`文件，**否则可能出现自己是对的但是自动评测脚本没分的情况**！！！
+    
+    1. `git stash`(如果你当前没有未提交更改，可以忽略这一步)
+
+        说明：该命令将你当前工作目录中的未提交更改（包括已修改的文件和已暂存的文件）暂时保存起来，并将工作目录恢复到干净的状态（即恢复到最近一次 commit 的状态）。这样可以防止当前正在编辑或未提交的文件与后续的操作（如切换分支或应用补丁）发生冲突。这样你可以在后续操作完成后恢复这些未提交的更改。
+    2. `git checkout util-base-24`
+
+        说明：切换到对应分支的标签，如果你在做实验二syscall则改为`syscall-base-24`。这是实验的初始代码版本。如果你没有这个标签可以使用`git fetch --tags`命令
+    3. `git apply commit.patch`
+
+        说明：将 `commit.patch` 文件中的更改应用到当前分支的代码上。如果显示`No such file or directory`，说明你在`git add .`的时候把`commit.patch`也跟踪了导致切换的时候没有这个文件，你现在需要手动保存`commit.patch` 文件再复制到这个`util-base-24`标签下的代码版本里。
+    4. `make grade`
+
+        说明：验证是否能正确复现，能通过所有测试
+    5. `git checkout -f util`
+
+        说明：强制(-f选项)切换回你正在开发的 util 分支，并丢弃 git apply 或其他未提交的更改
+    6. `git stash pop`（如果你没有进行`git stash`，可以忽略这一步）
+
+        说明：恢复之前 `git stash` 保存的未提交更改，将它们重新应用到当前工作目录中
 
 ------
 
