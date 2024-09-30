@@ -31,7 +31,11 @@
         说明：切换到对应分支的标签，如果你在做实验二syscall则改为`syscall-base-24`。这是实验的初始代码版本。如果你没有这个标签可以使用`git fetch --tags`命令
     3. `git apply commit.patch`
 
-        说明：将 `commit.patch` 文件中的更改应用到当前分支的代码上。如果显示`No such file or directory`，说明你在`git add .`的时候把`commit.patch`也跟踪了导致切换的时候没有这个文件，你现在需要手动保存`commit.patch` 文件再复制到这个`util-base-24`标签下的代码版本里。如果出现`already exists in working directory`错误，那么请在`util`分支下`.gitignore`文件中添加`commit.patch`，表示Git 在将来不再跟踪 `commit.patch` 文件，重新执行`git add .`、`git commit -m "xxxxx"`、`make diff`这一系列操作，再换到`util-base-24`下apply
+        说明：将 `commit.patch` 文件中的更改应用到当前分支的代码上。如果显示`No such file or directory`，说明你在`git add .`的时候把`commit.patch`也跟踪了导致切换的时候没有这个文件，你现在需要手动保存`commit.patch` 文件再复制到这个`util-base-24`标签下的代码版本里。如果出现`already exists in working directory`错误，说明你的`commit.patch`文件出现了自己和自己diff的套娃，此时请在util分支下按如下步骤执行：
+        
+        - 在.gitignore文件中加上commit.patch这一行
+        - 使用`git rm --cached commit.patch`取消对`commit.patch`文件的跟踪
+        - 使用`git diff util-base-24 HEAD -- . ':!commit.patch' > commit.patch`代替原来的`make diff`指令重新生成commit.patch，回到`如何检验提交上去的commit.patch文件是否正确`的第一步
     4. `make grade`
 
         说明：验证是否能正确复现，能通过所有测试
