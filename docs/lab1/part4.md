@@ -20,8 +20,8 @@
 
 <div align="center"> <img src="../part4.assets/image-20230913181456026.png" /> </div>
 
-!!! warning "如何检验提交上去的commit.patch文件是否正确"
-    强烈建议你通过`make diff`生成`commit.patch`文件后，再按照下面这个步骤检测一下再提交`commit.patch`文件，**否则可能出现自己是对的但是自动评测脚本没分的情况**！！！
+!!! tip "如何检验提交上去的commit.patch文件是否正确"
+    建议你通过`make diff`生成`commit.patch`文件后，再按照下面这个步骤检测一下再提交`commit.patch`文件，否则可能出现自己是对的但是自动评测脚本没分的情况。**在检验过程中请不要进行额外的git操作，如果已经开始了检验步骤，务必进行到底！**
     
     1. `git stash`(如果你当前没有未提交更改，可以忽略这一步)
 
