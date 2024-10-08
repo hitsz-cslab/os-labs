@@ -25,7 +25,7 @@
 
 ## 1.  实验目的
 
-本节实验的目的是对操作系统的系统调用模块进行修改，尽可能在真正修改操作系统之前，先对操作系统有一定的了解。
+&emsp;&emsp;本节实验的目的是对操作系统的系统调用模块进行修改，尽可能在真正修改操作系统之前，先对操作系统有一定的了解。
 
 1. 了解xv6系统调用的工作原理。
 2. 熟悉xv6通过系统调用给用户程序提供服务的机制。
@@ -34,11 +34,11 @@
 
 ## 2.  实验学时
 
-本实验为4学时。
+&emsp;&emsp;本实验为4学时。
 
 ## 3.  实验内容及要求
 
-实验要求可以参考`MIT XV6 lab2`和`lab4`提供的部分官方说明：[[Lab: System calls(mit.edu)]](https://pdos.csail.mit.edu/6.828/2020/labs/syscall.html) 、[[Lab: Trap(mit.edu)]](https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html)， **但请以指导书为准，否则可能无法通过测试！** 
+&emsp;&emsp;实验要求可以参考`MIT XV6 lab2`和`lab4`提供的部分官方说明：[[Lab: System calls(mit.edu)]](https://pdos.csail.mit.edu/6.828/2020/labs/syscall.html) 、[[Lab: Trap(mit.edu)]](https://pdos.csail.mit.edu/6.S081/2020/labs/traps.html)， **但请以指导书为准，否则可能无法通过测试！** 
 
 ### 3.1 切换分支
 
@@ -64,16 +64,16 @@
 ![](part1.assets/git_pull.png)
 
 
-我们建议同学们在切换分支之后进行`make clean`将上一个分支的`fs.img`删除，不然会出现无法启动qemu的问题（会显示`fs.img`被其他的进程占用）。
+&emsp;&emsp;我们建议同学们在切换分支之后进行`make clean`将上一个分支的`fs.img`删除，不然会出现无法启动qemu的问题（会显示`fs.img`被其他的进程占用）。
 
-本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用`exittest`, `waittest`和`yieldtest`测试程序。具体来说，本实验有三部分：
+&emsp;&emsp;本次实验需要为xv6实现一些必要的系统调用和功能，在完成这些之后，你就可以正常使用`exittest`, `waittest`和`yieldtest`测试程序。具体来说，本实验有三部分：
 
 
 ### 3.2 任务一：进程信息收集
 
-在该任务中，你需要在理解xv6的`exit`系统调用的基础上，实现 **进程在退出时打印自己的父进程和子进程的信息** 这一功能。
+&emsp;&emsp;在该任务中，你需要在理解xv6的`exit`系统调用的基础上，实现 **进程在退出时打印自己的父进程和子进程的信息** 这一功能。
 
-**具体要求：在exit系统调用当中寻找合适的输出时间点，在相应的函数内进行父子进程信息的打印。** 
+&emsp;&emsp;**具体要求：在exit系统调用当中寻找合适的输出时间点，在相应的函数内进行父子进程信息的打印。** 
 
 #### 3.2.1 exit系统调用的功能
 
@@ -95,12 +95,12 @@
 
 #### 3.2.2 运行结果
 
-实验提供了一个exittest（见 `user/exittest.c`）用户级应用程序，该程序首先通过fork系统调用创建3个子进程，并通过sleep保证父进程在退出时子进程还没有退出，然后父进程先退出，3个子进程再退出。
+&emsp;&emsp;实验提供了一个exittest（见 `user/exittest.c`）用户级应用程序，该程序首先通过fork系统调用创建3个子进程，并通过sleep保证父进程在退出时子进程还没有退出，然后父进程先退出，3个子进程再退出。
 
 !!! note   "提示"
     大家不要修改 `user/exittest.c`应用程序，它只是用于测试[3.2.1 exit系统调用的功能](#321)。
 
-在你实现完上述功能之后，运行用户程序 exittest运行正确的情况下，你可以看到以下输出：
+&emsp;&emsp;在你实现完上述功能之后，运行用户程序 exittest运行正确的情况下，你可以看到以下输出：
 
 ```
 [cs@localhost xv6-oslab23-hitsz]$ make qemu
@@ -155,28 +155,29 @@ $ [INFO] proc 5 exit, parent pid 1, name init, state runble
       // prints "OK".
       ```
      -->
-我们先不着急动手，先看看结果长什么样。在输出当中，存在两种不同的输出：  
-对当前进程的父进程的信息的输出：
+&emsp;&emsp;我们先不着急动手，先看看结果长什么样。在输出当中，存在两种不同的输出：  
+
+&emsp;&emsp;对当前进程的父进程的信息的输出：
 ```
 [INFO] proc 3 exit, parent pid 2, name sh, state sleep
 ```
-以及对当前进程的子进程的信息的输出：
+&emsp;&emsp;以及对当前进程的子进程的信息的输出：
 ```
 [INFO] proc 3 exit, child 0, pid 4, name child0, state sleep
 ```
-同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
+&emsp;&emsp;同时可以看到3号进程的子进程，在3号进程死后，它们的父进程都变成了init进程：
 ```
 $ [INFO] proc 5 exit, parent pid 1, name init, state runble
 [INFO] proc 4 exit, parent pid 1, name init, state run
 [INFO] proc 6 exit, parent pid 1, name init, state run
 ```
-关于这点我们会在[实验原理](../part2/#3)当中详细介绍。  
-你需要使用尝试在与exit相关的函数当中找到 **合适的位置** 来进行输出，我们建议你先阅读[实验原理](../part2/#3)，这会帮助你更好的了解系统调用和exit的工作流程。
+&emsp;&emsp;关于这点我们会在[实验原理](../part2/#3)当中详细介绍。  
+&emsp;&emsp;你需要使用尝试在与exit相关的函数当中找到 **合适的位置** 来进行输出，我们建议你先阅读[实验原理](../part2/#3)，这会帮助你更好的了解系统调用和exit的工作流程。
       
 
 ### 3.3 任务二：wait系统调用的非阻塞选项实现
 
-在该任务中，你需要 **对wait系统调用进行更改，使其增加一个非阻塞选项参数`int flags`，当`flags`为1时表示不需要进行阻塞等待**，否则需要进行阻塞等待。
+&emsp;&emsp;在该任务中，你需要 **对wait系统调用进行更改，使其增加一个非阻塞选项参数`int flags`，当`flags`为1时表示不需要进行阻塞等待**，否则需要进行阻塞等待。
 
 - *原版阻塞实现的wait* ：`int wait(int *status)`，其中参数status表示存储子进程退出状态的地址。在`kernel/proc.c`当中的wait函数内的结尾处，xv6通过以下代码实现wait的阻塞等待：
     ```
@@ -187,7 +188,7 @@ $ [INFO] proc 5 exit, parent pid 1, name init, state runble
 
 - *本任务需要实现的wait* ：`int wait(int *status, int flags)`，其中flags参数用以 **表示是否阻塞等待** 子进程退出。用户态的wait接口我们已经帮同学们更改了，同学们需要将内核态的wait系统调用的更改。  
 
-具体来说，同学们需要：
+&emsp;&emsp;具体来说，同学们需要：
 
 1. 尝试在`kernel/sysproc.c`的`sys_wait`函数中获取新添加的参数；
 2. 更改`kernel/defs.h`头文件中的wait的定义；
@@ -207,9 +208,9 @@ $ [INFO] proc 5 exit, parent pid 1, name init, state runble
 - `nproc`： **状态为UNUSED** 的进程个数
 - `freefd`：当前进程可用文件描述符的数量，即 **尚未使用** 的文件描述符数量 -->
 
-实验提供了一个`waittest`用户级应用程序（见`user/waittest.c`）。
+&emsp;&emsp;实验提供了一个`waittest`用户级应用程序（见`user/waittest.c`）。
 
-完成任务后，你可以在xv6中运行`waittest`程序，通过测试会显示如下内容：
+&emsp;&emsp;完成任务后，你可以在xv6中运行`waittest`程序，通过测试会显示如下内容：
 
 <!-- ![image-20211005130943125](part1.assets/image-20211005130943125.png) -->
 ![waittest-result](part1.assets/waittest-ans.png)
@@ -217,9 +218,9 @@ $ [INFO] proc 5 exit, parent pid 1, name init, state runble
 
 ### 3.4 任务三：实现yield系统调用
 
-你需要实现一个新的系统调用 `yield`，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程。当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码。
+&emsp;&emsp;你需要实现一个新的系统调用 `yield`，它可以使当前进程让出CPU，从而使CPU可以调度到别的进程。当然，该进程只是暂时被挂起，根据我们在课上学过的进程调度算法，如Round-Robin即时间片轮转调度算法，该进程很快便会再次被CPU调度到，从而从yield系统调用中返回，继续执行该进程后面的代码。
 
-另外我们的实验还有些额外要求，当调用`yield`系统调用时：
+&emsp;&emsp;另外我们的实验还有些额外要求，当调用`yield`系统调用时：
 
 1. 需要打印进程的内核线程上下文被保存的地址范围，按如下格式打印：
 ```shell
@@ -235,7 +236,7 @@ Next runnable process pid is ??? and user pc is 0x???
 
 
 ```
-   也就是在某些位置，分别添加上这样几句代码：
+&emsp;&emsp;也就是在某些位置，分别添加上这样几句代码：
 ```c
 printf("Save the context of the process to the memory region from address %p to %p\n", ?, ?);
 printf("Current running process pid is %d and user pc is %p\n", ?, ?);
@@ -243,7 +244,7 @@ printf("Next runnable process pid is %d and user pc is %p\n", ?, ?);
 ```
 2. 将当前进程让出CPU，从而调度到别的进程。
 
-实验提供了一个`yieldtest`用户态测试程序（见user/yieldtest.c）。完成任务后，你可以在xv6中运行`yieldtest`程序，不过有以下几点需要注意：
+&emsp;&emsp;实验提供了一个`yieldtest`用户态测试程序（见user/yieldtest.c）。完成任务后，你可以在xv6中运行`yieldtest`程序，不过有以下几点需要注意：
 
 - （1） 需要手动将`yieldtest`添加进Makefile中进行编译，即找到`UPROGS`变量，添加一行：
 ![](part1.assets/yield-test.png)
@@ -254,15 +255,15 @@ make qemu CPUS=1
 ```
 
 
-正确完成任务后 `yieldtest`的输出如下(你的具体数字可能不同，但是能通过`./grade-lab-syscall yield`测试即可)：
+&emsp;&emsp;正确完成任务后 `yieldtest`的输出如下(你的具体数字可能不同，但是能通过`./grade-lab-syscall yield`测试即可)：
 
 ![](part1.assets/yieldtest_output.png)
 ![](part1.assets/yieldtest_pass.png)
 ### 3.5 测试
 
-当完成上述的三个任务后，你需要在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
+&emsp;&emsp;当完成上述的三个任务后，你需要在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
 
-最后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
+&emsp;&emsp;最后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
 
 ![image-20211005131516101](part1.assets/result.png)
 
