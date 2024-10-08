@@ -103,7 +103,7 @@
 &emsp;&emsp;在你实现完上述功能之后，运行用户程序 exittest运行正确的情况下，你可以看到以下输出：
 
 ```
-[cs@localhost xv6-oslab23-hitsz]$ make qemu
+[cs@localhost xv6-oslab24-hitsz]$ make qemu
 
 /* 一大波输出 …… */
 
@@ -261,7 +261,7 @@ make qemu CPUS=1
 ![](part1.assets/yieldtest_pass.png)
 ### 3.5 测试
 
-&emsp;&emsp;当完成上述的三个任务后，你需要在xv6-oslab23-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
+&emsp;&emsp;当完成上述的三个任务后，你需要在xv6-oslab24-hitsz目录下，新建time.txt文件，在该文件中写入你做完这个实验所花费的时间（估算一下就行，单位是小时），只需要写一个整数即可。
 
 &emsp;&emsp;最后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
 
