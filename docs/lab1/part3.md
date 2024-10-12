@@ -129,7 +129,7 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
 二、了解管道模型，回答下列问题
 
 1. 简要说明在pingpong实验中，你是怎么创建管道的？结合fork系统调用说明你是怎么使用管道在父子进程之间传输数据的。
-2. 再次阅读[实验原理-管道](../part2/#5)这一节中给出的关于`wc`命令的示例程序，假设子进程没有关闭管道写端，运行该程序后，尝试描述会发生什么？为什么在Linux环境下编译运行再执行`ps`指令会有如下结果？
+2. 再次阅读[实验原理-管道](../part2/#5)这一节中给出的关于`wc`命令的示例程序，假设子进程没有关闭管道写端，在Linux环境下编译运行后执行`ps`指令，我们发现会多一个永不结束的`wc`进程，为什么会有如下结果？
 <div align="center"> <img src="../part3.assets/pipe-question.png" /> </div>
 <div align="center"> <img src="../part3.assets/pipe-question-result.png" /> </div>
 
