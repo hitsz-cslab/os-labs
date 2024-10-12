@@ -27,6 +27,28 @@
 ![pingpong3](lab1.assets/pingpong3.png)  
 解决方案：用户程序退出时使用 `exit()` 函数退出，不要使用 `return` 返回。
 
+### 2.3 pingpong测试不通过
+
+在手动输入命令时能打印出来，但是测试的时候显示不通过
+
+![pingpong4](lab1.assets/pingpong4.png) 
+
+![pingpong5](lab1.assets/pingpong5.png) 
+
+查看xv6.out.pingpong文件，可知输出的字符串有很多空字符。
+
+![pingpong6](lab1.assets/pingpong6.png) 
+
+该同学在pingpong程序中，向标准输出输出的时候直接用`write(1, pid, sizeof(pid)); `这种输出，导致把整个pid数组写到了标准输出。这种方式的输出在终端上看不出来，但用编辑器打开输出文件就清楚有哪些不可见字符。
+
+![pingpong7](lab1.assets/pingpong7.png) 
+
+一般向标准输出打印字符串是用`printf`函数，`printf`逐位打印字符数组，直到遇见"\0"字符就停止。
+
+解决方案：换成`printf`函数。
+
+
+
 ## 3. primes
 
 ### 3.1 primes输出发生奇怪的错误
