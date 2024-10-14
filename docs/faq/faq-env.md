@@ -220,3 +220,9 @@ no changes added to commit (use "git add" and/or "git commit -a")
 ### 6.1 GDB 不能 stepi ecall 或 sret 指令
 
 因为 gdb 版本不对，应该使用 `riscv64-unknown-elf-gdb` 而不是 `gdb-multiarch` 或 `riscv64-unknown-linux-gnu-gdb`。elf 表示裸机上执行的程序，通常为操作系统，linux-gnu 表示运行在 linux 上的程序，是正常的用户软件。裸机程序 gdb 才能调试特权级汇编语句。
+
+
+### 6.2 gdb-dashboard 装上去没有显示
+
+1. 检查 `~/.config/gdb/gdbinit` 文件是否存在，如果存在请删除。因为gdb 默认会选择 `~/.config/gdb/gdbinit` 作为配置文件，优先级高于 `~/.gdbinit`。
+2. `tail ~/.gdbinit` 查看文件末尾是否存在 `set auto-load safe-path /` 这一行，如果没有请手动添加。
