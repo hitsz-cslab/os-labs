@@ -90,12 +90,12 @@ nav:
     - 实验原理: lab2/part2.md
     - 实验实现: lab2/part3.md
     - 提交文档: lab2/part4.md   
-# - Lab3：锁机制的应用: 
-#   - 实验概述: lab3/part1.md
-#   - 实验原理: lab3/part2.md
-#   - 实验实现: lab3/part3.md
-#   - xv-6中Lock的实现（选读）: lab3/part4.md  
-#   - 提交文档: lab3/part5.md   
+  - Lab3：锁机制的应用: 
+    - 实验概述: lab3/part1.md
+    - 实验原理: lab3/part2.md
+    - 实验实现: lab3/part3.md
+    - xv-6中Lock的实现（选读）: lab3/part4.md  
+    - 提交文档: lab3/part5.md   
 # - Lab4：页表: 
 #   - 实验概述: lab4/part1.md
 #   - 实验原理: lab4/part2.md

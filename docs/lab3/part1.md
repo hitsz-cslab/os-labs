@@ -46,7 +46,7 @@
 
 ## 2.  实验学时
 
-本实验为4学时。
+&emsp;&emsp;本实验为4学时。
     
 
 ## 3.  实验内容及要求
@@ -58,10 +58,11 @@
 
 ### 3.1 任务一：内存分配器（Memory allocator）
 
-**修改内存分配器（主要修改kernel/kalloc.c）** ，使每个CPU核使用独立的内存链表，而不是现在的共享链表。
+&emsp;&emsp;**修改内存分配器（主要修改kernel/kalloc.c）** ，使每个CPU核使用独立的内存链表，而不是现在的共享链表。
 
-XV6的内存分配器只有一个内存链表供多个CPU核使用。在使用`kalloc()`获取内存时，由于添加了内存锁`kmem.lock`，其他CPU如果要切换进行内存申请必须等待当前进程释放内存锁。要消除锁争用的情况，需要重新设计内存链表管理机制以避免单个锁和单个链表。实验基本任务是让每个CPU拥有自己的内存链表，每个链表都有自己的锁。其中最具挑战的就是，当一个CPU内存链表不足时，还可以从其他链表 **窃取** 内存块，这样，就不会让所有的CPU争抢一个空闲区域（窃取可能会引发锁争用，但这也是不可避免的情况）。
+&emsp;&emsp;XV6的内存分配器只有一个内存链表供多个CPU核使用。在使用`kalloc()`获取内存时，由于添加了内存锁`kmem.lock`，其他CPU如果要切换进行内存申请必须等待当前进程释放内存锁。要消除锁争用的情况，需要重新设计内存链表管理机制以避免单个锁和单个链表。实验基本任务是让每个CPU拥有自己的内存链表，每个链表都有自己的锁。其中最具挑战的就是，当一个CPU内存链表不足时，还可以从其他链表 **窃取** 内存块，这样，就不会让所有的CPU争抢一个空闲区域（窃取可能会引发锁争用，但这也是不可避免的情况）。
 
+<!--
 !!! note   "怎么查看XV6开启了多少个CPU核？"
     在输入make qemu时，默认会启动3个CPU核，具体可以查看Makefile文件：
 
@@ -72,12 +73,13 @@ XV6的内存分配器只有一个内存链表供多个CPU核使用。在使用`k
     ```
 
     如果要开启单个CPU，使用命令 make CPUS=1 qemu 重新编译即可。在C代码中，可以使用kernel/param.h中的NCPU宏来查看CPU的数目（maximum number of CPUs）。
+-->
 
 #### 3.1.1 关于测评程序kalloctest
 
-测评程序`kalloctest`（见user/kalloctest.c）有两个test，分别是test1和test2。
+&emsp;&emsp;测评程序`kalloctest`（见`user/kalloctest.c`）有两个`test`，分别是`test1`和`test2`。
 
-- (1) 在test1中fork出多个进程，它们并发运行于不同CPU核心，用 `sbrk()` 进行频繁获取空闲内存（通过调用`kalloc()`实现），然后又释放（通过调用`kfree()`实现）。在获取内存的时候不同CPU核心可能会争抢锁。
+- (1) 在`test1`中`fork`出多个进程，它们并发运行于不同CPU核心，用 `sbrk()` 进行频繁获取空闲内存（通过调用`kalloc()`实现），然后又释放（通过调用`kfree()`实现）。在获取内存的时候不同CPU核心可能会争抢锁。
 
 <!--
 !!! note   "`sbrk()`函数功能说明"
@@ -88,9 +90,9 @@ XV6的内存分配器只有一个内存链表供多个CPU核使用。在使用`k
     `uvmalloc`首先使用`kalloc`来分配物理内存，然后再用`mappages`把PTE加到用户的页表里。`uvmdealloc`调用`uvmunmap`实现其功能，`uvmunmap`首先用`walk`来找到对应的PTE，然后使用`kfree`来释放相应的物理内存。
 -->
 
-- (2) 在test2中测试所有空闲内存的获取和释放，由于test2未使用fork，只在单进程中测试。
+- (2) 在`test2`中测试所有空闲内存的获取和释放，由于`test2`未使用`fork`，只在单进程中测试。
    
-测评程序kalloctest最终会打印出`fetch-and-add`的数目，也就是 **没有成功获取** 到kmem锁的次数，这种粗略测量锁争用的方式（实验前，即未修改前）如下：
+&emsp;&emsp;测评程序`kalloctest`运行了上述两个测试（test1和test2），最终会打印出`fetch-and-add`的数目，也就是 **自旋（CPU不停循环等待解锁）的次数** ，这种粗略测量锁争用的方式（实验前，即未修改前）如下：
 
 ```console
 $ kalloctest
@@ -112,12 +114,14 @@ total free number of pages: 32499 (out of 32768)
 .....
 test2 OK
 ```
+  
+&emsp;&emsp;"lock: kmem"、"lock: bcache"、"lock: proc" 等指示了锁的类型。`acquire()`记录了每种锁 **被请求的次数** 。`fetch-and-add`就是 **自旋（CPU不停循环等待解锁）的次数** 。例如， *lock: kmem: #fetch-and-add 46375 #acquire() 433016* 这句话的意思是，`kmem.lock`请求了433016次，自旋了46375次。
 
-其中，"lock: kmem"、"lock: bcache"、"lock: proc" 等指示了锁的类型，acquire()记录了每种锁 **被请求** 的次数，fetch-and-add就是 **进程没有成功获取到此锁** 的次数。例如， *lock: kmem: #fetch-and-add 46375 #acquire() 433016* 这句话的意思是，kmem.lock请求了433016次，仅成功了433016 - 46375 = 386641次，这就是发生了锁争用了（lock contention）。
+&emsp;&emsp;这些计数来自于在`kalloctest`调用的`ntas()`，它通过执行`statistics()`函数，打开"statistics"设备文件，获取内核打印的那些针对`kmem`和`bcache`锁( **本实验的重点** )及5个竞争最激烈的锁的计数（见`kernel/spinlock.c`中的`statslock()`）。关于`#acquire`和`#fetch-and-add`的计数算法见[测评程序kalloctest对锁的检测](../part4/#4-kalloctest)。
 
-这些计数来自于在kalloctest调用的ntas()，它通过执行statistics()函数，打开"statistics"设备文件，获取内核打印的那些针对kmem和bcache锁( **本验的重点** )及5个竞争最激烈的锁的计数（见kernel/spinlock.c中的`statslock()`）。关于#acquire和#fetch-and-add的计数算法见[测评程序kalloctest对锁的检测](../part4/#4-kalloctest)。
+&emsp;&emsp;如果存在锁争用，`fetch-and-add`的数量将会很高，因为在`acquire()`获得锁之前要进行许多循环迭代，"statistics"设备文件会返回`kmem`和`bcache`锁的`#test-and-set`的总和（也就是`tot`的值，即没有获取到此锁的次数）。
 
-如果存在锁争用，fetch-and-add的数量将会很高，因为在acquire()获得锁之前要进行许多循环迭代，"statistics"设备文件会返回kmem和bcache锁的#test-and-set的总和（也就是`tot`的值，即没有获取到此锁的次数）。
+&emsp;&emsp;test1失败，说明锁竞争太激烈，特别是在`kmem`锁。test2成功，说明内存分配和释放在测试期间没有问题。
 
 #### 3.1.2 具体要求
   
@@ -125,16 +129,16 @@ test2 OK
 2)   运行`kalloctest`查看实现的代码是否减少了锁争用（`tot`没有获取到此锁的次数小于10则为通过）；  
 3)   运行 `usertests sbrkmuch` 以测试修改代码后系统是否仍可以分配所有的内存；  
 4)   运行`usertests`，确保其能能够全部通过；  
-5)   kalloctest和usertests的输出如下图（锁争用的次数大大减少），具体的数据会有所差别：
+5)   `kalloctest`和`usertests`的输出如下图（锁争用的次数大大减少），具体的数据会有所差别：
 
     
 <div align="center"> <img src="../part1.assets/kalloc_proc.jpg" width = 70%/> </div>
 
 ### 3.2 任务二：磁盘缓存（Buffer cache）
     
-在访问文件数据的时候，操作系统会将文件的数据放置在磁盘缓存中。磁盘缓存是不同进程之间的共享资源，因此需要通过锁确保使用的正确性。如果有多进程密集地使用文件系统，他们可能会竞争磁盘缓存的`bcache.lock`锁。
+&emsp;&emsp;在访问文件数据的时候，操作系统会将文件的数据放置在磁盘缓存中。磁盘缓存是不同进程之间的共享资源，因此需要通过锁确保使用的正确性。如果有多进程密集地使用文件系统，他们可能会竞争磁盘缓存的`bcache.lock`锁。
 
-目前，xv6采用单个锁来管理磁盘缓存。假设有三个进程大量读写磁盘，而由于磁盘缓存只有一个`bcache.lock`锁，这就导致三个进程的竞争异常激烈。因此，我们需要 **修改磁盘缓存块列表的管理机制（主要修改kernel/bio.c）** ，使得可用多个锁管理缓存块，从而减少缓存块管理的锁争用。
+&emsp;&emsp;目前，xv6采用单个锁来管理磁盘缓存。假设有三个进程大量读写磁盘，而由于磁盘缓存只有一个`bcache.lock`锁，这就导致三个进程的竞争异常激烈。因此，我们需要 **修改磁盘缓存块列表的管理机制（主要修改kernel/bio.c）** ，使得可用多个锁管理缓存块，从而减少缓存块管理的锁争用。
 
 <!--
 !!! tip   "提示"
@@ -143,40 +147,40 @@ test2 OK
 
 #### 3.2.1 关于测评程序bcachetest
 
-测评程序bcachetest（见user/bcachetest.c）通过创建多个进程重复去读取不同的文件，从而造成bcache.lock锁争用。
+&emsp;&emsp;测评程序`bcachetest`（见`user/bcachetest.c`）通过创建多个进程重复去读取不同的文件，从而造成`bcache.lock`锁争用。
 
-测试方式如下：
+&emsp;&emsp;测试方式如下：
 
-实验前（即未修改前），测评程序bcachetest的输出如下：
+&emsp;&emsp;实验前（即未修改前），测评程序bcachetest的输出如下：
 
 <div align="center"> <img src="../part1.assets/image-20211019205157241.png" width = 80%/> </div>
 
-可以看到，bcache的`fetch-and-add`值非常大，说明磁盘缓存锁的争用非常严重。
+&emsp;&emsp;可以看到，bcache的`fetch-and-add`值非常大，说明磁盘缓存锁的争用非常严重。
 
-修改buffer cache的设计后，所有锁的fetch-and-add的数目应当接近于0。
+&emsp;&emsp;修改buffer cache的设计后，所有锁的fetch-and-add的数目应当接近于0。
 
 #### 3.2.2 具体要求
 
 !!! warning  "关于bcache实验的补充说明"
-    本实验要求大家在XV6原版的bcache基础上，修改磁盘缓存块列表的管理机制，主要修改kernel/bio.c。也就是，在原有的磁盘缓存大小的基础上，可采用多个哈希桶、时间戳、或CLOCK算法等优化策略来减少磁盘缓存的锁争用。故以下修改是不允许的：
+    本实验要求大家在XV6原版的bcache基础上，修改磁盘缓存块列表的管理机制，主要修改kernel/bio.c。也就是，在原有的磁盘缓存大小的基础上，可采用多个哈希桶、时间戳、或CLOCK算法等优化策略来减少磁盘缓存的锁争用。以下修改是不允许的：
 
-     1. 不允许修改`NBUF`的大小；
-     2. 不允许修改buf的数量，比如设置N个`struct buf [NBUF]`；
-     3. 不允许随意修改锁的命名，本任务涉及到的锁必须以`bcache`开头来命名。
+     1.  **不允许修改`NBUF`的大小** ；
+     2.  **不允许修改buf的数量，比如设置N个`struct buf [NBUF]`** ；
+     3.  **不允许随意修改锁的命名，本任务涉及到的锁必须以`bcache`开头来命名** 。
 
 
 -  理想状态下，`bcachetest`中数据块缓存相关的所有锁`fetch-and-add`的总和应该为0，但本实验中总和`tot`不超过500即可；  
--   请修改`bget()`和`brelse()`，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等bcache.lock；  
+-   请修改`bget()`和`brelse()`，使得缓存区并发的查询和释放不容易发生锁争用，比如，不是所有流程都得等`bcache.lock`；  
 -   同样要求`usertests`中的用例全部通过，最后的输出如下（具体数据有所出入）：  
 
 !!! tip "关于bcache实验的测试说明"
-     **在运行`make qemu`测试`bcachetest`和`usertests`之前，建议先运行`make clean`删除`fs.img`** ，以防之前错误的代码把磁盘写坏了，后面即使是改成正确的代码也没法执行。
+     在运行`make qemu`测试`bcachetest`和`usertests`之前， **建议先运行`make clean`删除`fs.img`** ，以防之前错误的代码把磁盘写坏了，后面即使是改成正确的代码也没法执行。
 
 <div align="center"> <img src="../part1.assets/image-20211019205449169.png" width = 70%/> </div>
 
 ### 3.3 测试
 
-当完成上述的两个实验后，在命令行输入 `make grade` 进行最终测试。
+&emsp;&emsp;当完成上述的两个实验后，在命令行输入 `make grade` 进行最终测试。
 
 
 <div align="center"> <img src="../part1.assets/grade-16349752282893.png" /> </div>
