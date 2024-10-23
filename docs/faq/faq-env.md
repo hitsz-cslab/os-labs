@@ -215,6 +215,19 @@ no changes added to commit (use "git add" and/or "git commit -a")
 这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](../../tools/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../../tools/#332-vs-code)节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。
 
+### 5.4 验证commit.patch时报错？
+
+在验证commit.patch是否正确时可能遇到如下报错：
+
+![git-apply-patch](faq-env.assets/git-apply-patch.png)
+
+首先，黄框内是警告，不重要，红框内才是报错。如果出现红框内`cannot apply binary patch`类似的输出说明我们的commit包含二进制文件，这时我们需要执行以下步骤：
+
+1. 将剩余的验证步骤执行完毕，切回分支头部
+2. 执行`git rm 二进制文件名`将上述二进制文件删除
+3. 使用`git add`和`git commit`操作提交这次修改
+4. 最后执行`make diff`重新生成commmit.patch
+
 ## 6. GDB 调试问题
 
 ### 6.1 GDB 不能 stepi ecall 或 sret 指令
