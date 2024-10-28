@@ -237,8 +237,4 @@ $
 
 &emsp;&emsp;当完成上述的三个实验后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
 
-    
-<div align="center"> <img src="../part1.assets/image-20211023160155602-16353874445883.png"  width = 70%/> </div>    
-
-
-
+<div align="center"> <img src="../part1.assets/image-20211023160155602-16353874445883.png"  width = 70%/> </div>

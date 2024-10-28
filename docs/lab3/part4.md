@@ -6,16 +6,16 @@
 
 &emsp;&emsp;`kalloc.c`中调用`acquire()`和`release()`来获取锁和释放锁。首先需要知道的是锁的`acquire`（或者叫`P`）和`release`（`V`）的实现并不是一件简单的事情。我们先来看一个最`naive`的实现：
 
-```c
-1. 	void acquire(struct spinlock *lk) // does not work!
-2. 	{
-3. 		for(;;) {
-4.			if(lk->locked == 0) {
-5.				lk->locked = 1;
-6.				break;
-7.			}
-8.		}
-9. 	}
+```c   linenums="1"
+void acquire(struct spinlock *lk) // does not work!
+{
+	for(;;) {
+		if(lk->locked == 0) {
+			lk->locked = 1;
+			break;
+		}
+	}
+}
 ```
 
 &emsp;&emsp;这个代码非常容易理解，如果`lk`被锁上了，那就继续循环，如果`lk`未被锁上，那就给它加锁并退出。但这个实现是有缺陷的，让我们试想一下以下场景：
@@ -41,31 +41,31 @@
 
 &emsp;&emsp;了解了`__sync_lock_test_and_set`之后，我们在回到`acquire`的问题上来。先看看xv6中是如何实现`acquire`的。
 
-```c
-1.    // Acquire the lock.
-2.    // Loops (spins) until the lock is acquired.
-3.    void
-4.    acquire(struct spinlock *lk)
-5.    {
-6.        push_off(); // disable interrupts to avoid deadlock.
-7.        if(holding(lk))
-8.            panic("acquire");
-9.        __sync_fetch_and_add(&(lk->n), 1);
-10.        // On RISC-V, sync_lock_test_and_set turns into anatomic swap:
-11.        //   a5 = 1
-12.        //   s1 = &lk->locked
-13.        //   amoswap.w.aq a5, a5, (s1)
-14.        while(__sync_lock_test_and_set(&lk->locked, 1) != 0) {
-15.            __sync_fetch_and_add(&lk->nts, 1);
-16.        }
-        
-17.        // Tell the C compiler and the processor to not moveloads or stores
-18.        // past this point, to ensure that the criticalsection's memory
-19.        // references happen after the lock is acquired.
-20.        __sync_synchronize();
-21.        // Record info about lock acquisition for holding() anddebugging.
-22.        lk->cpu = mycpu();
-23.    }
+```c   linenums="1"
+// Acquire the lock.
+// Loops (spins) until the lock is acquired.
+void
+acquire(struct spinlock *lk)
+{
+    push_off(); // disable interrupts to avoid deadlock.
+    if(holding(lk))
+        panic("acquire");
+    __sync_fetch_and_add(&(lk->n), 1);
+     // On RISC-V, sync_lock_test_and_set turns into anatomic swap:
+     //   a5 = 1
+     //   s1 = &lk->locked
+     //   amoswap.w.aq a5, a5, (s1)
+     while(__sync_lock_test_and_set(&lk->locked, 1) != 0) {
+         __sync_fetch_and_add(&lk->nts, 1);
+     }
+  
+     // Tell the C compiler and the processor to not moveloads or stores
+     // past this point, to ensure that the criticalsection's memory
+     // references happen after the lock is acquired.
+     __sync_synchronize();
+     // Record info about lock acquisition for holding() anddebugging.
+     lk->cpu = mycpu();
+}
 ```
 
 &emsp;&emsp;我们需要注意的是14-16行的`while`循环。这里使用了`__sync_lock_test_and_set()`（使用`amoswap`），保证了对`lk->locked`读写的一致性。下面我们来分析以下具体的工作流程。
@@ -86,25 +86,25 @@
 
 &emsp;&emsp;在前面的实验原理部分，我们已经解释了“`kalloc`在什么情况下使用了锁？”这个问题。那为什么要在操作`freelist`的时候上锁呢？上锁必然是为了防止并行运行的时候出问题，如果我们能设想出一场景（这个场景显然是并行情况下的）让没上锁的链表操作出问题，那就可以解释为什么要上锁了。
 
-```c
+```c   linenums="65"
 // Allocate one 4096-byte page of physical memory.
 // Returns a pointer that the kernel can use.
 // Returns 0 if the memory cannot be allocated.
-68 void *
-69 kalloc(void)
-70 {
-71  struct run *r;
-72
-73  acquire(&kmem.lock);
-74  r = kmem.freelist;
-75  if(r)
-76    kmem.freelist = r->next;
-77  release(&kmem.lock);
-78
-79  if(r)
-80    memset((char*)r, 5, PGSIZE); // fill with junk
-81  return (void*)r;
-82 }
+void *
+kalloc(void)
+{
+ struct run *r;
+
+ acquire(&kmem.lock);
+ r = kmem.freelist;
+ if(r)
+   kmem.freelist = r->next;
+ release(&kmem.lock);
+
+ if(r)
+   memset((char*)r, 5, PGSIZE); // fill with junk
+ return (void*)r;
+}
 ```
 
 !!! note   "某个错误场景"
@@ -163,31 +163,31 @@
 
 &emsp;&emsp;测评程序会检查锁被阻塞的情况，还记得上文提到的`acquire`代码吗？
 
-```c
-1.    // Acquire the lock.
-2.    // Loops (spins) until the lock is acquired.
-3.    void
-4.    acquire(struct spinlock *lk)
-5.    {
-6.        push_off(); // disable interrupts to avoid deadlock.
-7.        if(holding(lk))
-8.            panic("acquire");
-9.        __sync_fetch_and_add(&(lk->n), 1);
-10.        // On RISC-V, sync_lock_test_and_set turns into anatomic swap:
-11.        //   a5 = 1
-12.        //   s1 = &lk->locked
-13.        //   amoswap.w.aq a5, a5, (s1)
-14.        while(__sync_lock_test_and_set(&lk->locked, 1) != 0) {
-15.            __sync_fetch_and_add(&lk->nts, 1);
-16.        }
-        
-17.        // Tell the C compiler and the processor to not moveloads or stores
-18.        // past this point, to ensure that the criticalsection's memory
-19.        // references happen after the lock is acquired.
-20.        __sync_synchronize();
-21.        // Record info about lock acquisition for holding() anddebugging.
-22.        lk->cpu = mycpu();
-23.    }
+```c  linenums="1"
+// Acquire the lock.
+// Loops (spins) until the lock is acquired.
+void
+acquire(struct spinlock *lk)
+{
+    push_off(); // disable interrupts to avoid deadlock.
+    if(holding(lk))
+        panic("acquire");
+    __sync_fetch_and_add(&(lk->n), 1);
+     // On RISC-V, sync_lock_test_and_set turns into anatomic swap:
+     //   a5 = 1
+     //   s1 = &lk->locked
+     //   amoswap.w.aq a5, a5, (s1)
+     while(__sync_lock_test_and_set(&lk->locked, 1) != 0) {
+         __sync_fetch_and_add(&lk->nts, 1);
+     }
+  
+     // Tell the C compiler and the processor to not moveloads or stores
+     // past this point, to ensure that the criticalsection's memory
+     // references happen after the lock is acquired.
+     __sync_synchronize();
+     // Record info about lock acquisition for holding() anddebugging.
+     lk->cpu = mycpu();
+}
 ```
 
 `lk->n`：即\#acquire，想要获取锁的次数。
