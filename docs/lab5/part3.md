@@ -341,6 +341,18 @@ chmod +x test.sh && ./test.sh
 
 为了降低同学们的上手成本，我们为提供同学们提供了一个实现了完整功能的文件系统样例，`simplefs`，供同学们参考学习其部分实现。**值得注意的是**，本次任务二要实现的文件系统从磁盘布局上就和simplefs不一样，因此在有关文件系统接口的实现上也会不同。评测脚本会检查同学们的磁盘布局分布，`simplefs`无法通过所有测评， **若布局监测未通过，则扣除一半分数** 。
 
+此处列出需要实现的命令与钩子函数的对应关系，供同学们参考：
+
+必做题部分
++ `ls`命令需要实现`newfs_readdir`和`newfs_getattr`
++ `mkdir`命令需要增加`newfs_mkdir`
++ `touch`命令需要增加`newfs_mknod`和`newfs_utimens`
+
+选做题部分
++ `newfs_open`和`newfs_opendir`两个钩子函数参考simplefs返回0即可
++ 删除文件和目录需要增加`newfs_access`和`newfs_unlink`，`newfs_rmdir`是通过调用`newfs_unlink`实现的
++ 文件读写需要增加`newfs_read`、`newfs_write`、`newfs_truncate`
+
 #### 3.2.1 磁盘布局设计
 
 首先，在 **逻辑块大小** 上，本次实验逻辑块大小为1024B，后续的布局设计和接口实现均要使用到此大小。阅读学习`simplefs`代码的同学，需要注意到`simplefs`直接将一个磁盘IO块（512B）作为了一个逻辑块，也就是其逻辑块为512B，而本次实验要实现的青春版EXT2文件系统将两个IO块作为一个逻辑块（1024B）。**后续布局检查会基于1024B逻辑块进行检查，因此同学们需要注意**。
