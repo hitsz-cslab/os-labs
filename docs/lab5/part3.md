@@ -344,14 +344,14 @@ chmod +x test.sh && ./test.sh
 此处列出需要实现的命令与钩子函数的对应关系，供同学们参考：
 
 必做题部分
-+ `ls`命令需要实现`newfs_readdir`和`newfs_getattr`
-+ `mkdir`命令需要增加`newfs_mkdir`
-+ `touch`命令需要增加`newfs_mknod`和`newfs_utimens`
+- `ls`命令需要实现`newfs_readdir`和`newfs_getattr`
+- `mkdir`命令需要增加`newfs_mkdir`
+- `touch`命令需要增加`newfs_mknod`和`newfs_utimens`
 
 选做题部分
-+ `newfs_open`和`newfs_opendir`两个钩子函数参考simplefs返回0即可
-+ 删除文件和目录需要增加`newfs_access`和`newfs_unlink`，`newfs_rmdir`是通过调用`newfs_unlink`实现的
-+ 文件读写需要增加`newfs_read`、`newfs_write`、`newfs_truncate`
+- `newfs_open`和`newfs_opendir`两个钩子函数参考simplefs返回0即可
+- 删除文件和目录需要增加`newfs_access`和`newfs_unlink`，`newfs_rmdir`是通过调用`newfs_unlink`实现的
+- 文件读写需要增加`newfs_read`、`newfs_write`、`newfs_truncate`
 
 #### 3.2.1 磁盘布局设计
 
