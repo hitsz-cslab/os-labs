@@ -343,15 +343,16 @@ chmod +x test.sh && ./test.sh
 
 此处列出需要实现的命令与钩子函数的对应关系，供同学们参考：
 
-必做题部分
+必做部分
 - `ls`命令需要实现`newfs_readdir`和`newfs_getattr`
 - `mkdir`命令需要增加`newfs_mkdir`
 - `touch`命令需要增加`newfs_mknod`和`newfs_utimens`
 
-选做题部分
+选做部分
 - `newfs_open`和`newfs_opendir`两个钩子函数参考simplefs返回0即可
 - 删除文件和目录需要增加`newfs_access`和`newfs_unlink`，`newfs_rmdir`是通过调用`newfs_unlink`实现的
 - 文件读写需要增加`newfs_read`、`newfs_write`、`newfs_truncate`
+- 实现`mv`命令还需要实现`newfs_rename`
 
 #### 3.2.1 磁盘布局设计
 
@@ -454,6 +455,9 @@ void* init(struct fuse_conn_info * conn_info);
 !!! note "补充"
     实验原理提到父目录的数据块存放所有子文件的`struct dentry_d`结构。做路径解析时，解析到父目录时，会将这些`struct dentry_d`全部从父目录的数据块中读出从而得到子文件dentry结构。由于根目录不存在父目录，因此根目录的dentry比较特殊，不会保存在磁盘中，不会从父目录的数据块读出，而是每次在挂载文件系统时，为根目录新创建一个dentry，然后再和根目录的inode关联起来。
 
+!!! note "tips"
+    （1）为了实现挂载功能，需要实现较多的工具函数，如`alloc_inode`、`sync_inode`和`read_inode`，可能有较长时间没有反馈，但是后续的任务也会重复调用到这些工作函数。（2）sfs_dump_map()用于打印simplefs的索引节点位图，在newfs中可以用相同的方法打印两个位图，检查对位图的修改是否正确
+
 **（2）卸载函数**
 
 本次实验要求同学们实现重新挂载的功能，这意味着在卸载文件系统的时候，要实现将相关数据结构刷回磁盘的操作。
@@ -504,7 +508,7 @@ void* destroy(void* p);
 上述介绍的是找到文件的情况，这种情况通常会用于[查找文件和目录](./#3233)的实现。
 ![lookup](./part3.assets/lookup.svg)
 
-但在创建文件和目时，**文件还不存在**，传入的路径名是无法解析到其对应的`dentry`的。相反，假设解析到存在对应的`dentry`了，则说明文件重名了，应该做异常处理。以`/hunt/YBYB`为例，并假设路径还不存在。如上图所示，只需要按照刚刚所述的路径解析逻辑，最终未找到直接返回其父目录的`dentry`即可，供实现两个钩子函数下一步使用。
+但在创建文件和目录时，**文件还不存在**，传入的路径名是无法解析到其对应的`dentry`的。相反，假设解析到存在对应的`dentry`了，则说明文件重名了，应该做异常处理。以`/hunt/YBYB`为例，并假设路径还不存在。如上图所示，只需要按照刚刚所述的路径解析逻辑，最终未找到直接返回其父目录的`dentry`即可，供实现两个钩子函数下一步使用。
 
 然后，介绍 **如何从`dentry`到`inode`** 。刚刚提到由`dentry`可以读取到对应的`inode`，因为`dentry`维护有该文件对应的`inode`编号，有了编号，就可以按照磁盘布局设计，从磁盘指定的位置读取出对应的`inode_d`，如下图所示。在读取`inode`的时候可以预先读取对应文件的内容到内存中，方便文件系统的使用。特别的，对于目录文件，读取完其内容后，还应该动态的在文件系统维护好所有子文件的`dentry`。
 
@@ -691,6 +695,103 @@ int readdir(const char * path, void * buf, fuse_fill_dir_t filler, off_t offset,
 - `buf`是传入的装填返回结果的缓冲区。
 - `filler`是传入的上层自定义的装填函数。
 - `offset`是本次要要开始读取的子文件的偏移，`fi`无需关注。
+
+##### 3.2.3.4 读写文件（选做）
+
+在做选做部分之前，可以先参考`simplefs`完成`newfs_open`、`newfs_opendir`、`newfs_access`、`newfs_truncate`这几个比较简单的钩子函数。
+
+文件读写需要用到`read`和`write`钩子，先通过`lookup`找到文件对应的目录项，找到目录项之后判断文件类型，保证是文件类型并且文件大小要大于所要读取的偏移量，之后可以使用`memcpy`对内存中的文件内容进行读写。
+
+在`simplefs`的实现中，`sfs_lookup`会调用`sfs_read_inode`将索引节点读入内存，且在内存中为`inode->data`分配空间，在`newfs`中也可以采用类似的设计。但是在本次实验中需要实现按需分配数据块，而`simplefs`是固定分配，因此`write`需要在`simplefs`的基础上增加根据写入数据长度进行磁盘数据块分配的步骤。
+
+##### 3.2.3.5 文件与目录的删除（选做）
+
+本部分需要实现`drop_inode`和`drop_dentry`这两个工具函数，`drop_inode`的作用是删除内存中的一个索引结点以及该结点下的结构，对于目录类型，会递归删除子目录项对应的索引结点；对于文件类型，则会删除`inode->data`。`drop_dentry`的作用是从一个索引结点下，删除一个指定的目录项。在删除一个文件或目录时，先删除其本身的索引结点，再从父目录移除目录项。
+
+```c
+int sfs_unlink(const char* path) {
+	...
+	sfs_drop_inode(inode);
+	sfs_drop_dentry(dentry->parent->inode, dentry);
+	return SFS_ERROR_NONE;
+}
+
+```
+在`simplefs`中，`drop_inode`只进行了索引结点位图的管理，在`newfs`还需要以类似的方式管理inode持有的数据块。
+```c
+int sfs_drop_inode(struct sfs_inode * inode) {
+    ...
+
+        for (byte_cursor = 0; byte_cursor < SFS_BLKS_SZ(sfs_super.map_inode_blks); 
+            byte_cursor++)                            /* 调整inodemap */
+        {
+            for (bit_cursor = 0; bit_cursor < UINT8_BITS; bit_cursor++) {
+                if (ino_cursor == inode->ino) {
+                     sfs_super.map_inode[byte_cursor] &= (uint8_t)(~(0x1 << bit_cursor));
+                     is_find = TRUE;
+                     break;
+                }
+                ino_cursor++;
+            }
+            if (is_find == TRUE) {
+                break;
+            }
+        }
+    ...
+}
+```
+
+##### 3.2.3.6 mv命令（选做）
+
+`mv`的功能是重命名或者将文件/目录移动到指定目录下，对应的一个钩子函数是`newfs_rename`。（用源和目的来称呼两个路径）在`simplefs`中，`rename`先确认了源是否存在，使用`mknod`创建了具有相同文件类型的索引结点和目录项。这样做一方面复用了新建和分配目录项的代码，另一方面通过检查`mknod`返回值，保证目的不存在，是新创建的。
+```c
+int sfs_rename(const char* from, const char* to) {
+    ...
+    struct sfs_dentry* from_dentry = sfs_lookup(from, &is_find, &is_root);  /* 检查源 */
+    ...
+    if (SFS_IS_DIR(from_inode)) {
+		mode = __S_IFDIR;
+	}
+	else if (SFS_IS_REG(from_inode)) {
+		mode = __S_IFREG;
+	}
+	
+	ret = sfs_mknod(to, mode, NULL);    /* 创建目的的目录项和临时的索引结点 */
+	if (ret != SFS_ERROR_NONE) {    /* 保证目的文件不存在 */
+		return ret;
+	}
+    ...
+}
+```
+在源和目的都确认合法之后，`rename`将源目录项从它原本的父目录移除（使用之前实现的`drop_dentry`），并且将目的目录项对应的索引结点，由`mknod`创建的新结点替换成源索引结点。新生成的索引结点不再被需要，使用`drop_inode`将其删除。
+```c
+int sfs_rename(const char* from, const char* to) {
+    ...
+    to_dentry = sfs_lookup(to, &is_find, &is_root);	  
+	sfs_drop_inode(to_dentry->inode);				  /* 保证生成的inode被释放 */	
+	to_dentry->ino = from_inode->ino;				  /* 指向新的inode */
+	to_dentry->inode = from_inode;
+	
+	sfs_drop_dentry(from_dentry->parent->inode, from_dentry);   /* 源目录项从父目录移除 */
+	return ret;
+}
+```
+
+
+```
+//通过rename实现mv命令的重命名功能应该不难理解，如果觉得不太能理解移动是如何实现的，下面的内容或许有帮助
+
+//文件名f0、f1……目录名d0、d1
+
+$mv f0 f1
+
+//打印rename /f0 /f1
+
+$mv f0 d0
+
+//打印rename /f0 /d0/f0
+
+```
 
 ### 3.3 测试
 
