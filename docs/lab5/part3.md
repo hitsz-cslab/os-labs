@@ -447,7 +447,7 @@ int your_read(int offset, void *out_content, int size);
 
 挂载函数实现的大致示意如下图所示：
 
-![mount](./part3.assets/mount.svg)
+![mount](./part3.assets/mount_1.svg)
 
 在FUSE中，挂载函数对应的钩子是`.init`，同学们实现好挂载函数后，需要将自己的挂载函数添加到`.init`钩子上。
 
