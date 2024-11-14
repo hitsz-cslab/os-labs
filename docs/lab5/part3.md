@@ -202,9 +202,9 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$
 
 &emsp;&emsp;任务一的实现非常简单，只需要同学们根据`demo`代码中的`/* TODO */`指引填写几行代码。在完成任务一过程，同学们请参考实验原理部分的[驱动接口查阅](./part2.md#21)和[FUSE简单示例](./part2.md#31-fuse)。
 
-- **step 0**，熟悉demo代码（不到一百行）定义的简单数据结构`demo_super`和`demo_dentry`，以及四个钩子函数`demo_mount`，`demo_umount`，`demo_getattr`和`demo_readdir`
+- **step 0**，<font color=red>打开VSCode软件，点击左上角 "文件" → "打开文件夹"，选择实验包目录下的`fs/demo`文件夹</font> 。熟悉demo（src/main.c）代码（不到一百行）定义的简单数据结构`demo_super`和`demo_dentry`，以及四个钩子函数`demo_mount`，`demo_umount`，`demo_getattr`和`demo_readdir`.
 
-- **step 1**，完成一个简单的全局超级块填充，维护一些后续计算需要的信息。同学们可以通过`ddriver_ioctl`来获取磁盘容量和IO块大小等信息，从而得出逻辑块大小，需要在`demo_mount`函数中实现。
+- **step 1**，完成一个简单的全局超级块填充，维护一些后续计算需要的信息。同学们可以通过`ddriver_ioctl`来获取磁盘容量和IO块大小等信息，从而得出逻辑块大小（一个逻辑块是两个IO块大小），需要在`demo_mount`函数中实现。
 
 ```c
 /* 挂载文件系统 */
@@ -221,7 +221,7 @@ static int demo_mount(){
 - **step 2**，完成遍历目录逻辑，从第500个逻辑块读取一个`demo_dentry`，将`demo_dentry`的文件名填充到filename。下面给出一个参考的`/* TODO */`指引，同学们也无需严格按照这个指引。
 
 !!! tip "注意"
-    此处任务一同学 **暂时不用关注** `demo_readdir`传入的`path`，`buf`，`filler`，`offset`等参数，也先 **不要使用** 到这些参数。
+    <font color=red>此处任务一同学 **暂时不用关注** `demo_readdir`传入的`path`，`buf`，`filler`，`offset`等参数，也先 **不要使用** 到这些参数。</font> 
 
 ```c
 /* 遍历目录 */
@@ -270,7 +270,7 @@ static int demo_getattr(const char* path, struct stat *stbuf)
 
 &emsp;&emsp;我们给同学们提供了一个手动测试和调试用的固定文件名`pass_task1.txt`，同学们按照如下方式可以验证自己实现逻辑是否正确。
 
-&emsp;&emsp;先运行在`tests`目录下运行：
+&emsp;&emsp;先运行在`fs/demo/tests`目录下运行：
 
 ```shell
 chmod +x start.sh && ./start.sh
