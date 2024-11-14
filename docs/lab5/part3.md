@@ -1,8 +1,8 @@
 #  实验实现
 
 !!! tip "代码量相关"
-          1. 任务一：非常简单的demo。总代码量：100+行。实际编码：约10行。
-          2. 任务二：较完善的文件系统。总代码量：1k+行。实际编码：若多参考SFS，要改的并不多，预估200+行。也可自己重新完整实现。
+       1. 任务一：非常简单的demo。总代码量：100+行。实际编码：约10行。
+       2. 任务二：较完善的文件系统。总代码量：1k+行。实际编码：若多参考SFS，要改的并不多，预估200+行。也可自己重新完整实现。
 
 !!! tip "实验遇到问题"
        1. 首先阅读实验指导书的[常见问题](../part5)看有无命中，并自己尝试[一些debug手段](../part5#10-debug)。
@@ -23,6 +23,7 @@
 &emsp;&emsp;本次实验充分考虑到 **上手成本** ，因此我们编写了简单的环境配置脚本，帮助大家一键配置开发环境。实验包代码获取途径：
 
 ```console
+# cd ~
 # git clone https://gitee.com/ftutorials/user-land-filesystem.git
 ```
 
@@ -121,7 +122,7 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 
 ### 1.3 项目编译
 
-&emsp;&emsp;本次实验任务一和任务二，均需要按照下面步骤 **分别** 完成项目编译。如需编译任务一，**请在`./fs/demo`文件夹下打开VSCode软件**。如需编译任务二，**请在`./fs/newfs`文件夹下打开VSCode软件**。
+&emsp;&emsp;<font color=red>本次实验任务一和任务二，均需要按照下面步骤 **分别** 完成项目编译。如需编译任务一，**请在`./fs/demo`文件夹下打开VSCode软件**。如需编译任务二，**请在`./fs/newfs`文件夹下打开VSCode软件**。 </font> 
 
 &emsp;&emsp;项目编译的过程：
 
@@ -139,7 +140,7 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 
 -   **Step 3** . 打开CMakeLists.txt文件
 -   **Step 4** . ctrl + shift + p呼出命令菜单
--   **Step 5** . 输入CMake: Configure
+-   **Step 5** . 输入CMake: Select a Kit
 -   **Step 6** . 选择 **X86_64版本** 的GCC（不要选错为别的，如riscv64的）：
 
 ![image-20221108103122575](./part3-1.assets/image-20221108103122575.png)
