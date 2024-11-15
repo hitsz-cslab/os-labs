@@ -195,9 +195,9 @@
 
 ![用户共享页表](part3.assets/用户共享页表.png)
 
-**Step 2** ：用函数 `copyin_new()` （在 `kernel/vmcopyin.c`中定义）代替 `copyin()` （在 `kernel/vm.c`中定义）。即删除`copyin()`原来的实现方案，直接在`copyin()`里调用函数 `copyin_new()` 。在做完所有修改，确保程序 **能运行** `copyin_new()` 之后再用 `copyinstr_new()` 以代替 `copyinstr()`。
+**Step 2** ：用函数 `copyin_new()` （在 `kernel/vmcopyin.c`中定义）代替 `copyin()` （在 `kernel/vm.c`中定义）。即删除`copyin()`原来的实现方案，直接在`copyin()`里调用函数 `copyin_new()` 。建议在做完所有修改（包括从 **Step1** 到 **Step6** 所有的步骤），确保程序 **能运行** `copyin_new()` 之后，再回来用 `copyinstr_new()` 以代替 `copyinstr()`。
 
-**Step 3** ：在独立内核页表加上用户页表的映射，以保证刚刚替换地新函数能够使用。注意独立内核页表的用户页表的映射的标志位的选择。标志位User一旦被设置，内核就不能访问该虚拟地址了。
+**Step 3** ：在独立内核页表加上用户页表的映射，以保证刚刚替换地新函数能够使用。注意独立内核页表的用户页表的映射的标志位的选择。标志位User一旦被设置，内核就不能访问该虚拟地址了。注：SSTATUS_SUM需要同学们自行定义（详见[实验原理3.3.2小节](../part2/#332)）
 
 - **推荐方案** ：
    - 在调用`copyin_new()`/`copyinstr_new()`之前修改sstatus寄存器的SUM位： 
