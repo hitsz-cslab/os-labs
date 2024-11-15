@@ -342,25 +342,26 @@ chmod +x test.sh && ./test.sh
 
 &emsp;&emsp;为了降低同学们的上手成本，我们为提供同学们提供了一个实现了完整功能的文件系统样例，`simplefs`，供同学们参考学习其部分实现。**值得注意的是**，本次任务二要实现的文件系统从磁盘布局上就和simplefs不一样，因此在有关文件系统接口的实现上也会不同。评测脚本会检查同学们的磁盘布局分布，`simplefs`无法通过所有测评， **若布局监测未通过，则扣除一半分数** 。
 
-&emsp;&emsp;此处列出需要实现的命令与钩子函数的对应关系，供同学们参考：
+!!! note   "一些提示"
+    此处列出需要实现的命令与钩子函数的对应关系，供同学们参考：
 
-&emsp;&emsp;必做部分
+    **必做部分**
 
-- `ls`命令需要实现`newfs_readdir`和`newfs_getattr`
-  
-- `mkdir`命令需要增加`newfs_mkdir`
- 
-- `touch`命令需要增加`newfs_mknod`和`newfs_utimens`
+     - `ls`命令需要实现`newfs_readdir`和`newfs_getattr`
+     
+     - `mkdir`命令需要增加`newfs_mkdir`
+     
+     - `touch`命令需要增加`newfs_mknod`和`newfs_utimens`
+     
+    **选做部分**
 
-&emsp;&emsp;选做部分
-
-- `newfs_open`和`newfs_opendir`两个钩子函数参考simplefs返回0即可
-
-- 删除文件和目录需要增加`newfs_access`和`newfs_unlink`，`newfs_rmdir`是通过调用`newfs_unlink`实现的
-
-- 文件读写需要增加`newfs_read`、`newfs_write`、`newfs_truncate`
-
-- 实现`mv`命令还需要实现`newfs_rename`
+     - `newfs_open`和`newfs_opendir`两个钩子函数参考simplefs返回0即可
+     
+     - 删除文件和目录需要增加`newfs_access`和`newfs_unlink`，`newfs_rmdir`是通过调用`newfs_unlink`实现的
+     
+     - 文件读写需要增加`newfs_read`、`newfs_write`、`newfs_truncate`
+     
+     - 实现`mv`命令还需要实现`newfs_rename`
 
 #### 3.2.1 磁盘布局设计
 
