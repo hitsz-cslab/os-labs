@@ -10,13 +10,9 @@
 
 ## 1.任务零：环境搭建
 
-&emsp;&emsp;为了给同学们演示如何下载、编译、运行simplefs文件系统，我们录制了两个演示视频：“HITSZ FUSE文件系统实验（本地版）”和“HITSZ FUSE文件系统（远程计算节点版）”。
+&emsp;&emsp;为了给同学们演示如何下载、编译、运行文件系统，我们录制了演示视频：
 
-&emsp;&emsp;大家根据自己的实验环境选择对应的演示视频。
-
-&emsp;&emsp;FUSE文件系统实验（本地版）：https://www.bilibili.com/video/BV1Af4y1K7FX/
-
-&emsp;&emsp;HITSZ FUSE文件系统（远程计算节点版）：https://www.bilibili.com/video/BV1TR4y1b7M3/
+&emsp;&emsp;HITSZ FUSE文件系统（远程计算节点版）V2：https://www.bilibili.com/video/BV16ESFYeEUg/
 
 ### 1.1 实验包结构介绍
 
