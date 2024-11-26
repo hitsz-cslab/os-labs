@@ -169,7 +169,18 @@ EPERM /* 值为1, Operation not permitted */
 
 &emsp;&emsp;同学们可以参考`simplefs`的错误号使用，正确的使用相关错误号。
 
-## 10.其他问题 & debug
+## 10.stat命令查看文件Inode信息不符合预期
+
+![](part5.assets/hardlink.png)
+在实现基本功能时不太需要关注这部分内容，但是根据实现不同，`stat`的结果可能与`getattr`钩子函数中赋值的结果不同。通过gdb调试监视`st_ino`的变化，发现在`getattr`后又修改了一次。
+
+查看fuse中`getattr`钩子的说明，`st_ino`默认是被忽略的。
+![](part5.assets/getattr.png)
+
+因此如果希望`stat`得到文件系统分配的inode号，需要在launch.json中增加挂载参数。如果希望实现选做部分的链接功能，请修改launch.json之后再进行功能实现和调试。
+![](part5.assets/use_ino.png)
+
+## 11.其他问题 & debug
 
 &emsp;&emsp;很大概率是自身代码实现的问题。
 
