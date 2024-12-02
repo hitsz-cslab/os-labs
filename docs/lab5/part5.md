@@ -106,6 +106,14 @@ fusermount -u ./tests/mnt
 
 &emsp;&emsp;可能是因为扩展安装不成功导致.json的解析有问题，请确认CMake、CMake Tools、C/C++三个扩展已成功安装到远程实验平台。如果还是无法解决，可以进入build目录，`make`手动编译可执行文件，之后点击“仍要调试”应该可以进行调试。也可在编译后手动输入launch.json中的命令（以任务一的demo为例，build/demo -f -d -s tests/mnt）进行挂载和手动测试，但是这样不能使用vscode的调试功能。
 
+### 7.5 F5启动文件系统，成功编译了活动文件但是不能启动调试
+
+![](part5.assets/launchfail.png)
+
+&emsp;&emsp;目前查出的原因是C/C++插件使用了预发布版本，需要切换到发布版本
+
+![](part5.assets/CC++release.png)
+
 ## 8.位图不通过或没写回数据区
 
 &emsp;&emsp;运行测评脚本时，在`case 5.2 - check bitmap`中显示，索引节点位图错误，数据位图错误，没有写回到数据区等。
