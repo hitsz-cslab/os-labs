@@ -188,7 +188,14 @@ EPERM /* 值为1, Operation not permitted */
 因此如果希望`stat`得到文件系统分配的inode号，需要在launch.json中增加挂载参数。如果希望实现选做部分的链接功能，请修改launch.json之后再进行功能实现和调试。
 ![](part5.assets/use_ino.png)
 
-## 11.其他问题 & debug
+## 11.挂载时，传入ddriver_open路径与ddriver所在位置不同导致挂载失败
+
+&emsp;&emsp;检查调用栈发现没有经过`init`钩子就进入了`mount`，可能是工具函数与库函数同名导致的。
+![](part5.assets/ddriverpath.png)
+
+&emsp;&emsp;如果使用的不是远程平台，也有可能是机器上ddriver的实际路径与挂载时传入的--device参数不符。
+
+## 12.其他问题 & debug
 
 &emsp;&emsp;很大概率是自身代码实现的问题。
 
