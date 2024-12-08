@@ -917,7 +917,7 @@ F5(或Fn+F5)挂载文件系统
 touch ./tests/mnt/hello
 ls ./tests/mnt
 fusermount -u ./tests/mnt
-python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json
+python3 ./tests/checkbm/checkbm.py -l ./include/fs.layout -r ./tests/checkbm/golden.json -n "hello"
 ```
 
 &emsp;&emsp;以上命令均测试成功（**ls输出正常**），则测试通过。
