@@ -35,7 +35,7 @@
 
 &emsp;&emsp;了解了文件系统的总体概念后，我们来讲讲文件系统的挂载。
 
-![](part2.assets/插入.png)
+![](part2.assets/insert.png)
 
 &emsp;&emsp;在Linux操作系统上，在主机插入某种存储设备时（如移动硬盘），通常只会在`/dev`目录下多一个设备表示，如上图所示。但是，通常我们无法直接访问这个存储设备（如移动硬盘）中的数据内容。
 
@@ -125,7 +125,7 @@ struct super_block_d
 
 #### 1.2.3  文件的表示
 
-&emsp;&emsp;通过[1.1 文件系统](./#11)的介绍，不能仅仅将文件的数据存在磁盘就万事大吉了，还需要一些管理信息。文件的管理信息就是文件的 **元数据** ，也就是 **索引节点（inode）** 中的数据。
+&emsp;&emsp;通过[1.1 文件系统](#11)的介绍，不能仅仅将文件的数据存在磁盘就万事大吉了，还需要一些管理信息。文件的管理信息就是文件的 **元数据** ，也就是 **索引节点（inode）** 中的数据。
 
 &emsp;&emsp;在EXT2文件系统中，任何一个文件都是由 **索引节点（inode）** 和 **数据（data）** 构成。索引节点（inode）的数据存放在索引节点区，数据（data）存放在数据块区，并通过索引节点（inode）来索引数据块。
 
@@ -173,7 +173,7 @@ typedef enum file_type {
 **（2）数据（data）通常存放：**
 
 - **普通文件（file）的话**，直接存放文件的内容即可。例如，file.txt的内容为aaa，那么file.txt的数据块直接填aaa即可。
-- **目录文件（dir）的话**，存放所有的子目录项（dentry）。（什么是目录项dentry？参见下一小节[1.2.4目录项的表示](./#124)介绍）。例如，目录dir下有子目录dir0和子文件file.txt，那么目录dir的数据块填的是子目录dir0的dentry结构和子文件file.txt的dentry结构。
+- **目录文件（dir）的话**，存放所有的子目录项（dentry）。（什么是目录项dentry？参见下一小节[1.2.4目录项的表示](#124)介绍）。例如，目录dir下有子目录dir0和子文件file.txt，那么目录dir的数据块填的是子目录dir0的dentry结构和子文件file.txt的dentry结构。
 
 !!! note "笔记"
     目录也是一种特殊的文件，其数据块内容是所有子目录项结构。
@@ -227,7 +227,7 @@ struct dentry_d
 
 &emsp;&emsp;我们先以`dentry`这个结构，简单看看to-Disk的结构和in-Mem的结构的差异：
 
-![虚拟磁盘](part2.assets/in-Mem和in-Disk区别.png)
+![虚拟磁盘](part2.assets/inMem_vs_inDisk.png)
 
 
 
@@ -399,7 +399,7 @@ Hello-FUSE
 ./<你实现的fuse文件系统名称> --device=<指定挂载设备> <可选选项> <指定挂载点> 
 ```
 
-&emsp;&emsp;在任务二中，在[环境搭建](../part3/#14)的运行部分，VSCode配置的挂载命令（`F5`，或`Fn+F5`）展开就是：
+&emsp;&emsp;在任务二中，在[环境搭建](part3.md/#1)的运行部分，VSCode配置的挂载命令（`F5`，或`Fn+F5`）展开就是：
 
 ```shell
 ./build/newfs --device=/home/students/<学号>/ddriver -f -d -s ./tests/mnt/

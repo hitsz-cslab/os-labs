@@ -19,13 +19,13 @@
 
 &emsp;&emsp;打开MobaXterm，单击打开工具Session（位于左上角）选择New sessions打开新建窗口，选择SSH，输入远程服务器的IP地址、登陆用户名及端口（默认是22，远程实验平台端口号是6666），点击OK。
 
-<div align="center"> <img src="../tools.assets/0-12.png" width = 70%/> </div>
+<div align="center"> <img src="./tools.assets/0-12.png" width = 70%/> </div>
 
 &emsp;&emsp;SSH配置信息根据实验环境来配置：
 
 - 远程实验平台。IP地址： `10.249.12.98` ，端口号： `6666` ，用户名和初始密码都是 `你的学号` 。
 
-<div align="center"> <img src="../tools.assets/image-20201017220316972.png" width = 90%/> </div>
+<div align="center"> <img src="./tools.assets/image-20201017220316972.png" width = 90%/> </div>
 
 - 自行部署的实验环境。如果你用的是你自己的实验环境，可以使用ip addr命令来查询IP地址。端口号如果在没有修改的情况下，默认是22。用户名和密码是Linux系统中的用户名和密码。
 
@@ -39,7 +39,7 @@
 
 &emsp;&emsp;SSH远程登录完毕，在左下角有Sftp图标，双击它，就出现了远程服务器的文件目录
 
-<div align="center"> <img src="../tools.assets/mobaxterm-6.png" width = 90%/> </div>
+<div align="center"> <img src="./tools.assets/mobaxterm-6.png" width = 90%/> </div>
 
 &emsp;&emsp;接下来，可以点击红色框框的按钮“Upload to current folder”或者“Download selected files”，在windows系统和虚拟机/远程实验平台之间上传或下载文件。
 
@@ -106,22 +106,22 @@
 
 &emsp;&emsp;在连接到远程主机之后，需要在再次搜索并安装上述扩展，将其安装在远程主机上。C/C++扩展在安装后可能需要一段时间来下载依赖文件。
 
-<div align="center"> <img src="../remote_env.assets/image-20201016162754878.png" /> </div>
+<div align="center"> <img src="./remote_env.assets/image-20201016162754878.png" /> </div>
 
 &emsp;&emsp;回车，提示Host Added!
 
 &emsp;&emsp;在此处点击连接：
 
-<div align="center"> <img src="../remote_env.assets/image-20201016162859685.png" width = 40%/> </div>
+<div align="center"> <img src="./remote_env.assets/image-20201016162859685.png" width = 40%/> </div>
 
 &emsp;&emsp;输入密码后，稍等片刻，等待窗口成为如下时，即连接成功：
 
-<div align="center"> <img src="../remote_env.assets/image-20201016163031421.png" width = 70%/> </div>
+<div align="center"> <img src="./remote_env.assets/image-20201016163031421.png" width = 70%/> </div>
 
 &emsp;&emsp;此时，可以像本地一样使用远程机器进行工作了。
 
 !!! 提示
-    如果出现VSCode无法连接远程环境，请先查看[常见问题](../faq/faq-env)，如果还是解决不了，请联系老师/助教。
+    如果出现VSCode无法连接远程环境，请先查看[常见问题](faq/faq-env.md)，如果还是解决不了，请联系老师/助教。
 
 
 ## 3 git
@@ -231,18 +231,18 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 &emsp;&emsp;登录gitee，右上角可见一个加号，点击它下拉菜单中的“新建仓库”。
 
-<div align="center"> <img src="../tools.assets/new_repo.png" /> </div>
+<div align="center"> <img src="./tools.assets/new_repo.png" /> </div>
 
 &emsp;&emsp;点击进入，并为自己的仓库设置一个你喜欢的名称。你可以选择公开仓库或者私有仓库。完成后点击“创建”，即可创建一个空的远程仓库。
 
-<div align="center"> <img src="../tools.assets/new_repo2.png" /> </div>
+<div align="center"> <img src="./tools.assets/new_repo2.png" /> </div>
 
 !!! warning "请不要初始化仓库！"
     你的仓库在本地，因此请不要初始化仓库、设置模板或选择分支模型。总的而言，我们的目标是创建一个空的远程仓库，并且把我们本地的仓库塞进去。
 
 &emsp;&emsp;仓库创建完成后，会来到这个界面。将这个界面的SSH地址复制下来：
 
-<div align="center"> <img src="../tools.assets/new_repo3.png" /> </div>
+<div align="center"> <img src="./tools.assets/new_repo3.png" /> </div>
 
 #### 3.2.2 清理本地工作树
 
@@ -271,7 +271,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-&emsp;&emsp;如果本地有尚未commit的更改，请参照[3.3.1.1 Commit](#3311)中的操作（命令行操作）或者[3.3.2 使用VSCode内建的图形化界面完成操作](#332)中的操作（VSCode图形化界面操作），完成commit。你没有推送到上游仓库（本课程实验提供的远程仓库）的权限，所以不必push。
+&emsp;&emsp;如果本地有尚未commit的更改，请参照[3.3.1.1 Commit](#3311-commit)中的操作（命令行操作）或者[3.3.2 使用VSCode内建的图形化界面完成操作](#332-vscode)中的操作（VSCode图形化界面操作），完成commit。你没有推送到上游仓库（本课程实验提供的远程仓库）的权限，所以不必push。
 
 #### 3.2.3 修改远程仓库地址并推送
 
@@ -281,7 +281,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 git remote set-url origin git@gitee.com:willson0v0/my_xv6_repo.git
 ```
 
-&emsp;&emsp;将其中`git@gitee.com:willson0v0/my_xv6_repo.git`替换成[3.2.1 设立自己的远程仓库（以gitee为例）](#321)中复制下来的远程仓库地址。可以输入`git remote -v`检视远程连接有没有更改成功。完成后，切换到你想要推送的分支，并上传到远程。这里以`syscall`分支为例：
+&emsp;&emsp;将其中`git@gitee.com:willson0v0/my_xv6_repo.git`替换成[3.2.1 设立自己的远程仓库（以gitee为例）](#321-gitee)中复制下来的远程仓库地址。可以输入`git remote -v`检视远程连接有没有更改成功。完成后，切换到你想要推送的分支，并上传到远程。这里以`syscall`分支为例：
 
 ```bash
 git push -u origin syscall
@@ -295,7 +295,7 @@ git push -u origin syscall
 
 &emsp;&emsp;git工作过程
 
-<div align="center"> <img src="../tools.assets/git-command.jpg" /> </div>
+<div align="center"> <img src="./tools.assets/git-command.jpg" /> </div>
 说明：
 
 - workspace：工作区
@@ -362,22 +362,22 @@ git merge 远程仓库名称/分支名称
 
 &emsp;&emsp;VSCode的版本控制界面在左侧从上往下数第二个按钮处；下方会显示当前所处的分支，点击可以切换当前所处分支；右侧的圆形双箭头则代表与远程环境同步。右侧Changes显示工作区中被修改的文件，而Staged则显示将被加入到下次Commit中的修改。如图，这个界面显示我们有两个被修改的文件：
 
-<div align="center"> <img src="../tools.assets/vs_git.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/vs_git.png" width = 100%/> </div>
 
 &emsp;&emsp;鼠标移至Changes或下面所列文件处，点击右侧的加号，可以将文件加入到Staged区中：
 
-<div align="center"> <img src="../tools.assets/stage.png" width = 100%/> </div>
-<div align="center"> <img src="../tools.assets/stage2.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/stage.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/stage2.png" width = 100%/> </div>
 
 
 &emsp;&emsp;此时，这些文件已经准备好被Commit。在上方框内输入Commit信息，并点击 √ 按钮以提交：
 
-<div align="center"> <img src="../tools.assets/commit.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/commit.png" width = 100%/> </div>
 
 
 &emsp;&emsp;在下方的同步按钮处，可以发现有0个提交需要拉取、1个提交需要推送。点击这个按钮以同步，或者点击左上方那个巨大的蓝色的Sync Changes（同步更改）：
 
-<div align="center"> <img src="../tools.assets/push.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/push.png" width = 100%/> </div>
 
 &emsp;&emsp;这样，你的代码就保存到云端了。
 
@@ -388,7 +388,7 @@ git merge 远程仓库名称/分支名称
 
 &emsp;&emsp;如果有两个Commit的内容出现冲突，merge的时候就有可能需要合并冲突更改。建议在VSCode中进行冲突修改。例如此处，我在对本地`syscall`做修改之后，将其与远程`upstream/origin`做修改，并触发了冲突：
 
-<div align="center"> <img src="../tools.assets/merge_cf.png" /> </div>
+<div align="center"> <img src="./tools.assets/merge_cf.png" /> </div>
 &emsp;&emsp;从左侧红框中“Merge Changes”栏中可以看到出现冲突的文件。点开文件，右侧会出现冲突视图。上方青色部分指的是当前（本地）的修改，而下方蓝色部分则是远程(`upstream/origin`)的修改。根据实际情况，可以从上方几个按钮中选择合适的那个。这次，我想要保存我自己的修改、而丢弃远程的修改，故选择`Accept Current Change`。随后，和Commit前一样，将刚才的修改Stage，并点击上方 √ 号提交Commit，并推送。这样，我们就完成了冲突更改的合并。
 
 ### 3.4 ssh密钥设置
@@ -461,11 +461,11 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHTsqQjFiFXrQOc+opjUTQAWhGCqcpFTLWqiHkz0Rgl4
 &emsp;&emsp;如果你要访问的远程仓库位于Gitee，那么你需要将你的 **ssh公钥** 部署到Gitee。首先，打开[Gitee页面](https://gitee.com/)，登录，并点击左上角个人头像-设置：
 
 
-<div align="center"> <img src="../tools.assets/gitee_config.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/gitee_config.png" width = 100%/> </div>
 
 &emsp;&emsp;随后，点击左侧的ssh公钥，并将此前生成的 **ssh公钥** 内容拷贝进公钥区。你可以通过`cat ~/.ssh/id_ed25519.pub`从终端获得这个文件的内容。随后，你可以编辑这个公钥的标题。最后，点击最下方橙色的“确定”，即可完成公钥的添加。
 
-<div align="center"> <img src="../tools.assets/gitee_addssh.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/gitee_addssh.png" width = 100%/> </div>
 
 &emsp;&emsp;我们可以通过以下指令，尝试连接到Gitee，以验证公钥是否添加成功：
 
@@ -478,15 +478,15 @@ Hi 用户名! You've successfully authenticated, but GITEE.COM does not provide 
 
 &emsp;&emsp;如果你要访问的远程仓库位于Github，那么你需要将你的 **ssh公钥** 部署到Gitee。首先，打开[Github页面](https://gitee.com/)，登录，并点击左上角个人头像-Settings：
 
-<div align="center"> <img src="../tools.assets/github_setting.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/github_setting.png" width = 100%/> </div>
 
 &emsp;&emsp;随后，点击左侧SSH and GPG keys，并点击右上角的New SSH key：
 
-<div align="center"> <img src="../tools.assets/github_addssh.png" width =100%/> </div>
+<div align="center"> <img src="./tools.assets/github_addssh.png" width =100%/> </div>
 
 &emsp;&emsp;最后，输入SSH key的标题，将此前生成的 **ssh公钥** 内容拷贝进公钥区，并点击下方绿色`Add SSH key`即可。
 
-<div align="center"> <img src="../tools.assets/github_addssh2.png" width = 100%/> </div>
+<div align="center"> <img src="./tools.assets/github_addssh2.png" width = 100%/> </div>
 
 &emsp;&emsp;我们可以通过以下指令，尝试连接到Github，以验证公钥是否添加成功：
 
@@ -562,7 +562,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-&emsp;&emsp;这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](#332-vs-code)节，完成commit操作。
+&emsp;&emsp;这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](#332-vscode)节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。
 
 ## 4 gcc

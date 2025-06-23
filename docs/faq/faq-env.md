@@ -159,7 +159,7 @@ Please make sure you have the correct access rights
 and the repository exists
 ```
 
-这表明你没有权限推送到这个远程仓库。一般而言，这是由于你没有设置好自己的ssh密钥造成的。请参照[3.4节 ssh密钥设置](../../tools/#34-ssh)，设置自己的ssh密钥。
+这表明你没有权限推送到这个远程仓库。一般而言，这是由于你没有设置好自己的ssh密钥造成的。请参照[3.4节 ssh密钥设置](../tools.md/#34-ssh)，设置自己的ssh密钥。
 
 ### 5.2 我怎么知道我修改了哪些文件？
 
@@ -183,7 +183,7 @@ lgz_admin@OSLabExecNode0:~/git_demo/xv6-oslab23-hitsz$ git diff --stat upstream/
 	在比较的时候，你需要将本地分支与上游对应分支进行比较。举例而言，你不会想比较本地的`util`分支和远程的`syscall`分支，因为这两个不是一个实验的。请先使用`git checkout 分支名`以切换到对应分支，并在使用`git diff --stat upstream/分支名 *`时指定 **同一个** 上游分支。
 
 !!! warning "未设置上游仓库？"
-	如果git报告“`fatal: ambiguous argument 'upstream/分支名': unknown revision or path not in the working tree.`”，说明你尚未设置上游仓库。请先按本指南中的[3.1-同步上游仓库](../../tools/#31)一节完成上游仓库的设置与同步，再进行比较。
+	如果git报告“`fatal: ambiguous argument 'upstream/分支名': unknown revision or path not in the working tree.`”，说明你尚未设置上游仓库。请先按本指南中的[3.1-同步上游仓库](../tools.md/#31)一节完成上游仓库的设置与同步，再进行比较。
 
 ### 5.3 为什么我不能切换分支（checkout）？
 
@@ -212,7 +212,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](../../tools/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../../tools/#332-vs-code)节，完成commit操作。
+这说明当前你的工作区有尚未保存的更改。请参考[3.3.1 使用命令行完成操作](../tools.md/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../tools.md/#332-vscode)节，完成commit操作。
 或者，如果你希望直接放弃掉上一次commit后的 **所有更改** ，那么你也可以使用`-f`选项强制切换分支，例如`git checkout -f syscall`。
 
 ### 5.4 验证commit.patch时报错？

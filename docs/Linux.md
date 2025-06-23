@@ -12,11 +12,11 @@
 - 配置SSH连接，通常需要服务器的IP地址、用户名和可能的SSH密钥。
 - 使用VSCode打开一个新的SSH终端，连接到远程服务器。
 
-使用VSCode登录远程实验平台具体步骤详见[远程实验环境使用指南](../remote_env/)。
+使用VSCode登录远程实验平台具体步骤详见[远程实验环境使用指南](remote_env.md)。
 
 ### 1.2 使用MobaXterm登录
 
-具体步骤详见[MobaXterm工具](../tools/#11-mobaxtermssh)。
+具体步骤详见[MobaXterm工具](tools.md/#11-mobaxtermssh)。
   
 ### 1.3 在本地电脑上启动Linux
 

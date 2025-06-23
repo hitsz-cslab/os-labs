@@ -67,9 +67,9 @@
  
     本次实验基于 **pgtbl** 分支，请同学们注意切换。
 
-    **Step 1.** 首先，保存实验三的代码，请参考实验实用工具的[3.3.1 使用命令行完成操作](../../tools/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../../tools/#332-vs-code)这两小节，完成commit操作。
+    **Step 1.** 首先，保存实验三的代码，请参考实验实用工具的[3.3.1 使用命令行完成操作](../tools.md/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../tools.md/#332-vscode)这两小节，完成commit操作。
     
-    **Step 2.** 然后，参考“Lab2：进程与系统调用”的[3.1 切换分支](../../lab2/part1/#31)进行切换。
+    **Step 2.** 然后，参考“Lab2：进程与系统调用”的[3.1 切换分支](../lab2/part1.md/#31)进行切换。
 
     同时，本次实验的 **输出格式不同于MIT原版实验，请严格按照指导书要求！**
 
@@ -96,7 +96,7 @@
 
 - 在exec.c中的返回argc之前插入`vmprint()`函数，以输出第一个进程或刚载入程序的页表。其中，`vmprint()`函数的入参可以根据你自己的设计来填入。
 
-<div align="center"> <img src="../part1.assets/image-20221024121955342.png" /> </div>
+<div align="center"> <img src="./part1.assets/image-20221024121955342.png" /> </div>
 
 #### 3.1.2 结果示例
 
@@ -155,7 +155,7 @@ $
     **由于xv6不支持%c, 因此打印字符的时候请通过将字符转化为字符串的方式，使用%s格式化字符串** 。
 
 - 第一行打印的是 `vmprint` 的参数，即获得的页表参数具体的值。
-- 在之后打印的则是页表项。RISC-V的页表被设计成了三层（具体见[实验原理](../part2/)），每一个”||“都代表一层。
+- 在之后打印的则是页表项。RISC-V的页表被设计成了三层（具体见[实验原理](part2.md)），每一个”||“都代表一层。
 - 打印的格式为：（注意 **冒号后面都接一个空格** ）
     - 如果是非叶节点，则为：`idx: [索引编号]: pa: [物理地址], flags: [四个权限位(r/w/x/u)]`
     - 如果是叶子节点，则为：`idx: [索引编号]: va: [虚拟地址] -> pa: [物理地址], flags: [四个权限位(r/w/x/u)]`
@@ -207,7 +207,7 @@ $
 
 &emsp;&emsp;首先，在xv6运行 `kvmtest`，如果你确实使用了独立内核页表，会看到以下结果：
     
-<div align="center"> <img src="../part1.assets/image-20211023161926242-16353841836811.png" /> </div>   
+<div align="center"> <img src="./part1.assets/image-20211023161926242-16353841836811.png" /> </div>   
 
 &emsp;&emsp;然后，请在xv6运行 `usertests`，确保所有测试通过（显示"ALL TESTS PASSED"）。
     
@@ -223,13 +223,13 @@ $
 #### 3.3.1 任务要求
 
 1. 要求提供了新的函数 `copyin_new()/copyinstr_new() ` （在 `kernel/vmcopyin.c`中定义）。你需要找到调用 `copyin()`（在 `kernel/vm.c` 中定义）的地方，用`copyin_new()`替换之 。同样地，用`copyinstr_new()`代替 `copyinstr()`。
-2. 在独立内核页表加上用户页表的映射，以保证刚刚替换地新函数能够使用。但是要注意地址重合问题，见“[实验原理 3.5](../part2/#35)”.
+2. 在独立内核页表加上用户页表的映射，以保证刚刚替换地新函数能够使用。但是要注意地址重合问题，见“[实验原理 3.5](part2.md/#35)”.
    
 #### 3.3.2 结果示例
 
 &emsp;&emsp;首先，在xv6运行 `stats stats`，如果你正确使用了`copyin_new`和`copyinstr_new`，会看到输出的数值不为零：
     
-<div align="center"> <img src="../part1.assets/image-20211023162335116-16353873302232.png" /> </div>  
+<div align="center"> <img src="./part1.assets/image-20211023162335116-16353873302232.png" /> </div>  
     
 &emsp;&emsp;然后，请在xv6运行 `usertests`，确保所有测试通过（显示"ALL TESTS PASSED"）。
 
@@ -237,4 +237,4 @@ $
 
 &emsp;&emsp;当完成上述的三个实验后，在命令行输入 `make grade` 进行测试。如果通过测试，会显示如下内容：
 
-<div align="center"> <img src="../part1.assets/image-20211023160155602-16353874445883.png"  width = 70%/> </div>
+<div align="center"> <img src="./part1.assets/image-20211023160155602-16353874445883.png"  width = 70%/> </div>

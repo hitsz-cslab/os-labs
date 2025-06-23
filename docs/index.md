@@ -33,12 +33,12 @@
 -  **实验代码** 下载地址：https://gitee.com/ftutorials/xv6-oslab24-hitsz.git
 -  **实验工具** 下载地址（校内网）：https://mirrors.osa.moe/misc/
 -  **实验提交** 地址（校内网）：http://10.249.12.98:8000/#/login
--  **远程实验环境** （校内网），详见[远程实验环境使用指南](remote_env/)
+-  **远程实验环境** （校内网），详见[远程实验环境使用指南](remote_env.md)
 -  **piazza在线交流平台（access code：comp3001）** 欢迎同学们在piazza上提问，提问的内容第一时间会由助教或老师回答，当然也欢迎同学们来回答：https://piazza.com/harbin_institute_of_technology_shenzhen/fall2024/comp3001/
   
 ## 3. 获取XV6实验框架代码
 
-&emsp;&emsp;在下载实验代码前，请先搭建好xv6实验平台，搭建方法参考[实验平台搭建以及环境配置](env)。
+&emsp;&emsp;在下载实验代码前，请先搭建好xv6实验平台，搭建方法参考[实验平台搭建以及环境配置](env.md)。
   
 &emsp;&emsp;如果你已经进入实验平台，请在命令行终端中执行：
 

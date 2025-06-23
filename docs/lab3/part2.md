@@ -71,9 +71,10 @@ struct {
 
 &emsp;&emsp;这可能比较难理解，我们不妨从这个链表的构建开始了解。在系统启动时，`main()`函数（见`kernel/main.c`）调用`kinit()`来初始化分配器，它通过保存所有空闲页来初始化链表。`kinit()`调用`freerange()`来把空闲内存页加到链表里，`freerange()`则是通过调用`kfree()`把每个空闲页（地址范围从`pa_start`至`pa_end`）逐一加到链表里来实现此功能的。`kfree()` 函数用于释放指定的物理内存页，将其添加至`freelist`中，参数`pa`为需要释放的物理页页号，即物理页的首地址，它被看作一个没有类型的指针。在`kfree()`中，`pa`被 **强制转换** 为`run`类型的指针，进而可以放入`freelist`中。因为空闲页里什么都没有，所以结构体`run`的成员可以直接 **保存在空闲页自身里** 。
 
-<div align="center"> <img src="../part2.assets/kalloc执行流.png" width = 60%/> </div>
+<div align="center"> <img src="./part2.assets/kalloc_workflow.png" width = 60%/> </div>
 
 <!--
+
 ```c
 void freerange(void *pa_start, void *pa_end)
 {
@@ -102,18 +103,18 @@ void kfree(void *pa)
 
 &emsp;&emsp;释放内存的函数是`kfree(void *pa)`，首先将 `void *pa` 开始的物理页的内容全部置为1，这是为了让之前使用它的代码不能再读取到有效的内容，使得这些代码能尽早崩溃以暴露问题。然后将这空闲页物理内存加到链表头。
 
-<div align="center"> <img src="../part2.assets/image-20201121160342435.png" width = 60%/> </div>
+<div align="center"> <img src="./part2.assets/image-20201121160342435.png" width = 60%/> </div>
 
 2、申请内存
 
 &emsp;&emsp;`void* kalloc(void *)`用来分配内存物理页，功能很简单，就是移除并返回空闲链表头的第一个元素，即给调用者分配1页物理内存。
 
-<div align="center"> <img src="../part2.assets/image-20201121160419011.png" width = 70%/> </div>
+<div align="center"> <img src="./part2.assets/image-20201121160419011.png" width = 70%/> </div>
 
 &emsp;&emsp;由于物理内存是在多进程之间共享的，所以不管是分配还是释放页面，每次操作`kmem.freelist`时都需要先申请`kmem.lock`，此后再进行内存页面的操作。
     
 
-<div align="center"> <img src="../part2.assets/freelist.png" width = 70%/> </div>
+<div align="center"> <img src="./part2.assets/freelist.png" width = 70%/> </div>
 
 ### 1.3 锁机制
 
@@ -126,7 +127,7 @@ void kfree(void *pa)
 
 &emsp;&emsp;修改空闲内存链表就是`freelist`，现在我们要减少锁的争抢， **使每个`CPU`核使用独立的链表** ，而不是现在的共享链表。这样等分，就不会让所有的`CPU`争抢一个空闲区域。**注意**：每个空闲物理页只能存在于一个freelist中。 
 
-<div align="center"> <img src="../part2.assets/kalloc.png" width = 70%/> </div>
+<div align="center"> <img src="./part2.assets/kalloc.png" width = 70%/> </div>
 
 
 
@@ -150,7 +151,7 @@ void kfree(void *pa)
 2. 缓存常用块，使得不必每次都从硬盘上读取它们。  
 3. 修改缓存块的内容后，确保磁盘中对应内容的更新。  
 
-<div align="center"> <img src="../part2.assets/bcache3.png" width = 70%/> </div>
+<div align="center"> <img src="./part2.assets/bcache3.png" width = 70%/> </div>
 
 ### 2.2 基本结构
 
@@ -194,7 +195,7 @@ struct buf {
     - *`lock`* 是缓存磁盘块的睡眠锁。sleeplock是用于确保每次只有一个进程使用buffer（从而使用相应的磁盘块）。
 
 
-<div align="center"> <img src="../part2.assets/buffercache.png" width = 40%/> </div>
+<div align="center"> <img src="./part2.assets/buffercache.png" width = 40%/> </div>
 
 
 &emsp;&emsp;上图是bcache结构示意图。bcache.lock是自旋锁，用于表示 bcache 链表是否被锁住。b->lock是睡眠锁，用于表示缓存数据块buf是否被锁住。
@@ -226,7 +227,7 @@ struct buf {
 
 &emsp;&emsp;在`kernel/bio.c`中，可以看到，所有的`buffer`都被组织到 **一条链表** 中，因此如果有多个进程要使用`buffer`，它们并发的请求只能被顺序地处理。
 
-<div align="center"> <img src="../part2.assets/bcache2.png" width = 65%/> </div>
+<div align="center"> <img src="./part2.assets/bcache2.png" width = 65%/> </div>
 
 !!! note   "关于bcache的优化策略"
     MIT官方指导书推荐使用 **哈希桶** 和 **时间戳** 两个方案，此外，本实验还给出了基于 **CLOCK算法** 的优化策略，大家可以自行选择优化策略，也可以一起使用（如哈希桶结合时间戳），也可以单独分开用，需要自行测试看看能否通过测评程序。
@@ -244,7 +245,7 @@ struct buf {
 4. 哈希表的搜索和空闲缓存块的查找需要保证原子性。 
    
 
-<div align="center"> <img src="../part2.assets/hash.png" width = 70%/> </div>
+<div align="center"> <img src="./part2.assets/hash.png" width = 70%/> </div>
 
 
 #### 2.4.2 时间戳
@@ -257,13 +258,13 @@ struct buf {
    
 3. 时间戳可通过`kernel/trap.c`中的`ticks`函数获得（`ticks`已在`kernel/def.h`中声明，`bio.c`中可直接使用）。  
    
-<div align="center"> <img src="../part2.assets/timestamp.png" width = 70%/> </div>
+<div align="center"> <img src="./part2.assets/timestamp.png" width = 70%/> </div>
 
 #### 2.4.3 CLOCK算法
 
 &emsp;&emsp;除此之外，理论课上我们还学习过除了 LRU 以外的替换算法，例如 CLOCK 算法等，也可以在本实验中使用。
 
-<div align="center"> <img src="../part2.assets/CLOCK.png" width = 70%/> </div>
+<div align="center"> <img src="./part2.assets/CLOCK.png" width = 70%/> </div>
 
 
 

@@ -17,7 +17,7 @@
 
 &emsp;&emsp;远程实验平台共有8个计算节点，每一个计算节点都提供相同的服务，可能你每次登录的计算节点会不一样，但无须担心，你看到的文件都是一样的。
 
-<div align="center"> <img src="../remote_env.assets/image-20210910105707775.png" /> </div>
+<div align="center"> <img src="./remote_env.assets/image-20210910105707775.png" /> </div>
 
 ## 1 快速入门
 
@@ -44,7 +44,7 @@
 点击这个图标，选择SSH TARGETS右侧的`+`号：
 
 
-<div align="center"> <img src="../remote_env.assets/ssh_add_host.png" /> </div>
+<div align="center"> <img src="./remote_env.assets/ssh_add_host.png" /> </div>
 
 &emsp;&emsp;这会在屏幕上方中央弹出输入框，要求输入ssh指令。在这里输入`ssh 你的学号@远程实验平台IP -p 端口号`，例如`ssh 200110101@10.249.12.98 -p 6666`就是学号为200110101的同学希望连接到远程实验平台。
 
@@ -56,7 +56,7 @@
 
 &emsp;&emsp;现在，SSH Target添加成功，左侧SSH Target中应该增加了一栏。将鼠标移上去，点击这一栏右侧的小图标：
 
-<div align="center"> <img src="../remote_env.assets/connect1-16618272820231.png" /> </div>
+<div align="center"> <img src="./remote_env.assets/connect1-16618272820231.png" /> </div>
 
 
 
@@ -90,7 +90,7 @@ passwd
 随后，它会要求你输入新密码，并进行确认。
 
 
-<div align="center"> <img src="../remote_env.assets/passwd.png" /> </div>
+<div align="center"> <img src="./remote_env.assets/passwd.png" /> </div>
 
 &emsp;&emsp;接下来，我们将存放xv6-oslab24-hitsz复制到自己的工作空间。
 在终端中键入以下内容，并回车：
@@ -266,7 +266,7 @@ vi ~/.ssh/authorized_keys
 
 &emsp;&emsp;确保你输入的是正常的半角英文字符与英文标点符号，如图所示：
 
-<div align="center"> <img src="../remote_env.assets/char.png" /> </div>
+<div align="center"> <img src="./remote_env.assets/char.png" /> </div>
 
 &emsp;&emsp;这可以通过一起按下shift+空格，或者切换到英文输入法解决。**永远不要在中文输入法下输入命令！**
 

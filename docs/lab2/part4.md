@@ -46,7 +46,7 @@
 
 # 实验提交
 
-请参考实验一的代码[提交方式](../../lab1/part4/#_1)。
+请参考实验一的代码[提交方式](../lab1/part4.md/#1)。
 
 <!--
 &emsp;&emsp;实验二提交<font color=red>  **实验报告** </font> 和 <font color=red> **实验代码(只提交commit.patch文件)** </font> 。

@@ -3,14 +3,14 @@
 !!! note "调试说明"
 	这部分深入介绍了VSCode图形化界面GDB调试系统调用的过程，涉及到了page table的部分内容以及汇编代码，虽然有些晦涩难懂，但如果想要深入了解整个系统调用的过程，这些都是要掌握的必不可少的知识点。下面以ls.c文件中的`fstat`系统调用执行过程为例，采用GDB调试分析`ecall`指令前后的系统调用过程，供同学们进行参考。
 
-为了给同学们演示如何用VSCode图形化调试XV6系统调用的过程，在[VSCode图形化调试指南（一）](../remote_env_gdb)里的两个视频之后，我们再录制了2个演示视频：
+为了给同学们演示如何用VSCode图形化调试XV6系统调用的过程，在[VSCode图形化调试指南（一）](remote_env_gdb.md)里的两个视频之后，我们再录制了2个演示视频：
 
 1. 【3. VSCode调试系统调用过程（包含pagetable和汇编）】 https://www.bilibili.com/video/BV12P411J7xq?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33
 2. 【4. VSCode调试系统调用——从内核到用户，再从用户返回内核】 https://www.bilibili.com/video/BV1ug411m7ir?share_source=copy_web&vd_source=a822dcda3537564ccdd0bb45aa0afe33vd_source=a822dcda3537564ccdd0bb45aa0afe33
 
 ## 1. ECALL指令之前的状态
 
-首先，参考[用户态程序调试](../remote_env_gdb/#444)从内核进入用户空间的user/ls.c。
+首先，参考[用户态程序调试](remote_env_gdb.md/#444)从内核进入用户空间的user/ls.c。
 
 在第38行打上断点。
 

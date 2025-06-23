@@ -18,7 +18,7 @@
         - [Lecture 6 - Isolation & System Call Entry_Exit](https://www.bilibili.com/video/BV19k4y1C7kA?p=5&vd_source=d43f6077de789bb822e80882b94ffca4)
 
     - [xv6 book](https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf), Sections 4.3 and 4.4 of Chapter 4
-    - 推荐同学们用GDB跟踪XV6系统调用过程，详细步骤请查看[VSCode调试系统调用指南](../../remote_env_gdb2)
+    - 推荐同学们用GDB跟踪XV6系统调用过程，详细步骤请查看[VSCode调试系统调用指南](../remote_env_gdb2.md)
 
 
 
@@ -45,22 +45,22 @@
 !!! warning   "请先同步上游远程仓库，并注意切换到syscall分支进行试验"
     本次实验基于syscall分支，请同学们注意切换。
 
-    **首先，** 保存实验一的代码，请参考实验实用工具的[3.3.1 使用命令行完成操作](../../tools/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../../tools/#332-vs-code)这两小节，完成commit操作。或者， **如果你希望直接放弃掉上一次commit后的所有更改** ，那么你也可以使用-f选项强制切换分支，例如`git checkout -f syscall`。
+    **首先，** 保存实验一的代码，请参考实验实用工具的[3.3.1 使用命令行完成操作](../tools.md/#331)或者[3.3.2 使用VSCode内建的图形化界面完成操作](../tools.md/#332-vscode)这两小节，完成commit操作。或者， **如果你希望直接放弃掉上一次commit后的所有更改** ，那么你也可以使用-f选项强制切换分支，例如`git checkout -f syscall`。
 
 接着按照如下步骤进行分支切换：
 
 1. 如下图，通过`git remote -v`可以看到此时关联的所有远程仓库，然后从中找出对应的链接是我们的官方仓库(`https://gitee.com/ftutorials/xv6-oslab24-hitsz.git`或者`git@gitee.com:ftutorials/xv6-oslab24-hitsz.git`)的远程仓库名字（图中是`origin`，同学们可能是`upstream`之类的别的名字）
 ![](part1.assets/git_remote.png)
 
-2. 如下图，通过`git fetch 官方远程仓库名字`获取远程仓库的所有分支及标签
+1. 如下图，通过`git fetch 官方远程仓库名字`获取远程仓库的所有分支及标签
 ![](part1.assets/git_fetch.png)
 
-3. 如下图，通过`git branch`查看目前本地是否已经存在`syscall`分支：
+1. 如下图，通过`git branch`查看目前本地是否已经存在`syscall`分支：
     - 若已存在`syscall`分支，需要先输入`git branch -D syscall`删掉该本地分支（这是为了避免后续merge带来不必要的麻烦，如果你已经在该分支做了一些改动，请 **手动备份你改动的代码至别处** ），再输入`git checkout --track 官方远程仓库名字/syscall`切换至`syscall`分支；
     - 若不存在`syscall`分支，则直接输入`git checkout --track 官方远程仓库名字/syscall`切换至`syscall`分支；
 ![](part1.assets/git_branch.png)
 
-4. 通过`git pull 官方远程仓库名字 syscall`以获取`syscall`分支的最新版本。
+1. 通过`git pull 官方远程仓库名字 syscall`以获取`syscall`分支的最新版本。
 ![](part1.assets/git_pull.png)
 
 
@@ -82,7 +82,7 @@
 1. **参数`status`** ：退出状态，0表示正常退出，-1（大部分）表示异常退出。  
 2. **返回值** ：无，函数调用exit之后该进程在内核态进行exit相关的资源回收之后，对应进程终止，不会返回。  
 3. **功能** ：回收进程资源，回收完毕之后终止进程。  
-    - exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -> **调用reparent将当前进程的所有子进程交给初始进程init** -> 更改当前进程状态 -> 手动进入调度器（等待回收）。详细原理请参考[实验原理](../part2/#3)部分。  
+    - exit系统调用在处理当前进程的资源时，大致流程为：关闭所有打开文件 -> **调用reparent将当前进程的所有子进程交给初始进程init** -> 更改当前进程状态 -> 手动进入调度器（等待回收）。详细原理请参考[实验原理](part2.md/#3-pcb)部分。  
     - 本任务 **需要完成** 的信息输出格式：  
   *当前进程的父进程的信息输出格式* ： `proc PID exit, parent pid PID, name NAME, state STATE`  
 *当前进程的子进程的信息输出格式* ：`proc PID exit, child CHILD_NUM, pid PID, name NAME, state STATE`  
@@ -98,7 +98,7 @@
 &emsp;&emsp;实验提供了一个exittest（见 `user/exittest.c`）用户级应用程序，该程序首先通过fork系统调用创建3个子进程，并通过sleep保证父进程在退出时子进程还没有退出，然后父进程先退出，3个子进程再退出。
 
 !!! note   "提示"
-    大家不要修改 `user/exittest.c`应用程序，它只是用于测试[3.2.1 exit系统调用的功能](#321)。
+    大家不要修改 `user/exittest.c`应用程序，它只是用于测试[3.2.1 exit系统调用的功能](#321-exit)。
 
 &emsp;&emsp;在你实现完上述功能之后，运行用户程序 exittest运行正确的情况下，你可以看到以下输出：
 
@@ -171,8 +171,8 @@ $ [INFO] proc 5 exit, parent pid 1, name init, state runble
 [INFO] proc 4 exit, parent pid 1, name init, state run
 [INFO] proc 6 exit, parent pid 1, name init, state run
 ```
-&emsp;&emsp;关于这点我们会在[实验原理](../part2/#3)当中详细介绍。  
-&emsp;&emsp;你需要使用尝试在与exit相关的函数当中找到 **合适的位置** 来进行输出，我们建议你先阅读[实验原理](../part2/#3)，这会帮助你更好的了解系统调用和exit的工作流程。
+&emsp;&emsp;关于这点我们会在[实验原理](part2.md/#3-pcb)当中详细介绍。  
+&emsp;&emsp;你需要使用尝试在与exit相关的函数当中找到 **合适的位置** 来进行输出，我们建议你先阅读[实验原理](part2.md/#3-pcb)，这会帮助你更好的了解系统调用和exit的工作流程。
       
 
 ### 3.3 任务二：wait系统调用的非阻塞选项实现
@@ -226,7 +226,7 @@ $ [INFO] proc 5 exit, parent pid 1, name init, state runble
 ```shell
 Save the context of the process to the memory region from address 0x??? to 0x???
 ```
-2. 需要打印当前进程的pid和此进程在用户态的pc值，也就是陷入内核的那条指令地址，即`ecall`指令的地址，详情见[系统调用的接口](../part2/#12)中提到的系统调用步骤，按如下格式打印：
+2. 需要打印当前进程的pid和此进程在用户态的pc值，也就是陷入内核的那条指令地址，即`ecall`指令的地址，详情见[系统调用的接口](part2.md/#12)中提到的系统调用步骤，按如下格式打印：
 ```shell
 Current running process pid is ??? and user pc is 0x???
 ```

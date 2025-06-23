@@ -1,6 +1,6 @@
 # 实验步骤
 
-下面，我们就正式进入到各实验的细节中，并给出实验实现的一些提示。大家需要依照实验指导书的[实验概述](../part1/)中提到的要求进行实现。同时，还需要回答指导书给出的[问题](../part3/#33)。
+下面，我们就正式进入到各实验的细节中，并给出实验实现的一些提示。大家需要依照实验指导书的[实验概述](part1.md)中提到的要求进行实现。同时，还需要回答指导书给出的[问题](part3.md/#33)。
 
 ### 1. 部署实验环境
 
@@ -8,7 +8,7 @@
 
 #### 1.1 xv6运行环境
 
-&emsp;&emsp;xv6运行环境详见[实验平台及环境配置](../../env/)。
+&emsp;&emsp;xv6运行环境详见[实验平台及环境配置](../env.md)。
 
 #### 1.2 xv6源码
 
@@ -26,7 +26,7 @@ git checkout util
 ```
 
 `git branch`表示列出当前仓库中的所有 本地分支。加上`-a`这个选项后，会显示所有分支，包括本地分支和远程分支。
-<div align="center"> <img src="../part3.assets/image-20210913105916234.png" /> </div>
+<div align="center"> <img src="./part3.assets/image-20210913105916234.png" /> </div>
 
 &emsp;&emsp;另外，由于我们的[官方仓库](https://gitee.com/ftutorials/xv6-oslab24-hitsz.git) **随时可能更新**，所以做实验前需要先拉取最新的代码：先切到对应的分支（util），然后：
 
@@ -36,7 +36,7 @@ git pull
 
 &emsp;&emsp;xv6的代码结构：
 
-<div align="center"> <img src="../part3.assets/image-20201017231446472.png" /> </div>
+<div align="center"> <img src="./part3.assets/image-20201017231446472.png" /> </div>
 
 #### 1.3 编译并运行xv6
 
@@ -44,14 +44,14 @@ git pull
 
 &emsp;&emsp;**Step2** 当可以看到“init: starting sh”的字样表示xv6已经正常启动，此时在“$”提示符后可输入xv6支持的shell命令。
 
-<div align="center"> <img src="../part3.assets/image-20210913110108193.png" /> </div>
+<div align="center"> <img src="./part3.assets/image-20210913110108193.png" /> </div>
 
 !!! warning "qemu退出方法"
     先按`ctrl+a`组合键，接着完全松开，再按`x`。
 
 ### 2. 准备工作
 
-&emsp;&emsp;本次实验需要编写[实验内容](../part1/#3)中介绍的3个Unix实用程序。初次接触操作系统实验的你可能会感到不知所措，因此不妨先体验一下这些程序的运行效果。实际上，Linux中具备本次实验要实现的一些程序，例如sleep、find。你可以先尝试在Linux中使用这些命令，充分体会功能后再开始编程。当然，Linux中命令的功能较为复杂，我们仅要求实现简化版。
+&emsp;&emsp;本次实验需要编写[实验内容](part1.md/#3)中介绍的3个Unix实用程序。初次接触操作系统实验的你可能会感到不知所措，因此不妨先体验一下这些程序的运行效果。实际上，Linux中具备本次实验要实现的一些程序，例如sleep、find。你可以先尝试在Linux中使用这些命令，充分体会功能后再开始编程。当然，Linux中命令的功能较为复杂，我们仅要求实现简化版。
 
 &emsp;&emsp;实验开始之前，我们 **强烈建议** 你先完成以下工作：
 
@@ -70,18 +70,18 @@ git pull
 
 &emsp;&emsp;**Step1** . 新建user/sleep.c文件，编写如下代码，理解代码和注释；
 
-<div align="center"> <img src="../part3.assets/image-20210913110416368.png" /> </div>
+<div align="center"> <img src="./part3.assets/image-20210913110416368.png" /> </div>
 
 &emsp;&emsp;**Step2** . 由于sleep.c为新增的用户程序文件，请在Makefile文件中找到UPROGS，在`UPROGS`上增加一行`$U/_sleep`：
 
 !!! info "UPROGS的含义"
     `UPROGS`变量(User Programs)列出了所有需要编译、链接并打包到文件系统镜像中的用户程序。每一项都对应一个最终的可执行文件。例如，`$U/_cat`(`$U`是user目录的路径)表示cat命令的可执行文件，这个文件会被编译并生成，然后放入文件系统镜像`fs.img`中，以便在系统启动时可以访问和运行。
 
-<div align="center"> <img src="../part3.assets/image-20220926104856325.png" /> </div>
+<div align="center"> <img src="./part3.assets/image-20220926104856325.png" /> </div>
 
 &emsp;&emsp;**Step3** . 编译xv6并运行sleep。
 
-<div align="center"> <img src="../part3.assets/image-20201018125249828.png"  width = 40%/> </div>
+<div align="center"> <img src="./part3.assets/image-20201018125249828.png"  width = 40%/> </div>
 
 &emsp;&emsp;**Step4.**  回答3.3中的[相关问题](#33)。
 
@@ -93,13 +93,13 @@ git pull
 
 ##### 3.2.1 pingpong
 
-&emsp;&emsp;请在`user/pingpong.c`中实现[pingpong程序](../part1/#32-pingpong)。建议你在做之前着重理解实验原理中[文件描述符和IO操作](../part2/#3-xv6)和[管道](../part2/#5)这两节。
+&emsp;&emsp;请在`user/pingpong.c`中实现[pingpong程序](part1.md/#32-pingpong)。建议你在做之前着重理解实验原理中[文件描述符和IO操作](part2.md/#3-xv6)和[管道](part2.md/#5)这两节。
 
 a) 使用`pipe()`创建管道；请思考，需要用到几个管道呢？
 
 b) 使用`fork()`创建子进程，注意根据返回值，判断父子进程；
 
-c)   利用`read()`, `write()`系统调用对管道进行读写。你可能还需要用到`close()`、`getpid()`等等[系统调用](../part2/#3-xv6)。
+c)   利用`read()`, `write()`系统调用对管道进行读写。你可能还需要用到`close()`、`getpid()`等等[系统调用](part2.md/#3-xv6)。
 
 d)   如果你需要在数字和字符串之间进行转换，`user/ulib.c`提供了`atoi`和`itoa`函数（a for ASCII, i for Integer)。
 
@@ -129,9 +129,9 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
 二、了解管道模型，回答下列问题
 
 1. 简要说明在pingpong实验中，你是怎么创建管道的？结合fork系统调用说明你是怎么使用管道在父子进程之间传输数据的。
-2. 再次阅读[实验原理-管道](../part2/#5)这一节中给出的关于`wc`命令的示例程序，假设子进程没有关闭管道写端，在Linux环境下编译运行后执行`ps`指令，我们发现会多一个永不结束的`wc`进程，为什么会有如下结果？
-<div align="center"> <img src="../part3.assets/pipe-question.png" /> </div>
-<div align="center"> <img src="../part3.assets/pipe-question-result.png" /> </div>
+2. 再次阅读[实验原理-管道](part2.md/#5)这一节中给出的关于`wc`命令的示例程序，假设子进程没有关闭管道写端，在Linux环境下编译运行后执行`ps`指令，我们发现会多一个永不结束的`wc`进程，为什么会有如下结果？
+<div align="center"> <img src="./part3.assets/pipe-question.png" /> </div>
+<div align="center"> <img src="./part3.assets/pipe-question-result.png" /> </div>
 
 ### 4. xv6 启动流程分析
 
@@ -290,6 +290,6 @@ e) 测试时需要创建新的文件和文件夹，可使用`make clean`清理�
     !!! tip "调试 init 程序"
         进入用户态 init 程序执行后，可以使用 `add-symbol-file user/_init` 命令将 init 程序的调试符号导入到 gdb 中，这样就可以看见汇编对应的源代码了。可以参考 [GDB调试指南调试用户态程序一节](../gdb.md)
 
-在理解xv6的启动流程后，就可以开始编写xv6启动流程实验了，详见[实验内容及要求](../../lab1/part1/#34-xv6)
+在理解xv6的启动流程后，就可以开始编写xv6启动流程实验了，详见[实验内容及要求](part1.md/#34-xv6)
 
-<div align="center"> <img src="../part3.assets/image-20230914120057118.png" width = 60%/> </div>
+<div align="center"> <img src="./part3.assets/image-20230914120057118.png" width = 60%/> </div>

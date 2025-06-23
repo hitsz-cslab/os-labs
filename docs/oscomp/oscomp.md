@@ -25,7 +25,7 @@
     
     - <font color=red> **比赛重要时间点**   </font>：
       
-    ![img](oscomp.assets/时间轴-2023.png)
+    ![img](oscomp.assets/timeline-2023.png)
 
     - <font color=red> **比赛奖项设置** </font>： 
            
@@ -259,7 +259,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123101314/oskernel2023-Titanix)
     
-    ![img](oscomp.assets/内核赛-2023-1.jpg)
+    ![img](oscomp.assets/KernelTrack-2023-1.jpg)
     </font>
 
 ### 5.7 2023功能赛道-BoesFS
@@ -278,7 +278,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123111316/project1466467-176078)
     
-    ![img](oscomp.assets/功能赛-2023-1.jpg)
+    ![img](oscomp.assets/FunctionTrack-2023-1.jpg)
     </font>
 
 ### 5.8 2023功能赛道-COS
@@ -295,7 +295,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123111334/proj134-cfs-based-userspace-scheduler)
     
-    ![img](oscomp.assets/功能赛-2023.jpg)
+    ![img](oscomp.assets/FunctionTrack-2023.jpg)
     </font>
 
 ### 5.9 2023功能赛道-BugMaker
@@ -314,7 +314,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/202318123111333/project1466467-176092)
 
-    ![img](oscomp.assets/功能赛-2023-4.jpg)
+    ![img](oscomp.assets/FunctionTrack-2023-4.jpg)
     
     </font>
 
@@ -332,7 +332,7 @@
 
     作品开源：[点这里](https://gitlab.eduxiji.net/T202418123993075/oskernel2024-phoenix)
     
-    ![img](oscomp.assets/内核赛-2024.jpg)
+    ![img](oscomp.assets/KernelTrack-2024.jpg)
     </font>
 
 ## 6. 报名方式
@@ -341,7 +341,7 @@
     我校OS比赛将预计在元旦节前后（具体时间待确定）开放报名。现在参加操作系统大赛，将获得退休选手的宝贵参赛经验，机会难得！感兴趣的同学欢迎入群：
     
     <center>
-    ![image-20221109163745962](oscomp.assets/OS比赛-招新群聊二维码.png)
+    ![image-20221109163745962](oscomp.assets/oscomp-QRcode.png)
     </center>
     
     </font>

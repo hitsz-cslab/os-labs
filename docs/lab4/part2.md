@@ -20,7 +20,7 @@
 
 - **地址结构：** 分页存储管理的逻辑地址结构如图前一部分为页号P，后一部分为页内偏移量W。32位机器图示如下（xv6是64位操作系统）。
 
-<div align="center"> <img src="../part2.assets/1313421-20180729102826537-1711528749.png" /> </div>
+<div align="center"> <img src="./part2.assets/1313421-20180729102826537-1711528749.png" /> </div>
 
 - **页表：** 为了便于在内存中找到进程的每个页面所对应的物理块，系统为每个进程建立一张页表，记录页在内存中对应的页框号，页表一般存放在内存中。在配置了页表后，进程执行时，通过查找该表，即可找到每页在内存中的物理块号。可见，页表的作用是实现从页号到页框号的地址映射。
       
@@ -49,7 +49,7 @@
 
 &emsp;&emsp;页表的数据结构和翻译的模式图示大致如下：
     
-<div align="center"> <img src="../part2.assets/image-20211009204518009.png" /> </div>
+<div align="center"> <img src="./part2.assets/image-20211009204518009.png" /> </div>
     
 &emsp;&emsp;xv6采用的指令集标准为RISC-V标准，其中页表的标准为SV39标准，也就是虚拟地址最多为39位。下面，我们来介绍这套标准，之后你会知道为什么叫39。
 
@@ -58,7 +58,7 @@
 
 #### 2.2.1 虚实地址
 
-<div align="center"> <img src="../part2.assets/image-20211009210828719.png" /> </div>
+<div align="center"> <img src="./part2.assets/image-20211009210828719.png" /> </div>
 
 &emsp;&emsp;蓝色部分：代表用户所持有的虚拟地址。比如我们在用户程序所持有的指针，64位的，就长这样。其中低39位可用（39的由来），其他的为拓展。这三十九位被划分成了四部分： `L2、L1、L0、Offset`。
     
@@ -73,7 +73,7 @@
 
 #### 2.2.2 页表
 
-<div align="center"> <img src="../part2.assets/image-20211009211825370.png" /> </div>
+<div align="center"> <img src="./part2.assets/image-20211009211825370.png" /> </div>
 
 &emsp;&emsp;SV39页表标准下，构造了三级页表，我们将其分为称为：根页表、次页表、叶子页表。顺序和图中页表从左向右依次对应。
     
@@ -88,7 +88,7 @@
 
 #### 2.2.3 页表项
 
-<div align="center"> <img src="../part2.assets/image-20211010100329520.png" /> </div>
+<div align="center"> <img src="./part2.assets/image-20211010100329520.png" /> </div>
 
 &emsp;&emsp;刚刚，我们把目录项分成了两个部分：物理地址页帧号和标志位。具体的结构如上图。
     
@@ -142,7 +142,7 @@
 &emsp;&emsp;每个进程都有一个单独的用户程序页表，当xv6在进程间切换时，也会改变页表。用户程序页表仅包含自身的代码和数据的虚实地址映射，内核代码和数据不包含在内。
 
 
-<div align="center"> <img src="../part2.assets/image-20221024160039840.png" /> </div>
+<div align="center"> <img src="./part2.assets/image-20221024160039840.png" /> </div>
 
 &emsp;&emsp;上图是xv6的用户程序虚拟地址空间分布。其代码实现在kernel/exec.c中，`exec`使用`proc_pagetable`分配了`TRAMPOLINE`和`TRAPFRAME`的页表映射，然后用`uvmalloc`来为每个ELF段分配内存及页表映射，并用`loadseg`把每个ELF段载入内存。
 
@@ -163,7 +163,7 @@
 &emsp;&emsp;内核页表仅包含内核的代码和数据的虚实地址映射，用户程序的代码和数据不包含在内。
 下图描述了如何将内核虚拟地址映射到物理地址，`kernel/memlayout.h`声明了xv6内核内存布局的常量。
 
-<div align="center"> <img src="../part2.assets/image-20221024170624973.png" /> </div>
+<div align="center"> <img src="./part2.assets/image-20221024170624973.png" /> </div>
 
 &emsp;&emsp;其代码实现在`kernel/vm.c`的`kvminit()`函数。在`kvminit()`函数内，完成了`UART0`、`VIRTIO0`、`CLINT`、`PLIC`、`kernel text`、`kernel data`和`TRAMPOLINE`的虚拟地址和物理地址的映射。
 
@@ -207,7 +207,7 @@ kvminit()
 &emsp;&emsp;这里内核页表使用的还是 **全局页表** ，并且 **映射采用恒等映射** ，也就是说虚拟地址在哪，物理地址就在那。
 
 !!! info   "拓展阅读：内核虚拟地址空间-物理地址空间分布"
-    又见到图Figure3.3了: ) 我们在[Lab3的实验原理](../../lab3/part2/#11)部分已经介绍过了。
+    又见到图Figure3.3了: ) 我们在[Lab3的实验原理](../lab3/part2.md/#11)部分已经介绍过了。
 
     kernel/memlayout.h描述了内核内存的布局。
 
@@ -248,7 +248,7 @@ kvminit()
 
 &emsp;&emsp;可以看见：由于使用 **内核全局页表** ，所有进程的内核态以及`scheduler执行流`共享一个页表，因此总共有 **N+1** 个页表（N个用户态页表 + 一个内核全局页表），在进行进程间调度时，由于进程切换的点是发生在内核态的（`swtch.S`），因此进程切换前后使用的都是内核全局页表，不需要切换页表，即 **不需要对`satp`寄存器进行写入操作** ，只需要进行进程上下文的切换即可，一直到该进程返回用户态的时候才会切换成用户态页表（`trampoline.S:userret`）。
 
-&emsp;&emsp;但是如果内核页表变成独立页表，那么此时一共有 **2N+1** 个页表（N个用户态页表+N个内核页表+一个内核全局页表），在进程调度，切换进程的时候，就需要 **在适当的时候切换内核页表** （我们会在[实验实现](../part3/#21)当中给出具体的图片介绍）。
+&emsp;&emsp;但是如果内核页表变成独立页表，那么此时一共有 **2N+1** 个页表（N个用户态页表+N个内核页表+一个内核全局页表），在进程调度，切换进程的时候，就需要 **在适当的时候切换内核页表** （我们会在[实验实现](part3.md/#21)当中给出具体的图片介绍）。
     
 &emsp;&emsp;上文已经提及，使用某个页表时，页表所在的物理地址应存放在`satp`寄存器中。页表未使用时，页表所在地址也需要一个位置保存， **对于用户进程而言，它被保存在`struct proc`中的`pagetable_t pagetable`；对于内核而言，xv6使用一个全局变量保存（`kernel/vm.c`的`kernel_pagetable`）。** 为进程引入内核页表后，也需要存储其所在的物理地址。
 
@@ -285,7 +285,7 @@ kvminit()
 - （1）把内核页表中页表项的User位均置为0；
 - （2）借助RISC-V的`sstatus`寄存器，如果该寄存器的SUM位（第18位）置为1，那么内核也可以直接访问上述的虚拟地址。大多情况下，该位需要置0。（访问寄存器的函数定义于riscv.h）关于`sstatus`寄存器，可以查阅[riscv-privileged-20211203.pdf](https://gitee.com/hitsz-cslab/os-labs/tree/master/references/riscv-privileged-20211203.pdf) 4.1小节。
 
-<div align="center"> <img src="../part2.assets/image-20211023210540509.png"  width = 80%/> </div>
+<div align="center"> <img src="./part2.assets/image-20211023210540509.png"  width = 80%/> </div>
     
 ### 3.4 内核栈
 
@@ -333,4 +333,4 @@ for(p = proc; p < &proc[NPROC]; p++) {
 
 &emsp;&emsp;那么为何说0xC000000是内核地址的开始？内核页表不是从0开始，而是在某些特定地址上有特定的映射（见上述Figure3.3）。在 `memlayout.h` 可看到CLINT的值为0x2000000L，这个值比0xC000000小，0xC000000是PLIC（Platform-Level Interrput Controller，中断控制器）的地址，实际上，CLINT（Core Local Interruptor）定义了本地中断控制器的地址，我们只会在内核初始化的时候用到这段地址。所以，为用户进程生成内核页表的时候，可以不必映射这段地址。用户页表是从虚拟地址0开始，用多少就建多少，但最高地址不能超过内核的起始地址，这样用户程序可用的虚拟地址空间就为`0x0 - 0xC000000`。
 
-![页表合并](part2.assets/页表合并.png)
+![页表合并](part2.assets/pagetable_merge.png)

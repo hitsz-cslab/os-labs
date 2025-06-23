@@ -5,7 +5,7 @@
        2. 任务二：较完善的文件系统。总代码量：1k+行。实际编码：若多参考SFS，要改的并不多，预估200+行。也可自己重新完整实现。
 
 !!! tip "实验遇到问题"
-       1. 首先阅读实验指导书的[常见问题](../part5)看有无命中，并自己尝试[一些debug手段](../part5#10-debug)。
+       1. 首先阅读实验指导书的[常见问题](part5.md)看有无命中，并自己尝试[一些debug手段](part5.md/#12-debug)。
        2. 还是无法解决请及时在答疑平台提问，或积极向老师和助教寻求帮助。
 
 ## 1.任务零：环境搭建
@@ -152,7 +152,7 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 -   **Step 9** . 到`newfs/src/newfs.c`目录，打断点（可选，如果需要调试可打）。
 -   **Step 10** . 按下`F5`(或`Fn+F5`)进行运行和挂载文件系统。
 
-&emsp;&emsp;`F5`(或`Fn+F5`)是方便同学们直接在VSCode挂载文件系统，同学们也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)的`F5`(或`Fn+F5`)命令展开。
+&emsp;&emsp;`F5`(或`Fn+F5`)是方便同学们直接在VSCode挂载文件系统，同学们也可以自行使用命令行的方式输入命令来挂载文件系统，参考实验原理的[FUSE文件系统的挂载与卸载](part2.md/#32-fuse)的`F5`(或`Fn+F5`)命令展开。
 
 &emsp;&emsp;打下断点，调试运行如下图：
 
@@ -160,9 +160,9 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem$ ./setenv.sh
 
 &emsp;&emsp;没有打断点，直接运行和挂载文件系统，文件系统挂载成功如下图所示：
 
-![f5运行成功](./part3.assets/f5运行成功.png)
+![f5运行成功](./part3.assets/f5run_1.png)
 
-&emsp;&emsp;文件系统的卸载（参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)），需要同学们在命令行手动输入命令来实现：
+&emsp;&emsp;文件系统的卸载（参考实验原理的[FUSE文件系统的挂载与卸载](part2.md/#32-fuse)），需要同学们在命令行手动输入命令来实现：
 
 ```console
 teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$ fusermount -u ./tests/mnt
@@ -192,11 +192,11 @@ teststu_8@OSLabExecNode0:~/user-land-filesystem/fs/newfs$
 
 &emsp;&emsp;假设`<filename>`为`pass_task1.txt`，挂载文件系统后，`ls`效果将会如下：
 
-![](./part3.assets/task1效果.png)
+![](./part3.assets/task1_effect.png)
 
 ### 2.2 实现步骤
 
-&emsp;&emsp;任务一的实现非常简单，只需要同学们根据`demo`代码中的`/* TODO */`指引填写几行代码。在完成任务一过程，同学们请参考实验原理部分的[驱动接口查阅](./part2.md#21)和[FUSE简单示例](./part2.md#31-fuse)。
+&emsp;&emsp;任务一的实现非常简单，只需要同学们根据`demo`代码中的`/* TODO */`指引填写几行代码。在完成任务一过程，同学们请参考实验原理部分的[驱动接口查阅](part2.md#21)和[FUSE简单示例](part2.md#31-fuse)。
 
 - **step 0**，<font color=red>打开VSCode软件，点击左上角 "文件" → "打开文件夹"，选择实验包目录下的`fs/demo`文件夹</font> 。熟悉demo（src/main.c）代码（不到一百行）定义的简单数据结构`demo_super`和`demo_dentry`，以及四个钩子函数`demo_mount`，`demo_umount`，`demo_getattr`和`demo_readdir`.
 
@@ -272,21 +272,21 @@ static int demo_getattr(const char* path, struct stat *stbuf)
 chmod +x start.sh && ./start.sh
 ```
 
-&emsp;&emsp;然后挂载文件系统，VSCode按`F5`（或`Fn+F5`）（前提是已经按照[环境搭建-项目编译](./#13)配置好任务一的编译环境）：
+&emsp;&emsp;然后挂载文件系统，VSCode按`F5`（或`Fn+F5`）（前提是已经按照[环境搭建-项目编译](#13)配置好任务一的编译环境）：
 
-![f5运行成功](./part3.assets/f5运行成功2.png)
+![f5运行成功](./part3.assets/f5run_2.png)
 
 &emsp;&emsp;通过`ctrl + shift + ~`打开上述页面，然后在 **开启一个命令行** ，输入`ls`命令查看`tests`目录下的`mnt`文件夹，查看结果是否为`pass_task1.txt`，如果是，则 **手动测试通过** 。如下图：
 
-![](./part3.assets/task1效果.png)
+![](./part3.assets/task1_effect.png)
 
-&emsp;&emsp;最后一定要 **记得输入`fusermount`命令来卸载文件系统** （参考实验原理的[FUSE文件系统的挂载与卸载](../part2#32-fuse)），**不要** 直接在VSCode终止或者按`ctrl + c`：
+&emsp;&emsp;最后一定要 **记得输入`fusermount`命令来卸载文件系统** （参考实验原理的[FUSE文件系统的挂载与卸载](part2.md#32-fuse)），**不要** 直接在VSCode终止或者按`ctrl + c`：
 
 ```
 fusermount -u <挂载点>
 ```
 
-![](./part3.assets/卸载示例.png)
+![](./part3.assets/unmount_example.png)
 
 #### 2.3.2 测评程序
 
@@ -314,7 +314,7 @@ chmod +x test.sh && ./test.sh
 
 &emsp;&emsp;通过任务一的同学们已经对本次实验的相关内容有了初步的认识和了解。
 
-&emsp;&emsp;实验的总体结构同学们可以参考实验原理部分的[实验总体结构](../part2#4)小节。
+&emsp;&emsp;实验的总体结构同学们可以参考实验原理部分的[实验总体结构](part2.md/#4)小节。
 
 ### 3.1 实现内容
 
@@ -326,11 +326,11 @@ chmod +x test.sh && ./test.sh
 
 &emsp;&emsp;（3）该文件系统的磁盘布局应该按顺序依次包括（如下图）：超级块、索引节点位图、数据块位图、索引节点区、数据块区。五个区域 **缺一不可**。但具体的每个区域占多少个逻辑块，同学可以自行设计。
 
-![](./part3.assets/任务2布局.png)
+![](./part3.assets/task2_layout.png)
 
 &emsp;&emsp;（4）实现 **按需分配** 文件数据块，利用好数据块位图，当文件需要新的数据块来写内容的时候才分配，而不是采用预先分配。
 
-&emsp;&emsp;（提示：参考[文件的表示](../part2#123)中数据的存放。本次实验的必做部分不要求实现普通文件的写，也就是普通文件不需要额外分配数据块。只需要为目录文件在合适的时候，如`mknod`、`mkdir`时候为父目录分配数据块即可）
+&emsp;&emsp;（提示：参考[文件的表示](part2.md/#123)中数据的存放。本次实验的必做部分不要求实现普通文件的写，也就是普通文件不需要额外分配数据块。只需要为目录文件在合适的时候，如`mknod`、`mkdir`时候为父目录分配数据块即可）
 
 &emsp;&emsp;（5）出于测评脚本考虑，本次实验 **统一规定** **不实现"."和".."两个特殊目录**。此外，本次实验一个inode只对应到一个文件，无需考虑软链接和硬链接的实现（也可选做）；只用实现直接索引，无需考虑间接索引（也可选做）。
 
@@ -409,7 +409,7 @@ int your_mount(struct options opt){
 
 #### 3.2.2 磁盘交互的封装
 
-&emsp;&emsp;本次实验的驱动接口（见[实验原理-驱动接口查阅](./part2#21)）为我们提供了读写模拟磁盘的方法，`ddriver_read`和`ddriver_write`，利用这两个接口能够实现往模拟磁盘读取或写入一个IO块大小的数据。同时提供了`ddriver_seek`来移动要读取或写入的起始位置，也就是磁盘头。
+&emsp;&emsp;本次实验的驱动接口（见[实验原理-驱动接口查阅](part2.md/#21)）为我们提供了读写模拟磁盘的方法，`ddriver_read`和`ddriver_write`，利用这两个接口能够实现往模拟磁盘读取或写入一个IO块大小的数据。同时提供了`ddriver_seek`来移动要读取或写入的起始位置，也就是磁盘头。
 
 &emsp;&emsp;但上述接口每次读写的数据量固定为一个磁盘IO块的大小（512B），并且移动磁盘头的位置必须和512B保持对齐。为了能够更加灵活往磁盘任何一个位置`offset`读写任意大小`size`的数据，例如从磁盘开始位置处读出或写入`struct super_block_d`超级块结构体。同学们可以利用提供原始驱动接口`ddriver_read`和`ddriver_write`，完成一层封装，大概思路是先把数据所在的磁盘块都读出来，然后再从这一部分读出的数据中读写相应的数据，若是写，则要把读入修改的部分再写回磁盘。下面简要介绍实现`your_read`方法。
 
@@ -510,7 +510,7 @@ void* destroy(void* p);
 
 &emsp;&emsp;首先介绍路径 **解析的逻辑** 。在`simplefs`中路径解析对应着`sfs_lookup`函数。以`/hunt/bin.o`为例，并假设路径存在。如下图所示，所有的路径解析都会从 **根目录** 开始，由超级块维护的根目录`dentry`，读取根目录的`inode`（在读取`inode`的时候会把数据块的内容读取进来，即所有子文件的`dentry_d`），然后依次遍历所有子文件的`dentry`，找到文件名为`hunt`的`dentry`，然后再读取`hunt`的`inode`。然后根据`hunt`的`inode`，再依次遍历所有子文件的`dentry`，找到文件名为`bin.o`的`dentry`。路径解析找到该文件，返回其`dentry`。
 
-&emsp;&emsp;上述介绍的是找到文件的情况，这种情况通常会用于[查找文件和目录](./#3233)的实现。
+&emsp;&emsp;上述介绍的是找到文件的情况，这种情况通常会用于[查找文件和目录](#3233)的实现。
 ![lookup](./part3.assets/lookup.svg)
 
 &emsp;&emsp;但在创建文件和目录时，**文件还不存在**，传入的路径名是无法解析到其对应的`dentry`的。相反，假设解析到存在对应的`dentry`了，则说明文件重名了，应该做异常处理。以`/hunt/YBYB`为例，并假设路径还不存在。如上图所示，只需要按照刚刚所述的路径解析逻辑，最终未找到直接返回其父目录的`dentry`即可，供实现两个钩子函数下一步使用。
@@ -563,7 +563,7 @@ struct dentry {
 
 &emsp;&emsp;新创建的文件还需要为其 **分配一个索引节点** `inode`：通过逐个位遍历索引节点位图（参考上述数据块位图的遍历），找到一个空闲的索引节点编号，然后创建一个新的索引节点`inode`，绑定该编号，并填写`inode`一些字段（后续在写回的时候写回到该编号对应的索引节点位置即可）。
 
-&emsp;&emsp;在[实验原理-目录项的表示](../part2#124)的介绍中，我们知道`dentry`能够索引到对应的`inode`，也就是说`dentry`会和一个`inode`进行绑定。我们创建好新的索引节点`inode`后，要和 **传入的对应目录项**  `dentry`进行 **绑定** 。参考代码如下：
+&emsp;&emsp;在[实验原理-目录项的表示](part2.md/#124)的介绍中，我们知道`dentry`能够索引到对应的`inode`，也就是说`dentry`会和一个`inode`进行绑定。我们创建好新的索引节点`inode`后，要和 **传入的对应目录项**  `dentry`进行 **绑定** 。参考代码如下：
 
 ```c
 struct sfs_inode* sfs_alloc_inode(struct sfs_dentry * dentry) {
@@ -607,7 +607,7 @@ int mkdir(const char* path, mode_t mode)
 
 &emsp;&emsp;获取文件属性的函数的核心就是要实现填充好对应的`stat`结构体，并向上层返回。获取文件属性的函数对应`getattr`钩子。
 
-&emsp;&emsp;首先进行 **路径解析的逻辑**  （在[创建文件](./#3232)一小节已经介绍过）得到传入路径对应的`dentry`结构，然后就可以根据`dentry`及其索引的`inode`结构的字段来 **填充`stat`结构体** 的字段。一个示例代码如下：
+&emsp;&emsp;首先进行 **路径解析的逻辑**  （在[创建文件](#3232)一小节已经介绍过）得到传入路径对应的`dentry`结构，然后就可以根据`dentry`及其索引的`inode`结构的字段来 **填充`stat`结构体** 的字段。一个示例代码如下：
 
 ```c
 int sfs_getattr(const char* path, struct stat * sfs_stat) {
@@ -814,13 +814,13 @@ ddriver -r
 
 &emsp;&emsp;检查`tests`目录下有无`mnt`目录，没有需要自己`mkdir mnt`创建一个，并保证这个目录是 **空** 的，否则`F5`无法挂载成功。
 
-&emsp;&emsp;挂载文件系统，VSCode按`F5`（或`Fn+F5`）（前提是已经按照[环境搭建-项目编译](./#13)配置好任务二的编译环境）：
+&emsp;&emsp;挂载文件系统，VSCode按`F5`（或`Fn+F5`）（前提是已经按照[环境搭建-项目编译](#13)配置好任务二的编译环境）：
 
-![](./part3.assets/f5运行成功任务二.png)
+![](./part3.assets/f5run_task2.png)
 
 &emsp;&emsp;挂载好后，在新的一个命令行，对`tests`目录下的`mnt`目录进行`ls`、`touch`、`mkdir`操作，均能符合预期功能，如下图所示。卸载文件系统后，重新挂载文件系统，`ls`也能查看到上次的文件。
 
-![](./part3.assets/手动测试task2.png)
+![](./part3.assets/manual_task2.png)
 
 &emsp;&emsp;同任务一，同学们使用完文件系统后，及时 **通过`fusermount`命令来卸载文件系统** ，不要直接使用`ctrl + c`和VSCode终止的方式，避免影响下一次挂载。
 

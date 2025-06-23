@@ -34,7 +34,7 @@ fusermount -u ./tests/mnt
 
 &emsp;&emsp;提示"fuse: bad mount point ... No such file or directory" 如下图所示：
 
-![](part5.assets/没有挂载点.png)
+![](part5.assets/no_mountpoint.png)
 
 这种情况是，文件系统挂载的挂载点，如`./tests/mnt`不存在。需要同学们提前创建好一个空的文件夹`./tests/mnt`。
 
@@ -68,7 +68,7 @@ fusermount -u ./tests/mnt
 
 ![](part5.assets/spawn.png)
 
-&emsp;&emsp;这个原因是同学们的项目还没通过`ctrl + shift + p`进行项目编译环境的配置（见指导书[项目编译](../part3#13)）。编译环境配置完成后，会生成一个`build`目录的，这个时候再按`F5`编译即可。
+&emsp;&emsp;这个原因是同学们的项目还没通过`ctrl + shift + p`进行项目编译环境的配置（见指导书[项目编译](./part3.md#13)）。编译环境配置完成后，会生成一个`build`目录的，这个时候再按`F5`编译即可。
 
 ### 7.2 #error Please ... flags
 
@@ -80,7 +80,7 @@ fusermount -u ./tests/mnt
 
 &emsp;&emsp;如果想做任务一，请用`VSCode`打开`demo`文件夹。如果想做任务二，请用`VSCode`打开`newfs`（你自己的fs）文件夹。如果想调试`simplefs`，请用`VSCode`打开`simplefs`文件夹。
 
-&emsp;&emsp;打开正确的目录后按照指导书[项目编译](../part3#13)进行即可。
+&emsp;&emsp;打开正确的目录后按照指导书[项目编译](./part3.md#13)进行即可。
 
 ### 7.3 multiple definition ... first defined here
 
@@ -136,7 +136,7 @@ fusermount -u ./tests/mnt
 
 &emsp;&emsp;测试场景是：清空磁盘重新挂载文件系统后，在根目录下创建了一个空文件，根目录有一个数据块，空文件没有数据块，总计一个数据块。也就是数据位图的只有一个有效位。而你的有效位有八个（以上图为例）。
 
-&emsp;&emsp;额外注意的是，参考[任务二实验内容](../part3#31)的第四点，同学们需要按需分配，不能预先分配数据块。
+&emsp;&emsp;额外注意的是，参考[任务二实验内容](./part3.md#31)的第四点，同学们需要按需分配，不能预先分配数据块。
 
 &emsp;&emsp;请通过打印位图或者使用Hex Editor查看磁盘等方式查看数据位图，辅助检查一下自己的数据位图修改逻辑是否正确。
 
@@ -217,4 +217,4 @@ EPERM /* 值为1, Operation not permitted */
 
 - 使用Hex Editor查看磁盘镜像
 
-&emsp;&emsp;对磁盘镜像进行查看，检查一下例如数据位图、索引节点位图的具体数值，数据写回位置是否和预期的相符等。同学可以参考实验原理中[磁盘镜像查看](../part2#22)的例子。
+&emsp;&emsp;对磁盘镜像进行查看，检查一下例如数据位图、索引节点位图的具体数值，数据写回位置是否和预期的相符等。同学可以参考实验原理中[磁盘镜像查看](./part2.md#22)的例子。

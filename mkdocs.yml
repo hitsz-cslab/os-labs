@@ -2,6 +2,8 @@ site_name: 操作系统2024秋 | 哈工大（深圳）
 copyright: 'Copyright &copy; 2024 - 2025 哈尔滨工业大学（深圳）'
 repo_name: 'HITSZ-OS-Course'
 
+use_directory_urls: false
+
 theme:
     language: 'zh' # 配置语言
     name: material

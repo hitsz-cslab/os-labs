@@ -53,7 +53,7 @@
 
 !!! warning   "请先同步上游远程仓库，并注意切换到lock分支进行试验"
  
-    本次实验基于 **lock** 分支，请同学们参考“Lab2：进程与系统调用”的[3.1 切换分支](../../lab2/part1/#31)进行切换。
+    本次实验基于 **lock** 分支，请同学们参考“Lab2：进程与系统调用”的[3.1 切换分支](../lab2/part1.md/#31)进行切换。
 
 
 ### 3.1 任务一：内存分配器（Memory allocator）
@@ -117,7 +117,7 @@ test2 OK
   
 &emsp;&emsp;"lock: kmem"、"lock: bcache"、"lock: proc" 等指示了锁的类型。`acquire()`记录了每种锁 **被请求的次数** 。`fetch-and-add`就是 **自旋（CPU不停循环等待解锁）的次数** 。例如， *lock: kmem: #fetch-and-add 46375 #acquire() 433016* 这句话的意思是，`kmem.lock`请求了433016次，自旋了46375次。
 
-&emsp;&emsp;这些计数来自于在`kalloctest`调用的`ntas()`，它通过执行`statistics()`函数，打开"statistics"设备文件，获取内核打印的那些针对`kmem`和`bcache`锁( **本实验的重点** )及5个竞争最激烈的锁的计数（见`kernel/spinlock.c`中的`statslock()`）。关于`#acquire`和`#fetch-and-add`的计数算法见[测评程序kalloctest对锁的检测](../part4/#4-kalloctest)。
+&emsp;&emsp;这些计数来自于在`kalloctest`调用的`ntas()`，它通过执行`statistics()`函数，打开"statistics"设备文件，获取内核打印的那些针对`kmem`和`bcache`锁( **本实验的重点** )及5个竞争最激烈的锁的计数（见`kernel/spinlock.c`中的`statslock()`）。关于`#acquire`和`#fetch-and-add`的计数算法见[测评程序kalloctest对锁的检测](part4.md/#4-kalloctest)。
 
 &emsp;&emsp;如果存在锁争用，`fetch-and-add`的数量将会很高，因为在`acquire()`获得锁之前要进行许多循环迭代，"statistics"设备文件会返回`kmem`和`bcache`锁的`#test-and-set`的总和（也就是`tot`的值，即没有获取到此锁的次数）。
 
@@ -132,7 +132,7 @@ test2 OK
 5)   `kalloctest`和`usertests`的输出如下图（锁争用的次数大大减少），具体的数据会有所差别：
 
     
-<div align="center"> <img src="../part1.assets/kalloc_proc.jpg" width = 70%/> </div>
+<div align="center"> <img src="./part1.assets/kalloc_proc.jpg" width = 70%/> </div>
 
 ### 3.2 任务二：磁盘缓存（Buffer cache）
     
@@ -153,7 +153,7 @@ test2 OK
 
 &emsp;&emsp;实验前（即未修改前），测评程序bcachetest的输出如下：
 
-<div align="center"> <img src="../part1.assets/image-20211019205157241.png" width = 80%/> </div>
+<div align="center"> <img src="./part1.assets/image-20211019205157241.png" width = 80%/> </div>
 
 &emsp;&emsp;可以看到，bcache的`fetch-and-add`值非常大，说明磁盘缓存锁的争用非常严重。
 
@@ -176,11 +176,11 @@ test2 OK
 !!! tip "关于bcache实验的测试说明"
      在运行`make qemu`测试`bcachetest`和`usertests`之前， **建议先运行`make clean`删除`fs.img`** ，以防之前错误的代码把磁盘写坏了，后面即使是改成正确的代码也没法执行。
 
-<div align="center"> <img src="../part1.assets/image-20211019205449169.png" width = 70%/> </div>
+<div align="center"> <img src="./part1.assets/image-20211019205449169.png" width = 70%/> </div>
 
 ### 3.3 测试
 
 &emsp;&emsp;当完成上述的两个实验后，在命令行输入 `make grade` 进行最终测试。
 
 
-<div align="center"> <img src="../part1.assets/grade-16349752282893.png" /> </div>
+<div align="center"> <img src="./part1.assets/grade-16349752282893.png" /> </div>

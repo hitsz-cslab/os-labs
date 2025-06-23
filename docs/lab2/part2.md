@@ -372,13 +372,13 @@ acquire(&p->lock);
 // Give any children to init.
 reparent(p);
 ```
-&emsp;&emsp;希望同学们能够自己查看`proc.c: reparent(struct proc *p)`函数，并理解里面查找当前进程的子进程的逻辑，这会对你解决[任务一](../part1/#32)有帮助 (=  
+&emsp;&emsp;希望同学们能够自己查看`proc.c: reparent(struct proc *p)`函数，并理解里面查找当前进程的子进程的逻辑，这会对你解决[任务一](part1.md/#32)有帮助 (=  
 4. 唤醒当前进程的父进程
 ```c
 wakeup1(original_parent);
 ```
 &emsp;&emsp;关于为什么唤醒父进程：因为父进程此时可能处在wait()当中，而xv6的wait的实现是让当前进程睡眠，等待被唤醒，如果子进程退出时不唤醒父进程，那么父进程将会一直睡下去...  
-&emsp;&emsp;我们的[任务二](../part1/#33)就是在更改wait的这一实现。
+&emsp;&emsp;我们的[任务二](part1.md/#33-wait)就是在更改wait的这一实现。
 
 ### 4.2 更改当前进程状态
 
