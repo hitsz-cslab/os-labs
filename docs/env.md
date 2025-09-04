@@ -55,7 +55,7 @@
 
 ### 2.1 XV6环境配置
 
-#### 2.1.1 安装依赖包
+#### 2.1.1 使用包管理工具安装
 
 !!! warning "注意事项"
     在执行以下命令时，不需要复制输入命令前的“#”或"$"符号，只需输入符号后的命令。
@@ -66,7 +66,11 @@
 $ sudo apt-get install git build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu
 ```
 
-#### 2.1.2 安装RISC-V GNU编译器工具链
+#### 2.1.2 自行编译RISC-V GNU编译器工具链
+
+ps.此方法需要Linux系统有较大存储空间，且在cpu核心数和内存不充足的虚拟机上编译速度较慢，建议使用包管理工具直接安装，或者使用docker容器环境。
+
+&emsp;&emsp;克隆RISC-V GNU的仓库
 
 ```shell
 $ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
@@ -112,8 +116,6 @@ rm: remove regular file 'riscv-gnu-toolchain.tar.gz'? y
 $ 
 ```
 --->
-
-#### 2.1.3 安装QEMU
 
 &emsp;&emsp;下载QEMU
 
